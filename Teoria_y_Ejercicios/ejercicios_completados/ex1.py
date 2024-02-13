@@ -27,7 +27,7 @@ def tokenize(text):
         elif m.group() == ' ':
             index = m.end()
         else:
-            raise SyntaxError('Bad char %r' % text[index]) #esto es innecesario, pero bueh
+            raise SyntaxError('Bad char %r' % text[index]) #esto es innecesario, pero bueno
 
 # Sample usage
 text = 'abc if = 123 $ cde 456'
