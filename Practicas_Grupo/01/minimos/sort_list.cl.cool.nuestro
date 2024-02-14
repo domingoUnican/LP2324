@@ -1,0 +1,104 @@
+#name "sort_list.cl.cool"
+ OBJECTID iota
+ '(' 
+ OBJECTID i
+ ':' 
+ TYPEID Int
+ ')' 
+ ':' 
+ TYPEID List
+ '{' 
+ '{' 
+ OBJECTID l
+ '<' 
+ '-' 
+ NEW
+ TYPEID Nil
+ ';' 
+ '(' 
+ LET
+ OBJECTID j
+ ':' 
+ TYPEID Int
+ '<' 
+ '-' 
+ INT_CONST 0
+ IN
+ WHILE
+ OBJECTID j
+ '<' 
+ OBJECTID i
+ LOOP
+ '{' 
+ OBJECTID l
+ '<' 
+ '-' 
+ '(' 
+ NEW
+ TYPEID Cons
+ ')' 
+ '.' 
+ OBJECTID init
+ '(' 
+ OBJECTID j
+ OBJECTID l
+ ')' 
+ ';' 
+ OBJECTID j
+ '<' 
+ '-' 
+ OBJECTID j
+ '+' 
+ INT_CONST 1
+ ';' 
+ '}' 
+ POOL
+ ')' 
+ ';' 
+ OBJECTID l
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID main
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Object
+ '{' 
+ '{' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ TYPEID How
+ OBJECTID many
+ OBJECTID numbers
+ OBJECTID to
+ OBJECTID sort
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID iota
+ '(' 
+ OBJECTID in_int
+ '(' 
+ ')' 
+ ')' 
+ '.' 
+ OBJECTID rev
+ '(' 
+ ')' 
+ '.' 
+ OBJECTID sort
+ '(' 
+ ')' 
+ '.' 
+ OBJECTID print_list
+ '(' 
+ ')' 
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ '}' 
+ ';'

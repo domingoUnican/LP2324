@@ -1,0 +1,8 @@
+#name "multilinecomment.cool"
+ '(' 
+ '*' 
+ NOT
+ OBJECTID a
+ OBJECTID comment
+ '*' 
+ ')'

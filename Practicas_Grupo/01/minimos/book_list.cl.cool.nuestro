@@ -1,0 +1,537 @@
+#name "book_list.cl.cool"
+ '-' 
+ '-' 
+ OBJECTID example
+ OF
+ OBJECTID static
+ OBJECTID and
+ OBJECTID dynamic
+ OBJECTID type
+ OBJECTID differing
+ OBJECTID for
+ OBJECTID a
+ OBJECTID dispatch
+ CLASS
+ TYPEID Book
+ INHERITS
+ TYPEID IO
+ '{' 
+ OBJECTID title
+ ':' 
+ TYPEID String
+ ';' 
+ OBJECTID author
+ ':' 
+ TYPEID String
+ ';' 
+ OBJECTID initBook
+ '(' 
+ OBJECTID title_p
+ ':' 
+ TYPEID String
+ OBJECTID author_p
+ ':' 
+ TYPEID String
+ ')' 
+ ':' 
+ TYPEID Book
+ '{' 
+ '{' 
+ OBJECTID title
+ '<' 
+ '-' 
+ OBJECTID title_p
+ ';' 
+ OBJECTID author
+ '<' 
+ '-' 
+ OBJECTID author_p
+ ';' 
+ OBJECTID self
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID print
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Book
+ '{' 
+ '{' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID title
+ ':' 
+ '"' 
+ ')' 
+ '.' 
+ OBJECTID out_string
+ '(' 
+ OBJECTID title
+ ')' 
+ '.' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID author
+ ':' 
+ '"' 
+ ')' 
+ '.' 
+ OBJECTID out_string
+ '(' 
+ OBJECTID author
+ ')' 
+ '.' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID self
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ '}' 
+ ';' 
+ CLASS
+ TYPEID Article
+ INHERITS
+ TYPEID Book
+ '{' 
+ OBJECTID per_title
+ ':' 
+ TYPEID String
+ ';' 
+ OBJECTID initArticle
+ '(' 
+ OBJECTID title_p
+ ':' 
+ TYPEID String
+ OBJECTID author_p
+ ':' 
+ TYPEID String
+ OBJECTID per_title_p
+ ':' 
+ TYPEID String
+ ')' 
+ ':' 
+ TYPEID Article
+ '{' 
+ '{' 
+ OBJECTID initBook
+ '(' 
+ OBJECTID title_p
+ OBJECTID author_p
+ ')' 
+ ';' 
+ OBJECTID per_title
+ '<' 
+ '-' 
+ OBJECTID per_title_p
+ ';' 
+ OBJECTID self
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID print
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Book
+ '{' 
+ '{' 
+ OBJECTID self
+ '@' 
+ TYPEID Book
+ '.' 
+ OBJECTID print
+ '(' 
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID periodical
+ ':' 
+ '"' 
+ ')' 
+ '.' 
+ OBJECTID out_string
+ '(' 
+ OBJECTID per_title
+ ')' 
+ '.' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID self
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ '}' 
+ ';' 
+ CLASS
+ TYPEID BookList
+ INHERITS
+ TYPEID IO
+ '{' 
+ OBJECTID cdr
+ '(' 
+ ')' 
+ ':' 
+ TYPEID BookList
+ '{' 
+ '{' 
+ OBJECTID abort
+ '(' 
+ ')' 
+ ';' 
+ NEW
+ TYPEID BookList
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID print_list
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Object
+ '{' 
+ OBJECTID abort
+ '(' 
+ ')' 
+ '}' 
+ ';' 
+ '}' 
+ ';' 
+ CLASS
+ TYPEID Cons
+ INHERITS
+ TYPEID BookList
+ '{' 
+ OBJECTID xcar
+ ':' 
+ TYPEID Book
+ ';' 
+ '-' 
+ '-' 
+ TYPEID We
+ OBJECTID keep
+ OBJECTID the
+ OBJECTID car
+ OBJECTID and
+ OBJECTID cdr
+ IN
+ OBJECTID attributes
+ '.' 
+ OBJECTID xcdr
+ ':' 
+ TYPEID BookList
+ ';' 
+ '-' 
+ '-' 
+ TYPEID Because
+ OBJECTID methods
+ OBJECTID and
+ OBJECTID features
+ OBJECTID must
+ OBJECTID have
+ OBJECTID different
+ OBJECTID names
+ '-' 
+ '-' 
+ OBJECTID we
+ OBJECTID use
+ OBJECTID xcar
+ OBJECTID and
+ OBJECTID xcdr
+ OBJECTID for
+ OBJECTID the
+ OBJECTID attributes
+ OBJECTID and
+ OBJECTID reserve
+ '-' 
+ '-' 
+ OBJECTID car
+ OBJECTID and
+ OBJECTID cdr
+ OBJECTID for
+ OBJECTID the
+ OBJECTID features
+ '.' 
+ OBJECTID isNil
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Bool
+ '{' 
+ BOOL_CONST false
+ '}' 
+ ';' 
+ OBJECTID init
+ '(' 
+ OBJECTID hd
+ ':' 
+ TYPEID Book
+ OBJECTID tl
+ ':' 
+ TYPEID BookList
+ ')' 
+ ':' 
+ TYPEID Cons
+ '{' 
+ '{' 
+ OBJECTID xcar
+ '<' 
+ '-' 
+ OBJECTID hd
+ ';' 
+ OBJECTID xcdr
+ '<' 
+ '-' 
+ OBJECTID tl
+ ';' 
+ OBJECTID self
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID car
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Book
+ '{' 
+ OBJECTID xcar
+ '}' 
+ ';' 
+ OBJECTID cdr
+ '(' 
+ ')' 
+ ':' 
+ TYPEID BookList
+ '{' 
+ OBJECTID xcdr
+ '}' 
+ ';' 
+ OBJECTID print_list
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Object
+ '{' 
+ '{' 
+ CASE
+ OBJECTID xcar
+ '.' 
+ OBJECTID print
+ '(' 
+ ')' 
+ OF
+ OBJECTID dummy
+ ':' 
+ TYPEID Book
+ '=' 
+ '>' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ '-' 
+ OBJECTID dynamic
+ OBJECTID type
+ OBJECTID was
+ TYPEID Book
+ '-' 
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID dummy
+ ':' 
+ TYPEID Article
+ '=' 
+ '>' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ '-' 
+ OBJECTID dynamic
+ OBJECTID type
+ OBJECTID was
+ TYPEID Article
+ '-' 
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ ESAC
+ ';' 
+ OBJECTID xcdr
+ '.' 
+ OBJECTID print_list
+ '(' 
+ ')' 
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ '}' 
+ ';' 
+ CLASS
+ TYPEID Nil
+ INHERITS
+ TYPEID BookList
+ '{' 
+ OBJECTID isNil
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Bool
+ '{' 
+ BOOL_CONST true
+ '}' 
+ ';' 
+ OBJECTID print_list
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Object
+ '{' 
+ BOOL_CONST true
+ '}' 
+ ';' 
+ '}' 
+ ';' 
+ CLASS
+ TYPEID Main
+ '{' 
+ OBJECTID books
+ ':' 
+ TYPEID BookList
+ ';' 
+ OBJECTID main
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Object
+ '{' 
+ '(' 
+ LET
+ OBJECTID a_book
+ ':' 
+ TYPEID Book
+ '<' 
+ '-' 
+ '(' 
+ NEW
+ TYPEID Book
+ ')' 
+ '.' 
+ OBJECTID initBook
+ '(' 
+ '"' 
+ TYPEID Compilers
+ TYPEID Principles
+ TYPEID Techniques
+ OBJECTID and
+ TYPEID Tools
+ '"' 
+ '"' 
+ TYPEID Aho
+ TYPEID Sethi
+ OBJECTID and
+ TYPEID Ullman
+ '"' 
+ ')' 
+ IN
+ '(' 
+ LET
+ OBJECTID an_article
+ ':' 
+ TYPEID Article
+ '<' 
+ '-' 
+ '(' 
+ NEW
+ TYPEID Article
+ ')' 
+ '.' 
+ OBJECTID initArticle
+ '(' 
+ '"' 
+ TYPEID The
+ TYPEID Top
+ INT_CONST 100
+ TYPEID CD_ROMs
+ '"' 
+ '"' 
+ TYPEID Ulanoff
+ '"' 
+ '"' 
+ TYPEID PC
+ TYPEID Magazine
+ '"' 
+ ')' 
+ IN
+ '{' 
+ OBJECTID books
+ '<' 
+ '-' 
+ '(' 
+ NEW
+ TYPEID Nil
+ ')' 
+ '.' 
+ OBJECTID cons
+ '(' 
+ OBJECTID a_book
+ ')' 
+ '.' 
+ OBJECTID cons
+ '(' 
+ OBJECTID an_article
+ ')' 
+ ';' 
+ OBJECTID books
+ '.' 
+ OBJECTID print_list
+ '(' 
+ ')' 
+ ';' 
+ '}' 
+ ')' 
+ '-' 
+ '-' 
+ OBJECTID end
+ LET
+ OBJECTID an_article
+ ')' 
+ '-' 
+ '-' 
+ OBJECTID end
+ LET
+ OBJECTID a_book
+ '}' 
+ ';' 
+ '}' 
+ ';'

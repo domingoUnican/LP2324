@@ -1,0 +1,50 @@
+#name "hairyscary.cool"
+ CLASS
+ TYPEID Main
+ '{' 
+ OBJECTID a
+ ':' 
+ TYPEID Bazz
+ '<' 
+ '-' 
+ NEW
+ TYPEID Bazz
+ ';' 
+ OBJECTID b
+ ':' 
+ TYPEID Foo
+ '<' 
+ '-' 
+ NEW
+ TYPEID Foo
+ ';' 
+ OBJECTID c
+ ':' 
+ TYPEID Razz
+ '<' 
+ '-' 
+ NEW
+ TYPEID Razz
+ ';' 
+ OBJECTID d
+ ':' 
+ TYPEID Bar
+ '<' 
+ '-' 
+ NEW
+ TYPEID Bar
+ ';' 
+ OBJECTID main
+ '(' 
+ ')' 
+ ':' 
+ TYPEID String
+ '{' 
+ '"' 
+ OBJECTID do
+ OBJECTID nothing
+ '"' 
+ '}' 
+ ';' 
+ '}' 
+ ';'

@@ -1,0 +1,1340 @@
+#name "arith.cool"
+ OBJECTID i2a_aux
+ '(' 
+ OBJECTID i
+ ':' 
+ TYPEID Int
+ ')' 
+ ':' 
+ TYPEID String
+ '{' 
+ IF
+ OBJECTID i
+ '=' 
+ INT_CONST 0
+ THEN
+ '"' 
+ '"' 
+ ELSE
+ '(' 
+ LET
+ OBJECTID next
+ ':' 
+ TYPEID Int
+ '<' 
+ '-' 
+ OBJECTID i
+ '/' 
+ INT_CONST 10
+ IN
+ OBJECTID i2a_aux
+ '(' 
+ OBJECTID next
+ ')' 
+ '.' 
+ OBJECTID concat
+ '(' 
+ OBJECTID i2c
+ '(' 
+ OBJECTID i
+ '-' 
+ OBJECTID next
+ '*' 
+ INT_CONST 10
+ ')' 
+ ')' 
+ ')' 
+ FI
+ '}' 
+ ';' 
+ '}' 
+ ';' 
+ CLASS
+ TYPEID Main
+ INHERITS
+ TYPEID IO
+ '{' 
+ OBJECTID char
+ ':' 
+ TYPEID String
+ ';' 
+ OBJECTID avar
+ ':' 
+ TYPEID A
+ ';' 
+ OBJECTID a_var
+ ':' 
+ TYPEID A
+ ';' 
+ OBJECTID flag
+ ':' 
+ TYPEID Bool
+ '<' 
+ '-' 
+ BOOL_CONST true
+ ';' 
+ OBJECTID menu
+ '(' 
+ ')' 
+ ':' 
+ TYPEID String
+ '{' 
+ '{' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID n
+ OBJECTID tTo
+ OBJECTID add
+ OBJECTID a
+ OBJECTID number
+ OBJECTID to
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID print
+ '(' 
+ OBJECTID avar
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ '.' 
+ '.' 
+ '.' 
+ OBJECTID enter
+ OBJECTID a
+ ':' 
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID tTo
+ OBJECTID negate
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID print
+ '(' 
+ OBJECTID avar
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ '.' 
+ '.' 
+ '.' 
+ OBJECTID enter
+ OBJECTID b
+ ':' 
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID tTo
+ OBJECTID find
+ OBJECTID the
+ OBJECTID difference
+ OBJECTID between
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID print
+ '(' 
+ OBJECTID avar
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID and
+ OBJECTID another
+ OBJECTID number
+ '.' 
+ '.' 
+ '.' 
+ OBJECTID enter
+ OBJECTID c
+ ':' 
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID tTo
+ OBJECTID find
+ OBJECTID the
+ OBJECTID factorial
+ OF
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID print
+ '(' 
+ OBJECTID avar
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ '.' 
+ '.' 
+ '.' 
+ OBJECTID enter
+ OBJECTID d
+ ':' 
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID tTo
+ OBJECTID square
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID print
+ '(' 
+ OBJECTID avar
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ '.' 
+ '.' 
+ '.' 
+ OBJECTID enter
+ OBJECTID e
+ ':' 
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID tTo
+ OBJECTID cube
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID print
+ '(' 
+ OBJECTID avar
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ '.' 
+ '.' 
+ '.' 
+ OBJECTID enter
+ OBJECTID f
+ ':' 
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID tTo
+ OBJECTID find
+ OBJECTID out
+ IF
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID print
+ '(' 
+ OBJECTID avar
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID is
+ OBJECTID a
+ OBJECTID multiple
+ OF
+ INT_CONST 3
+ '.' 
+ '.' 
+ '.' 
+ OBJECTID enter
+ OBJECTID g
+ ':' 
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID tTo
+ OBJECTID divide
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID print
+ '(' 
+ OBJECTID avar
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID by
+ INT_CONST 8
+ '.' 
+ '.' 
+ '.' 
+ OBJECTID enter
+ OBJECTID h
+ ':' 
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID tTo
+ OBJECTID get
+ OBJECTID a
+ NEW
+ OBJECTID number
+ '.' 
+ '.' 
+ '.' 
+ OBJECTID enter
+ OBJECTID j
+ ':' 
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID tTo
+ OBJECTID quit
+ '.' 
+ '.' 
+ '.' 
+ OBJECTID enter
+ OBJECTID q
+ ':' 
+ OBJECTID n
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID in_string
+ '(' 
+ ')' 
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID prompt
+ '(' 
+ ')' 
+ ':' 
+ TYPEID String
+ '{' 
+ '{' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ TYPEID Please
+ OBJECTID enter
+ OBJECTID a
+ OBJECTID number
+ '.' 
+ '.' 
+ '.' 
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID in_string
+ '(' 
+ ')' 
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID get_int
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Int
+ '{' 
+ '{' 
+ '(' 
+ LET
+ OBJECTID z
+ ':' 
+ TYPEID A2I
+ '<' 
+ '-' 
+ NEW
+ TYPEID A2I
+ IN
+ '(' 
+ LET
+ OBJECTID s
+ ':' 
+ TYPEID String
+ '<' 
+ '-' 
+ OBJECTID prompt
+ '(' 
+ ')' 
+ IN
+ OBJECTID z
+ '.' 
+ OBJECTID a2i
+ '(' 
+ OBJECTID s
+ ')' 
+ ')' 
+ ')' 
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID is_even
+ '(' 
+ OBJECTID num
+ ':' 
+ TYPEID Int
+ ')' 
+ ':' 
+ TYPEID Bool
+ '{' 
+ '(' 
+ LET
+ OBJECTID x
+ ':' 
+ TYPEID Int
+ '<' 
+ '-' 
+ OBJECTID num
+ IN
+ IF
+ OBJECTID x
+ '<' 
+ INT_CONST 0
+ THEN
+ OBJECTID is_even
+ '(' 
+ OBJECTID x
+ ')' 
+ ELSE
+ IF
+ INT_CONST 0
+ '=' 
+ OBJECTID x
+ THEN
+ BOOL_CONST true
+ ELSE
+ IF
+ INT_CONST 1
+ '=' 
+ OBJECTID x
+ THEN
+ BOOL_CONST false
+ ELSE
+ OBJECTID is_even
+ '(' 
+ OBJECTID x
+ '-' 
+ INT_CONST 2
+ ')' 
+ FI
+ FI
+ FI
+ ')' 
+ '}' 
+ ';' 
+ OBJECTID class_type
+ '(' 
+ OBJECTID var
+ ':' 
+ TYPEID A
+ ')' 
+ ':' 
+ TYPEID SELF_TYPE
+ '{' 
+ CASE
+ OBJECTID var
+ OF
+ OBJECTID a
+ ':' 
+ TYPEID A
+ '=' 
+ '>' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ CLASS
+ OBJECTID type
+ OBJECTID is
+ OBJECTID now
+ TYPEID A
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID b
+ ':' 
+ TYPEID B
+ '=' 
+ '>' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ CLASS
+ OBJECTID type
+ OBJECTID is
+ OBJECTID now
+ TYPEID B
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID c
+ ':' 
+ TYPEID C
+ '=' 
+ '>' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ CLASS
+ OBJECTID type
+ OBJECTID is
+ OBJECTID now
+ TYPEID C
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID d
+ ':' 
+ TYPEID D
+ '=' 
+ '>' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ CLASS
+ OBJECTID type
+ OBJECTID is
+ OBJECTID now
+ TYPEID D
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID e
+ ':' 
+ TYPEID E
+ '=' 
+ '>' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ CLASS
+ OBJECTID type
+ OBJECTID is
+ OBJECTID now
+ TYPEID E
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID o
+ ':' 
+ TYPEID Object
+ '=' 
+ '>' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ TYPEID Oooops
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ ESAC
+ '}' 
+ ';' 
+ OBJECTID print
+ '(' 
+ OBJECTID var
+ ':' 
+ TYPEID A
+ ')' 
+ ':' 
+ TYPEID SELF_TYPE
+ '{' 
+ '(' 
+ LET
+ OBJECTID z
+ ':' 
+ TYPEID A2I
+ '<' 
+ '-' 
+ NEW
+ TYPEID A2I
+ IN
+ '{' 
+ OBJECTID out_string
+ '(' 
+ OBJECTID z
+ '.' 
+ OBJECTID i2a
+ '(' 
+ OBJECTID var
+ '.' 
+ OBJECTID value
+ '(' 
+ ')' 
+ ')' 
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ '"' 
+ ')' 
+ ';' 
+ '}' 
+ ')' 
+ '}' 
+ ';' 
+ OBJECTID main
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Object
+ '{' 
+ '{' 
+ OBJECTID avar
+ '<' 
+ '-' 
+ '(' 
+ NEW
+ TYPEID A
+ ')' 
+ ';' 
+ WHILE
+ OBJECTID flag
+ LOOP
+ '{' 
+ '-' 
+ '-' 
+ OBJECTID avar
+ '<' 
+ '-' 
+ '(' 
+ NEW
+ TYPEID A
+ ')' 
+ '.' 
+ OBJECTID set_var
+ '(' 
+ OBJECTID get_int
+ '(' 
+ ')' 
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID number
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID print
+ '(' 
+ OBJECTID avar
+ ')' 
+ ';' 
+ IF
+ OBJECTID is_even
+ '(' 
+ OBJECTID avar
+ '.' 
+ OBJECTID value
+ '(' 
+ ')' 
+ ')' 
+ THEN
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID is
+ OBJECTID even
+ OBJECTID n
+ '"' 
+ ')' 
+ ELSE
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID is
+ OBJECTID odd
+ OBJECTID n
+ '"' 
+ ')' 
+ FI
+ ';' 
+ '-' 
+ '-' 
+ OBJECTID print
+ '(' 
+ OBJECTID avar
+ ')' 
+ ';' 
+ '-' 
+ '-' 
+ OBJECTID prints
+ OBJECTID out
+ OBJECTID answer
+ OBJECTID class_type
+ '(' 
+ OBJECTID avar
+ ')' 
+ ';' 
+ OBJECTID char
+ '<' 
+ '-' 
+ OBJECTID menu
+ '(' 
+ ')' 
+ ';' 
+ IF
+ OBJECTID char
+ '=' 
+ '"' 
+ OBJECTID a
+ '"' 
+ THEN
+ '-' 
+ '-' 
+ OBJECTID add
+ '{' 
+ OBJECTID a_var
+ '<' 
+ '-' 
+ '(' 
+ NEW
+ TYPEID A
+ ')' 
+ '.' 
+ OBJECTID set_var
+ '(' 
+ OBJECTID get_int
+ '(' 
+ ')' 
+ ')' 
+ ';' 
+ OBJECTID avar
+ '<' 
+ '-' 
+ '(' 
+ NEW
+ TYPEID B
+ ')' 
+ '.' 
+ OBJECTID method2
+ '(' 
+ OBJECTID avar
+ '.' 
+ OBJECTID value
+ '(' 
+ ')' 
+ OBJECTID a_var
+ '.' 
+ OBJECTID value
+ '(' 
+ ')' 
+ ')' 
+ ';' 
+ '}' 
+ ELSE
+ IF
+ OBJECTID char
+ '=' 
+ '"' 
+ OBJECTID b
+ '"' 
+ THEN
+ '-' 
+ '-' 
+ OBJECTID negate
+ CASE
+ OBJECTID avar
+ OF
+ OBJECTID c
+ ':' 
+ TYPEID C
+ '=' 
+ '>' 
+ OBJECTID avar
+ '<' 
+ '-' 
+ OBJECTID c
+ '.' 
+ OBJECTID method6
+ '(' 
+ OBJECTID c
+ '.' 
+ OBJECTID value
+ '(' 
+ ')' 
+ ')' 
+ ';' 
+ OBJECTID a
+ ':' 
+ TYPEID A
+ '=' 
+ '>' 
+ OBJECTID avar
+ '<' 
+ '-' 
+ OBJECTID a
+ '.' 
+ OBJECTID method3
+ '(' 
+ OBJECTID a
+ '.' 
+ OBJECTID value
+ '(' 
+ ')' 
+ ')' 
+ ';' 
+ OBJECTID o
+ ':' 
+ TYPEID Object
+ '=' 
+ '>' 
+ '{' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ TYPEID Oooops
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID abort
+ '(' 
+ ')' 
+ ';' 
+ INT_CONST 0
+ ';' 
+ '}' 
+ ';' 
+ ESAC
+ ELSE
+ IF
+ OBJECTID char
+ '=' 
+ '"' 
+ OBJECTID c
+ '"' 
+ THEN
+ '-' 
+ '-' 
+ OBJECTID diff
+ '{' 
+ OBJECTID a_var
+ '<' 
+ '-' 
+ '(' 
+ NEW
+ TYPEID A
+ ')' 
+ '.' 
+ OBJECTID set_var
+ '(' 
+ OBJECTID get_int
+ '(' 
+ ')' 
+ ')' 
+ ';' 
+ OBJECTID avar
+ '<' 
+ '-' 
+ '(' 
+ NEW
+ TYPEID D
+ ')' 
+ '.' 
+ OBJECTID method4
+ '(' 
+ OBJECTID avar
+ '.' 
+ OBJECTID value
+ '(' 
+ ')' 
+ OBJECTID a_var
+ '.' 
+ OBJECTID value
+ '(' 
+ ')' 
+ ')' 
+ ';' 
+ '}' 
+ ELSE
+ IF
+ OBJECTID char
+ '=' 
+ '"' 
+ OBJECTID d
+ '"' 
+ THEN
+ OBJECTID avar
+ '<' 
+ '-' 
+ '(' 
+ NEW
+ TYPEID C
+ ')' 
+ '@' 
+ TYPEID A
+ '.' 
+ OBJECTID method5
+ '(' 
+ OBJECTID avar
+ '.' 
+ OBJECTID value
+ '(' 
+ ')' 
+ ')' 
+ ELSE
+ '-' 
+ '-' 
+ OBJECTID factorial
+ IF
+ OBJECTID char
+ '=' 
+ '"' 
+ OBJECTID e
+ '"' 
+ THEN
+ OBJECTID avar
+ '<' 
+ '-' 
+ '(' 
+ NEW
+ TYPEID C
+ ')' 
+ '@' 
+ TYPEID B
+ '.' 
+ OBJECTID method5
+ '(' 
+ OBJECTID avar
+ '.' 
+ OBJECTID value
+ '(' 
+ ')' 
+ ')' 
+ ELSE
+ '-' 
+ '-' 
+ OBJECTID square
+ IF
+ OBJECTID char
+ '=' 
+ '"' 
+ OBJECTID f
+ '"' 
+ THEN
+ OBJECTID avar
+ '<' 
+ '-' 
+ '(' 
+ NEW
+ TYPEID C
+ ')' 
+ '@' 
+ TYPEID C
+ '.' 
+ OBJECTID method5
+ '(' 
+ OBJECTID avar
+ '.' 
+ OBJECTID value
+ '(' 
+ ')' 
+ ')' 
+ ELSE
+ '-' 
+ '-' 
+ OBJECTID cube
+ IF
+ OBJECTID char
+ '=' 
+ '"' 
+ OBJECTID g
+ '"' 
+ THEN
+ '-' 
+ '-' 
+ OBJECTID multiple
+ OF
+ INT_CONST 3
+ IF
+ '(' 
+ '(' 
+ NEW
+ TYPEID D
+ ')' 
+ '.' 
+ OBJECTID method7
+ '(' 
+ OBJECTID avar
+ '.' 
+ OBJECTID value
+ '(' 
+ ')' 
+ ')' 
+ ')' 
+ THEN
+ '-' 
+ '-' 
+ OBJECTID avar
+ '<' 
+ '-' 
+ '(' 
+ NEW
+ TYPEID A
+ ')' 
+ '.' 
+ OBJECTID method1
+ '(' 
+ OBJECTID avar
+ '.' 
+ OBJECTID value
+ '(' 
+ ')' 
+ ')' 
+ '{' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID number
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID print
+ '(' 
+ OBJECTID avar
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID is
+ OBJECTID divisible
+ OBJECTID by
+ INT_CONST 3
+ '.' 
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ '}' 
+ ELSE
+ '-' 
+ '-' 
+ OBJECTID avar
+ '<' 
+ '-' 
+ '(' 
+ NEW
+ TYPEID A
+ ')' 
+ '.' 
+ OBJECTID set_var
+ '(' 
+ INT_CONST 0
+ ')' 
+ '{' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID number
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID print
+ '(' 
+ OBJECTID avar
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID is
+ NOT
+ OBJECTID divisible
+ OBJECTID by
+ INT_CONST 3
+ '.' 
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ '}' 
+ FI
+ ELSE
+ IF
+ OBJECTID char
+ '=' 
+ '"' 
+ OBJECTID h
+ '"' 
+ THEN
+ '(' 
+ LET
+ OBJECTID x
+ ':' 
+ TYPEID A
+ IN
+ '{' 
+ OBJECTID x
+ '<' 
+ '-' 
+ '(' 
+ NEW
+ TYPEID E
+ ')' 
+ '.' 
+ OBJECTID method6
+ '(' 
+ OBJECTID avar
+ '.' 
+ OBJECTID value
+ '(' 
+ ')' 
+ ')' 
+ ';' 
+ '(' 
+ LET
+ OBJECTID r
+ ':' 
+ TYPEID Int
+ '<' 
+ '-' 
+ '(' 
+ OBJECTID avar
+ '.' 
+ OBJECTID value
+ '(' 
+ ')' 
+ '-' 
+ '(' 
+ OBJECTID x
+ '.' 
+ OBJECTID value
+ '(' 
+ ')' 
+ '*' 
+ INT_CONST 8
+ ')' 
+ ')' 
+ IN
+ '{' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID number
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID print
+ '(' 
+ OBJECTID avar
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID is
+ OBJECTID equal
+ OBJECTID to
+ '"' 
+ ')' 
+ ';' 
+ OBJECTID print
+ '(' 
+ OBJECTID x
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID times
+ INT_CONST 8
+ OBJECTID with
+ OBJECTID a
+ OBJECTID remainder
+ OF
+ '"' 
+ ')' 
+ ';' 
+ '(' 
+ LET
+ OBJECTID a
+ ':' 
+ TYPEID A2I
+ '<' 
+ '-' 
+ NEW
+ TYPEID A2I
+ IN
+ '{' 
+ OBJECTID out_string
+ '(' 
+ OBJECTID a
+ '.' 
+ OBJECTID i2a
+ '(' 
+ OBJECTID r
+ ')' 
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ '"' 
+ OBJECTID n
+ '"' 
+ ')' 
+ ';' 
+ '}' 
+ ')' 
+ ';' 
+ '-' 
+ '-' 
+ OBJECTID end
+ LET
+ OBJECTID a
+ ':' 
+ '}' 
+ ')' 
+ ';' 
+ '-' 
+ '-' 
+ OBJECTID end
+ LET
+ OBJECTID r
+ ':' 
+ OBJECTID avar
+ '<' 
+ '-' 
+ OBJECTID x
+ ';' 
+ '}' 
+ ')' 
+ '-' 
+ '-' 
+ OBJECTID end
+ LET
+ OBJECTID x
+ ':' 
+ ELSE
+ IF
+ OBJECTID char
+ '=' 
+ '"' 
+ OBJECTID j
+ '"' 
+ THEN
+ OBJECTID avar
+ '<' 
+ '-' 
+ '(' 
+ NEW
+ TYPEID A
+ ')' 
+ ELSE
+ IF
+ OBJECTID char
+ '=' 
+ '"' 
+ OBJECTID q
+ '"' 
+ THEN
+ OBJECTID flag
+ '<' 
+ '-' 
+ BOOL_CONST false
+ ELSE
+ OBJECTID avar
+ '<' 
+ '-' 
+ '(' 
+ NEW
+ TYPEID A
+ ')' 
+ '.' 
+ OBJECTID method1
+ '(' 
+ OBJECTID avar
+ '.' 
+ OBJECTID value
+ '(' 
+ ')' 
+ ')' 
+ '-' 
+ '-' 
+ OBJECTID divide
+ '/' 
+ INT_CONST 8
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ ';' 
+ '}' 
+ POOL
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ '}' 
+ ';'

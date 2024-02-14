@@ -1,0 +1,51 @@
+#name "atoi.cool"
+ OBJECTID i2a_aux
+ '(' 
+ OBJECTID i
+ ':' 
+ TYPEID Int
+ ')' 
+ ':' 
+ TYPEID String
+ '{' 
+ IF
+ OBJECTID i
+ '=' 
+ INT_CONST 0
+ THEN
+ '"' 
+ '"' 
+ ELSE
+ '(' 
+ LET
+ OBJECTID next
+ ':' 
+ TYPEID Int
+ '<' 
+ '-' 
+ OBJECTID i
+ '/' 
+ INT_CONST 10
+ IN
+ OBJECTID i2a_aux
+ '(' 
+ OBJECTID next
+ ')' 
+ '.' 
+ OBJECTID concat
+ '(' 
+ OBJECTID i2c
+ '(' 
+ OBJECTID i
+ '-' 
+ OBJECTID next
+ '*' 
+ INT_CONST 10
+ ')' 
+ ')' 
+ ')' 
+ FI
+ '}' 
+ ';' 
+ '}' 
+ ';'
