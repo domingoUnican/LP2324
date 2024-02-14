@@ -1,100 +1,409 @@
 #name "book_list.cl.cool"
- '-' 
- '-' 
- OBJECTID example of static and dynamic type differing for a dispatch
- CLASS
- OBJECTID ook inherits IO {
- OBJECTID title : String;
- OBJECTID author : String;
- OBJECTID initBook(title_p : String, author_p : String) : Book {
- OBJECTID title <- title_p;
- OBJECTID author <- author_p;
- OBJECTID self;
- OBJECTID print() : Book {
- OBJECTID out_string("title:      ").out_string(title).out_string("\n");
- OBJECTID out_string("author:     ").out_string(author).out_string("\n");
- OBJECTID self;
- CLASS
- OBJECTID rticle inherits Book {
- OBJECTID per_title : String;
- OBJECTID initArticle(title_p : String, author_p : String,
- OBJECTID per_title_p : String) : Article {
- OBJECTID initBook(title_p, author_p);
- OBJECTID per_title <- per_title_p;
- OBJECTID self;
- OBJECTID print() : Book {
- OBJECTID self@Book.print();
- OBJECTID out_string("periodical:  ").out_string(per_title).out_string("\n");
- OBJECTID self;
- CLASS
- OBJECTID ookList inherits IO { 
- OBJECTID ince abort "returns" type Object, we have to add
- OBJECTID an expression of type Bool here to satisfy the typechecker.
- OBJECTID his code is unreachable, since abort() halts the program.
- OBJECTID isNil() : Bool { { abort(); true; } };
- OBJECTID cons(hd : Book) : Cons {
+ TYPEID Class
+ TYPEID Book
+ INHERITS
+ TYPEID IO
+ '{' 
+ OBJECTID title
+ ':' 
+ TYPEID String;
+ OBJECTID author
+ ':' 
+ TYPEID String;
+ OBJECTID initBook
+ '(' 
+ OBJECTID title_p
+ ':' 
+ TYPEID String,
+ OBJECTID author_p
+ ':' 
+ TYPEID String)
+ ':' 
+ TYPEID Book
+ '{' 
+ '{' 
+ OBJECTID title
+ ASSIGN
+ OBJECTID title_p;
+ OBJECTID author
+ ASSIGN
+ OBJECTID author_p;
+ OBJECTID self;
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID print
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Book
+ '{' 
+ '{' 
+ OBJECTID out_string
+ '(' 
+ OBJECTID title:
+ ')' 
+ OBJECTID out_string
+ '(' 
+ OBJECTID title).out_string
+ '(' 
+ OBJECTID n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID author:
+ ')' 
+ OBJECTID out_string
+ '(' 
+ OBJECTID author).out_string
+ '(' 
+ OBJECTID n");
+ OBJECTID self;
+ '}' 
+ '}' 
+ ';' 
+ '}' 
+ ';' 
+ TYPEID Class
+ TYPEID Article
+ INHERITS
+ TYPEID Book
+ '{' 
+ OBJECTID per_title
+ ':' 
+ TYPEID String;
+ OBJECTID initArticle
+ '(' 
+ OBJECTID title_p
+ ':' 
+ TYPEID String,
+ OBJECTID author_p
+ ':' 
+ TYPEID String,
+ OBJECTID per_title_p
+ ':' 
+ TYPEID String)
+ ':' 
+ TYPEID Article
+ '{' 
+ '{' 
+ OBJECTID initBook
+ '(' 
+ OBJECTID title_p,
+ OBJECTID author_p);
+ OBJECTID per_title
+ ASSIGN
+ OBJECTID per_title_p;
+ OBJECTID self;
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID print
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Book
+ '{' 
+ '{' 
+ OBJECTID self@Book.print
+ '(' 
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ OBJECTID periodical:
+ ')' 
+ OBJECTID out_string
+ '(' 
+ OBJECTID per_title).out_string
+ '(' 
+ OBJECTID n");
+ OBJECTID self;
+ '}' 
+ '}' 
+ ';' 
+ '}' 
+ ';' 
+ TYPEID Class
+ TYPEID BookList
+ INHERITS
+ TYPEID IO
+ '{' 
+ OBJECTID isNil
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Bool
+ '{' 
+ '{' 
+ OBJECTID abort
+ '(' 
+ ')' 
+ ';' 
+ BOOL_CONST true
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID cons
+ '(' 
+ OBJECTID hd
+ ':' 
+ TYPEID Book)
+ ':' 
+ TYPEID Cons
+ '{' 
+ '(' 
  LET
- OBJECTID new_cell : Cons <- new Cons in
- OBJECTID new_cell.init(hd,self)
- OBJECTID ince abort "returns" type Object, we have to add
- OBJECTID an expression of type Book here to satisfy the typechecker.
- OBJECTID his code is unreachable, since abort() halts the program.
- OBJECTID car() : Book { { abort(); new Book; } };
- OBJECTID ince abort "returns" type Object, we have to add
- OBJECTID an expression of type BookList here to satisfy the typechecker.
- OBJECTID his code is unreachable, since abort() halts the program.
- OBJECTID cdr() : BookList { { abort(); new BookList; } };
- OBJECTID print_list() : Object { abort() };
- CLASS
- OBJECTID ons inherits BookList {
- OBJECTID xcar : Book;  -- We keep the car and cdr in attributes.
- OBJECTID xcdr : BookList; -- Because methods and features must have different names,
- '-' 
- '-' 
- OBJECTID we use xcar and xcdr for the attributes and reserve
- '-' 
- '-' 
- OBJECTID car and cdr for the features.
- OBJECTID isNil() : Bool { false };
- OBJECTID init(hd : Book, tl : BookList) : Cons {
- OBJECTID xcar <- hd;
- OBJECTID xcdr <- tl;
- OBJECTID self;
- OBJECTID car() : Book { xcar };
- OBJECTID cdr() : BookList { xcdr };
- OBJECTID print_list() : Object {
+ OBJECTID new_cell
+ ':' 
+ TYPEID Cons
+ ASSIGN
+ NEW
+ TYPEID Cons
+ IN
+ OBJECTID new_cell.init
+ '(' 
+ OBJECTID hd,self)
+ ')' 
+ '}' 
+ ';' 
+ OBJECTID car
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Book
+ '{' 
+ '{' 
+ OBJECTID abort
+ '(' 
+ ')' 
+ ';' 
+ NEW
+ TYPEID Book;
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID cdr
+ '(' 
+ ')' 
+ ':' 
+ TYPEID BookList
+ '{' 
+ '{' 
+ OBJECTID abort
+ '(' 
+ ')' 
+ ';' 
+ NEW
+ TYPEID BookList;
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID print_list
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Object
+ '{' 
+ OBJECTID abort
+ '(' 
+ ')' 
+ '}' 
+ ';' 
+ '}' 
+ ';' 
+ TYPEID Class
+ TYPEID Cons
+ INHERITS
+ TYPEID BookList
+ '{' 
+ OBJECTID xcar
+ ':' 
+ TYPEID Book;
+ OBJECTID xcdr
+ ':' 
+ TYPEID BookList;
+ OBJECTID isNil
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Bool
+ '{' 
+ BOOL_CONST false
+ '}' 
+ ';' 
+ OBJECTID init
+ '(' 
+ OBJECTID hd
+ ':' 
+ TYPEID Book,
+ OBJECTID tl
+ ':' 
+ TYPEID BookList)
+ ':' 
+ TYPEID Cons
+ '{' 
+ '{' 
+ OBJECTID xcar
+ ASSIGN
+ OBJECTID hd;
+ OBJECTID xcdr
+ ASSIGN
+ OBJECTID tl;
+ OBJECTID self;
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID car
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Book
+ '{' 
+ OBJECTID xcar
+ '}' 
+ ';' 
+ OBJECTID cdr
+ '(' 
+ ')' 
+ ':' 
+ TYPEID BookList
+ '{' 
+ OBJECTID xcdr
+ '}' 
+ ';' 
+ OBJECTID print_list
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Object
+ '{' 
+ '{' 
  CASE
- OBJECTID xcar.print() of
- OBJECTID dummy : Book => out_string("- dynamic type was Book -\n");
- OBJECTID dummy : Article => out_string("- dynamic type was Article -\n");
+ OBJECTID xcar.print
+ '(' 
+ ')' 
+ OF
+ OBJECTID dummy
+ ':' 
+ TYPEID Book
+ OBJECTID out_string
+ '(' 
+ '-' 
+ OBJECTID dynamic
+ OBJECTID type
+ OBJECTID was
+ TYPEID Book
+ '-' 
+ OBJECTID n");
+ OBJECTID dummy
+ ':' 
+ TYPEID Article
+ OBJECTID out_string
+ '(' 
+ '-' 
+ OBJECTID dynamic
+ OBJECTID type
+ OBJECTID was
+ TYPEID Article
+ '-' 
+ OBJECTID n");
  ESAC
- OBJECTID xcdr.print_list();
- CLASS
- OBJECTID il inherits BookList {
- OBJECTID isNil() : Bool { true };
- OBJECTID print_list() : Object { true };
- CLASS
- OBJECTID ain {
- OBJECTID books : BookList;
- OBJECTID main() : Object {
+ ';' 
+ OBJECTID xcdr.print_list
+ '(' 
+ ')' 
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ '}' 
+ ';' 
+ TYPEID Class
+ TYPEID Nil
+ INHERITS
+ TYPEID BookList
+ '{' 
+ OBJECTID isNil
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Bool
+ '{' 
+ BOOL_CONST true
+ '}' 
+ ';' 
+ OBJECTID print_list
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Object
+ '{' 
+ BOOL_CONST true
+ '}' 
+ ';' 
+ '}' 
+ ';' 
+ TYPEID Class
+ TYPEID Main
+ '{' 
+ OBJECTID books
+ ':' 
+ TYPEID BookList;
+ OBJECTID main
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Object
+ '{' 
+ '(' 
  LET
- OBJECTID a_book : Book <-
+ OBJECTID a_book
+ ':' 
+ TYPEID Book
+ ASSIGN
+ '(' 
  NEW
- OBJECTID ook).initBook("Compilers, Principles, Techniques, and Tools",
- OBJECTID ho, Sethi, and Ullman")
+ TYPEID Book).initBook("Compilers,
+ TYPEID Principles,
+ TYPEID Techniques,
+ OBJECTID and
+ TYPEID Tools",
+ TYPEID Aho,
+ TYPEID Sethi,
+ OBJECTID and
+ TYPEID Ullman")
  IN
+ '(' 
  LET
- OBJECTID an_article : Article <-
+ OBJECTID an_article
+ ':' 
+ TYPEID Article
+ ASSIGN
+ '(' 
  NEW
- OBJECTID rticle).initArticle("The Top 100 CD_ROMs",
- OBJECTID lanoff",
- OBJECTID agazine")
+ TYPEID Article).initArticle("The
+ TYPEID Top
+ INT_CONST 100
+ TYPEID CD_ROMs",
+ TYPEID Ulanoff",
+ TYPEID PC
+ TYPEID Magazine")
  IN
- OBJECTID books <- (new Nil).cons(a_book).cons(an_article);
- OBJECTID books.print_list();
- '-' 
- '-' 
- OBJECTID end let an_article
- '-' 
- '-' 
- OBJECTID end let a_book
+ '{' 
+ OBJECTID books
+ ASSIGN
+ '(' 
+ NEW
+ TYPEID Nil).cons(a_book).cons(an_article);
+ OBJECTID books.print_list
+ '(' 
+ ')' 
+ ';' 
+ '}' 
+ ')' 
+ ')' 
+ '}' 
+ ';' 
+ '}' 
+ ';'

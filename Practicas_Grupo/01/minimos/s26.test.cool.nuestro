@@ -1,5 +1,3 @@
 #name "s26.test.cool"
- OBJECTID this works, and the lang spec doesn't say it shouldn't;
- OBJECTID this is numeric literal "3" and object id "a" *)
  INT_CONST 3
  OBJECTID a

@@ -1,42 +1,274 @@
 #name "hairyscary.cool"
- OBJECTID hairy  . . .*)
  CLASS
- OBJECTID oo inherits Bazz {
- OBJECTID a : Razz <- case self of
- OBJECTID n : Razz => (new Bar);
- OBJECTID n : Foo => (new Razz);
- OBJECTID n : Bar => n;
+ TYPEID Foo
+ INHERITS
+ TYPEID Bazz
+ '{' 
+ OBJECTID a
+ ':' 
+ TYPEID Razz
+ ASSIGN
+ CASE
+ OBJECTID self
+ OF
+ OBJECTID n
+ ':' 
+ TYPEID Razz
+ '(' 
+ NEW
+ TYPEID Bar);
+ OBJECTID n
+ ':' 
+ TYPEID Foo
+ '(' 
+ NEW
+ TYPEID Razz);
+ OBJECTID n
+ ':' 
+ TYPEID Bar
+ OBJECTID n;
  ESAC
- OBJECTID b : Int <- a.doh() + g.doh() + doh() + printh();
- OBJECTID doh() : Int { (let i : Int <- h in { h <- h + 2; i; } ) };
+ ';' 
+ OBJECTID b
+ ':' 
+ TYPEID Int
+ ASSIGN
+ OBJECTID a.doh
+ '(' 
+ ')' 
+ OBJECTID g.doh
+ '(' 
+ ')' 
+ OBJECTID doh
+ '(' 
+ ')' 
+ OBJECTID printh
+ '(' 
+ ')' 
+ ';' 
+ OBJECTID doh
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Int
+ '{' 
+ '(' 
+ LET
+ OBJECTID i
+ ':' 
+ TYPEID Int
+ ASSIGN
+ OBJECTID h
+ IN
+ '{' 
+ OBJECTID h
+ ASSIGN
+ OBJECTID h
+ INT_CONST 2
+ ';' 
+ OBJECTID i;
+ '}' 
+ ')' 
+ '}' 
+ ';' 
+ '}' 
+ ';' 
  CLASS
- OBJECTID ar inherits Razz {
- OBJECTID c : Int <- doh();
- OBJECTID d : Object <- printh();
+ TYPEID Bar
+ INHERITS
+ TYPEID Razz
+ '{' 
+ OBJECTID c
+ ':' 
+ TYPEID Int
+ ASSIGN
+ OBJECTID doh
+ '(' 
+ ')' 
+ ';' 
+ OBJECTID d
+ ':' 
+ TYPEID Object
+ ASSIGN
+ OBJECTID printh
+ '(' 
+ ')' 
+ ';' 
+ '}' 
+ ';' 
  CLASS
- OBJECTID azz inherits Foo {
- OBJECTID e : Bar <- case self of
- OBJECTID n : Razz => (new Bar);
- OBJECTID n : Bar => n;
+ TYPEID Razz
+ INHERITS
+ TYPEID Foo
+ '{' 
+ OBJECTID e
+ ':' 
+ TYPEID Bar
+ ASSIGN
+ CASE
+ OBJECTID self
+ OF
+ OBJECTID n
+ ':' 
+ TYPEID Razz
+ '(' 
+ NEW
+ TYPEID Bar);
+ OBJECTID n
+ ':' 
+ TYPEID Bar
+ OBJECTID n;
  ESAC
- OBJECTID f : Int <- a@Bazz.doh() + g.doh() + e.doh() + doh() + printh();
+ ';' 
+ OBJECTID f
+ ':' 
+ TYPEID Int
+ ASSIGN
+ OBJECTID a@Bazz.doh
+ '(' 
+ ')' 
+ OBJECTID g.doh
+ '(' 
+ ')' 
+ OBJECTID e.doh
+ '(' 
+ ')' 
+ OBJECTID doh
+ '(' 
+ ')' 
+ OBJECTID printh
+ '(' 
+ ')' 
+ ';' 
+ '}' 
+ ';' 
  CLASS
- OBJECTID azz inherits IO {
- OBJECTID h : Int <- 1;
- OBJECTID g : Foo  <- case self of
- OBJECTID n : Bazz => (new Foo);
- OBJECTID n : Razz => (new Bar);
- OBJECTID n : Foo  => (new Razz);
- OBJECTID n : Bar => n;
+ TYPEID Bazz
+ INHERITS
+ TYPEID IO
+ '{' 
+ OBJECTID h
+ ':' 
+ TYPEID Int
+ ASSIGN
+ INT_CONST 1
+ ';' 
+ OBJECTID g
+ ':' 
+ TYPEID Foo
+ ASSIGN
+ CASE
+ OBJECTID self
+ OF
+ OBJECTID n
+ ':' 
+ TYPEID Bazz
+ '(' 
+ NEW
+ TYPEID Foo);
+ OBJECTID n
+ ':' 
+ TYPEID Razz
+ '(' 
+ NEW
+ TYPEID Bar);
+ OBJECTID n
+ ':' 
+ TYPEID Foo
+ '(' 
+ NEW
+ TYPEID Razz);
+ OBJECTID n
+ ':' 
+ TYPEID Bar
+ OBJECTID n;
  ESAC
- OBJECTID i : Object <- printh();
- OBJECTID printh() : Int { { out_int(h); 0; } };
- OBJECTID doh() : Int { (let i: Int <- h in { h <- h + 1; i; } ) };
- OBJECTID scary . . . *)
+ ';' 
+ OBJECTID i
+ ':' 
+ TYPEID Object
+ ASSIGN
+ OBJECTID printh
+ '(' 
+ ')' 
+ ';' 
+ OBJECTID printh
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Int
+ '{' 
+ '{' 
+ OBJECTID out_int
+ '(' 
+ OBJECTID h);
+ INT_CONST 0
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID doh
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Int
+ '{' 
+ '(' 
+ LET
+ OBJECTID i:
+ TYPEID Int
+ ASSIGN
+ OBJECTID h
+ IN
+ '{' 
+ OBJECTID h
+ ASSIGN
+ OBJECTID h
+ INT_CONST 1
+ ';' 
+ OBJECTID i;
+ '}' 
+ ')' 
+ '}' 
+ ';' 
+ '}' 
+ ';' 
  CLASS
- OBJECTID ain {
- OBJECTID a : Bazz <- new Bazz;
- OBJECTID b : Foo <- new Foo;
- OBJECTID c : Razz <- new Razz;
- OBJECTID d : Bar <- new Bar;
- OBJECTID main(): String { "do nothing" };
+ TYPEID Main
+ '{' 
+ OBJECTID a
+ ':' 
+ TYPEID Bazz
+ ASSIGN
+ NEW
+ TYPEID Bazz;
+ OBJECTID b
+ ':' 
+ TYPEID Foo
+ ASSIGN
+ NEW
+ TYPEID Foo;
+ OBJECTID c
+ ':' 
+ TYPEID Razz
+ ASSIGN
+ NEW
+ TYPEID Razz;
+ OBJECTID d
+ ':' 
+ TYPEID Bar
+ ASSIGN
+ NEW
+ TYPEID Bar;
+ OBJECTID main
+ '(' 
+ ')' 
+ ':' 
+ TYPEID String
+ '{' 
+ OBJECTID do
+ OBJECTID nothing"
+ '}' 
+ ';' 
+ '}' 
+ ';'

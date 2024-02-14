@@ -1,103 +1,446 @@
 #name "sort_list.cl.cool"
- OBJECTID his file presents a fairly large example of Cool programming.  The
- CLASS
- OBJECTID ist defines the names of standard list operations ala Scheme:
- OBJECTID car, cdr, cons, isNil, rev, sort, rcons (add an element to the end of
- OBJECTID the list), and print_list.  In the List class most of these functions
- OBJECTID are just stubs that abort if ever called.  The classes Nil and Cons
- OBJECTID inherit from List and define the same operations, but now as
- OBJECTID appropriate to the empty list (for the Nil class) and for cons cells (for
- OBJECTID the Cons class).
- OBJECTID he Main class puts all of this code through the following silly 
- OBJECTID test exercise:
- INT_CONST 1
- OBJECTID prompt for a number N
- INT_CONST 2
- OBJECTID generate a list of numbers 0..N-1
- INT_CONST 3
- OBJECTID reverse the list
- INT_CONST 4
- OBJECTID sort the list
- INT_CONST 5
- OBJECTID print the sorted list
- OBJECTID ecause the sort used is a quadratic space insertion sort, sorting
- OBJECTID moderately large lists will cause spim to run out of memory.
- CLASS
- OBJECTID ist inherits IO { 
- OBJECTID ince abort() returns Object, we need something of
- OBJECTID type Bool at the end of the block to satisfy the typechecker. 
- OBJECTID his code is unreachable, since abort() halts the program. *)
- OBJECTID isNil() : Bool { { abort(); true; } };
- OBJECTID cons(hd : Int) : Cons {
+ TYPEID Class
+ TYPEID List
+ INHERITS
+ TYPEID IO
+ '{' 
+ OBJECTID isNil
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Bool
+ '{' 
+ '{' 
+ OBJECTID abort
+ '(' 
+ ')' 
+ ';' 
+ BOOL_CONST true
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID cons
+ '(' 
+ OBJECTID hd
+ ':' 
+ TYPEID Int)
+ ':' 
+ TYPEID Cons
+ '{' 
+ '(' 
  LET
- OBJECTID new_cell : Cons <- new Cons in
- OBJECTID new_cell.init(hd,self)
- OBJECTID ince abort "returns" type Object, we have to add
- OBJECTID an expression of type Int here to satisfy the typechecker.
- OBJECTID his code is, of course, unreachable.
- OBJECTID car() : Int { { abort(); new Int; } };
- OBJECTID cdr() : List { { abort(); new List; } };
- OBJECTID rev() : List { cdr() };
- OBJECTID sort() : List { cdr() };
- OBJECTID insert(i : Int) : List { cdr() };
- OBJECTID rcons(i : Int) : List { cdr() };
- OBJECTID print_list() : Object { abort() };
- CLASS
- OBJECTID ons inherits List {
- OBJECTID xcar : Int;  -- We keep the car in cdr in attributes.
- OBJECTID xcdr : List; -- Because methods and features must have different names,
- '-' 
- '-' 
- OBJECTID we use xcar and xcdr for the attributes and reserve
- '-' 
- '-' 
- OBJECTID cons and car for the features.
- OBJECTID isNil() : Bool { false };
- OBJECTID init(hd : Int, tl : List) : Cons {
- OBJECTID xcar <- hd;
- OBJECTID xcdr <- tl;
- OBJECTID self;
- OBJECTID car() : Int { xcar };
- OBJECTID cdr() : List { xcdr };
- OBJECTID rev() : List { (xcdr.rev()).rcons(xcar) };
- OBJECTID sort() : List { (xcdr.sort()).insert(xcar) };
- OBJECTID insert(i : Int) : List {
+ OBJECTID new_cell
+ ':' 
+ TYPEID Cons
+ ASSIGN
+ NEW
+ TYPEID Cons
+ IN
+ OBJECTID new_cell.init
+ '(' 
+ OBJECTID hd,self)
+ ')' 
+ '}' 
+ ';' 
+ OBJECTID car
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Int
+ '{' 
+ '{' 
+ OBJECTID abort
+ '(' 
+ ')' 
+ ';' 
+ NEW
+ TYPEID Int;
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID cdr
+ '(' 
+ ')' 
+ ':' 
+ TYPEID List
+ '{' 
+ '{' 
+ OBJECTID abort
+ '(' 
+ ')' 
+ ';' 
+ NEW
+ TYPEID List;
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID rev
+ '(' 
+ ')' 
+ ':' 
+ TYPEID List
+ '{' 
+ OBJECTID cdr
+ '(' 
+ ')' 
+ '}' 
+ ';' 
+ OBJECTID sort
+ '(' 
+ ')' 
+ ':' 
+ TYPEID List
+ '{' 
+ OBJECTID cdr
+ '(' 
+ ')' 
+ '}' 
+ ';' 
+ OBJECTID insert
+ '(' 
+ OBJECTID i
+ ':' 
+ TYPEID Int)
+ ':' 
+ TYPEID List
+ '{' 
+ OBJECTID cdr
+ '(' 
+ ')' 
+ '}' 
+ ';' 
+ OBJECTID rcons
+ '(' 
+ OBJECTID i
+ ':' 
+ TYPEID Int)
+ ':' 
+ TYPEID List
+ '{' 
+ OBJECTID cdr
+ '(' 
+ ')' 
+ '}' 
+ ';' 
+ OBJECTID print_list
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Object
+ '{' 
+ OBJECTID abort
+ '(' 
+ ')' 
+ '}' 
+ ';' 
+ '}' 
+ ';' 
+ TYPEID Class
+ TYPEID Cons
+ INHERITS
+ TYPEID List
+ '{' 
+ OBJECTID xcar
+ ':' 
+ TYPEID Int;
+ OBJECTID xcdr
+ ':' 
+ TYPEID List;
+ OBJECTID isNil
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Bool
+ '{' 
+ BOOL_CONST false
+ '}' 
+ ';' 
+ OBJECTID init
+ '(' 
+ OBJECTID hd
+ ':' 
+ TYPEID Int,
+ OBJECTID tl
+ ':' 
+ TYPEID List)
+ ':' 
+ TYPEID Cons
+ '{' 
+ '{' 
+ OBJECTID xcar
+ ASSIGN
+ OBJECTID hd;
+ OBJECTID xcdr
+ ASSIGN
+ OBJECTID tl;
+ OBJECTID self;
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID car
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Int
+ '{' 
+ OBJECTID xcar
+ '}' 
+ ';' 
+ OBJECTID cdr
+ '(' 
+ ')' 
+ ':' 
+ TYPEID List
+ '{' 
+ OBJECTID xcdr
+ '}' 
+ ';' 
+ OBJECTID rev
+ '(' 
+ ')' 
+ ':' 
+ TYPEID List
+ '{' 
+ '(' 
+ OBJECTID xcdr.rev
+ '(' 
+ ')' 
+ ')' 
+ OBJECTID rcons
+ '(' 
+ OBJECTID xcar)
+ '}' 
+ ';' 
+ OBJECTID sort
+ '(' 
+ ')' 
+ ':' 
+ TYPEID List
+ '{' 
+ '(' 
+ OBJECTID xcdr.sort
+ '(' 
+ ')' 
+ ')' 
+ OBJECTID insert
+ '(' 
+ OBJECTID xcar)
+ '}' 
+ ';' 
+ OBJECTID insert
+ '(' 
+ OBJECTID i
+ ':' 
+ TYPEID Int)
+ ':' 
+ TYPEID List
+ '{' 
  IF
- OBJECTID i < xcar then
+ OBJECTID i
+ OBJECTID xcar
+ THEN
+ '(' 
  NEW
- OBJECTID ons).init(i,self)
+ TYPEID Cons).init(i,self)
  ELSE
+ '(' 
  NEW
- OBJECTID ons).init(xcar,xcdr.insert(i))
+ TYPEID Cons).init(xcar,xcdr.insert(i))
  FI
- OBJECTID rcons(i : Int) : List { (new Cons).init(xcar, xcdr.rcons(i)) };
- OBJECTID print_list() : Object {
- OBJECTID out_int(xcar);
- OBJECTID out_string("\n");
- OBJECTID xcdr.print_list();
- CLASS
- OBJECTID il inherits List {
- OBJECTID isNil() : Bool { true };
- OBJECTID rev() : List { self };
- OBJECTID sort() : List { self };
- OBJECTID insert(i : Int) : List { rcons(i) };
- OBJECTID rcons(i : Int) : List { (new Cons).init(i,self) };
- OBJECTID print_list() : Object { true };
- CLASS
- OBJECTID ain inherits IO {
- OBJECTID l : List;
- OBJECTID iota maps its integer argument n into the list 0..n-1 *)
- OBJECTID iota(i : Int) : List {
- OBJECTID l <- new Nil;
+ '}' 
+ ';' 
+ OBJECTID rcons
+ '(' 
+ OBJECTID i
+ ':' 
+ TYPEID Int)
+ ':' 
+ TYPEID List
+ '{' 
+ '(' 
+ NEW
+ TYPEID Cons).init(xcar,
+ OBJECTID xcdr.rcons
+ '(' 
+ OBJECTID i))
+ '}' 
+ ';' 
+ OBJECTID print_list
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Object
+ '{' 
+ '{' 
+ OBJECTID out_int
+ '(' 
+ OBJECTID xcar);
+ OBJECTID out_string
+ '(' 
+ OBJECTID n");
+ OBJECTID xcdr.print_list
+ '(' 
+ ')' 
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ '}' 
+ ';' 
+ TYPEID Class
+ TYPEID Nil
+ INHERITS
+ TYPEID List
+ '{' 
+ OBJECTID isNil
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Bool
+ '{' 
+ BOOL_CONST true
+ '}' 
+ ';' 
+ OBJECTID rev
+ '(' 
+ ')' 
+ ':' 
+ TYPEID List
+ '{' 
+ OBJECTID self
+ '}' 
+ ';' 
+ OBJECTID sort
+ '(' 
+ ')' 
+ ':' 
+ TYPEID List
+ '{' 
+ OBJECTID self
+ '}' 
+ ';' 
+ OBJECTID insert
+ '(' 
+ OBJECTID i
+ ':' 
+ TYPEID Int)
+ ':' 
+ TYPEID List
+ '{' 
+ OBJECTID rcons
+ '(' 
+ OBJECTID i)
+ '}' 
+ ';' 
+ OBJECTID rcons
+ '(' 
+ OBJECTID i
+ ':' 
+ TYPEID Int)
+ ':' 
+ TYPEID List
+ '{' 
+ '(' 
+ NEW
+ TYPEID Cons).init(i,self)
+ '}' 
+ ';' 
+ OBJECTID print_list
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Object
+ '{' 
+ BOOL_CONST true
+ '}' 
+ ';' 
+ '}' 
+ ';' 
+ TYPEID Class
+ TYPEID Main
+ INHERITS
+ TYPEID IO
+ '{' 
+ OBJECTID l
+ ':' 
+ TYPEID List;
+ OBJECTID iota
+ '(' 
+ OBJECTID i
+ ':' 
+ TYPEID Int)
+ ':' 
+ TYPEID List
+ '{' 
+ '{' 
+ OBJECTID l
+ ASSIGN
+ NEW
+ TYPEID Nil;
+ '(' 
  LET
- OBJECTID j : Int <- 0 in
+ OBJECTID j
+ ':' 
+ TYPEID Int
+ ASSIGN
+ INT_CONST 0
+ IN
  WHILE
- OBJECTID j < i 
+ OBJECTID j
+ OBJECTID i
  LOOP
- OBJECTID l <- (new Cons).init(j,l);
- OBJECTID j <- j + 1;
+ '{' 
+ OBJECTID l
+ ASSIGN
+ '(' 
+ NEW
+ TYPEID Cons).init(j,l);
+ OBJECTID j
+ ASSIGN
+ OBJECTID j
+ INT_CONST 1
+ ';' 
+ '}' 
  POOL
- OBJECTID l;
- OBJECTID main() : Object {
- OBJECTID out_string("How many numbers to sort?");
- OBJECTID iota(in_int()).rev().sort().print_list();
+ ')' 
+ ';' 
+ OBJECTID l;
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID main
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Object
+ '{' 
+ '{' 
+ OBJECTID out_string
+ '(' 
+ TYPEID How
+ OBJECTID many
+ OBJECTID numbers
+ OBJECTID to
+ OBJECTID sort?");
+ OBJECTID iota
+ '(' 
+ OBJECTID in_int
+ '(' 
+ ')' 
+ ')' 
+ OBJECTID rev
+ '(' 
+ ')' 
+ OBJECTID sort
+ '(' 
+ ')' 
+ OBJECTID print_list
+ '(' 
+ ')' 
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ '}' 
+ ';'

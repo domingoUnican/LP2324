@@ -1,2 +1,8 @@
 #name "validcharacters.cool"
- '-'
+ '-' 
+ ';' 
+ ':' 
+ '(' 
+ ')' 
+ '{' 
+ '}'

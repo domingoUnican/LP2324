@@ -1,36 +1,83 @@
 #name "atoi.cool"
- OBJECTID he class A2I provides integer-to-string and string-to-integer
- OBJECTID conversion routines.  To use these routines, either inherit them
- IN
- OBJECTID the class where needed, have a dummy variable bound to
- OBJECTID something of type A2I, or simpl write (new A2I).method(argument).
- OBJECTID c2i   Converts a 1-character string to an integer.  Aborts
- IF
- OBJECTID the string is not "0" through "9"
  CLASS
+ TYPEID A2I
+ '{' 
+ OBJECTID c2i
+ '(' 
+ OBJECTID char
+ ':' 
+ TYPEID String)
+ ':' 
+ TYPEID Int
+ '{' 
+ IF
+ OBJECTID char
+ INT_CONST 0
+ THEN
+ INT_CONST 0
+ ELSE
+ IF
+ OBJECTID char
+ INT_CONST 1
+ THEN
+ INT_CONST 1
+ ELSE
+ IF
+ OBJECTID char
  INT_CONST 2
- OBJECTID c2i(char : String) : Int {
+ THEN
+ INT_CONST 2
+ ELSE
  IF
- OBJECTID char = "0" then 0 else
+ OBJECTID char
+ INT_CONST 3
+ THEN
+ INT_CONST 3
+ ELSE
  IF
- OBJECTID char = "1" then 1 else
+ OBJECTID char
+ INT_CONST 4
+ THEN
+ INT_CONST 4
+ ELSE
  IF
- OBJECTID char = "2" then 2 else
+ OBJECTID char
+ INT_CONST 5
+ THEN
+ INT_CONST 5
+ ELSE
  IF
- OBJECTID char = "3" then 3 else
+ OBJECTID char
+ INT_CONST 6
+ THEN
+ INT_CONST 6
+ ELSE
  IF
- OBJECTID char = "4" then 4 else
+ OBJECTID char
+ INT_CONST 7
+ THEN
+ INT_CONST 7
+ ELSE
  IF
- OBJECTID char = "5" then 5 else
+ OBJECTID char
+ INT_CONST 8
+ THEN
+ INT_CONST 8
+ ELSE
  IF
- OBJECTID char = "6" then 6 else
- IF
- OBJECTID char = "7" then 7 else
- IF
- OBJECTID char = "8" then 8 else
- IF
- OBJECTID char = "9" then 9 else
- OBJECTID abort(); 0; }  -- the 0 is needed to satisfy the typchecker
+ OBJECTID char
+ INT_CONST 9
+ THEN
+ INT_CONST 9
+ ELSE
+ '{' 
+ OBJECTID abort
+ '(' 
+ ')' 
+ ';' 
+ INT_CONST 0
+ ';' 
+ '}' 
  FI
  FI
  FI
@@ -41,29 +88,83 @@
  FI
  FI
  FI
- OBJECTID i2c is the inverse of c2i.
- OBJECTID i2c(i : Int) : String {
+ '}' 
+ ';' 
+ OBJECTID i2c
+ '(' 
+ OBJECTID i
+ ':' 
+ TYPEID Int)
+ ':' 
+ TYPEID String
+ '{' 
  IF
- OBJECTID i = 0 then "0" else
+ OBJECTID i
+ INT_CONST 0
+ THEN
+ INT_CONST 0
+ ELSE
  IF
- OBJECTID i = 1 then "1" else
+ OBJECTID i
+ INT_CONST 1
+ THEN
+ INT_CONST 1
+ ELSE
  IF
- OBJECTID i = 2 then "2" else
+ OBJECTID i
+ INT_CONST 2
+ THEN
+ INT_CONST 2
+ ELSE
  IF
- OBJECTID i = 3 then "3" else
+ OBJECTID i
+ INT_CONST 3
+ THEN
+ INT_CONST 3
+ ELSE
  IF
- OBJECTID i = 4 then "4" else
+ OBJECTID i
+ INT_CONST 4
+ THEN
+ INT_CONST 4
+ ELSE
  IF
- OBJECTID i = 5 then "5" else
+ OBJECTID i
+ INT_CONST 5
+ THEN
+ INT_CONST 5
+ ELSE
  IF
- OBJECTID i = 6 then "6" else
+ OBJECTID i
+ INT_CONST 6
+ THEN
+ INT_CONST 6
+ ELSE
  IF
- OBJECTID i = 7 then "7" else
+ OBJECTID i
+ INT_CONST 7
+ THEN
+ INT_CONST 7
+ ELSE
  IF
- OBJECTID i = 8 then "8" else
+ OBJECTID i
+ INT_CONST 8
+ THEN
+ INT_CONST 8
+ ELSE
  IF
- OBJECTID i = 9 then "9" else
- OBJECTID abort(); ""; }  -- the "" is needed to satisfy the typchecker
+ OBJECTID i
+ INT_CONST 9
+ THEN
+ INT_CONST 9
+ ELSE
+ '{' 
+ OBJECTID abort
+ '(' 
+ ')' 
+ ';' 
+ ';' 
+ '}' 
  FI
  FI
  FI
@@ -74,62 +175,209 @@
  FI
  FI
  FI
- OBJECTID a2i converts an ASCII string into an integer.  The empty string
- OBJECTID is converted to 0.  Signed and unsigned strings are handled.  The
- OBJECTID method aborts if the string does not represent an integer.  Very
- OBJECTID long strings of digits produce strange answers because of arithmetic 
- OBJECTID overflow.
- OBJECTID a2i(s : String) : Int {
+ '}' 
+ ';' 
+ OBJECTID a2i
+ '(' 
+ OBJECTID s
+ ':' 
+ TYPEID String)
+ ':' 
+ TYPEID Int
+ '{' 
  IF
- OBJECTID s.length() = 0 then 0 else
+ OBJECTID s.length
+ '(' 
+ ')' 
+ INT_CONST 0
+ THEN
+ INT_CONST 0
+ ELSE
  IF
- OBJECTID s.substr(0,1) = "-" then ~a2i_aux(s.substr(1,s.length()-1)) else
- IF
- OBJECTID s.substr(0,1) = "+" then a2i_aux(s.substr(1,s.length()-1)) else
- OBJECTID a2i_aux(s)
- FI
- FI
- FI
- OBJECTID a2i_aux converts the usigned portion of the string.  As a programming
- OBJECTID example, this method is written iteratively.
- OBJECTID a2i_aux(s : String) : Int {
- LET
- BOOL_CONST false
- BOOL_CONST false
+ OBJECTID s.substr
+ '(' 
+ INT_CONST 0
+ INT_CONST 1
+ ')' 
  '-' 
+ THEN
+ OBJECTID a2i_aux
+ '(' 
+ OBJECTID s.substr
+ '(' 
+ INT_CONST 1
+ OBJECTID s.length
+ '(' 
+ ')' 
+ '-' 
+ INT_CONST 1
+ ')' 
+ ')' 
+ ELSE
+ IF
+ OBJECTID s.substr
+ '(' 
+ INT_CONST 0
+ INT_CONST 1
+ ')' 
+ THEN
+ OBJECTID a2i_aux
+ '(' 
+ OBJECTID s.substr
+ '(' 
+ INT_CONST 1
+ OBJECTID s.length
+ '(' 
+ ')' 
+ '-' 
+ INT_CONST 1
+ ')' 
+ ')' 
+ ELSE
+ OBJECTID a2i_aux
+ '(' 
+ OBJECTID s)
+ FI
+ FI
+ FI
+ '}' 
+ ';' 
+ OBJECTID a2i_aux
+ '(' 
+ OBJECTID s
+ ':' 
+ TYPEID String)
+ ':' 
+ TYPEID Int
+ '{' 
+ '(' 
+ LET
+ OBJECTID int
+ ':' 
+ TYPEID Int
+ ASSIGN
  INT_CONST 0
  IN
+ '{' 
+ '(' 
  LET
- OBJECTID j : Int <- s.length() in
+ OBJECTID j
+ ':' 
+ TYPEID Int
+ ASSIGN
+ OBJECTID s.length
+ '(' 
+ ')' 
+ IN
+ '(' 
  LET
- OBJECTID i : Int <- 0 in
+ OBJECTID i
+ ':' 
+ TYPEID Int
+ ASSIGN
+ INT_CONST 0
+ IN
  WHILE
- OBJECTID i < j loop
- BOOL_CONST false
- '-' 
- BOOL_CONST false
+ OBJECTID i
+ OBJECTID j
+ LOOP
+ '{' 
+ OBJECTID int
+ ASSIGN
+ OBJECTID int
  INT_CONST 10
- OBJECTID c2i(s.substr(i,1));
- OBJECTID i <- i + 1;
+ OBJECTID c2i
+ '(' 
+ OBJECTID s.substr
+ '(' 
+ OBJECTID i,1));
+ OBJECTID i
+ ASSIGN
+ OBJECTID i
+ INT_CONST 1
+ ';' 
+ '}' 
  POOL
- BOOL_CONST false
- OBJECTID i2a converts an integer to a string.  Positive and negative 
- OBJECTID numbers are handled correctly.  
- OBJECTID i2a(i : Int) : String {
+ ')' 
+ ')' 
+ ';' 
+ OBJECTID int;
+ '}' 
+ ')' 
+ '}' 
+ ';' 
+ OBJECTID i2a
+ '(' 
+ OBJECTID i
+ ':' 
+ TYPEID Int)
+ ':' 
+ TYPEID String
+ '{' 
  IF
- OBJECTID i = 0 then "0" else 
+ OBJECTID i
+ INT_CONST 0
+ THEN
+ INT_CONST 0
+ ELSE
  IF
  INT_CONST 0
- OBJECTID i then i2a_aux(i) else
+ OBJECTID i
+ THEN
+ OBJECTID i2a_aux
+ '(' 
+ OBJECTID i)
+ ELSE
  '-' 
- OBJECTID concat(i2a_aux(i * ~1)) 
+ OBJECTID concat
+ '(' 
+ OBJECTID i2a_aux
+ '(' 
+ OBJECTID i
+ INT_CONST 1
+ ')' 
+ ')' 
  FI
  FI
- OBJECTID i2a_aux is an example using recursion.
- OBJECTID i2a_aux(i : Int) : String {
+ '}' 
+ ';' 
+ OBJECTID i2a_aux
+ '(' 
+ OBJECTID i
+ ':' 
+ TYPEID Int)
+ ':' 
+ TYPEID String
+ '{' 
  IF
- OBJECTID i = 0 then "" else 
+ OBJECTID i
+ INT_CONST 0
+ THEN
+ ELSE
+ '(' 
  LET
- OBJECTID next : Int <- i / 10 in
- OBJECTID i2a_aux(next).concat(i2c(i - next * 10))
+ OBJECTID next
+ ':' 
+ TYPEID Int
+ ASSIGN
+ OBJECTID i
+ INT_CONST 10
+ IN
+ OBJECTID i2a_aux
+ '(' 
+ OBJECTID next).concat
+ '(' 
+ OBJECTID i2c
+ '(' 
+ OBJECTID i
+ '-' 
+ OBJECTID next
+ INT_CONST 10
+ ')' 
+ ')' 
+ ')' 
  FI
+ '}' 
+ ';' 
+ '}' 
+ ';'

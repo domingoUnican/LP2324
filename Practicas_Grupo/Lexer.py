@@ -13,11 +13,11 @@ class CoolLexer(Lexer):
     tokens = {OBJECTID, INT_CONST, BOOL_CONST, TYPEID,
               ELSE, IF, FI, THEN, NOT, IN, CASE, ESAC, CLASS,
               INHERITS, ISVOID, LET, LOOP, NEW, OF,
-              POOL, THEN, WHILE, NUMBER, STR_CONST, LE, DARROW, ASSIGN}
+              POOL, THEN, WHILE, NUMBER, STR_CONST, LE, DARROW, ASSIGN, IGNORE}
     #ignore = '\t '
-    literals = {'-'}
+    IGNORE = r'(\(\*((?:.|\n)*?)\*\))|(\-\-.*)'
+    literals = {'-', ':', '(', ')', '{', '}', ';'}
     # Ejemplo
-     
 
     ELSE = r'\b[eE][lL][sS][eE]\b'
 
@@ -45,11 +45,11 @@ class CoolLexer(Lexer):
 
     DARROW = r'\b\=\>\b'
 
-    ASSIGN = r'\b<-\b'
+    ASSIGN = r'\<\-'
 
-    BOOL_CONST = r'\b([t][rR][uU][eE])\b|\b([f][aA][lL][sS][eE])\b|\b[iI][nN][tT]\b'
+    BOOL_CONST = r'\b([t][rR][uU][eE])\b|\b([f][aA][lL][sS][eE])\b'
 
-    TYPEID = r'\b([T][rR][uU][eE])\b|\b([F][aA][lL][sS][eE])\b|\b([iI][nN][tT])\b|\b([fF][oO][aA][tT])\b'
+    TYPEID = r'\b[A-Z][^\s\n]*' 
 
     NOT = r'\b[nN][oO][tT]\b' #terminar de revisar
     CASE = r'\b[cC][aA][sS][eE]\b'
@@ -61,12 +61,18 @@ class CoolLexer(Lexer):
     LOOP = r'\b[lL][oO][oO][pP]\b'
     NEW = r'\b[nN][eE][wW]\b'
     OF = r'\b[oO][fF]\b'
-    OBJECTID = r'[a-z].*'
+    OBJECTID = r'[a-z][^\s\n\(]*'
     #STR_CONST = r'[a-zA-Z]+'
 
     CARACTERES_CONTROL = [bytes.fromhex(i+hex(j)[-1]).decode('ascii')
                           for i in ['0', '1']
                           for j in range(16)] + [bytes.fromhex(hex(127)[-2:]).decode("ascii")]
+    
+
+
+    @_(r'\(\*.*\*\)')
+    def IGNORE(self, t):
+        pass
 
     @_(r'\b([t][rR][uU][eE])\b|\b([f][aA][lL][sS][eE])\b|\b[iI][nN][tT]\b')
     def BOOL_CONST(self, t):

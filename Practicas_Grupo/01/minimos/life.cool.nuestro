@@ -1,417 +1,1396 @@
 #name "life.cool"
- OBJECTID he Game of Life 
- OBJECTID endo Kayiira, Summer '95
- OBJECTID ith code taken from /private/cool/class/examples/cells.cl
- OBJECTID his introduction was taken off the internet. It gives a brief 
- OBJECTID description of the Game Of Life. It also gives the rules by which 
- OBJECTID this particular game follows.
- OBJECTID ntroduction
- OBJECTID ohn Conway's Game of Life is a mathematical amusement, but it 
- OBJECTID is also much more: an insight into how a system of simple 
- OBJECTID cellualar automata can create complex, odd, and often aesthetically 
- OBJECTID pleasing patterns. It is played on a cartesian grid of cells
- OBJECTID which are either 'on' or 'off' The game gets it's name from the 
- OBJECTID similarity between the behaviour of these cells and the behaviour 
- OF
- OBJECTID living organisms.
- OBJECTID he Rules
- OBJECTID he playfield is a cartesian grid of arbitrary size. Each cell in 
- OBJECTID this grid can be in an 'on' state or an 'off' state. On each 'turn' 
- OBJECTID called a generation,) the state of each cell changes simultaneously 
- OBJECTID depending on it's state and the state of all cells adjacent to it.
- OBJECTID or 'on' cells, 
- IF
- OBJECTID the cell has 0 or 1 neighbours which are 'on', the cell turns 
- OBJECTID off'. ('dies of loneliness') 
- IF
- OBJECTID the cell has 2 or 3 neighbours which are 'on', the cell stays 
- OBJECTID on'. (nothing happens to that cell) 
- IF
- OBJECTID the cell has 4, 5, 6, 7, 8, or 9 neighbours which are 'on', 
- OBJECTID the cell turns 'off'. ('dies of overcrowding') 
- OBJECTID or 'off' cells, 
- IF
- OBJECTID the cell has 0, 1, 2, 4, 5, 6, 7, 8, or 9 neighbours which 
- OBJECTID are 'on', the cell stays 'off'. (nothing happens to that cell) 
- IF
- OBJECTID the cell has 3 neighbours which are 'on', the cell turns 
- OBJECTID on'. (3 neighbouring 'alive' cells 'give birth' to a fourth.) 
- OBJECTID epeat for as many generations as desired. 
  CLASS
- OBJECTID oard inherits IO { 
- OBJECTID rows : Int;
- OBJECTID columns : Int;
- OBJECTID board_size : Int;
- OBJECTID size_of_board(initial : String) : Int {
- OBJECTID initial.length()
- OBJECTID board_init(start : String) : SELF_TYPE {
+ TYPEID Board
+ INHERITS
+ TYPEID IO
+ '{' 
+ OBJECTID rows
+ ':' 
+ TYPEID Int;
+ OBJECTID columns
+ ':' 
+ TYPEID Int;
+ OBJECTID board_size
+ ':' 
+ TYPEID Int;
+ OBJECTID size_of_board
+ '(' 
+ OBJECTID initial
+ ':' 
+ TYPEID String)
+ ':' 
+ TYPEID Int
+ '{' 
+ OBJECTID initial.length
+ '(' 
+ ')' 
+ '}' 
+ ';' 
+ OBJECTID board_init
+ '(' 
+ OBJECTID start
+ ':' 
+ TYPEID String)
+ ':' 
+ TYPEID SELF_TYPE
+ '{' 
+ '(' 
  LET
- OBJECTID size :Int  <- size_of_board(start) in
+ OBJECTID size
+ ':' 
+ TYPEID Int
+ ASSIGN
+ OBJECTID size_of_board
+ '(' 
+ OBJECTID start)
+ IN
+ '{' 
  IF
- OBJECTID size = 15 then
- OBJECTID rows <- 3;
- OBJECTID columns <- 5;
- OBJECTID board_size <- size;
- ELSE
- IF
- OBJECTID size = 16 then
- OBJECTID rows <- 4;
- OBJECTID columns <- 4;
- OBJECTID board_size <- size;
- ELSE
- IF
- OBJECTID size = 20 then
- OBJECTID rows <- 4;
- OBJECTID columns <- 5;
- OBJECTID board_size <- size;
- ELSE
- IF
- OBJECTID size = 21 then
- OBJECTID rows <- 3;
- OBJECTID columns <- 7;
- OBJECTID board_size <- size;
- ELSE
- IF
- OBJECTID size = 25 then
- OBJECTID rows <- 5;
- OBJECTID columns <- 5;
- OBJECTID board_size <- size;
- ELSE
- IF
- OBJECTID size = 28 then
- OBJECTID rows <- 7;
- OBJECTID columns <- 4;
- OBJECTID board_size <- size;
- ELSE
- '-' 
- '-' 
- IF
- OBJECTID none of the above fit, then just give 
- '-' 
- '-' 
- OBJECTID the configuration of the most common board
- OBJECTID rows <- 5;
- OBJECTID columns <- 5;
- OBJECTID board_size <- size;
- FI
- FI
- FI
- FI
- FI
- FI
- OBJECTID self;
- CLASS
- OBJECTID ellularAutomaton inherits Board {
- OBJECTID population_map : String;
- OBJECTID init(map : String) : SELF_TYPE {
- OBJECTID population_map <- map;
- OBJECTID board_init(map);
- OBJECTID self;
- OBJECTID print() : SELF_TYPE {
- LET
- OBJECTID i : Int <- 0 in
- LET
- OBJECTID num : Int <- board_size in
- OBJECTID out_string("\n");
- WHILE
- OBJECTID i < num loop
- OBJECTID out_string(population_map.substr(i,columns));
- OBJECTID out_string("\n"); 
- OBJECTID i <- i + columns;
- POOL
- OBJECTID out_string("\n");
- OBJECTID self;
- OBJECTID num_cells() : Int {
- OBJECTID population_map.length()
- OBJECTID cell(position : Int) : String {
- IF
- OBJECTID board_size - 1 < position then
- ELSE
- OBJECTID population_map.substr(position, 1)
- FI
- OBJECTID north(position : Int): String {
- IF
- OBJECTID position - columns) < 0 then
- ELSE
- OBJECTID cell(position - columns)
- FI
- OBJECTID south(position : Int): String {
- IF
- OBJECTID board_size < (position + columns) then
- ELSE
- OBJECTID cell(position + columns)
- FI
- OBJECTID east(position : Int): String {
- IF
- OBJECTID position + 1) /columns ) * columns) = (position + 1) then
- ELSE
- OBJECTID cell(position + 1)
- FI
- OBJECTID west(position : Int): String {
- IF
- OBJECTID position = 0 then
- ELSE
- IF
- OBJECTID position / columns) * columns) = position then
- ELSE
- OBJECTID cell(position - 1)
- FI
- FI
- OBJECTID northwest(position : Int): String {
- IF
- OBJECTID position - columns) < 0 then
- ELSE
- IF
- OBJECTID position / columns) * columns) = position then
- ELSE
- OBJECTID north(position - 1)
- FI
- FI
- OBJECTID northeast(position : Int): String {
- IF
- OBJECTID position - columns) < 0 then
- ELSE
- IF
- OBJECTID position + 1) /columns ) * columns) = (position + 1) then
- ELSE
- OBJECTID north(position + 1)
- FI
- FI
- OBJECTID southeast(position : Int): String {
- IF
- OBJECTID board_size < (position + columns) then
- ELSE
- IF
- OBJECTID position + 1) /columns ) * columns) = (position + 1) then
- ELSE
- OBJECTID south(position + 1)
- FI
- FI
- OBJECTID southwest(position : Int): String {
- IF
- OBJECTID board_size < (position + columns) then
- ELSE
- IF
- OBJECTID position / columns) * columns) = position then
- ELSE
- OBJECTID south(position - 1)
- FI
- FI
- OBJECTID neighbors(position: Int): Int { 
- IF
- OBJECTID north(position) = "X" then 1 else 0 fi
- IF
- OBJECTID south(position) = "X" then 1 else 0 fi
- IF
- OBJECTID east(position) = "X" then 1 else 0 fi
- IF
- OBJECTID west(position) = "X" then 1 else 0 fi
- IF
- OBJECTID northeast(position) = "X" then 1 else 0 fi
- IF
- OBJECTID northwest(position) = "X" then 1 else 0 fi
- IF
- OBJECTID southeast(position) = "X" then 1 else 0 fi
- IF
- OBJECTID southwest(position) = "X" then 1 else 0 fi;
- OBJECTID cell will live if 2 or 3 of it's neighbors are alive. It dies 
- OBJECTID otherwise. A cell is born if only 3 of it's neighbors are alive. *)
- OBJECTID cell_at_next_evolution(position : Int) : String {
- IF
- OBJECTID neighbors(position) = 3 then
- ELSE
- IF
- OBJECTID neighbors(position) = 2 then
- IF
- OBJECTID cell(position) = "X" then
- ELSE
- '-' 
- FI
- ELSE
- '-' 
- FI
- FI
- OBJECTID evolve() : SELF_TYPE {
- LET
- OBJECTID position : Int <- 0 in
- LET
- OBJECTID num : Int <- num_cells() in
- LET
- OBJECTID temp : String in
- WHILE
- OBJECTID position < num loop
- OBJECTID temp <- temp.concat(cell_at_next_evolution(position));
- OBJECTID position <- position + 1;
- POOL
- OBJECTID population_map <- temp;
- OBJECTID self;
- OBJECTID his is where the background pattern is detremined by the user. More 
- OBJECTID patterns can be added as long as whoever adds keeps the board either
+ OBJECTID size
+ INT_CONST 15
+ THEN
+ '{' 
+ OBJECTID rows
+ ASSIGN
  INT_CONST 3
- OBJECTID x5, 4x5, 5x5, 3x7, 7x4, 4x4 with the row first then column. *) 
- OBJECTID option(): String {
- LET
- OBJECTID num : Int in
- OBJECTID out_string("\nPlease chose a number:\n");
- OBJECTID out_string("\t1: A cross\n"); 
- OBJECTID out_string("\t2: A slash from the upper left to lower right\n");
- OBJECTID out_string("\t3: A slash from the upper right to lower left\n"); 
- OBJECTID out_string("\t4: An X\n"); 
- OBJECTID out_string("\t5: A greater than sign \n"); 
- OBJECTID out_string("\t6: A less than sign\n"); 
- OBJECTID out_string("\t7: Two greater than signs\n"); 
- OBJECTID out_string("\t8: Two less than signs\n"); 
- OBJECTID out_string("\t9: A 'V'\n"); 
- OBJECTID out_string("\t10: An inverse 'V'\n"); 
- OBJECTID out_string("\t11: Numbers 9 and 10 combined\n"); 
- OBJECTID out_string("\t12: A full grid\n"); 
- OBJECTID out_string("\t13: A 'T'\n");
- OBJECTID out_string("\t14: A plus '+'\n");
- OBJECTID out_string("\t15: A 'W'\n");
- OBJECTID out_string("\t16: An 'M'\n");
- OBJECTID out_string("\t17: An 'E'\n");
- OBJECTID out_string("\t18: A '3'\n");
- OBJECTID out_string("\t19: An 'O'\n");
- OBJECTID out_string("\t20: An '8'\n");
- OBJECTID out_string("\t21: An 'S'\n");
- OBJECTID out_string("Your choice => ");
- OBJECTID num <- in_int();
- OBJECTID out_string("\n");
- IF
- OBJECTID num = 1 then
+ ';' 
+ OBJECTID columns
+ ASSIGN
+ INT_CONST 5
+ ';' 
+ OBJECTID board_size
+ ASSIGN
+ OBJECTID size;
+ '}' 
  ELSE
  IF
- OBJECTID num = 2 then
+ OBJECTID size
+ INT_CONST 16
+ THEN
+ '{' 
+ OBJECTID rows
+ ASSIGN
+ INT_CONST 4
+ ';' 
+ OBJECTID columns
+ ASSIGN
+ INT_CONST 4
+ ';' 
+ OBJECTID board_size
+ ASSIGN
+ OBJECTID size;
+ '}' 
  ELSE
  IF
- OBJECTID num = 3 then
+ OBJECTID size
+ INT_CONST 20
+ THEN
+ '{' 
+ OBJECTID rows
+ ASSIGN
+ INT_CONST 4
+ ';' 
+ OBJECTID columns
+ ASSIGN
+ INT_CONST 5
+ ';' 
+ OBJECTID board_size
+ ASSIGN
+ OBJECTID size;
+ '}' 
  ELSE
  IF
- OBJECTID num = 4 then
+ OBJECTID size
+ INT_CONST 21
+ THEN
+ '{' 
+ OBJECTID rows
+ ASSIGN
+ INT_CONST 3
+ ';' 
+ OBJECTID columns
+ ASSIGN
+ INT_CONST 7
+ ';' 
+ OBJECTID board_size
+ ASSIGN
+ OBJECTID size;
+ '}' 
  ELSE
  IF
- OBJECTID num = 5 then
+ OBJECTID size
+ INT_CONST 25
+ THEN
+ '{' 
+ OBJECTID rows
+ ASSIGN
+ INT_CONST 5
+ ';' 
+ OBJECTID columns
+ ASSIGN
+ INT_CONST 5
+ ';' 
+ OBJECTID board_size
+ ASSIGN
+ OBJECTID size;
+ '}' 
  ELSE
  IF
- OBJECTID num = 6 then
+ OBJECTID size
+ INT_CONST 28
+ THEN
+ '{' 
+ OBJECTID rows
+ ASSIGN
+ INT_CONST 7
+ ';' 
+ OBJECTID columns
+ ASSIGN
+ INT_CONST 4
+ ';' 
+ OBJECTID board_size
+ ASSIGN
+ OBJECTID size;
+ '}' 
  ELSE
- IF
- OBJECTID num = 7 then
- ELSE
- IF
- OBJECTID num = 8 then
- ELSE
- IF
- OBJECTID num = 9 then
- ELSE
- IF
- OBJECTID num = 10 then
- ELSE
- IF
- OBJECTID num = 11 then
- ELSE
- IF
- OBJECTID num = 12 then
- ELSE
- IF
- OBJECTID num = 13 then
- ELSE
- IF
- OBJECTID num = 14 then
- ELSE
- IF
- OBJECTID num = 15 then
- ELSE
- IF
- OBJECTID num = 16 then
- ELSE
- IF
- OBJECTID num = 17 then
- ELSE
- IF
- OBJECTID num = 18 then
- ELSE
- IF
- OBJECTID num = 19 then
- ELSE
- IF
- OBJECTID num = 20 then
- ELSE
- IF
- OBJECTID num = 21 then
- ELSE
+ '{' 
+ OBJECTID rows
+ ASSIGN
+ INT_CONST 5
+ ';' 
+ OBJECTID columns
+ ASSIGN
+ INT_CONST 5
+ ';' 
+ OBJECTID board_size
+ ASSIGN
+ OBJECTID size;
+ '}' 
  FI
  FI
  FI
  FI
  FI
  FI
- FI
- FI
- FI
- FI
- FI
- FI
- FI
- FI
- FI
- FI
- FI
- FI
- FI
- FI
- FI
- OBJECTID prompt() : Bool { 
- LET
- OBJECTID ans : String in
- OBJECTID out_string("Would you like to continue with the next generation? \n");
- OBJECTID out_string("Please use lowercase y or n for your answer [y]: ");
- OBJECTID ans <- in_string();
- OBJECTID out_string("\n");
- IF
- OBJECTID ans = "n" then 
- BOOL_CONST false
- ELSE
- BOOL_CONST true
- FI
- OBJECTID prompt2() : Bool { 
- LET
- OBJECTID ans : String in
- OBJECTID out_string("\n\n");
- OBJECTID out_string("Would you like to choose a background pattern? \n");
- OBJECTID out_string("Please use lowercase y or n for your answer [n]: ");
- OBJECTID ans <- in_string();
- IF
- OBJECTID ans = "y" then 
- BOOL_CONST true
- ELSE
- BOOL_CONST false
- FI
- CLASS
- OBJECTID ain inherits CellularAutomaton {
- OBJECTID cells : CellularAutomaton;
- OBJECTID main() : SELF_TYPE {
- LET
- OBJECTID continue : Bool  in
- LET
- OBJECTID choice : String  in
- OBJECTID out_string("Welcome to the Game of Life.\n");
- OBJECTID out_string("There are many initial states to choose from. \n");
- WHILE
- OBJECTID prompt2() loop
- OBJECTID continue <- true;
- OBJECTID choice <- option();
- OBJECTID cells <- (new CellularAutomaton).init(choice);
- OBJECTID cells.print();
- WHILE
- OBJECTID continue loop
- IF
- OBJECTID prompt() then
- OBJECTID cells.evolve();
- OBJECTID cells.print();
- ELSE
- OBJECTID continue <- false
- FI
- POOL
- POOL
+ ';' 
  OBJECTID self;
+ '}' 
+ ')' 
+ '}' 
+ ';' 
+ '}' 
+ ';' 
+ CLASS
+ TYPEID CellularAutomaton
+ INHERITS
+ TYPEID Board
+ '{' 
+ OBJECTID population_map
+ ':' 
+ TYPEID String;
+ OBJECTID init
+ '(' 
+ OBJECTID map
+ ':' 
+ TYPEID String)
+ ':' 
+ TYPEID SELF_TYPE
+ '{' 
+ '{' 
+ OBJECTID population_map
+ ASSIGN
+ OBJECTID map;
+ OBJECTID board_init
+ '(' 
+ OBJECTID map);
+ OBJECTID self;
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID print
+ '(' 
+ ')' 
+ ':' 
+ TYPEID SELF_TYPE
+ '{' 
+ '(' 
+ LET
+ OBJECTID i
+ ':' 
+ TYPEID Int
+ ASSIGN
+ INT_CONST 0
+ IN
+ '(' 
+ LET
+ OBJECTID num
+ ':' 
+ TYPEID Int
+ ASSIGN
+ OBJECTID board_size
+ IN
+ '{' 
+ OBJECTID out_string
+ '(' 
+ OBJECTID n");
+ WHILE
+ OBJECTID i
+ OBJECTID num
+ LOOP
+ '{' 
+ OBJECTID out_string
+ '(' 
+ OBJECTID population_map.substr
+ '(' 
+ OBJECTID i,columns));
+ OBJECTID out_string
+ '(' 
+ OBJECTID n");
+ OBJECTID i
+ ASSIGN
+ OBJECTID i
+ OBJECTID columns;
+ '}' 
+ POOL
+ ';' 
+ OBJECTID out_string
+ '(' 
+ OBJECTID n");
+ OBJECTID self;
+ '}' 
+ ')' 
+ ')' 
+ '}' 
+ ';' 
+ OBJECTID num_cells
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Int
+ '{' 
+ OBJECTID population_map.length
+ '(' 
+ ')' 
+ '}' 
+ ';' 
+ OBJECTID cell
+ '(' 
+ OBJECTID position
+ ':' 
+ TYPEID Int)
+ ':' 
+ TYPEID String
+ '{' 
+ IF
+ OBJECTID board_size
+ '-' 
+ INT_CONST 1
+ OBJECTID position
+ THEN
+ ELSE
+ OBJECTID population_map.substr
+ '(' 
+ OBJECTID position,
+ INT_CONST 1
+ ')' 
+ FI
+ '}' 
+ ';' 
+ OBJECTID north
+ '(' 
+ OBJECTID position
+ ':' 
+ TYPEID Int):
+ TYPEID String
+ '{' 
+ IF
+ '(' 
+ OBJECTID position
+ '-' 
+ OBJECTID columns)
+ INT_CONST 0
+ THEN
+ ELSE
+ OBJECTID cell
+ '(' 
+ OBJECTID position
+ '-' 
+ OBJECTID columns)
+ FI
+ '}' 
+ ';' 
+ OBJECTID south
+ '(' 
+ OBJECTID position
+ ':' 
+ TYPEID Int):
+ TYPEID String
+ '{' 
+ IF
+ OBJECTID board_size
+ '(' 
+ OBJECTID position
+ OBJECTID columns)
+ THEN
+ ELSE
+ OBJECTID cell
+ '(' 
+ OBJECTID position
+ OBJECTID columns)
+ FI
+ '}' 
+ ';' 
+ OBJECTID east
+ '(' 
+ OBJECTID position
+ ':' 
+ TYPEID Int):
+ TYPEID String
+ '{' 
+ IF
+ '(' 
+ '(' 
+ '(' 
+ OBJECTID position
+ INT_CONST 1
+ ')' 
+ OBJECTID columns
+ ')' 
+ OBJECTID columns)
+ '(' 
+ OBJECTID position
+ INT_CONST 1
+ ')' 
+ THEN
+ ELSE
+ OBJECTID cell
+ '(' 
+ OBJECTID position
+ INT_CONST 1
+ ')' 
+ FI
+ '}' 
+ ';' 
+ OBJECTID west
+ '(' 
+ OBJECTID position
+ ':' 
+ TYPEID Int):
+ TYPEID String
+ '{' 
+ IF
+ OBJECTID position
+ INT_CONST 0
+ THEN
+ ELSE
+ IF
+ '(' 
+ '(' 
+ OBJECTID position
+ OBJECTID columns)
+ OBJECTID columns)
+ OBJECTID position
+ THEN
+ ELSE
+ OBJECTID cell
+ '(' 
+ OBJECTID position
+ '-' 
+ INT_CONST 1
+ ')' 
+ FI
+ FI
+ '}' 
+ ';' 
+ OBJECTID northwest
+ '(' 
+ OBJECTID position
+ ':' 
+ TYPEID Int):
+ TYPEID String
+ '{' 
+ IF
+ '(' 
+ OBJECTID position
+ '-' 
+ OBJECTID columns)
+ INT_CONST 0
+ THEN
+ ELSE
+ IF
+ '(' 
+ '(' 
+ OBJECTID position
+ OBJECTID columns)
+ OBJECTID columns)
+ OBJECTID position
+ THEN
+ ELSE
+ OBJECTID north
+ '(' 
+ OBJECTID position
+ '-' 
+ INT_CONST 1
+ ')' 
+ FI
+ FI
+ '}' 
+ ';' 
+ OBJECTID northeast
+ '(' 
+ OBJECTID position
+ ':' 
+ TYPEID Int):
+ TYPEID String
+ '{' 
+ IF
+ '(' 
+ OBJECTID position
+ '-' 
+ OBJECTID columns)
+ INT_CONST 0
+ THEN
+ ELSE
+ IF
+ '(' 
+ '(' 
+ '(' 
+ OBJECTID position
+ INT_CONST 1
+ ')' 
+ OBJECTID columns
+ ')' 
+ OBJECTID columns)
+ '(' 
+ OBJECTID position
+ INT_CONST 1
+ ')' 
+ THEN
+ ELSE
+ OBJECTID north
+ '(' 
+ OBJECTID position
+ INT_CONST 1
+ ')' 
+ FI
+ FI
+ '}' 
+ ';' 
+ OBJECTID southeast
+ '(' 
+ OBJECTID position
+ ':' 
+ TYPEID Int):
+ TYPEID String
+ '{' 
+ IF
+ OBJECTID board_size
+ '(' 
+ OBJECTID position
+ OBJECTID columns)
+ THEN
+ ELSE
+ IF
+ '(' 
+ '(' 
+ '(' 
+ OBJECTID position
+ INT_CONST 1
+ ')' 
+ OBJECTID columns
+ ')' 
+ OBJECTID columns)
+ '(' 
+ OBJECTID position
+ INT_CONST 1
+ ')' 
+ THEN
+ ELSE
+ OBJECTID south
+ '(' 
+ OBJECTID position
+ INT_CONST 1
+ ')' 
+ FI
+ FI
+ '}' 
+ ';' 
+ OBJECTID southwest
+ '(' 
+ OBJECTID position
+ ':' 
+ TYPEID Int):
+ TYPEID String
+ '{' 
+ IF
+ OBJECTID board_size
+ '(' 
+ OBJECTID position
+ OBJECTID columns)
+ THEN
+ ELSE
+ IF
+ '(' 
+ '(' 
+ OBJECTID position
+ OBJECTID columns)
+ OBJECTID columns)
+ OBJECTID position
+ THEN
+ ELSE
+ OBJECTID south
+ '(' 
+ OBJECTID position
+ '-' 
+ INT_CONST 1
+ ')' 
+ FI
+ FI
+ '}' 
+ ';' 
+ OBJECTID neighbors
+ '(' 
+ OBJECTID position:
+ TYPEID Int):
+ TYPEID Int
+ '{' 
+ '{' 
+ IF
+ OBJECTID north
+ '(' 
+ OBJECTID position)
+ TYPEID X"
+ THEN
+ INT_CONST 1
+ ELSE
+ INT_CONST 0
+ FI
+ IF
+ OBJECTID south
+ '(' 
+ OBJECTID position)
+ TYPEID X"
+ THEN
+ INT_CONST 1
+ ELSE
+ INT_CONST 0
+ FI
+ IF
+ OBJECTID east
+ '(' 
+ OBJECTID position)
+ TYPEID X"
+ THEN
+ INT_CONST 1
+ ELSE
+ INT_CONST 0
+ FI
+ IF
+ OBJECTID west
+ '(' 
+ OBJECTID position)
+ TYPEID X"
+ THEN
+ INT_CONST 1
+ ELSE
+ INT_CONST 0
+ FI
+ IF
+ OBJECTID northeast
+ '(' 
+ OBJECTID position)
+ TYPEID X"
+ THEN
+ INT_CONST 1
+ ELSE
+ INT_CONST 0
+ FI
+ IF
+ OBJECTID northwest
+ '(' 
+ OBJECTID position)
+ TYPEID X"
+ THEN
+ INT_CONST 1
+ ELSE
+ INT_CONST 0
+ FI
+ IF
+ OBJECTID southeast
+ '(' 
+ OBJECTID position)
+ TYPEID X"
+ THEN
+ INT_CONST 1
+ ELSE
+ INT_CONST 0
+ FI
+ IF
+ OBJECTID southwest
+ '(' 
+ OBJECTID position)
+ TYPEID X"
+ THEN
+ INT_CONST 1
+ ELSE
+ INT_CONST 0
+ FI
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID cell_at_next_evolution
+ '(' 
+ OBJECTID position
+ ':' 
+ TYPEID Int)
+ ':' 
+ TYPEID String
+ '{' 
+ IF
+ OBJECTID neighbors
+ '(' 
+ OBJECTID position)
+ INT_CONST 3
+ THEN
+ TYPEID X"
+ ELSE
+ IF
+ OBJECTID neighbors
+ '(' 
+ OBJECTID position)
+ INT_CONST 2
+ THEN
+ IF
+ OBJECTID cell
+ '(' 
+ OBJECTID position)
+ TYPEID X"
+ THEN
+ TYPEID X"
+ ELSE
+ '-' 
+ FI
+ ELSE
+ '-' 
+ FI
+ FI
+ '}' 
+ ';' 
+ OBJECTID evolve
+ '(' 
+ ')' 
+ ':' 
+ TYPEID SELF_TYPE
+ '{' 
+ '(' 
+ LET
+ OBJECTID position
+ ':' 
+ TYPEID Int
+ ASSIGN
+ INT_CONST 0
+ IN
+ '(' 
+ LET
+ OBJECTID num
+ ':' 
+ TYPEID Int
+ ASSIGN
+ OBJECTID num_cells
+ '(' 
+ ')' 
+ IN
+ '(' 
+ LET
+ OBJECTID temp
+ ':' 
+ TYPEID String
+ IN
+ '{' 
+ WHILE
+ OBJECTID position
+ OBJECTID num
+ LOOP
+ '{' 
+ OBJECTID temp
+ ASSIGN
+ OBJECTID temp.concat
+ '(' 
+ OBJECTID cell_at_next_evolution
+ '(' 
+ OBJECTID position));
+ OBJECTID position
+ ASSIGN
+ OBJECTID position
+ INT_CONST 1
+ ';' 
+ '}' 
+ POOL
+ ';' 
+ OBJECTID population_map
+ ASSIGN
+ OBJECTID temp;
+ OBJECTID self;
+ '}' 
+ ')' 
+ ')' 
+ ')' 
+ '}' 
+ ';' 
+ OBJECTID option
+ '(' 
+ ')' 
+ ':' 
+ TYPEID String
+ '{' 
+ '{' 
+ '(' 
+ LET
+ OBJECTID num
+ ':' 
+ TYPEID Int
+ IN
+ '{' 
+ OBJECTID out_string
+ '(' 
+ OBJECTID nPlease
+ OBJECTID chose
+ OBJECTID a
+ OBJECTID number:\n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t1:
+ TYPEID A
+ OBJECTID cross\n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t2:
+ TYPEID A
+ OBJECTID slash
+ OBJECTID from
+ OBJECTID the
+ OBJECTID upper
+ OBJECTID left
+ OBJECTID to
+ OBJECTID lower
+ OBJECTID right\n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t3:
+ TYPEID A
+ OBJECTID slash
+ OBJECTID from
+ OBJECTID the
+ OBJECTID upper
+ OBJECTID right
+ OBJECTID to
+ OBJECTID lower
+ OBJECTID left\n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t4:
+ TYPEID An
+ TYPEID X\n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t5:
+ TYPEID A
+ OBJECTID greater
+ OBJECTID than
+ OBJECTID sign
+ OBJECTID n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t6:
+ TYPEID A
+ OBJECTID less
+ OBJECTID than
+ OBJECTID sign\n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t7:
+ TYPEID Two
+ OBJECTID greater
+ OBJECTID than
+ OBJECTID signs\n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t8:
+ TYPEID Two
+ OBJECTID less
+ OBJECTID than
+ OBJECTID signs\n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t9:
+ TYPEID A
+ TYPEID V'\n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t10:
+ TYPEID An
+ OBJECTID inverse
+ TYPEID V'\n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t11:
+ TYPEID Numbers
+ INT_CONST 9
+ OBJECTID and
+ INT_CONST 10
+ OBJECTID combined\n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t12:
+ TYPEID A
+ OBJECTID full
+ OBJECTID grid\n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t13:
+ TYPEID A
+ TYPEID T'\n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t14:
+ TYPEID A
+ OBJECTID plus
+ OBJECTID n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t15:
+ TYPEID A
+ TYPEID W'\n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t16:
+ TYPEID An
+ TYPEID M'\n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t17:
+ TYPEID An
+ TYPEID E'\n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t18:
+ TYPEID A
+ INT_CONST 3
+ OBJECTID n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t19:
+ TYPEID An
+ TYPEID O'\n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t20:
+ TYPEID An
+ INT_CONST 8
+ OBJECTID n");
+ OBJECTID out_string
+ '(' 
+ OBJECTID t21:
+ TYPEID An
+ TYPEID S'\n");
+ OBJECTID out_string
+ '(' 
+ TYPEID Your
+ OBJECTID choice
+ ')' 
+ ';' 
+ OBJECTID num
+ ASSIGN
+ OBJECTID in_int
+ '(' 
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ OBJECTID n");
+ IF
+ OBJECTID num
+ INT_CONST 1
+ THEN
+ TYPEID XX
+ TYPEID XXXX
+ TYPEID XXXX
+ TYPEID XX
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 2
+ THEN
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 3
+ THEN
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X"
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 4
+ THEN
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X"
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 5
+ THEN
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 6
+ THEN
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X"
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 7
+ THEN
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID XX
+ TYPEID X
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 8
+ THEN
+ TYPEID X
+ TYPEID XX
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 9
+ THEN
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 10
+ THEN
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X"
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 11
+ THEN
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X"
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 12
+ THEN
+ TYPEID XXXXXXXXXXXXXXXXXXXXXXXXX"
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 13
+ THEN
+ TYPEID XXXXX
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 14
+ THEN
+ TYPEID X
+ TYPEID X
+ TYPEID XXXXX
+ TYPEID X
+ TYPEID X
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 15
+ THEN
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 16
+ THEN
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X"
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 17
+ THEN
+ TYPEID XXXXX
+ TYPEID X
+ TYPEID XXXXX
+ TYPEID X
+ TYPEID XXXX"
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 18
+ THEN
+ TYPEID XXX
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID X
+ TYPEID XXXX
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 19
+ THEN
+ TYPEID XX
+ TYPEID X
+ TYPEID XX
+ TYPEID X
+ TYPEID XX
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 20
+ THEN
+ TYPEID XX
+ TYPEID X
+ TYPEID XX
+ TYPEID X
+ TYPEID XX
+ TYPEID X
+ TYPEID XX
+ TYPEID X
+ TYPEID XX
+ ELSE
+ IF
+ OBJECTID num
+ INT_CONST 21
+ THEN
+ TYPEID XXXX
+ TYPEID X
+ TYPEID XX
+ TYPEID X
+ TYPEID XXXX
+ ELSE
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ ';' 
+ '}' 
+ ')' 
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID prompt
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Bool
+ '{' 
+ '{' 
+ '(' 
+ LET
+ OBJECTID ans
+ ':' 
+ TYPEID String
+ IN
+ '{' 
+ OBJECTID out_string
+ '(' 
+ TYPEID Would
+ OBJECTID you
+ OBJECTID like
+ OBJECTID to
+ OBJECTID continue
+ OBJECTID with
+ OBJECTID the
+ OBJECTID next
+ OBJECTID generation?
+ OBJECTID n");
+ OBJECTID out_string
+ '(' 
+ TYPEID Please
+ OBJECTID use
+ OBJECTID lowercase
+ OBJECTID y
+ OBJECTID or
+ OBJECTID n
+ OBJECTID for
+ OBJECTID your
+ OBJECTID answer
+ OBJECTID y]:
+ ')' 
+ ';' 
+ OBJECTID ans
+ ASSIGN
+ OBJECTID in_string
+ '(' 
+ ')' 
+ ';' 
+ OBJECTID out_string
+ '(' 
+ OBJECTID n");
+ IF
+ OBJECTID ans
+ OBJECTID n"
+ THEN
+ BOOL_CONST false
+ ELSE
+ BOOL_CONST true
+ FI
+ ';' 
+ '}' 
+ ')' 
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID prompt2
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Bool
+ '{' 
+ '(' 
+ LET
+ OBJECTID ans
+ ':' 
+ TYPEID String
+ IN
+ '{' 
+ OBJECTID out_string
+ '(' 
+ OBJECTID n\n");
+ OBJECTID out_string
+ '(' 
+ TYPEID Would
+ OBJECTID you
+ OBJECTID like
+ OBJECTID to
+ OBJECTID choose
+ OBJECTID a
+ OBJECTID background
+ OBJECTID pattern?
+ OBJECTID n");
+ OBJECTID out_string
+ '(' 
+ TYPEID Please
+ OBJECTID use
+ OBJECTID lowercase
+ OBJECTID y
+ OBJECTID or
+ OBJECTID n
+ OBJECTID for
+ OBJECTID your
+ OBJECTID answer
+ OBJECTID n]:
+ ')' 
+ ';' 
+ OBJECTID ans
+ ASSIGN
+ OBJECTID in_string
+ '(' 
+ ')' 
+ ';' 
+ IF
+ OBJECTID ans
+ OBJECTID y"
+ THEN
+ BOOL_CONST true
+ ELSE
+ BOOL_CONST false
+ FI
+ ';' 
+ '}' 
+ ')' 
+ '}' 
+ ';' 
+ '}' 
+ ';' 
+ CLASS
+ TYPEID Main
+ INHERITS
+ TYPEID CellularAutomaton
+ '{' 
+ OBJECTID cells
+ ':' 
+ TYPEID CellularAutomaton;
+ OBJECTID main
+ '(' 
+ ')' 
+ ':' 
+ TYPEID SELF_TYPE
+ '{' 
+ '{' 
+ '(' 
+ LET
+ OBJECTID continue
+ ':' 
+ TYPEID Bool
+ IN
+ '(' 
+ LET
+ OBJECTID choice
+ ':' 
+ TYPEID String
+ IN
+ '{' 
+ OBJECTID out_string
+ '(' 
+ TYPEID Welcome
+ OBJECTID to
+ OBJECTID the
+ TYPEID Game
+ OF
+ TYPEID Life.\n");
+ OBJECTID out_string
+ '(' 
+ TYPEID There
+ OBJECTID are
+ OBJECTID many
+ OBJECTID initial
+ OBJECTID states
+ OBJECTID to
+ OBJECTID choose
+ OBJECTID from.
+ OBJECTID n");
+ WHILE
+ OBJECTID prompt2
+ '(' 
+ ')' 
+ LOOP
+ '{' 
+ OBJECTID continue
+ ASSIGN
+ BOOL_CONST true
+ ';' 
+ OBJECTID choice
+ ASSIGN
+ OBJECTID option
+ '(' 
+ ')' 
+ ';' 
+ OBJECTID cells
+ ASSIGN
+ '(' 
+ NEW
+ TYPEID CellularAutomaton).init(choice);
+ OBJECTID cells.print
+ '(' 
+ ')' 
+ ';' 
+ WHILE
+ OBJECTID continue
+ LOOP
+ IF
+ OBJECTID prompt
+ '(' 
+ ')' 
+ THEN
+ '{' 
+ OBJECTID cells.evolve
+ '(' 
+ ')' 
+ ';' 
+ OBJECTID cells.print
+ '(' 
+ ')' 
+ ';' 
+ '}' 
+ ELSE
+ OBJECTID continue
+ ASSIGN
+ BOOL_CONST false
+ FI
+ POOL
+ ';' 
+ '}' 
+ POOL
+ ';' 
+ OBJECTID self;
+ '}' 
+ ')' 
+ ')' 
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ '}' 
+ ';'

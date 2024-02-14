@@ -1,20 +1,22 @@
 #name "badkeywords.cool"
- OBJECTID casee
- OBJECTID elsif
- OBJECTID form
- OBJECTID es;ac
- OBJECTID true9
+ OBJECTID casee
+ OBJECTID elsif
+ OBJECTID form
+ OBJECTID es;ac
+ OBJECTID true9
  TYPEID False
- OBJECTID fi_if
- OBJECTID inh erits
- OBJECTID isS
- OBJECTID isv	Oid
- OBJECTID oopnew
- OBJECTID te
- OBJECTID ofofofofof
- INT_CONST 8
- OBJECTID ol
+ OBJECTID fi_if
+ OBJECTID inh
+ OBJECTID erits
+ OBJECTID isS
+ OBJECTID isv
+ TYPEID Oid
+ TYPEID Loopnew
+ TYPEID NOte
+ OBJECTID ofofofofof
+ TYPEID PO8ol
  THEN
- OBJECTID hile
- OBJECTID ifif
+ OBJECTID hile
+ OBJECTID ifif
+ TYPEID IFIF
  OBJECTID fif
