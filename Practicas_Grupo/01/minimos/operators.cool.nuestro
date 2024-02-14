@@ -1,0 +1,8 @@
+#name "operators.cool"
+ OBJECTID some operators *)
+ '-' 
+ '-' 
+ OBJECTID should be < and <= *)
+ OBJECTID should be <= and = *)
+ OBJECTID should be <= and => *)
+ '-'

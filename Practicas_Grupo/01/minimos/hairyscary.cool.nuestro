@@ -1,0 +1,42 @@
+#name "hairyscary.cool"
+ OBJECTID hairy  . . .*)
+ CLASS
+ OBJECTID oo inherits Bazz {
+ OBJECTID a : Razz <- case self of
+ OBJECTID n : Razz => (new Bar);
+ OBJECTID n : Foo => (new Razz);
+ OBJECTID n : Bar => n;
+ ESAC
+ OBJECTID b : Int <- a.doh() + g.doh() + doh() + printh();
+ OBJECTID doh() : Int { (let i : Int <- h in { h <- h + 2; i; } ) };
+ CLASS
+ OBJECTID ar inherits Razz {
+ OBJECTID c : Int <- doh();
+ OBJECTID d : Object <- printh();
+ CLASS
+ OBJECTID azz inherits Foo {
+ OBJECTID e : Bar <- case self of
+ OBJECTID n : Razz => (new Bar);
+ OBJECTID n : Bar => n;
+ ESAC
+ OBJECTID f : Int <- a@Bazz.doh() + g.doh() + e.doh() + doh() + printh();
+ CLASS
+ OBJECTID azz inherits IO {
+ OBJECTID h : Int <- 1;
+ OBJECTID g : Foo  <- case self of
+ OBJECTID n : Bazz => (new Foo);
+ OBJECTID n : Razz => (new Bar);
+ OBJECTID n : Foo  => (new Razz);
+ OBJECTID n : Bar => n;
+ ESAC
+ OBJECTID i : Object <- printh();
+ OBJECTID printh() : Int { { out_int(h); 0; } };
+ OBJECTID doh() : Int { (let i: Int <- h in { h <- h + 1; i; } ) };
+ OBJECTID scary . . . *)
+ CLASS
+ OBJECTID ain {
+ OBJECTID a : Bazz <- new Bazz;
+ OBJECTID b : Foo <- new Foo;
+ OBJECTID c : Razz <- new Razz;
+ OBJECTID d : Bar <- new Bar;
+ OBJECTID main(): String { "do nothing" };

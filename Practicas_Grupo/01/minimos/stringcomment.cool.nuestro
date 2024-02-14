@@ -1,0 +1,9 @@
+#name "stringcomment.cool"
+ OBJECTID his is a string--and it's still a string"
+ '-' 
+ '-' 
+ OBJECTID his is a comment, "not a string"
+ NOT
+ OBJECTID a string" *)
+ NOT
+ OBJECTID a comment *)"

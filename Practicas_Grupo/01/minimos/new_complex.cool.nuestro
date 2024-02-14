@@ -1,0 +1,70 @@
+#name "new_complex.cool"
+ CLASS
+ OBJECTID ain inherits IO {
+ OBJECTID main() : SELF_TYPE {
+ LET
+ OBJECTID c : Complex <- (new Complex).init(1, 1) in
+ '-' 
+ '-' 
+ OBJECTID trivially equal (see CoolAid)
+ IF
+ OBJECTID c.reflect_X() = c.reflect_0()
+ THEN
+ OBJECTID out_string("=)\n")
+ ELSE
+ OBJECTID out_string("=(\n")
+ FI
+ '-' 
+ '-' 
+ OBJECTID equal
+ IF
+ OBJECTID c.reflect_X().reflect_Y().equal(c.reflect_0())
+ THEN
+ OBJECTID out_string("=)\n")
+ ELSE
+ OBJECTID out_string("=(\n")
+ FI
+ CLASS
+ OBJECTID omplex inherits IO {
+ OBJECTID x : Int;
+ OBJECTID y : Int;
+ OBJECTID init(a : Int, b : Int) : Complex {
+ OBJECTID x = a;
+ OBJECTID y = b;
+ OBJECTID self;
+ OBJECTID print() : Object {
+ IF
+ OBJECTID y = 0
+ THEN
+ OBJECTID out_int(x)
+ ELSE
+ OBJECTID out_int(x).out_string("+").out_int(y).out_string("I")
+ FI
+ OBJECTID reflect_0() : Complex {
+ OBJECTID x = ~x;
+ OBJECTID y = ~y;
+ OBJECTID self;
+ OBJECTID reflect_X() : Complex {
+ OBJECTID y = ~y;
+ OBJECTID self;
+ OBJECTID reflect_Y() : Complex {
+ OBJECTID x = ~x;
+ OBJECTID self;
+ OBJECTID equal(d : Complex) : Bool {
+ IF
+ OBJECTID x = d.x_value()
+ THEN
+ IF
+ OBJECTID y = d.y_value()
+ THEN
+ BOOL_CONST true
+ ELSE
+ BOOL_CONST false
+ FI
+ ELSE
+ BOOL_CONST false
+ FI
+ OBJECTID x_value() : Int {
+ OBJECTID x
+ OBJECTID y_value() : Int {
+ OBJECTID y

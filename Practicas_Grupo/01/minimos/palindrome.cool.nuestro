@@ -1,0 +1,34 @@
+#name "palindrome.cool"
+ CLASS
+ OBJECTID ain inherits IO {
+ OBJECTID pal(s : String) : Bool {
+ IF
+ OBJECTID s.length() = 0
+ THEN
+ BOOL_CONST true
+ ELSE
+ IF
+ OBJECTID s.length() = 1
+ THEN
+ BOOL_CONST true
+ ELSE
+ IF
+ OBJECTID s.substr(0, 1) = s.substr(s.length() - 1, 1)
+ THEN
+ OBJECTID pal(s.substr(1, s.length() -2))
+ ELSE
+ BOOL_CONST false
+ FI
+ FI
+ FI
+ OBJECTID i : Int;
+ OBJECTID main() : SELF_TYPE {
+ OBJECTID i <- ~1;
+ OBJECTID out_string("enter a string\n");
+ IF
+ OBJECTID pal(in_string())
+ THEN
+ OBJECTID out_string("that was a palindrome\n")
+ ELSE
+ OBJECTID out_string("that was not a palindrome\n")
+ FI

@@ -1,0 +1,100 @@
+#name "book_list.cl.cool"
+ '-' 
+ '-' 
+ OBJECTID example of static and dynamic type differing for a dispatch
+ CLASS
+ OBJECTID ook inherits IO {
+ OBJECTID title : String;
+ OBJECTID author : String;
+ OBJECTID initBook(title_p : String, author_p : String) : Book {
+ OBJECTID title <- title_p;
+ OBJECTID author <- author_p;
+ OBJECTID self;
+ OBJECTID print() : Book {
+ OBJECTID out_string("title:      ").out_string(title).out_string("\n");
+ OBJECTID out_string("author:     ").out_string(author).out_string("\n");
+ OBJECTID self;
+ CLASS
+ OBJECTID rticle inherits Book {
+ OBJECTID per_title : String;
+ OBJECTID initArticle(title_p : String, author_p : String,
+ OBJECTID per_title_p : String) : Article {
+ OBJECTID initBook(title_p, author_p);
+ OBJECTID per_title <- per_title_p;
+ OBJECTID self;
+ OBJECTID print() : Book {
+ OBJECTID self@Book.print();
+ OBJECTID out_string("periodical:  ").out_string(per_title).out_string("\n");
+ OBJECTID self;
+ CLASS
+ OBJECTID ookList inherits IO { 
+ OBJECTID ince abort "returns" type Object, we have to add
+ OBJECTID an expression of type Bool here to satisfy the typechecker.
+ OBJECTID his code is unreachable, since abort() halts the program.
+ OBJECTID isNil() : Bool { { abort(); true; } };
+ OBJECTID cons(hd : Book) : Cons {
+ LET
+ OBJECTID new_cell : Cons <- new Cons in
+ OBJECTID new_cell.init(hd,self)
+ OBJECTID ince abort "returns" type Object, we have to add
+ OBJECTID an expression of type Book here to satisfy the typechecker.
+ OBJECTID his code is unreachable, since abort() halts the program.
+ OBJECTID car() : Book { { abort(); new Book; } };
+ OBJECTID ince abort "returns" type Object, we have to add
+ OBJECTID an expression of type BookList here to satisfy the typechecker.
+ OBJECTID his code is unreachable, since abort() halts the program.
+ OBJECTID cdr() : BookList { { abort(); new BookList; } };
+ OBJECTID print_list() : Object { abort() };
+ CLASS
+ OBJECTID ons inherits BookList {
+ OBJECTID xcar : Book;  -- We keep the car and cdr in attributes.
+ OBJECTID xcdr : BookList; -- Because methods and features must have different names,
+ '-' 
+ '-' 
+ OBJECTID we use xcar and xcdr for the attributes and reserve
+ '-' 
+ '-' 
+ OBJECTID car and cdr for the features.
+ OBJECTID isNil() : Bool { false };
+ OBJECTID init(hd : Book, tl : BookList) : Cons {
+ OBJECTID xcar <- hd;
+ OBJECTID xcdr <- tl;
+ OBJECTID self;
+ OBJECTID car() : Book { xcar };
+ OBJECTID cdr() : BookList { xcdr };
+ OBJECTID print_list() : Object {
+ CASE
+ OBJECTID xcar.print() of
+ OBJECTID dummy : Book => out_string("- dynamic type was Book -\n");
+ OBJECTID dummy : Article => out_string("- dynamic type was Article -\n");
+ ESAC
+ OBJECTID xcdr.print_list();
+ CLASS
+ OBJECTID il inherits BookList {
+ OBJECTID isNil() : Bool { true };
+ OBJECTID print_list() : Object { true };
+ CLASS
+ OBJECTID ain {
+ OBJECTID books : BookList;
+ OBJECTID main() : Object {
+ LET
+ OBJECTID a_book : Book <-
+ NEW
+ OBJECTID ook).initBook("Compilers, Principles, Techniques, and Tools",
+ OBJECTID ho, Sethi, and Ullman")
+ IN
+ LET
+ OBJECTID an_article : Article <-
+ NEW
+ OBJECTID rticle).initArticle("The Top 100 CD_ROMs",
+ OBJECTID lanoff",
+ OBJECTID agazine")
+ IN
+ OBJECTID books <- (new Nil).cons(a_book).cons(an_article);
+ OBJECTID books.print_list();
+ '-' 
+ '-' 
+ OBJECTID end let an_article
+ '-' 
+ '-' 
+ OBJECTID end let a_book

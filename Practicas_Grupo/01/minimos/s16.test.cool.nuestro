@@ -1,0 +1,14 @@
+#name "s16.test.cool"
+ OBJECTID some integer literals *)
+ INT_CONST 0
+ INT_CONST 99
+ INT_CONST 0777
+ OBJECTID this is *decimal* 777 *)
+ INT_CONST 2147483647
+ OBJECTID largest representable *)
+ INT_CONST 2147483648
+ OBJECTID one too big *)
+ INT_CONST 012345678901234567890123456789
+ OBJECTID long ... *)
+ INT_CONST 2147483647
+ OBJECTID largest representable (again to ensure errno resetting works) *)

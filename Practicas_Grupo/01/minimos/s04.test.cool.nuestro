@@ -1,0 +1,13 @@
+#name "s04.test.cool"
+ OBJECTID various forms of whitespace *)
+ INT_CONST 0
+ OBJECTID blanks *)
+ INT_CONST 1
+ OBJECTID formfeed *)
+ INT_CONST 2
+ OBJECTID carriage return *)
+ INT_CONST 3
+ OBJECTID tab *)
+ INT_CONST 4
+ OBJECTID vertical tab *)
+ INT_CONST 5

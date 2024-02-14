@@ -1,0 +1,103 @@
+#name "sort_list.cl.cool"
+ OBJECTID his file presents a fairly large example of Cool programming.  The
+ CLASS
+ OBJECTID ist defines the names of standard list operations ala Scheme:
+ OBJECTID car, cdr, cons, isNil, rev, sort, rcons (add an element to the end of
+ OBJECTID the list), and print_list.  In the List class most of these functions
+ OBJECTID are just stubs that abort if ever called.  The classes Nil and Cons
+ OBJECTID inherit from List and define the same operations, but now as
+ OBJECTID appropriate to the empty list (for the Nil class) and for cons cells (for
+ OBJECTID the Cons class).
+ OBJECTID he Main class puts all of this code through the following silly 
+ OBJECTID test exercise:
+ INT_CONST 1
+ OBJECTID prompt for a number N
+ INT_CONST 2
+ OBJECTID generate a list of numbers 0..N-1
+ INT_CONST 3
+ OBJECTID reverse the list
+ INT_CONST 4
+ OBJECTID sort the list
+ INT_CONST 5
+ OBJECTID print the sorted list
+ OBJECTID ecause the sort used is a quadratic space insertion sort, sorting
+ OBJECTID moderately large lists will cause spim to run out of memory.
+ CLASS
+ OBJECTID ist inherits IO { 
+ OBJECTID ince abort() returns Object, we need something of
+ OBJECTID type Bool at the end of the block to satisfy the typechecker. 
+ OBJECTID his code is unreachable, since abort() halts the program. *)
+ OBJECTID isNil() : Bool { { abort(); true; } };
+ OBJECTID cons(hd : Int) : Cons {
+ LET
+ OBJECTID new_cell : Cons <- new Cons in
+ OBJECTID new_cell.init(hd,self)
+ OBJECTID ince abort "returns" type Object, we have to add
+ OBJECTID an expression of type Int here to satisfy the typechecker.
+ OBJECTID his code is, of course, unreachable.
+ OBJECTID car() : Int { { abort(); new Int; } };
+ OBJECTID cdr() : List { { abort(); new List; } };
+ OBJECTID rev() : List { cdr() };
+ OBJECTID sort() : List { cdr() };
+ OBJECTID insert(i : Int) : List { cdr() };
+ OBJECTID rcons(i : Int) : List { cdr() };
+ OBJECTID print_list() : Object { abort() };
+ CLASS
+ OBJECTID ons inherits List {
+ OBJECTID xcar : Int;  -- We keep the car in cdr in attributes.
+ OBJECTID xcdr : List; -- Because methods and features must have different names,
+ '-' 
+ '-' 
+ OBJECTID we use xcar and xcdr for the attributes and reserve
+ '-' 
+ '-' 
+ OBJECTID cons and car for the features.
+ OBJECTID isNil() : Bool { false };
+ OBJECTID init(hd : Int, tl : List) : Cons {
+ OBJECTID xcar <- hd;
+ OBJECTID xcdr <- tl;
+ OBJECTID self;
+ OBJECTID car() : Int { xcar };
+ OBJECTID cdr() : List { xcdr };
+ OBJECTID rev() : List { (xcdr.rev()).rcons(xcar) };
+ OBJECTID sort() : List { (xcdr.sort()).insert(xcar) };
+ OBJECTID insert(i : Int) : List {
+ IF
+ OBJECTID i < xcar then
+ NEW
+ OBJECTID ons).init(i,self)
+ ELSE
+ NEW
+ OBJECTID ons).init(xcar,xcdr.insert(i))
+ FI
+ OBJECTID rcons(i : Int) : List { (new Cons).init(xcar, xcdr.rcons(i)) };
+ OBJECTID print_list() : Object {
+ OBJECTID out_int(xcar);
+ OBJECTID out_string("\n");
+ OBJECTID xcdr.print_list();
+ CLASS
+ OBJECTID il inherits List {
+ OBJECTID isNil() : Bool { true };
+ OBJECTID rev() : List { self };
+ OBJECTID sort() : List { self };
+ OBJECTID insert(i : Int) : List { rcons(i) };
+ OBJECTID rcons(i : Int) : List { (new Cons).init(i,self) };
+ OBJECTID print_list() : Object { true };
+ CLASS
+ OBJECTID ain inherits IO {
+ OBJECTID l : List;
+ OBJECTID iota maps its integer argument n into the list 0..n-1 *)
+ OBJECTID iota(i : Int) : List {
+ OBJECTID l <- new Nil;
+ LET
+ OBJECTID j : Int <- 0 in
+ WHILE
+ OBJECTID j < i 
+ LOOP
+ OBJECTID l <- (new Cons).init(j,l);
+ OBJECTID j <- j + 1;
+ POOL
+ OBJECTID l;
+ OBJECTID main() : Object {
+ OBJECTID out_string("How many numbers to sort?");
+ OBJECTID iota(in_int()).rev().sort().print_list();

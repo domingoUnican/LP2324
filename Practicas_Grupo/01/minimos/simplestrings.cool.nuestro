@@ -1,0 +1,7 @@
+#name "simplestrings.cool"
+ OBJECTID this is a string" "so is this"
+ OBJECTID one more string"
+ OBJECTID strings can have keywords inside: if else case"
+ INT_CONST 1234567890
+ '-' 
+ OBJECTID justanother string   "

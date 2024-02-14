@@ -1,0 +1,82 @@
+#name "io.cool"
+ OBJECTID he IO class is predefined and has 4 methods:
+ OBJECTID out_string(s : String) : SELF_TYPE
+ OBJECTID out_int(i : Int) : SELF_TYPE
+ OBJECTID in_string() : String
+ OBJECTID in_int() : Int
+ OBJECTID he out operations print their argument to the terminal. The
+ OBJECTID in_string method reads an entire line from the terminal and returns a
+ OBJECTID string not containing the new line. The in_int method also reads
+ OBJECTID an entire line from the terminal and returns the integer
+ OBJECTID corresponding to the first non blank word on the line. If that
+ OBJECTID word is not an integer, it returns 0.
+ OBJECTID ecause our language is object oriented, we need an object of type
+ IN
+ OBJECTID order to call any of these methods.
+ OBJECTID here are basically two ways of getting access to IO in a class C.
+ INT_CONST 1
+ OBJECTID efine C to Inherit from IO. This way the IO methods become
+ OBJECTID methods of C, and they can be called using the abbreviated
+ OBJECTID dispatch, i.e.
+ CLASS
+ INHERITS
+ OBJECTID is
+ OBJECTID out_string("Hello world\n")
+ OBJECTID end;
+ INT_CONST 2
+ IF
+ OBJECTID your class C does not directly or indirectly inherit from
+ OBJECTID the best way to access IO is through an initialized
+ OBJECTID attribute of type IO. 
+ CLASS
+ INHERITS
+ OBJECTID oo is
+ OBJECTID io : IO <- new IO;
+ OBJECTID io.out_string("Hello world\n");
+ OBJECTID end;
+ OBJECTID pproach 1) is most often used, in particular when you need IO
+ OBJECTID functions in the Main class.
+ CLASS
+ '-' 
+ '-' 
+ LET
+ OBJECTID s assume that we don't want A to not inherit from IO.
+ OBJECTID io : IO <- new IO;
+ OBJECTID out_a() : Object { io.out_string("A: Hello world\n") };
+ CLASS
+ INHERITS
+ '-' 
+ '-' 
+ OBJECTID does not have to an extra attribute, since it inherits io from A.
+ OBJECTID out_b() : Object { io.out_string("B: Hello world\n") };
+ CLASS
+ INHERITS
+ '-' 
+ '-' 
+ OBJECTID ow the IO methods are part of C.
+ OBJECTID out_c() : Object { out_string("C: Hello world\n") };
+ '-' 
+ '-' 
+ OBJECTID ote that out_string(...) is just a shorthand for self.out_string(...)
+ CLASS
+ INHERITS
+ '-' 
+ '-' 
+ INHERITS
+ OBJECTID methods from C.
+ OBJECTID out_d() : Object { out_string("D: Hello world\n") };
+ CLASS
+ OBJECTID ain inherits IO {
+ '-' 
+ '-' 
+ OBJECTID ame case as class C.
+ OBJECTID main() : Object {
+ NEW
+ OBJECTID out_a();
+ NEW
+ OBJECTID out_b();
+ NEW
+ OBJECTID out_c();
+ NEW
+ OBJECTID out_d();
+ OBJECTID out_string("Done.\n");

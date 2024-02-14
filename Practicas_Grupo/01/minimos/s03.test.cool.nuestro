@@ -1,0 +1,4 @@
+#name "s03.test.cool"
+ '-' 
+ '-' 
+ OBJECTID can they handle EOF in "--" state?
