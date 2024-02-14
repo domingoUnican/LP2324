@@ -18,6 +18,7 @@ class CoolLexer(Lexer):
     literals = {}
     # Ejemplo
     ELSE = r'\b[eE][lL][sS][eE]\b'
+    IF = r'\b[Ii][fF]\b'
 
     CARACTERES_CONTROL = [bytes.fromhex(i+hex(j)[-1]).decode('ascii')
                           for i in ['0', '1']
