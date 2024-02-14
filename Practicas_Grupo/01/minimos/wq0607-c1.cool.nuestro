@@ -1,0 +1,9 @@
+#name "wq0607-c1.cool"
+ '(' 
+ '*' 
+ TYPEID COMMENT
+ TYPEID STRING
+ TYPEID COMMENT
+ TYPEID COMMENT
+ '*' 
+ ')'

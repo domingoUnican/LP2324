@@ -1,0 +1,217 @@
+#name "atoi.cool"
+ '(' 
+ '*' 
+ TYPEID The
+ CLASS
+ TYPEID A2I
+ OBJECTID provides
+ OBJECTID integer
+ '-' 
+ OBJECTID to
+ '-' 
+ OBJECTID string
+ OBJECTID and
+ OBJECTID string
+ '-' 
+ OBJECTID to
+ '-' 
+ OBJECTID integer
+ OBJECTID conversion
+ OBJECTID routines
+ TYPEID To
+ OBJECTID use
+ OBJECTID these
+ OBJECTID routines
+ OBJECTID either
+ OBJECTID inherit
+ OBJECTID them
+ IN
+ OBJECTID the
+ CLASS
+ OBJECTID where
+ OBJECTID needed
+ OBJECTID have
+ OBJECTID a
+ OBJECTID dummy
+ OBJECTID variable
+ OBJECTID bound
+ OBJECTID to
+ OBJECTID something
+ OF
+ OBJECTID type
+ TYPEID A2I
+ OBJECTID or
+ OBJECTID simpl
+ OBJECTID write
+ '(' 
+ NEW
+ TYPEID A2I
+ ')' 
+ OBJECTID method
+ '(' 
+ OBJECTID argument
+ ')' 
+ '*' 
+ ')' 
+ CLASS
+ TYPEID A2I
+ '{' 
+ OBJECTID c2i
+ '(' 
+ OBJECTID char
+ ':' 
+ TYPEID String
+ ')' 
+ ':' 
+ TYPEID Int
+ '{' 
+ IF
+ OBJECTID char
+ STR_CONST "0"
+ THEN
+ INT_CONST 0
+ ELSE
+ IF
+ OBJECTID char
+ STR_CONST "1"
+ THEN
+ INT_CONST 1
+ ELSE
+ IF
+ OBJECTID char
+ STR_CONST "2"
+ THEN
+ INT_CONST 2
+ ELSE
+ IF
+ OBJECTID char
+ STR_CONST "3"
+ THEN
+ INT_CONST 3
+ ELSE
+ IF
+ OBJECTID char
+ STR_CONST "4"
+ THEN
+ INT_CONST 4
+ ELSE
+ IF
+ OBJECTID char
+ STR_CONST "5"
+ THEN
+ INT_CONST 5
+ ELSE
+ IF
+ OBJECTID char
+ STR_CONST "6"
+ THEN
+ INT_CONST 6
+ ELSE
+ IF
+ OBJECTID char
+ STR_CONST "7"
+ THEN
+ INT_CONST 7
+ ELSE
+ IF
+ OBJECTID char
+ STR_CONST "8"
+ THEN
+ INT_CONST 8
+ ELSE
+ IF
+ OBJECTID char
+ STR_CONST "9"
+ THEN
+ INT_CONST 9
+ ELSE
+ '{' 
+ OBJECTID abort
+ '(' 
+ ')' 
+ ';' 
+ INT_CONST 0
+ ';' 
+ '}' 
+ '-' 
+ STR_CONST " then ~a2i_aux(s.substr(1,s.length()-1)) else
+        if s.substr(0,1) = "
+ '+' 
+ STR_CONST " then a2i_aux(s.substr(1,s.length()-1)) else
+           a2i_aux(s)
+        fi fi fi
+     };
+
+(*
+  a2i_aux converts the usigned portion of the string.  As a programming
+example, this method is written iteratively.
+*)
+     a2i_aux(s : String) : Int {
+	(let int : Int <- 0 in	
+           {	
+               (let j : Int <- s.length() in
+	          (let i : Int <- 0 in
+		    while i < j loop
+			{
+			    int <- int * 10 + c2i(s.substr(i,1));
+			    i <- i + 1;
+			}
+		    pool
+		  )
+	       );
+              int;
+	    }
+        )
+     };
+
+(*
+    i2a converts an integer to a string.  Positive and negative 
+numbers are handled correctly.  
+*)
+    i2a(i : Int) : String {
+	if i = 0 then "
+ INT_CONST 0
+ STR_CONST " else 
+        if 0 < i then i2a_aux(i) else
+          "
+ '-' 
+ STR_CONST ".concat(i2a_aux(i * ~1)) 
+        fi fi
+    };
+	
+(*
+    i2a_aux is an example using recursion.
+*)		
+    i2a_aux(i : Int) : String {
+        if i = 0 then "
+ ELSE
+ '(' 
+ LET
+ OBJECTID next
+ ':' 
+ TYPEID Int
+ '-' 
+ OBJECTID i
+ INT_CONST 10
+ IN
+ OBJECTID i2a_aux
+ '(' 
+ OBJECTID next
+ ')' 
+ OBJECTID concat
+ '(' 
+ OBJECTID i2c
+ '(' 
+ OBJECTID i
+ '-' 
+ OBJECTID next
+ '*' 
+ INT_CONST 10
+ ')' 
+ ')' 
+ ')' 
+ FI
+ '}' 
+ ';' 
+ '}' 
+ ';'

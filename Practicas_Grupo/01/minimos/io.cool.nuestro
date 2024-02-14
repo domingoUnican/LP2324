@@ -1,0 +1,315 @@
+#name "io.cool"
+ '(' 
+ '*' 
+ '*' 
+ TYPEID The
+ TYPEID IO
+ CLASS
+ OBJECTID is
+ OBJECTID predefined
+ OBJECTID and
+ OBJECTID has
+ INT_CONST 4
+ OBJECTID methods
+ ':' 
+ '*' 
+ '*' 
+ OBJECTID out_string
+ '(' 
+ OBJECTID s
+ ':' 
+ TYPEID String
+ ')' 
+ ':' 
+ TYPEID SELF_TYPE
+ '*' 
+ OBJECTID out_int
+ '(' 
+ OBJECTID i
+ ':' 
+ TYPEID Int
+ ')' 
+ ':' 
+ TYPEID SELF_TYPE
+ '*' 
+ OBJECTID in_string
+ '(' 
+ ')' 
+ ':' 
+ TYPEID String
+ '*' 
+ OBJECTID in_int
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Int
+ '*' 
+ '*' 
+ TYPEID The
+ OBJECTID out
+ OBJECTID operations
+ OBJECTID print
+ OBJECTID their
+ OBJECTID argument
+ OBJECTID to
+ OBJECTID the
+ OBJECTID terminal
+ TYPEID The
+ '*' 
+ OBJECTID in_string
+ OBJECTID method
+ OBJECTID reads
+ OBJECTID an
+ OBJECTID entire
+ OBJECTID line
+ OBJECTID from
+ OBJECTID the
+ OBJECTID terminal
+ OBJECTID and
+ OBJECTID returns
+ OBJECTID a
+ '*' 
+ OBJECTID string
+ NOT
+ OBJECTID containing
+ OBJECTID the
+ NEW
+ OBJECTID line
+ TYPEID The
+ OBJECTID in_int
+ OBJECTID method
+ OBJECTID also
+ OBJECTID reads
+ '*' 
+ OBJECTID an
+ OBJECTID entire
+ OBJECTID line
+ OBJECTID from
+ OBJECTID the
+ OBJECTID terminal
+ OBJECTID and
+ OBJECTID returns
+ OBJECTID the
+ OBJECTID integer
+ '*' 
+ OBJECTID corresponding
+ OBJECTID to
+ OBJECTID the
+ OBJECTID first
+ OBJECTID non
+ OBJECTID blank
+ OBJECTID word
+ OBJECTID on
+ OBJECTID the
+ OBJECTID line
+ IF
+ OBJECTID that
+ '*' 
+ OBJECTID word
+ OBJECTID is
+ NOT
+ OBJECTID an
+ OBJECTID integer
+ OBJECTID it
+ OBJECTID returns
+ INT_CONST 0
+ '*' 
+ '*' 
+ '*' 
+ TYPEID Because
+ OBJECTID our
+ OBJECTID language
+ OBJECTID is
+ OBJECTID object
+ OBJECTID oriented
+ OBJECTID we
+ OBJECTID need
+ OBJECTID an
+ OBJECTID object
+ OF
+ OBJECTID type
+ '*' 
+ TYPEID IO
+ IN
+ OBJECTID order
+ OBJECTID to
+ OBJECTID call
+ OBJECTID any
+ OF
+ OBJECTID these
+ OBJECTID methods
+ '*' 
+ '*' 
+ TYPEID There
+ OBJECTID are
+ OBJECTID basically
+ OBJECTID two
+ OBJECTID ways
+ OF
+ OBJECTID getting
+ OBJECTID access
+ OBJECTID to
+ TYPEID IO
+ IN
+ OBJECTID a
+ CLASS
+ TYPEID C
+ '*' 
+ '*' 
+ INT_CONST 1
+ ')' 
+ TYPEID Define
+ TYPEID C
+ OBJECTID to
+ TYPEID Inherit
+ OBJECTID from
+ TYPEID IO
+ TYPEID This
+ OBJECTID way
+ OBJECTID the
+ TYPEID IO
+ OBJECTID methods
+ OBJECTID become
+ '*' 
+ OBJECTID methods
+ OF
+ TYPEID C
+ OBJECTID and
+ OBJECTID they
+ OBJECTID can
+ OBJECTID be
+ OBJECTID called
+ OBJECTID using
+ OBJECTID the
+ OBJECTID abbreviated
+ '*' 
+ OBJECTID dispatch
+ OBJECTID i
+ OBJECTID e
+ '*' 
+ '*' 
+ CLASS
+ TYPEID C
+ INHERITS
+ TYPEID IO
+ OBJECTID is
+ '*' 
+ '*' 
+ OBJECTID out_string
+ '(' 
+ STR_CONST "Hello world\n"
+ ')' 
+ '*' 
+ '*' 
+ OBJECTID end
+ ';' 
+ '*' 
+ '*' 
+ INT_CONST 2
+ ')' 
+ IF
+ OBJECTID your
+ CLASS
+ TYPEID C
+ OBJECTID does
+ NOT
+ OBJECTID directly
+ OBJECTID or
+ OBJECTID indirectly
+ OBJECTID inherit
+ OBJECTID from
+ '*' 
+ TYPEID IO
+ OBJECTID the
+ OBJECTID best
+ OBJECTID way
+ OBJECTID to
+ OBJECTID access
+ TYPEID IO
+ OBJECTID is
+ OBJECTID through
+ OBJECTID an
+ OBJECTID initialized
+ '*' 
+ OBJECTID attribute
+ OF
+ OBJECTID type
+ TYPEID IO
+ '*' 
+ '*' 
+ CLASS
+ TYPEID C
+ INHERITS
+ TYPEID Foo
+ OBJECTID is
+ '*' 
+ OBJECTID io
+ ':' 
+ TYPEID IO
+ '-' 
+ NEW
+ TYPEID IO
+ ';' 
+ '*' 
+ '*' 
+ OBJECTID io
+ OBJECTID out_string
+ '(' 
+ STR_CONST "Hello world\n"
+ ')' 
+ ';' 
+ '*' 
+ '*' 
+ OBJECTID end
+ ';' 
+ '*' 
+ '*' 
+ TYPEID Approach
+ INT_CONST 1
+ ')' 
+ OBJECTID is
+ OBJECTID most
+ OBJECTID often
+ OBJECTID used
+ IN
+ OBJECTID particular
+ OBJECTID when
+ OBJECTID you
+ OBJECTID need
+ TYPEID IO
+ '*' 
+ OBJECTID functions
+ IN
+ OBJECTID the
+ TYPEID Main
+ CLASS
+ '*' 
+ '*' 
+ ')' 
+ CLASS
+ TYPEID A
+ '{' 
+ '-' 
+ NEW
+ TYPEID IO
+ ';' 
+ OBJECTID out_a
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Object
+ '{' 
+ OBJECTID io
+ OBJECTID out_string
+ '(' 
+ STR_CONST "A: Hello world\n"
+ ')' 
+ '}' 
+ ';' 
+ '}' 
+ ';' 
+ CLASS
+ TYPEID B
+ INHERITS
+ TYPEID A
+ '{'

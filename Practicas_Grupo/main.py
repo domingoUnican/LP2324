@@ -54,6 +54,8 @@ if True:
                     f.close()
                     g.close()
                     contador -= 1
+            else:
+                print(f"PASA {fich}")
         elif PRACTICA in ('02', '03'):
             from Parser import CoolParser
             parser = CoolParser()
