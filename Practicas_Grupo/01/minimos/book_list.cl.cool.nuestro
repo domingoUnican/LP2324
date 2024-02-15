@@ -1,4 +1,5 @@
 #name "book_list.cl.cool"
+
  CLASS
 
  TYPEID Book
@@ -96,6 +97,7 @@
  '('
 
  STR_CONST "title:      "
+
  ')'
 
  '.'
@@ -115,6 +117,7 @@
  '('
 
  STR_CONST "\n"
+
  ')'
 
  ';'
@@ -124,6 +127,7 @@
  '('
 
  STR_CONST "author:     "
+
  ')'
 
  '.'
@@ -143,6 +147,7 @@
  '('
 
  STR_CONST "\n"
+
  ')'
 
  ';'
@@ -274,6 +279,7 @@
  '('
 
  STR_CONST "periodical:  "
+
  ')'
 
  '.'
@@ -293,6 +299,7 @@
  '('
 
  STR_CONST "\n"
+
  ')'
 
  ';'
@@ -344,6 +351,7 @@
  ';'
 
  BOOL_CONST true
+
  ';'
 
  '}'
@@ -543,6 +551,7 @@
  '{'
 
  BOOL_CONST false
+
  '}'
 
  ';'
@@ -676,6 +685,7 @@
  '('
 
  STR_CONST "- dynamic type was Book -\n"
+
  ')'
 
  ';'
@@ -693,6 +703,7 @@
  '('
 
  STR_CONST "- dynamic type was Article -\n"
+
  ')'
 
  ';'
@@ -746,6 +757,7 @@
  '{'
 
  BOOL_CONST true
+
  '}'
 
  ';'
@@ -763,6 +775,7 @@
  '{'
 
  BOOL_CONST true
+
  '}'
 
  ';'
@@ -824,9 +837,11 @@
  '('
 
  STR_CONST "Compilers, Principles, Techniques, and Tools"
+
  ','
 
  STR_CONST "Aho, Sethi, and Ullman"
+
  ')'
 
  IN
@@ -858,12 +873,15 @@
  '('
 
  STR_CONST "The Top 100 CD_ROMs"
+
  ','
 
  STR_CONST "Ulanoff"
+
  ','
 
  STR_CONST "PC Magazine"
+
  ')'
 
  IN

@@ -1,4 +1,5 @@
 #name "atoi.cool"
+
  CLASS
 
  TYPEID A2I
@@ -30,9 +31,11 @@
  '='
 
  STR_CONST "0"
+
  THEN
 
  INT_CONST 0
+
  ELSE
 
  IF
@@ -42,9 +45,11 @@
  '='
 
  STR_CONST "1"
+
  THEN
 
  INT_CONST 1
+
  ELSE
 
  IF
@@ -54,9 +59,11 @@
  '='
 
  STR_CONST "2"
+
  THEN
 
  INT_CONST 2
+
  ELSE
 
  IF
@@ -66,9 +73,11 @@
  '='
 
  STR_CONST "3"
+
  THEN
 
  INT_CONST 3
+
  ELSE
 
  IF
@@ -78,9 +87,11 @@
  '='
 
  STR_CONST "4"
+
  THEN
 
  INT_CONST 4
+
  ELSE
 
  IF
@@ -90,9 +101,11 @@
  '='
 
  STR_CONST "5"
+
  THEN
 
  INT_CONST 5
+
  ELSE
 
  IF
@@ -102,9 +115,11 @@
  '='
 
  STR_CONST "6"
+
  THEN
 
  INT_CONST 6
+
  ELSE
 
  IF
@@ -114,9 +129,11 @@
  '='
 
  STR_CONST "7"
+
  THEN
 
  INT_CONST 7
+
  ELSE
 
  IF
@@ -126,9 +143,11 @@
  '='
 
  STR_CONST "8"
+
  THEN
 
  INT_CONST 8
+
  ELSE
 
  IF
@@ -138,9 +157,11 @@
  '='
 
  STR_CONST "9"
+
  THEN
 
  INT_CONST 9
+
  ELSE
 
  '{'
@@ -154,6 +175,7 @@
  ';'
 
  INT_CONST 0
+
  ';'
 
  '}'
@@ -207,9 +229,11 @@
  '='
 
  INT_CONST 0
+
  THEN
 
  STR_CONST "0"
+
  ELSE
 
  IF
@@ -219,9 +243,11 @@
  '='
 
  INT_CONST 1
+
  THEN
 
  STR_CONST "1"
+
  ELSE
 
  IF
@@ -231,9 +257,11 @@
  '='
 
  INT_CONST 2
+
  THEN
 
  STR_CONST "2"
+
  ELSE
 
  IF
@@ -243,9 +271,11 @@
  '='
 
  INT_CONST 3
+
  THEN
 
  STR_CONST "3"
+
  ELSE
 
  IF
@@ -255,9 +285,11 @@
  '='
 
  INT_CONST 4
+
  THEN
 
  STR_CONST "4"
+
  ELSE
 
  IF
@@ -267,9 +299,11 @@
  '='
 
  INT_CONST 5
+
  THEN
 
  STR_CONST "5"
+
  ELSE
 
  IF
@@ -279,9 +313,11 @@
  '='
 
  INT_CONST 6
+
  THEN
 
  STR_CONST "6"
+
  ELSE
 
  IF
@@ -291,9 +327,11 @@
  '='
 
  INT_CONST 7
+
  THEN
 
  STR_CONST "7"
+
  ELSE
 
  IF
@@ -303,9 +341,11 @@
  '='
 
  INT_CONST 8
+
  THEN
 
  STR_CONST "8"
+
  ELSE
 
  IF
@@ -315,9 +355,11 @@
  '='
 
  INT_CONST 9
+
  THEN
 
  STR_CONST "9"
+
  ELSE
 
  '{'
@@ -331,6 +373,7 @@
  ';'
 
  STR_CONST ""
+
  ';'
 
  '}'
@@ -392,9 +435,11 @@
  '='
 
  INT_CONST 0
+
  THEN
 
  INT_CONST 0
+
  ELSE
 
  IF
@@ -408,14 +453,17 @@
  '('
 
  INT_CONST 0
+
  ','
 
  INT_CONST 1
+
  ')'
 
  '='
 
  STR_CONST "-"
+
  THEN
 
  '~'
@@ -433,6 +481,7 @@
  '('
 
  INT_CONST 1
+
  ','
 
  OBJECTID s
@@ -448,6 +497,7 @@
  '-'
 
  INT_CONST 1
+
  ')'
 
  ')'
@@ -465,14 +515,17 @@
  '('
 
  INT_CONST 0
+
  ','
 
  INT_CONST 1
+
  ')'
 
  '='
 
  STR_CONST "+"
+
  THEN
 
  OBJECTID a2i_aux
@@ -488,6 +541,7 @@
  '('
 
  INT_CONST 1
+
  ','
 
  OBJECTID s
@@ -503,6 +557,7 @@
  '-'
 
  INT_CONST 1
+
  ')'
 
  ')'
@@ -558,6 +613,7 @@
  ASSIGN
 
  INT_CONST 0
+
  IN
 
  '{'
@@ -599,6 +655,7 @@
  ASSIGN
 
  INT_CONST 0
+
  IN
 
  WHILE
@@ -622,6 +679,7 @@
  '*'
 
  INT_CONST 10
+
  '+'
 
  OBJECTID c2i
@@ -641,6 +699,7 @@
  ','
 
  INT_CONST 1
+
  ')'
 
  ')'
@@ -656,6 +715,7 @@
  '+'
 
  INT_CONST 1
+
  ';'
 
  '}'
@@ -705,14 +765,17 @@
  '='
 
  INT_CONST 0
+
  THEN
 
  STR_CONST "0"
+
  ELSE
 
  IF
 
  INT_CONST 0
+
  '<'
 
  OBJECTID i
@@ -730,6 +793,7 @@
  ELSE
 
  STR_CONST "-"
+
  '.'
 
  OBJECTID concat
@@ -747,6 +811,7 @@
  '~'
 
  INT_CONST 1
+
  ')'
 
  ')'
@@ -784,9 +849,11 @@
  '='
 
  INT_CONST 0
+
  THEN
 
  STR_CONST ""
+
  ELSE
 
  '('
@@ -806,6 +873,7 @@
  '/'
 
  INT_CONST 10
+
  IN
 
  OBJECTID i2a_aux
@@ -835,6 +903,7 @@
  '*'
 
  INT_CONST 10
+
  ')'
 
  ')'

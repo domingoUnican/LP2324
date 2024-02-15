@@ -1,4 +1,5 @@
 #name "io.cool"
+
  CLASS
 
  TYPEID A
@@ -40,6 +41,7 @@
  '('
 
  STR_CONST "A: Hello world\n"
+
  ')'
 
  '}'
@@ -81,6 +83,7 @@
  '('
 
  STR_CONST "B: Hello world\n"
+
  ')'
 
  '}'
@@ -118,6 +121,7 @@
  '('
 
  STR_CONST "C: Hello world\n"
+
  ')'
 
  '}'
@@ -155,6 +159,7 @@
  '('
 
  STR_CONST "D: Hello world\n"
+
  ')'
 
  '}'
@@ -266,6 +271,7 @@
  '('
 
  STR_CONST "Done.\n"
+
  ')'
 
  ';'

@@ -1,4 +1,5 @@
 #name "new_complex.cool"
+
  CLASS
 
  TYPEID Main
@@ -48,9 +49,11 @@
  '('
 
  INT_CONST 1
+
  ','
 
  INT_CONST 1
+
  ')'
 
  IN
@@ -88,6 +91,7 @@
  '('
 
  STR_CONST "=)\n"
+
  ')'
 
  ELSE
@@ -97,6 +101,7 @@
  '('
 
  STR_CONST "=(\n"
+
  ')'
 
  FI
@@ -148,6 +153,7 @@
  '('
 
  STR_CONST "=)\n"
+
  ')'
 
  ELSE
@@ -157,6 +163,7 @@
  '('
 
  STR_CONST "=(\n"
+
  ')'
 
  FI
@@ -272,6 +279,7 @@
  '='
 
  INT_CONST 0
+
  THEN
 
  OBJECTID out_int
@@ -299,6 +307,7 @@
  '('
 
  STR_CONST "+"
+
  ')'
 
  '.'
@@ -318,6 +327,7 @@
  '('
 
  STR_CONST "I"
+
  ')'
 
  FI
@@ -493,14 +503,17 @@
  THEN
 
  BOOL_CONST true
+
  ELSE
 
  BOOL_CONST false
+
  FI
 
  ELSE
 
  BOOL_CONST false
+
  FI
 
  '}'

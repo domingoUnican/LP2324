@@ -36,7 +36,7 @@ if True:
         f.close()
         if PRACTICA == '01':
             texto = '\n'.join(lexer.salida(entrada))
-            texto = f'#name "{fich}"\n' + texto
+            texto = f'#name "{fich}"\n\n' + texto
             resultado = g.read()
             g.close()
             if texto.strip().split() != resultado.strip().split():

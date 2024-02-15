@@ -1,4 +1,5 @@
 #name "life.cool"
+
  CLASS
 
  TYPEID Board
@@ -114,6 +115,7 @@
  '='
 
  INT_CONST 15
+
  THEN
 
  '{'
@@ -123,6 +125,7 @@
  ASSIGN
 
  INT_CONST 3
+
  ';'
 
  OBJECTID columns
@@ -130,6 +133,7 @@
  ASSIGN
 
  INT_CONST 5
+
  ';'
 
  OBJECTID board_size
@@ -151,6 +155,7 @@
  '='
 
  INT_CONST 16
+
  THEN
 
  '{'
@@ -160,6 +165,7 @@
  ASSIGN
 
  INT_CONST 4
+
  ';'
 
  OBJECTID columns
@@ -167,6 +173,7 @@
  ASSIGN
 
  INT_CONST 4
+
  ';'
 
  OBJECTID board_size
@@ -188,6 +195,7 @@
  '='
 
  INT_CONST 20
+
  THEN
 
  '{'
@@ -197,6 +205,7 @@
  ASSIGN
 
  INT_CONST 4
+
  ';'
 
  OBJECTID columns
@@ -204,6 +213,7 @@
  ASSIGN
 
  INT_CONST 5
+
  ';'
 
  OBJECTID board_size
@@ -225,6 +235,7 @@
  '='
 
  INT_CONST 21
+
  THEN
 
  '{'
@@ -234,6 +245,7 @@
  ASSIGN
 
  INT_CONST 3
+
  ';'
 
  OBJECTID columns
@@ -241,6 +253,7 @@
  ASSIGN
 
  INT_CONST 7
+
  ';'
 
  OBJECTID board_size
@@ -262,6 +275,7 @@
  '='
 
  INT_CONST 25
+
  THEN
 
  '{'
@@ -271,6 +285,7 @@
  ASSIGN
 
  INT_CONST 5
+
  ';'
 
  OBJECTID columns
@@ -278,6 +293,7 @@
  ASSIGN
 
  INT_CONST 5
+
  ';'
 
  OBJECTID board_size
@@ -299,6 +315,7 @@
  '='
 
  INT_CONST 28
+
  THEN
 
  '{'
@@ -308,6 +325,7 @@
  ASSIGN
 
  INT_CONST 7
+
  ';'
 
  OBJECTID columns
@@ -315,6 +333,7 @@
  ASSIGN
 
  INT_CONST 4
+
  ';'
 
  OBJECTID board_size
@@ -336,6 +355,7 @@
  ASSIGN
 
  INT_CONST 5
+
  ';'
 
  OBJECTID columns
@@ -343,6 +363,7 @@
  ASSIGN
 
  INT_CONST 5
+
  ';'
 
  OBJECTID board_size
@@ -476,6 +497,7 @@
  ASSIGN
 
  INT_CONST 0
+
  IN
 
  '('
@@ -501,6 +523,7 @@
  '('
 
  STR_CONST "\n"
+
  ')'
 
  ';'
@@ -546,6 +569,7 @@
  '('
 
  STR_CONST "\n"
+
  ')'
 
  ';'
@@ -573,6 +597,7 @@
  '('
 
  STR_CONST "\n"
+
  ')'
 
  ';'
@@ -642,6 +667,7 @@
  '-'
 
  INT_CONST 1
+
  '<'
 
  OBJECTID position
@@ -649,6 +675,7 @@
  THEN
 
  STR_CONST " "
+
  ELSE
 
  OBJECTID population_map
@@ -664,6 +691,7 @@
  ','
 
  INT_CONST 1
+
  ')'
 
  FI
@@ -705,9 +733,11 @@
  '<'
 
  INT_CONST 0
+
  THEN
 
  STR_CONST " "
+
  ELSE
 
  OBJECTID cell
@@ -765,6 +795,7 @@
  THEN
 
  STR_CONST " "
+
  ELSE
 
  OBJECTID cell
@@ -816,6 +847,7 @@
  '+'
 
  INT_CONST 1
+
  ')'
 
  '/'
@@ -839,11 +871,13 @@
  '+'
 
  INT_CONST 1
+
  ')'
 
  THEN
 
  STR_CONST " "
+
  ELSE
 
  OBJECTID cell
@@ -855,6 +889,7 @@
  '+'
 
  INT_CONST 1
+
  ')'
 
  FI
@@ -888,9 +923,11 @@
  '='
 
  INT_CONST 0
+
  THEN
 
  STR_CONST " "
+
  ELSE
 
  IF
@@ -920,6 +957,7 @@
  THEN
 
  STR_CONST " "
+
  ELSE
 
  OBJECTID cell
@@ -931,6 +969,7 @@
  '-'
 
  INT_CONST 1
+
  ')'
 
  FI
@@ -974,9 +1013,11 @@
  '<'
 
  INT_CONST 0
+
  THEN
 
  STR_CONST " "
+
  ELSE
 
  IF
@@ -1006,6 +1047,7 @@
  THEN
 
  STR_CONST " "
+
  ELSE
 
  OBJECTID north
@@ -1017,6 +1059,7 @@
  '-'
 
  INT_CONST 1
+
  ')'
 
  FI
@@ -1060,9 +1103,11 @@
  '<'
 
  INT_CONST 0
+
  THEN
 
  STR_CONST " "
+
  ELSE
 
  IF
@@ -1078,6 +1123,7 @@
  '+'
 
  INT_CONST 1
+
  ')'
 
  '/'
@@ -1101,11 +1147,13 @@
  '+'
 
  INT_CONST 1
+
  ')'
 
  THEN
 
  STR_CONST " "
+
  ELSE
 
  OBJECTID north
@@ -1117,6 +1165,7 @@
  '+'
 
  INT_CONST 1
+
  ')'
 
  FI
@@ -1164,6 +1213,7 @@
  THEN
 
  STR_CONST " "
+
  ELSE
 
  IF
@@ -1179,6 +1229,7 @@
  '+'
 
  INT_CONST 1
+
  ')'
 
  '/'
@@ -1202,11 +1253,13 @@
  '+'
 
  INT_CONST 1
+
  ')'
 
  THEN
 
  STR_CONST " "
+
  ELSE
 
  OBJECTID south
@@ -1218,6 +1271,7 @@
  '+'
 
  INT_CONST 1
+
  ')'
 
  FI
@@ -1265,6 +1319,7 @@
  THEN
 
  STR_CONST " "
+
  ELSE
 
  IF
@@ -1294,6 +1349,7 @@
  THEN
 
  STR_CONST " "
+
  ELSE
 
  OBJECTID south
@@ -1305,6 +1361,7 @@
  '-'
 
  INT_CONST 1
+
  ')'
 
  FI
@@ -1346,12 +1403,15 @@
  '='
 
  STR_CONST "X"
+
  THEN
 
  INT_CONST 1
+
  ELSE
 
  INT_CONST 0
+
  FI
 
  '+'
@@ -1369,12 +1429,15 @@
  '='
 
  STR_CONST "X"
+
  THEN
 
  INT_CONST 1
+
  ELSE
 
  INT_CONST 0
+
  FI
 
  '+'
@@ -1392,12 +1455,15 @@
  '='
 
  STR_CONST "X"
+
  THEN
 
  INT_CONST 1
+
  ELSE
 
  INT_CONST 0
+
  FI
 
  '+'
@@ -1415,12 +1481,15 @@
  '='
 
  STR_CONST "X"
+
  THEN
 
  INT_CONST 1
+
  ELSE
 
  INT_CONST 0
+
  FI
 
  '+'
@@ -1438,12 +1507,15 @@
  '='
 
  STR_CONST "X"
+
  THEN
 
  INT_CONST 1
+
  ELSE
 
  INT_CONST 0
+
  FI
 
  '+'
@@ -1461,12 +1533,15 @@
  '='
 
  STR_CONST "X"
+
  THEN
 
  INT_CONST 1
+
  ELSE
 
  INT_CONST 0
+
  FI
 
  '+'
@@ -1484,12 +1559,15 @@
  '='
 
  STR_CONST "X"
+
  THEN
 
  INT_CONST 1
+
  ELSE
 
  INT_CONST 0
+
  FI
 
  '+'
@@ -1507,12 +1585,15 @@
  '='
 
  STR_CONST "X"
+
  THEN
 
  INT_CONST 1
+
  ELSE
 
  INT_CONST 0
+
  FI
 
  ';'
@@ -1554,9 +1635,11 @@
  '='
 
  INT_CONST 3
+
  THEN
 
  STR_CONST "X"
+
  ELSE
 
  IF
@@ -1572,6 +1655,7 @@
  '='
 
  INT_CONST 2
+
  THEN
 
  IF
@@ -1587,17 +1671,21 @@
  '='
 
  STR_CONST "X"
+
  THEN
 
  STR_CONST "X"
+
  ELSE
 
  STR_CONST "-"
+
  FI
 
  ELSE
 
  STR_CONST "-"
+
  FI
 
  FI
@@ -1631,6 +1719,7 @@
  ASSIGN
 
  INT_CONST 0
+
  IN
 
  '('
@@ -1712,6 +1801,7 @@
  '+'
 
  INT_CONST 1
+
  ';'
 
  '}'
@@ -1777,6 +1867,7 @@
  '('
 
  STR_CONST "\nPlease chose a number:\n"
+
  ')'
 
  ';'
@@ -1786,6 +1877,7 @@
  '('
 
  STR_CONST "\t1: A cross\n"
+
  ')'
 
  ';'
@@ -1795,6 +1887,7 @@
  '('
 
  STR_CONST "\t2: A slash from the upper left to lower right\n"
+
  ')'
 
  ';'
@@ -1804,6 +1897,7 @@
  '('
 
  STR_CONST "\t3: A slash from the upper right to lower left\n"
+
  ')'
 
  ';'
@@ -1813,6 +1907,7 @@
  '('
 
  STR_CONST "\t4: An X\n"
+
  ')'
 
  ';'
@@ -1822,6 +1917,7 @@
  '('
 
  STR_CONST "\t5: A greater than sign \n"
+
  ')'
 
  ';'
@@ -1831,6 +1927,7 @@
  '('
 
  STR_CONST "\t6: A less than sign\n"
+
  ')'
 
  ';'
@@ -1840,6 +1937,7 @@
  '('
 
  STR_CONST "\t7: Two greater than signs\n"
+
  ')'
 
  ';'
@@ -1849,6 +1947,7 @@
  '('
 
  STR_CONST "\t8: Two less than signs\n"
+
  ')'
 
  ';'
@@ -1858,6 +1957,7 @@
  '('
 
  STR_CONST "\t9: A 'V'\n"
+
  ')'
 
  ';'
@@ -1867,6 +1967,7 @@
  '('
 
  STR_CONST "\t10: An inverse 'V'\n"
+
  ')'
 
  ';'
@@ -1876,6 +1977,7 @@
  '('
 
  STR_CONST "\t11: Numbers 9 and 10 combined\n"
+
  ')'
 
  ';'
@@ -1885,6 +1987,7 @@
  '('
 
  STR_CONST "\t12: A full grid\n"
+
  ')'
 
  ';'
@@ -1894,6 +1997,7 @@
  '('
 
  STR_CONST "\t13: A 'T'\n"
+
  ')'
 
  ';'
@@ -1903,6 +2007,7 @@
  '('
 
  STR_CONST "\t14: A plus '+'\n"
+
  ')'
 
  ';'
@@ -1912,6 +2017,7 @@
  '('
 
  STR_CONST "\t15: A 'W'\n"
+
  ')'
 
  ';'
@@ -1921,6 +2027,7 @@
  '('
 
  STR_CONST "\t16: An 'M'\n"
+
  ')'
 
  ';'
@@ -1930,6 +2037,7 @@
  '('
 
  STR_CONST "\t17: An 'E'\n"
+
  ')'
 
  ';'
@@ -1939,6 +2047,7 @@
  '('
 
  STR_CONST "\t18: A '3'\n"
+
  ')'
 
  ';'
@@ -1948,6 +2057,7 @@
  '('
 
  STR_CONST "\t19: An 'O'\n"
+
  ')'
 
  ';'
@@ -1957,6 +2067,7 @@
  '('
 
  STR_CONST "\t20: An '8'\n"
+
  ')'
 
  ';'
@@ -1966,6 +2077,7 @@
  '('
 
  STR_CONST "\t21: An 'S'\n"
+
  ')'
 
  ';'
@@ -1975,6 +2087,7 @@
  '('
 
  STR_CONST "Your choice => "
+
  ')'
 
  ';'
@@ -1996,6 +2109,7 @@
  '('
 
  STR_CONST "\n"
+
  ')'
 
  ';'
@@ -2007,9 +2121,11 @@
  '='
 
  INT_CONST 1
+
  THEN
 
  STR_CONST " XX  XXXX XXXX  XX  "
+
  ELSE
 
  IF
@@ -2019,9 +2135,11 @@
  '='
 
  INT_CONST 2
+
  THEN
 
  STR_CONST "    X   X   X   X   X    "
+
  ELSE
 
  IF
@@ -2031,9 +2149,11 @@
  '='
 
  INT_CONST 3
+
  THEN
 
  STR_CONST "X     X     X     X     X"
+
  ELSE
 
  IF
@@ -2043,9 +2163,11 @@
  '='
 
  INT_CONST 4
+
  THEN
 
  STR_CONST "X   X X X   X   X X X   X"
+
  ELSE
 
  IF
@@ -2055,9 +2177,11 @@
  '='
 
  INT_CONST 5
+
  THEN
 
  STR_CONST "X     X     X   X   X    "
+
  ELSE
 
  IF
@@ -2067,9 +2191,11 @@
  '='
 
  INT_CONST 6
+
  THEN
 
  STR_CONST "    X   X   X     X     X"
+
  ELSE
 
  IF
@@ -2079,9 +2205,11 @@
  '='
 
  INT_CONST 7
+
  THEN
 
  STR_CONST "X  X  X  XX  X      "
+
  ELSE
 
  IF
@@ -2091,9 +2219,11 @@
  '='
 
  INT_CONST 8
+
  THEN
 
  STR_CONST " X  XX  X  X  X     "
+
  ELSE
 
  IF
@@ -2103,9 +2233,11 @@
  '='
 
  INT_CONST 9
+
  THEN
 
  STR_CONST "X   X X X   X  "
+
  ELSE
 
  IF
@@ -2115,9 +2247,11 @@
  '='
 
  INT_CONST 10
+
  THEN
 
  STR_CONST "  X   X X X   X"
+
  ELSE
 
  IF
@@ -2127,9 +2261,11 @@
  '='
 
  INT_CONST 11
+
  THEN
 
  STR_CONST "X X X X X X X X"
+
  ELSE
 
  IF
@@ -2139,9 +2275,11 @@
  '='
 
  INT_CONST 12
+
  THEN
 
  STR_CONST "XXXXXXXXXXXXXXXXXXXXXXXXX"
+
  ELSE
 
  IF
@@ -2151,9 +2289,11 @@
  '='
 
  INT_CONST 13
+
  THEN
 
  STR_CONST "XXXXX  X    X    X    X  "
+
  ELSE
 
  IF
@@ -2163,9 +2303,11 @@
  '='
 
  INT_CONST 14
+
  THEN
 
  STR_CONST "  X    X  XXXXX  X    X  "
+
  ELSE
 
  IF
@@ -2175,9 +2317,11 @@
  '='
 
  INT_CONST 15
+
  THEN
 
  STR_CONST "X     X X X X   X X  "
+
  ELSE
 
  IF
@@ -2187,9 +2331,11 @@
  '='
 
  INT_CONST 16
+
  THEN
 
  STR_CONST "  X X   X X X X     X"
+
  ELSE
 
  IF
@@ -2199,9 +2345,11 @@
  '='
 
  INT_CONST 17
+
  THEN
 
  STR_CONST "XXXXX   X   XXXXX   X   XXXX"
+
  ELSE
 
  IF
@@ -2211,9 +2359,11 @@
  '='
 
  INT_CONST 18
+
  THEN
 
  STR_CONST "XXX    X   X  X    X   XXXX "
+
  ELSE
 
  IF
@@ -2223,9 +2373,11 @@
  '='
 
  INT_CONST 19
+
  THEN
 
  STR_CONST " XX X  XX  X XX "
+
  ELSE
 
  IF
@@ -2235,9 +2387,11 @@
  '='
 
  INT_CONST 20
+
  THEN
 
  STR_CONST " XX X  XX  X XX X  XX  X XX "
+
  ELSE
 
  IF
@@ -2247,12 +2401,15 @@
  '='
 
  INT_CONST 21
+
  THEN
 
  STR_CONST " XXXX   X    XX    X   XXXX "
+
  ELSE
 
  STR_CONST "                         "
+
  FI
 
  FI
@@ -2342,6 +2499,7 @@
  '('
 
  STR_CONST "Would you like to continue with the next generation? \n"
+
  ')'
 
  ';'
@@ -2351,6 +2509,7 @@
  '('
 
  STR_CONST "Please use lowercase y or n for your answer [y]: "
+
  ')'
 
  ';'
@@ -2372,6 +2531,7 @@
  '('
 
  STR_CONST "\n"
+
  ')'
 
  ';'
@@ -2383,12 +2543,15 @@
  '='
 
  STR_CONST "n"
+
  THEN
 
  BOOL_CONST false
+
  ELSE
 
  BOOL_CONST true
+
  FI
 
  ';'
@@ -2436,6 +2599,7 @@
  '('
 
  STR_CONST "\n\n"
+
  ')'
 
  ';'
@@ -2445,6 +2609,7 @@
  '('
 
  STR_CONST "Would you like to choose a background pattern? \n"
+
  ')'
 
  ';'
@@ -2454,6 +2619,7 @@
  '('
 
  STR_CONST "Please use lowercase y or n for your answer [n]: "
+
  ')'
 
  ';'
@@ -2477,12 +2643,15 @@
  '='
 
  STR_CONST "y"
+
  THEN
 
  BOOL_CONST true
+
  ELSE
 
  BOOL_CONST false
+
  FI
 
  ';'
@@ -2562,6 +2731,7 @@
  '('
 
  STR_CONST "Welcome to the Game of Life.\n"
+
  ')'
 
  ';'
@@ -2571,6 +2741,7 @@
  '('
 
  STR_CONST "There are many initial states to choose from. \n"
+
  ')'
 
  ';'
@@ -2592,6 +2763,7 @@
  ASSIGN
 
  BOOL_CONST true
+
  ';'
 
  OBJECTID choice
@@ -2693,6 +2865,7 @@
  ASSIGN
 
  BOOL_CONST false
+
  FI
 
  POOL

@@ -109,20 +109,21 @@ class CoolLexer(Lexer):
         for token in lexer.tokenize(texto):
             result = f'#{token.lineno} {token.type} '
             if token.type == 'OBJECTID':
-                result += f"{token.value}\n"
+                result += f"{token.value}"
             elif token.type == 'BOOL_CONST':
                 result += "true" if token.value else "false"
             elif token.type == 'TYPEID':
-                result += f"{str(token.value)}\n"
+                result += f"{str(token.value)}"
             elif token.type in self.literals:
-                result = f'#{token.lineno} \'{token.type}\'\n'
+                result = f'#{token.lineno} \'{token.type}\''
             elif token.type == 'STR_CONST':
                 result += token.value
             elif token.type == 'INT_CONST':
                 result += str(token.value)
             elif token.type == 'ERROR':
-                result = f'#{token.lineno} {token.type} {token.value}\n'
+                result = f'#{token.lineno} {token.type} {token.value}'
             else:
-                result = f'#{token.lineno} {token.type}\n'
+                result = f'#{token.lineno} {token.type}'
+            result += '\n'
             list_strings.append(result)
         return list_strings

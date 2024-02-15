@@ -1,4 +1,5 @@
 #name "hairyscary.cool"
+
  CLASS
 
  TYPEID Foo
@@ -162,6 +163,7 @@
  '+'
 
  INT_CONST 2
+
  ';'
 
  OBJECTID i
@@ -367,6 +369,7 @@
  ASSIGN
 
  INT_CONST 1
+
  ';'
 
  OBJECTID g
@@ -494,6 +497,7 @@
  ';'
 
  INT_CONST 0
+
  ';'
 
  '}'
@@ -539,6 +543,7 @@
  '+'
 
  INT_CONST 1
+
  ';'
 
  OBJECTID i
@@ -632,6 +637,7 @@
  '{'
 
  STR_CONST "do nothing"
+
  '}'
 
  ';'
