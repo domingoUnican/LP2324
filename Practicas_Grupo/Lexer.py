@@ -15,7 +15,7 @@ class CoolLexer(Lexer):
               INHERITS, ISVOID, LET, LOOP, NEW, OF,
               POOL, THEN, WHILE, NUMBER, STR_CONST, LE, DARROW, ASSIGN}
     #ignore = '\t '
-    literals = {"=","+","-","*","/","(",")","<",">",".",";",":","@",'"','{','}'}
+    literals = {"=","+","-","*","/","(",")","<",">",".",";",":","@",'"','{','}','~',','}
     # Ejemplo
     ELSE = r'\b[eE][lL][sS][eE]\b'
 
@@ -141,11 +141,12 @@ class CoolLexer(Lexer):
     def newline(self, t):
         self.lineno += t.value.count('\n')
 
+    '''
     @_(r'(["])(.{1,1024})\1')
     def STR_CONST(self, t):
         t.value = t.value[1:-1]
         #completar TODO
-        
+    '''    
 
     
     def error(self, t):

@@ -450,6 +450,7 @@
  THEN
  OBJECTID is_even
  '(' 
+ '~' 
  OBJECTID x
  ')' 
  ELSE
@@ -778,6 +779,7 @@
  OBJECTID value
  '(' 
  ')' 
+ ',' 
  OBJECTID a_var
  '.' 
  OBJECTID value
@@ -903,6 +905,7 @@
  OBJECTID value
  '(' 
  ')' 
+ ',' 
  OBJECTID a_var
  '.' 
  OBJECTID value

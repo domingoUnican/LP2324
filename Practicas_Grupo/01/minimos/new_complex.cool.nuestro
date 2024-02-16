@@ -25,6 +25,7 @@
  OBJECTID init
  '(' 
  INT_CONST 1
+ ',' 
  INT_CONST 1
  ')' 
  IN
@@ -135,6 +136,7 @@
  OBJECTID a
  ':' 
  TYPEID Int
+ ',' 
  OBJECTID b
  ':' 
  TYPEID Int
@@ -207,10 +209,12 @@
  '{' 
  OBJECTID x
  '=' 
+ '~' 
  OBJECTID x
  ';' 
  OBJECTID y
  '=' 
+ '~' 
  OBJECTID y
  ';' 
  OBJECTID self
@@ -227,6 +231,7 @@
  '{' 
  OBJECTID y
  '=' 
+ '~' 
  OBJECTID y
  ';' 
  OBJECTID self
@@ -243,6 +248,7 @@
  '{' 
  OBJECTID x
  '=' 
+ '~' 
  OBJECTID x
  ';' 
  OBJECTID self

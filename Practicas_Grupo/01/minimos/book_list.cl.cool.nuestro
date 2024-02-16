@@ -29,6 +29,7 @@
  OBJECTID title_p
  ':' 
  TYPEID String
+ ',' 
  OBJECTID author_p
  ':' 
  TYPEID String
@@ -120,9 +121,11 @@
  OBJECTID title_p
  ':' 
  TYPEID String
+ ',' 
  OBJECTID author_p
  ':' 
  TYPEID String
+ ',' 
  OBJECTID per_title_p
  ':' 
  TYPEID String
@@ -134,6 +137,7 @@
  OBJECTID initBook
  '(' 
  OBJECTID title_p
+ ',' 
  OBJECTID author_p
  ')' 
  ';' 
@@ -258,6 +262,7 @@
  OBJECTID have
  OBJECTID different
  OBJECTID names
+ ',' 
  '-' 
  '-' 
  OBJECTID we
@@ -293,6 +298,7 @@
  OBJECTID hd
  ':' 
  TYPEID Book
+ ',' 
  OBJECTID tl
  ':' 
  TYPEID BookList
@@ -451,14 +457,20 @@
  '(' 
  '"' 
  TYPEID Compilers
+ ',' 
  TYPEID Principles
+ ',' 
  TYPEID Techniques
+ ',' 
  OBJECTID and
  TYPEID Tools
  '"' 
+ ',' 
  '"' 
  TYPEID Aho
+ ',' 
  TYPEID Sethi
+ ',' 
  OBJECTID and
  TYPEID Ullman
  '"' 
@@ -484,9 +496,11 @@
  INT_CONST 100
  TYPEID CD_ROMs
  '"' 
+ ',' 
  '"' 
  TYPEID Ulanoff
  '"' 
+ ',' 
  '"' 
  TYPEID PC
  TYPEID Magazine

@@ -64,6 +64,7 @@
  OBJECTID an
  OBJECTID extra
  OBJECTID attribute
+ ',' 
  OBJECTID since
  OBJECTID it
  INHERITS
