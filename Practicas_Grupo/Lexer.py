@@ -76,7 +76,7 @@ class CoolLexer(Lexer):
                           for j in range(16)] + [bytes.fromhex(hex(127)[-2:]).decode("ascii")]
     
 
-    @_(r'"([^"]*)"')
+    @_(r'"(?:\\.|[^"])*"')
     def STR_CONST(self, t):
         t.value = t.value.replace("\t", "\\t")
         return t

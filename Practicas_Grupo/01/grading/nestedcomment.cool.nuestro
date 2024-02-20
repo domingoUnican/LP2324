@@ -1,7 +1,13 @@
 #name "nestedcomment.cool"
-#1 TYPEID XXX
-#1 '*' 
-#1 ')' 
-#3 TYPEID XXX
-#3 '*' 
-#3 ')'
+
+ TYPEID XXX
+
+ '*'
+
+ ')'
+
+ TYPEID XXX
+
+ '*'
+
+ ')'
