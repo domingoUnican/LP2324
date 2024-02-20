@@ -4,10 +4,14 @@ from sly import Lexer
 
 class SimpleLexer(Lexer):
     # Token names
-    tokens = {LE, LT, LE, GT, GE, EQ, NE, ASSIGN,PLUS,LPAREN,TIMES,RPAREN, NUMBER, ID }
+    tokens = {ID, IF, ELSE, WHILE, LE, LT, LE, GT, GE, EQ, NE, ASSIGN,PLUS,LPAREN,TIMES,RPAREN, NUMBER, ID }
 
     # Ignored characters
     ignore = ' \t'
+
+    @_(r'\n+')
+    def ignore_newline(self,  t):
+        self.lineno += t.value.count('\n')
 
     # Token regexs
     EQ = r'=='
@@ -23,6 +27,9 @@ class SimpleLexer(Lexer):
     GT = r'>'
     NE = r'!='
     ID = r'[a-zA-Z_][a-zA-Z0-9_]*'
+    ID['if'] = IF
+    ID['else'] = ELSE
+    ID['while'] = WHILE
 
     def error(self, t):
         print('Bad character %r' % t.value[0])
@@ -31,9 +38,9 @@ class SimpleLexer(Lexer):
 # Example
 if __name__ == '__main__':
     text = '''
-           a < b
-           a <= b
-           a > b
+           if a < b
+           else a <= b
+           while a > b
            a >= b
            a == b
            a != b

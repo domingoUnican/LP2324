@@ -20,7 +20,6 @@ TESTS = [fich for fich in FICHEROS
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$", fich)]
 TESTS.sort()
 
-
 if True:
     contador = len(TESTS)
     for fich in TESTS:
@@ -36,14 +35,16 @@ if True:
         f.close()
         if PRACTICA == '01':
             texto = '\n'.join(lexer.salida(entrada))
-            texto = f'#name "{fich}"\n' + texto
+            texto = f'#name "{fich}"\n\n' + texto
             resultado = g.read()
             g.close()
+            texto = re.sub(r'#\d+\b','',texto)
+            resultado = re.sub(r'#\d+\b','',resultado)
             if texto.strip().split() != resultado.strip().split():
                 print(f"Revisa el fichero {fich}")
                 if DEBUG:
-                    texto = re.sub(r'#\d+\b','',texto)
-                    resultado = re.sub(r'#\d+\b','',resultado)
+                    #texto = re.sub(r'#\d+\b','',texto)
+                    #resultado = re.sub(r'#\d+\b','',resultado)
                     nuestro = [linea for linea in texto.split('\n') if linea]
                     bien = [linea for linea in resultado.split('\n') if linea]
                     linea = 0

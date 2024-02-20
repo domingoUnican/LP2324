@@ -13,12 +13,11 @@ class CoolLexer(Lexer):
     tokens = {OBJECTID, INT_CONST, BOOL_CONST, TYPEID,
               ELSE, IF, FI, THEN, NOT, IN, CASE, ESAC, CLASS,
               INHERITS, ISVOID, LET, LOOP, NEW, OF,
-              POOL, THEN, WHILE, NUMBER, STR_CONST, LE, DARROW, ASSIGN, IGNORE}
+              POOL, THEN, WHILE, NUMBER, STR_CONST, LE, DARROW, ASSIGN, IGNORE, CLASS}
     #ignore = '\t '
     IGNORE = r'(\(\*((?:.|\n)*?)\*\))|(\-\-.*)'
-    literals = {'-', ':', '(', ')', '{', '}', ';'}
+    literals = {'-', ':', '(', ')', '{', '}', ';', '+', '*', '~', ',', '<', '.', '=', '/', '@'}
     # Ejemplo
-
     ELSE = r'\b[eE][lL][sS][eE]\b'
 
     IF = r'\b[iI][fF]\b'
@@ -39,30 +38,38 @@ class CoolLexer(Lexer):
 
     NUMBER = r'^-?\d+(\.\d+)?$'
 
+    LE = r'\<\='
 
-
-    LE = r'\b\<\=\b'
-
-    DARROW = r'\b\=\>\b'
+    DARROW = r'\=\>'
 
     ASSIGN = r'\<\-'
 
     BOOL_CONST = r'\b([t][rR][uU][eE])\b|\b([f][aA][lL][sS][eE])\b'
 
-    TYPEID = r'\b[A-Z][^\s\n]*' 
 
     NOT = r'\b[nN][oO][tT]\b' #terminar de revisar
+
     CASE = r'\b[cC][aA][sS][eE]\b'
+
     CLASS = r'\b[cC][lL][aA][sS][sS]\b'
     
     INHERITS = r'\b[iI][nN][hH][eE][rR][iI][tT][sS]\b'
+
     ISVOID = r'\b[iI][sS][vV][oO][iI][dD]\b'
+
     LET = r'\b[lL][eE][tT]\b'
+
     LOOP = r'\b[lL][oO][oO][pP]\b'
+
     NEW = r'\b[nN][eE][wW]\b'
+
     OF = r'\b[oO][fF]\b'
-    OBJECTID = r'[a-z][^\s\n\(]*'
-    #STR_CONST = r'[a-zA-Z]+'
+
+    TYPEID = r'\b[A-Z][^\s\n\)\;\.\()]*' 
+
+    OBJECTID = r'[a-z][^\s\n\(\;\)\.\,]*'
+
+    STR_CONST = r'"([^"]*)"'
 
     CARACTERES_CONTROL = [bytes.fromhex(i+hex(j)[-1]).decode('ascii')
                           for i in ['0', '1']
@@ -85,6 +92,7 @@ class CoolLexer(Lexer):
     
     @_(r'\t| |\v|\r|\f')
     def spaces(self, t):
+        #self.lineno += t.value.count('\r')
         pass
 
     @_(r'\n+')
@@ -108,7 +116,7 @@ class CoolLexer(Lexer):
             elif token.type == 'TYPEID':
                 result += f"{str(token.value)}"
             elif token.type in self.literals:
-                result = f'#{token.lineno} \'{token.type}\' '
+                result = f'#{token.lineno} \'{token.type}\''
             elif token.type == 'STR_CONST':
                 result += token.value
             elif token.type == 'INT_CONST':
@@ -117,5 +125,6 @@ class CoolLexer(Lexer):
                 result = f'#{token.lineno} {token.type} {token.value}'
             else:
                 result = f'#{token.lineno} {token.type}'
+            result += '\n'
             list_strings.append(result)
         return list_strings
