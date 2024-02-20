@@ -65,17 +65,21 @@ class CoolLexer(Lexer):
 
     OF = r'\b[oO][fF]\b'
 
-    TYPEID = r'\b[A-Z][^\s\n\)\;\.\()]*' 
+    TYPEID = r'\b[A-Z][a-zA-Z0-9\_]*' 
 
-    OBJECTID = r'[a-z][^\s\n\(\;\)\.\,]*'
+    OBJECTID = r'[a-z][a-zA-Z0-9\_]*'
 
-    STR_CONST = r'"([^"]*)"'
+    #STR_CONST = r'"([^"]*)"'
 
     CARACTERES_CONTROL = [bytes.fromhex(i+hex(j)[-1]).decode('ascii')
                           for i in ['0', '1']
                           for j in range(16)] + [bytes.fromhex(hex(127)[-2:]).decode("ascii")]
     
 
+    @_(r'"([^"]*)"')
+    def STR_CONST(self, t):
+        t.value = t.value.replace("\t", "\\t")
+        return t
 
     @_(r'\(\*.*\*\)')
     def IGNORE(self, t):
