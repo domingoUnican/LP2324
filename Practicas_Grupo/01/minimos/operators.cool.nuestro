@@ -1,0 +1,10 @@
+#name "operators.cool"
+ ';' 
+ '{' 
+ '}' 
+ '(' 
+ ')' 
+ ':' 
+ '-' 
+ ASSIGN
+ ASSIGN
