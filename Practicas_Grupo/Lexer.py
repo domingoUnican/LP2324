@@ -185,6 +185,14 @@ class CoolLexer(Lexer):
             t.value = f'\\{t.value}'
         return t
 
+    @_(r'"')
+    def empiezaString():
+        self.begin(STRING)
+    
+    @_(r'--.*')
+    def comentario1Linea(self, t):
+        pass
+
     @_(r'\t| |\v|\r|\f')
     def spaces(self, t):
         pass
@@ -220,3 +228,6 @@ class CoolLexer(Lexer):
                 result = f'#{token.lineno} {token.type}'
             list_strings.append(result)
         return list_strings
+
+class STRING (Lexer):
+    tokens = {STR_CONST,ERROR}
