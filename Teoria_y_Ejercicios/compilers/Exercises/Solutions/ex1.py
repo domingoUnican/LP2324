@@ -8,7 +8,6 @@ SPACE = r'(?P<SPACE>\s+)'
 
 patterns = [ID, NUMBER, SPACE]
 
-
 # Make the master regex pattern
 pat = re.compile('|'.join(patterns))
 
