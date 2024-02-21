@@ -1,6 +1,11 @@
 #name "escapedunprintables.cool"
-#1 STR_CONST "This is a tab:\\t"
-#2 STR_CONST "This is a backspace:\"
-#3 STR_CONST "This is a formfeed:\"
-#4 STR_CONST "This is a carriage return:"
-#5 STR_CONST "This is an escape:"
+
+ STR_CONST "This is a tab:\\t"
+
+ STR_CONST "This is a backspace:\"
+
+ STR_CONST "This is a formfeed:\"
+
+ STR_CONST "This is a carriage return:"
+
+ STR_CONST "This is an escape:"
