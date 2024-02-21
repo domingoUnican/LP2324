@@ -20,6 +20,8 @@ TESTS = [fich for fich in FICHEROS
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$", fich)]
 TESTS.sort()
 
+TESTS = ["backslash.cool"]
+
 if True:
     contador = len(TESTS)
     for fich in TESTS:

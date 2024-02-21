@@ -69,16 +69,23 @@ class CoolLexer(Lexer):
 
     OBJECTID = r'[a-z][a-zA-Z0-9\_]*'
 
-    #STR_CONST = r'"([^"]*)"'
-
     CARACTERES_CONTROL = [bytes.fromhex(i+hex(j)[-1]).decode('ascii')
                           for i in ['0', '1']
                           for j in range(16)] + [bytes.fromhex(hex(127)[-2:]).decode("ascii")]
     
 
-    @_(r'"(?:\\.|[^"])*"')
+    @_(r'"(?:\\.|[^"])*"|"(?:\\\\(?:\\[a-ac-eg-mo-qs-su-z0-9])|\\[a-ac-eg-mo-qs-su-z0-9]|[^"])*"')
     def STR_CONST(self, t):
+
+        pattern_to_replace = r'(?<!\\)(\\([a-ac-eg-mo-qs-su-z0-9]))'
+
+        def replace_fn(match):
+            return match.group(2)
+        
+        
+        t.value = re.sub(pattern_to_replace, replace_fn, t.value)
         t.value = t.value.replace("\t", "\\t")
+        t.value = re.sub('\\\n', r'\\n', t.value)
         return t
 
     @_(r'\(\*.*\*\)')

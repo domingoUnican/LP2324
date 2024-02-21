@@ -1,13 +1,10 @@
 #name "backslash2.cool"
 
- STR_CONST "I'm not going to escape this newline
-"
+ STR_CONST "I'm not going to escape this newlinen"
 
- STR_CONST "This is also not escaped \\
-"
+ STR_CONST "This is also not escaped \\n"
 
- STR_CONST "This is, though \\\
-"
+ STR_CONST "This is, though \\\n"
 
  STR_CONST "\\"
 

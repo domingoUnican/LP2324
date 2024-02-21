@@ -1,11 +1,6 @@
 #name "wq0607-c2.cool"
 
- STR_CONST "
-*) Estos son comentarios anidados
-
-
-
-"
+ STR_CONST "n*) Estos son comentarios anidadosnnnn"
 
  TYPEID Esto
 
