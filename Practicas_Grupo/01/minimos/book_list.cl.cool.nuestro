@@ -1,16 +1,4 @@
 #name "book_list.cl.cool"
- '-' 
- '-' 
- OBJECTID example
- OF
- OBJECTID static
- OBJECTID and
- OBJECTID dynamic
- OBJECTID type
- OBJECTID differing
- OBJECTID for
- OBJECTID a
- OBJECTID dispatch
  CLASS
  TYPEID Book
  INHERITS
@@ -39,13 +27,11 @@
  '{' 
  '{' 
  OBJECTID title
- '<' 
- '-' 
+ ASSIGN
  OBJECTID title_p
  ';' 
  OBJECTID author
- '<' 
- '-' 
+ ASSIGN
  OBJECTID author_p
  ';' 
  OBJECTID self
@@ -62,10 +48,7 @@
  '{' 
  OBJECTID out_string
  '(' 
- '"' 
- OBJECTID title
- ':' 
- '"' 
+ STR_CONST title:      
  ')' 
  '.' 
  OBJECTID out_string
@@ -75,17 +58,12 @@
  '.' 
  OBJECTID out_string
  '(' 
- '"' 
- OBJECTID n
- '"' 
+ STR_CONST \n
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- '"' 
- OBJECTID author
- ':' 
- '"' 
+ STR_CONST author:     
  ')' 
  '.' 
  OBJECTID out_string
@@ -95,9 +73,7 @@
  '.' 
  OBJECTID out_string
  '(' 
- '"' 
- OBJECTID n
- '"' 
+ STR_CONST \n
  ')' 
  ';' 
  OBJECTID self
@@ -142,8 +118,7 @@
  ')' 
  ';' 
  OBJECTID per_title
- '<' 
- '-' 
+ ASSIGN
  OBJECTID per_title_p
  ';' 
  OBJECTID self
@@ -168,10 +143,7 @@
  ';' 
  OBJECTID out_string
  '(' 
- '"' 
- OBJECTID periodical
- ':' 
- '"' 
+ STR_CONST periodical:  
  ')' 
  '.' 
  OBJECTID out_string
@@ -181,9 +153,7 @@
  '.' 
  OBJECTID out_string
  '(' 
- '"' 
- OBJECTID n
- '"' 
+ STR_CONST \n
  ')' 
  ';' 
  OBJECTID self
@@ -198,6 +168,68 @@
  INHERITS
  TYPEID IO
  '{' 
+ OBJECTID isNil
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Bool
+ '{' 
+ '{' 
+ OBJECTID abort
+ '(' 
+ ')' 
+ ';' 
+ BOOL_CONST true
+ ';' 
+ '}' 
+ '}' 
+ ';' 
+ OBJECTID cons
+ '(' 
+ OBJECTID hd
+ ':' 
+ TYPEID Book
+ ')' 
+ ':' 
+ TYPEID Cons
+ '{' 
+ '(' 
+ LET
+ OBJECTID new_cell
+ ':' 
+ TYPEID Cons
+ ASSIGN
+ NEW
+ TYPEID Cons
+ IN
+ OBJECTID new_cell
+ '.' 
+ OBJECTID init
+ '(' 
+ OBJECTID hd
+ ',' 
+ OBJECTID self
+ ')' 
+ ')' 
+ '}' 
+ ';' 
+ OBJECTID car
+ '(' 
+ ')' 
+ ':' 
+ TYPEID Book
+ '{' 
+ '{' 
+ OBJECTID abort
+ '(' 
+ ')' 
+ ';' 
+ NEW
+ TYPEID Book
+ ';' 
+ '}' 
+ '}' 
+ ';' 
  OBJECTID cdr
  '(' 
  ')' 
@@ -237,53 +269,10 @@
  ':' 
  TYPEID Book
  ';' 
- '-' 
- '-' 
- TYPEID We
- OBJECTID keep
- OBJECTID the
- OBJECTID car
- OBJECTID and
- OBJECTID cdr
- IN
- OBJECTID attributes
- '.' 
  OBJECTID xcdr
  ':' 
  TYPEID BookList
  ';' 
- '-' 
- '-' 
- TYPEID Because
- OBJECTID methods
- OBJECTID and
- OBJECTID features
- OBJECTID must
- OBJECTID have
- OBJECTID different
- OBJECTID names
- ',' 
- '-' 
- '-' 
- OBJECTID we
- OBJECTID use
- OBJECTID xcar
- OBJECTID and
- OBJECTID xcdr
- OBJECTID for
- OBJECTID the
- OBJECTID attributes
- OBJECTID and
- OBJECTID reserve
- '-' 
- '-' 
- OBJECTID car
- OBJECTID and
- OBJECTID cdr
- OBJECTID for
- OBJECTID the
- OBJECTID features
- '.' 
  OBJECTID isNil
  '(' 
  ')' 
@@ -308,13 +297,11 @@
  '{' 
  '{' 
  OBJECTID xcar
- '<' 
- '-' 
+ ASSIGN
  OBJECTID hd
  ';' 
  OBJECTID xcdr
- '<' 
- '-' 
+ ASSIGN
  OBJECTID tl
  ';' 
  OBJECTID self
@@ -357,37 +344,19 @@
  OBJECTID dummy
  ':' 
  TYPEID Book
- '=' 
- '>' 
+ DARROW
  OBJECTID out_string
  '(' 
- '"' 
- '-' 
- OBJECTID dynamic
- OBJECTID type
- OBJECTID was
- TYPEID Book
- '-' 
- OBJECTID n
- '"' 
+ STR_CONST - dynamic type was Book -\n
  ')' 
  ';' 
  OBJECTID dummy
  ':' 
  TYPEID Article
- '=' 
- '>' 
+ DARROW
  OBJECTID out_string
  '(' 
- '"' 
- '-' 
- OBJECTID dynamic
- OBJECTID type
- OBJECTID was
- TYPEID Article
- '-' 
- OBJECTID n
- '"' 
+ STR_CONST - dynamic type was Article -\n
  ')' 
  ';' 
  ESAC
@@ -446,8 +415,7 @@
  OBJECTID a_book
  ':' 
  TYPEID Book
- '<' 
- '-' 
+ ASSIGN
  '(' 
  NEW
  TYPEID Book
@@ -455,25 +423,9 @@
  '.' 
  OBJECTID initBook
  '(' 
- '"' 
- TYPEID Compilers
+ STR_CONST Compilers, Principles, Techniques, and Tools
  ',' 
- TYPEID Principles
- ',' 
- TYPEID Techniques
- ',' 
- OBJECTID and
- TYPEID Tools
- '"' 
- ',' 
- '"' 
- TYPEID Aho
- ',' 
- TYPEID Sethi
- ',' 
- OBJECTID and
- TYPEID Ullman
- '"' 
+ STR_CONST Aho, Sethi, and Ullman
  ')' 
  IN
  '(' 
@@ -481,8 +433,7 @@
  OBJECTID an_article
  ':' 
  TYPEID Article
- '<' 
- '-' 
+ ASSIGN
  '(' 
  NEW
  TYPEID Article
@@ -490,27 +441,16 @@
  '.' 
  OBJECTID initArticle
  '(' 
- '"' 
- TYPEID The
- TYPEID Top
- INT_CONST 100
- TYPEID CD_ROMs
- '"' 
+ STR_CONST The Top 100 CD_ROMs
  ',' 
- '"' 
- TYPEID Ulanoff
- '"' 
+ STR_CONST Ulanoff
  ',' 
- '"' 
- TYPEID PC
- TYPEID Magazine
- '"' 
+ STR_CONST PC Magazine
  ')' 
  IN
  '{' 
  OBJECTID books
- '<' 
- '-' 
+ ASSIGN
  '(' 
  NEW
  TYPEID Nil
@@ -534,17 +474,7 @@
  ';' 
  '}' 
  ')' 
- '-' 
- '-' 
- OBJECTID end
- LET
- OBJECTID an_article
  ')' 
- '-' 
- '-' 
- OBJECTID end
- LET
- OBJECTID a_book
  '}' 
  ';' 
  '}' 

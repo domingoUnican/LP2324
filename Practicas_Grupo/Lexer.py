@@ -5,16 +5,12 @@ import os
 import re
 import sys
 
-
-
-
-
 class CoolLexer(Lexer):
     tokens = {OBJECTID, INT_CONST, BOOL_CONST, TYPEID,
               ELSE, IF, FI, THEN, NOT, IN, CASE, ESAC, CLASS,
               INHERITS, ISVOID, LET, LOOP, NEW, OF,
               POOL, THEN, WHILE, NUMBER, STR_CONST, LE, DARROW, ASSIGN}
-    #ignore = '\t '
+    # ignore = '\t '
     literals = {"=","+","-","*","/","(",")","<",">",".",";",":","@",'"','{','}','~',','}
     # Ejemplo
     ELSE = r'\b[eE][lL][sS][eE]\b'
@@ -24,6 +20,11 @@ class CoolLexer(Lexer):
                           for j in range(16)] + [bytes.fromhex(hex(127)[-2:]).decode("ascii")]
 
 
+    @_(r'"')
+    def STR_CONST(self, t):
+        self.begin(StringLexer)
+        pass 
+    
     @_(r'\b[iI][fF]\b')
     def IF(self,t):
         return t
@@ -32,12 +33,16 @@ class CoolLexer(Lexer):
     def FI(self,t):
         return t
         
-    @_(r'\b[tT][hH][eE][nN]')
+    @_(r'[tT][hH][eE][nN]')
     def THEN(self,t):
         return t
     
     @_(r'\b[nN][oO][tT]\b')
     def NOT(self,t):
+        return t
+    
+    @_(r'\b[Ii][Nn][Hh][Ee][Rr][Ii][Tt][Ss]\b')
+    def INHERITS(self,t):
         return t
 
     @_(r'\b[iI][nN]\b')
@@ -48,9 +53,18 @@ class CoolLexer(Lexer):
     def CASE(self, t):
         return t
     
-    @_(r'[Ee][Ss][Aa][Cc]')
+    @_(r'\b[Ee][Ss][Aa][Cc]\b')
     def ESAC(self,t):
         return t
+    
+    @_(r'\<\=')
+    def LE(self,t):
+        return t
+
+    @_(r'\=\>')
+    def DARROW(self,t):
+        return t
+    # DARROW = r'\=\>'
     
     @_(r'\b[Cc][Ll][aA][Ss]{2}\b')
     def CLASS(self,t):
@@ -72,9 +86,6 @@ class CoolLexer(Lexer):
     def ISVOID(self,t):
         return t
     
-    @_(r'\b[Ii][Nn][Hh][Ee][Rr][Ii][Tt][Ss]\b')
-    def INHERITS(self,t):
-        return t
 
     @_(r'\b[Oo][Ff]\b')
     def OF(self,t):
@@ -117,15 +128,8 @@ class CoolLexer(Lexer):
     def INT_CONST(self,t):
         return t
 
-    @_(r'\b<=\b')
-    def LE(self,t):
-        return t
-
-    @_(r'\b=>\b')
-    def DARROW(self,t):
-        return t
     
-    @_(r'\b<-\b')
+    @_(r'\<\-')
     def ASSIGN(self,t):
         return t
     
@@ -133,21 +137,26 @@ class CoolLexer(Lexer):
     def spaces(self, t):
         pass
 
-    @_(r'-{2}.*\n?$|\(\*(.|\n)*\*\)')
-    def comments(self, t):
+    # @_(r'-{2}.*\n?$|\(\*(.|\n)*\*\)')
+    # def comments(self, t):
+    #     pass
+
+    @_(r'\-\-.+\n?')  
+    def line_comment(self, t):
         pass
+
+    @_(r'(?<!\\)\(\*')
+    def multiline_comment(self, t):
+        self.begin(MultilineCommentRemover)
+        pass
+        # return t
+    # @_(r'(?<!\\)\(\*(.|\n)+(?<!\\)\*\)')
+    # def multiline_comment(self, t):
+    #     pass
 
     @_(r'\n+')
     def newline(self, t):
-        self.lineno += t.value.count('\n')
-
-    '''
-    @_(r'(["])(.{1,1024})\1')
-    def STR_CONST(self, t):
-        t.value = t.value[1:-1]
-        #completar TODO
-    '''    
-
+        self.lineno += t.value.count('\n') 
     
     def error(self, t):
         self.index += 1
@@ -175,3 +184,62 @@ class CoolLexer(Lexer):
                 result = f'#{token.lineno} {token.type}'
             list_strings.append(result)
         return list_strings
+
+class StringLexer(Lexer):
+
+    tokens = {STR_CONST, VUELTA, ESCAPADO, CUALQUIERCOSA}
+
+    _acumulado = ""
+
+    # @_('\\.')
+    # def ESCAPADO(self, t):
+    #     self._acumulado += t.value[1:]
+    #     #self._acumulado += t.value
+    #     pass
+    
+    @_('"')
+    def VUELTA(self, t):
+        t.type = "STR_CONST"
+        t.value = self._acumulado
+        self._acumulado = ""
+        self.begin(CoolLexer)
+        return t
+    
+    @_(r'(.\Z)|(.\x00)') #error de string
+    def ERROR(self, t):
+        t.value = "error en fichero"
+        self.begin(CoolLexer)
+        return t
+    
+    @_(r'.')
+    def CUALQUIERCOSA(self, t):
+        self._acumulado += t.value
+        pass
+
+class MultilineCommentRemover(Lexer):
+
+    tokens = {}
+
+    _nestcomments = 0
+
+    @_(r'(?<!\\)\(\*')
+    def registrar(self, t):
+        self._nestcomments += 1
+        pass
+
+    @_(r'(?<!\\)\*\)')
+    def volvedor(self, t):
+        if (self._nestcomments == 0):
+            self.begin(CoolLexer)
+        else:
+            self._nestcomments -= 1
+        pass
+
+    @_(r'\n+')
+    def newline(self, t):
+        self.lineno += t.value.count('\n')
+
+
+    @_(r'.')
+    def ignore_method(self, t):
+        pass

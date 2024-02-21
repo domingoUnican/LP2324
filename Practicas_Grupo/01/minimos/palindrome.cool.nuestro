@@ -96,19 +96,13 @@
  '{' 
  '{' 
  OBJECTID i
- '<' 
- '-' 
+ ASSIGN
  '~' 
  INT_CONST 1
  ';' 
  OBJECTID out_string
  '(' 
- '"' 
- OBJECTID enter
- OBJECTID a
- OBJECTID string
- OBJECTID n
- '"' 
+ STR_CONST enter a string\n
  ')' 
  ';' 
  IF
@@ -121,25 +115,12 @@
  THEN
  OBJECTID out_string
  '(' 
- '"' 
- OBJECTID that
- OBJECTID was
- OBJECTID a
- OBJECTID palindrome
- OBJECTID n
- '"' 
+ STR_CONST that was a palindrome\n
  ')' 
  ELSE
  OBJECTID out_string
  '(' 
- '"' 
- OBJECTID that
- OBJECTID was
- NOT
- OBJECTID a
- OBJECTID palindrome
- OBJECTID n
- '"' 
+ STR_CONST that was not a palindrome\n
  ')' 
  FI
  ';' 

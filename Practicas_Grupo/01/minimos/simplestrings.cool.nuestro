@@ -1,40 +1,6 @@
 #name "simplestrings.cool"
- '"' 
- OBJECTID this
- OBJECTID is
- OBJECTID a
- OBJECTID string
- '"' 
- '"' 
- OBJECTID so
- OBJECTID is
- OBJECTID this
- '"' 
- '"' 
- OBJECTID one
- OBJECTID more
- OBJECTID string
- '"' 
- '"' 
- OBJECTID strings
- OBJECTID can
- OBJECTID have
- OBJECTID keywords
- OBJECTID inside
- ':' 
- IF
- ELSE
- CASE
- '"' 
- '"' 
- '@' 
- '*' 
- '(' 
- ')' 
- '+' 
- INT_CONST 1234567890
- '-' 
- '=' 
- OBJECTID justanother
- OBJECTID string
- '"'
+ STR_CONST this is a string
+ STR_CONST so is this
+ STR_CONST one more string
+ STR_CONST strings can have keywords inside: if else case
+ STR_CONST !@#$%^&*()_+1234567890-=	justanother string

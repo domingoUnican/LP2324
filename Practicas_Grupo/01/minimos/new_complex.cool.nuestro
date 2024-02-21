@@ -15,8 +15,7 @@
  OBJECTID c
  ':' 
  TYPEID Complex
- '<' 
- '-' 
+ ASSIGN
  '(' 
  NEW
  TYPEID Complex
@@ -30,14 +29,6 @@
  ')' 
  IN
  '{' 
- '-' 
- '-' 
- OBJECTID trivially
- OBJECTID equal
- '(' 
- OBJECTID see
- TYPEID CoolAid
- ')' 
  IF
  OBJECTID c
  '.' 
@@ -53,26 +44,15 @@
  THEN
  OBJECTID out_string
  '(' 
- '"' 
- '=' 
- ')' 
- OBJECTID n
- '"' 
+ STR_CONST =)\n
  ')' 
  ELSE
  OBJECTID out_string
  '(' 
- '"' 
- '=' 
- '(' 
- OBJECTID n
- '"' 
+ STR_CONST =(\n
  ')' 
  FI
  ';' 
- '-' 
- '-' 
- OBJECTID equal
  IF
  OBJECTID c
  '.' 
@@ -95,20 +75,12 @@
  THEN
  OBJECTID out_string
  '(' 
- '"' 
- '=' 
- ')' 
- OBJECTID n
- '"' 
+ STR_CONST =)\n
  ')' 
  ELSE
  OBJECTID out_string
  '(' 
- '"' 
- '=' 
- '(' 
- OBJECTID n
- '"' 
+ STR_CONST =(\n
  ')' 
  FI
  ';' 
@@ -181,9 +153,7 @@
  '.' 
  OBJECTID out_string
  '(' 
- '"' 
- '+' 
- '"' 
+ STR_CONST +
  ')' 
  '.' 
  OBJECTID out_int
@@ -193,9 +163,7 @@
  '.' 
  OBJECTID out_string
  '(' 
- '"' 
- TYPEID I
- '"' 
+ STR_CONST I
  ')' 
  FI
  '}' 
