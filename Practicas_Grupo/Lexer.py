@@ -10,20 +10,17 @@ import sys
 
 
 class CoolLexer(Lexer):
-    tokens = {OBJECTID, INT_CONST, BOOL_CONST, TYPEID,
+    tokens = {OBJECTID, INT_CONST, BOOL_CONST,ASSIGN, TYPEID,
             ELSE, IF, FI, THEN, NOT, IN, CASE, ESAC, CLASS,
             INHERITS, ISVOID, LET, LOOP, NEW, OF,
-            POOL, THEN, WHILE, NUMBER, STR_CONST, LE, DARROW, ASSIGN, ERROR}
+            POOL, THEN, WHILE, NUMBER, STR_CONST, LE, DARROW, ERROR,COMMENT_1LINEA}
     #ignore = '\t '
-    literals = {'==', '+', '-', '*', '/', '(', ')', '<', '>', '.',' ' ,';', ':', '@', ','}
+    literals = {'==', '+', '-', '*', '/', '(', ')', '<', '>', '.',' ' ,';', ':', '@', ',','{', '}', '[', ']', '~'}
     # Ejemplo
     INT_CONST   = r'\d+'
-    TYPEID      = r'[A-Z]([a-zA-Z0-9_])*'
-    OBJECTID    = r'[a-z]([a-zA-Z0-9_])*'
     LE          = r'[<][=]'
     DARROW      = r'[=][>]'
-    ASSIGN      = r'\b[<][-]\b'
-    STR_CONST   = r'\"([^\\\n]|(\\.))*?\"' #Preguntar
+    ASSIGN      = r'[<][-]'
     IF          = r'\b[iI][fF]\b'
     FI          = r'\b[fF][iI]\b'
     THEN        = r'\b[tT][hH][eE][nN]\b'
@@ -41,140 +38,30 @@ class CoolLexer(Lexer):
     OF          = r'\b[oO][fF]\b'
     POOL        = r'\b[pP][oO][oO][lL]\b'
     WHILE       = r'\b[wW][hH][iI][lL][eE]\b'
-    
 
     CARACTERES_CONTROL = [bytes.fromhex(i+hex(j)[-1]).decode('ascii')
                         for i in ['0', '1']
                         for j in range(16)] + [bytes.fromhex(hex(127)[-2:]).decode("ascii")]
-    
 
-
-    @_(INT_CONST) # r'(\d+)' para que coja los numeros de mas de un digito
-    def INT_CONST(self,t):
-        t.value = int(t.value)
-        t.type = 'INT_CONST'
-        return t
-
-    @_(THEN) 
-    def THEN(self,t):
-        t.type = 'THEN'
-        return t
-
-    @_(OBJECTID)
-    def OBJECTID(self, t):
-        t.type = 'OBJECTID'
-        return t
-    
-    @_(TYPEID)
-    def TYPEID(self, t):
-        t.type = 'TYPEID'
-        return t
-
-    @_(IF)
-    def IF(self, t):
-        t.type = 'IF'
-        return t
-
-    @_(FI)
-    def FI(self, t):
-        t.type = 'FI'
-        return t
-
-    @_(ASSIGN)
-    def ASSIGN(self, t):
-        t.type = 'ASSIGN'
-        return t
-
-    @_(DARROW)
-    def DARROW(self, t):
-        t.type = 'DARROW'
-        return t
-
-    @_(LE)
-    def LE(self, t):
-        t.type = 'LE'
-        return t
-
-    @_(r'\b[tT][rR][uU][eE]|[fF][aA][lL][sS][eE]\b')
+    @_(r'\b[t][rR][uU][eE]|[f][aA][lL][sS][eE]\b')
     def BOOL_CONST(self, t):
         t.type = 'BOOL_CONST'
-        if t.value == 'true':
+        if t.value[0] == 't':
             t.value = True
-        elif t.value == 'false':
+        elif t.value[0] == 'f':
             t.value = False
-        else:
-            t.type = 'TYPEID'
+        return t
+    
+    @_('[A-Z]([a-zA-Z0-9_])*')
+    def TYPEID(self, t):
         return t
 
-    @_(NOT)
-    def NOT(self, t):
-        t.type = 'NOT'
+    @_(r'[a-z]([a-zA-Z0-9_])*')
+    def OBJECTID(self, t):
         return t
     
-    @_(IN)
-    def IN(self, t):
-        t.type = 'IN'
-        return t
     
-    @_(CASE)
-    def CASE(self, t):
-        t.type = 'CASE'
-        return t
-    
-    @_(ELSE)
-    def ELSE(self, t):
-        t.type = 'ELSE'
-        return t
-    
-    @_(ESAC)
-    def ESAC(self, t):
-        t.type = 'ESAC'
-        return t
-    
-    @_(CLASS)
-    def CLASS(self, t):
-        t.type = 'CLASS'
-        return t
-    
-    @_(INHERITS)
-    def INHERITS(self, t):
-        t.type = 'INHERITS'
-        return t
-    
-    @_(ISVOID)
-    def ISVOID(self, t):
-        t.type = 'ISVOID'
-        return t
-    
-    @_(LET)
-    def LET(self, t):
-        t.type = 'LET'
-        return t
-    
-    @_(LOOP)
-    def LOOP(self, t):
-        t.type = 'LOOP'
-        return t
-    
-    @_(NEW)
-    def NEW(self, t):
-        t.type = 'NEW'
-        return t
-    
-    @_(OF)
-    def OF(self, t):
-        t.type = 'OF'
-        return t
-    
-    @_(POOL)
-    def POOL(self, t):
-        t.type = 'POOL'
-        return t
-    
-    @_(WHILE)
-    def WHILE(self, t):
-        t.type = 'WHILE'
-        return t
+
     
     @_(r'[_]|[!]|[#]|[$]|[%]|[&]|[>]|[?]|[`]|[[]|[]]|[\\]|[|]|[\^]|[\\x*[a-zA-Z0-9]+]|[]|[]|[]|[]')
     def ERROR(self, t):
@@ -184,18 +71,18 @@ class CoolLexer(Lexer):
         elif t.value in self.CARACTERES_CONTROL:
             t.value = f'\\{t.value}'
         return t
-
-    @_(r'"')
-    def empiezaString():
-        self.begin(STRING)
     
     @_(r'--.*')
-    def comentario1Linea(self, t):
+    def COMENT_1LINEA(self, t):
         pass
 
-    @_(r'\t| |\v|\r|\f')
+    @_(r"\s")
     def spaces(self, t):
         pass
+
+    @_(r'"')
+    def STR_CONST(self, t):
+        self.begin(StringLexer)
 
     @_(r'\n+')
     def newline(self, t):
@@ -229,5 +116,46 @@ class CoolLexer(Lexer):
             list_strings.append(result)
         return list_strings
 
-class STRING (Lexer):
-    tokens = {STR_CONST,ERROR}
+class StringLexer(Lexer):
+    tokens = {STR_CONST, ERROR}
+    _acumulado = ""
+
+    @_(r'\\\n')
+    def SALTOESCAPADO(self, t):
+        self._acumulado += "\\n"
+        self.lineno += 1
+    
+    @_(r'\\[btrn"]')
+    def caracter_escapado1(self, t):
+        self._acumulado += t.value[1]
+    
+    @_(r'\\\\')
+    def DOBLE_BARRA(self, t):
+        self._acumulado += t.value[0:]
+
+    @_(r'\t')
+    def TABULADORESCAPADO(self, t):
+        self._acumulado += '\\t'
+    
+    @_(r'\\.') # El punto no representa el salto de linea
+    def COMILLASESCAPADO(self, t):
+        self._acumulado += t.value
+
+    @_(r'"')
+    def CIERRE(self, t):
+        t.type = "STR_CONST"
+        t.value = self._acumulado
+        self._acumulado = ""
+        self.begin(CoolLexer)
+        return t
+
+    @_(r'.')
+    def CUALQUIER_COSA(self, t):
+        self._acumulado += t.value
+    
+    def error(self, t):
+        self.index += 1
+
+
+    
+

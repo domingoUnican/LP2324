@@ -1,0 +1,58 @@
+#name "operators.cool"
+ '(' 
+ '*' 
+ OBJECTID some
+ OBJECTID operators
+ '*' 
+ ')' 
+ ';' 
+ '{' 
+ '}' 
+ '(' 
+ ',' 
+ ')' 
+ ':' 
+ '@' 
+ '.' 
+ '+' 
+ '-' 
+ '*' 
+ '/' 
+ '~' 
+ '<' 
+ ASSIGN
+ DARROW
+ LE
+ '(' 
+ '*' 
+ OBJECTID should
+ OBJECTID be
+ '<' 
+ OBJECTID and
+ LE
+ '*' 
+ ')' 
+ '<' 
+ LE
+ '(' 
+ '*' 
+ OBJECTID should
+ OBJECTID be
+ LE
+ OBJECTID and
+ '*' 
+ ')' 
+ LE
+ '(' 
+ '*' 
+ OBJECTID should
+ OBJECTID be
+ LE
+ OBJECTID and
+ DARROW
+ '*' 
+ ')' 
+ LE
+ DARROW
+ '<' 
+ ASSIGN

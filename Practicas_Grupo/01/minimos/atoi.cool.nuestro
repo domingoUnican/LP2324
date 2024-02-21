@@ -1,0 +1,639 @@
+#name "atoi.cool"
+ '(' 
+ '*' 
+ TYPEID The
+ CLASS
+ TYPEID A2I
+ OBJECTID provides
+ OBJECTID integer
+ '-' 
+ OBJECTID to
+ '-' 
+ OBJECTID string
+ OBJECTID and
+ OBJECTID string
+ '-' 
+ OBJECTID to
+ '-' 
+ OBJECTID integer
+ OBJECTID conversion
+ OBJECTID routines
+ '.' 
+ TYPEID To
+ OBJECTID use
+ OBJECTID these
+ OBJECTID routines
+ ',' 
+ OBJECTID either
+ OBJECTID inherit
+ OBJECTID them
+ IN
+ OBJECTID the
+ CLASS
+ OBJECTID where
+ OBJECTID needed
+ ',' 
+ OBJECTID have
+ OBJECTID a
+ OBJECTID dummy
+ OBJECTID variable
+ OBJECTID bound
+ OBJECTID to
+ OBJECTID something
+ OF
+ OBJECTID type
+ TYPEID A2I
+ ',' 
+ OBJECTID or
+ OBJECTID simpl
+ OBJECTID write
+ '(' 
+ NEW
+ TYPEID A2I
+ ')' 
+ '.' 
+ OBJECTID method
+ '(' 
+ OBJECTID argument
+ ')' 
+ '.' 
+ '*' 
+ ')' 
+ '(' 
+ '*' 
+ OBJECTID c2i
+ TYPEID Converts
+ OBJECTID a
+ INT_CONST 1
+ '-' 
+ OBJECTID character
+ OBJECTID string
+ OBJECTID to
+ OBJECTID an
+ OBJECTID integer
+ '.' 
+ TYPEID Aborts
+ IF
+ OBJECTID the
+ OBJECTID string
+ OBJECTID is
+ NOT
+ STR_CONST 0
+ OBJECTID through
+ STR_CONST 9
+ '*' 
+ ')' 
+ CLASS
+ TYPEID A2I
+ '{' 
+ OBJECTID c2i
+ '(' 
+ OBJECTID char
+ ':' 
+ TYPEID String
+ ')' 
+ ':' 
+ TYPEID Int
+ '{' 
+ IF
+ OBJECTID char
+ STR_CONST 0
+ THEN
+ INT_CONST 0
+ ELSE
+ IF
+ OBJECTID char
+ STR_CONST 1
+ THEN
+ INT_CONST 1
+ ELSE
+ IF
+ OBJECTID char
+ STR_CONST 2
+ THEN
+ INT_CONST 2
+ ELSE
+ IF
+ OBJECTID char
+ STR_CONST 3
+ THEN
+ INT_CONST 3
+ ELSE
+ IF
+ OBJECTID char
+ STR_CONST 4
+ THEN
+ INT_CONST 4
+ ELSE
+ IF
+ OBJECTID char
+ STR_CONST 5
+ THEN
+ INT_CONST 5
+ ELSE
+ IF
+ OBJECTID char
+ STR_CONST 6
+ THEN
+ INT_CONST 6
+ ELSE
+ IF
+ OBJECTID char
+ STR_CONST 7
+ THEN
+ INT_CONST 7
+ ELSE
+ IF
+ OBJECTID char
+ STR_CONST 8
+ THEN
+ INT_CONST 8
+ ELSE
+ IF
+ OBJECTID char
+ STR_CONST 9
+ THEN
+ INT_CONST 9
+ ELSE
+ '{' 
+ OBJECTID abort
+ '(' 
+ ')' 
+ ';' 
+ INT_CONST 0
+ ';' 
+ '}' 
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ '}' 
+ ';' 
+ '(' 
+ '*' 
+ OBJECTID i2c
+ OBJECTID is
+ OBJECTID the
+ OBJECTID inverse
+ OF
+ OBJECTID c2i
+ '.' 
+ '*' 
+ ')' 
+ OBJECTID i2c
+ '(' 
+ OBJECTID i
+ ':' 
+ TYPEID Int
+ ')' 
+ ':' 
+ TYPEID String
+ '{' 
+ IF
+ OBJECTID i
+ INT_CONST 0
+ THEN
+ STR_CONST 0
+ ELSE
+ IF
+ OBJECTID i
+ INT_CONST 1
+ THEN
+ STR_CONST 1
+ ELSE
+ IF
+ OBJECTID i
+ INT_CONST 2
+ THEN
+ STR_CONST 2
+ ELSE
+ IF
+ OBJECTID i
+ INT_CONST 3
+ THEN
+ STR_CONST 3
+ ELSE
+ IF
+ OBJECTID i
+ INT_CONST 4
+ THEN
+ STR_CONST 4
+ ELSE
+ IF
+ OBJECTID i
+ INT_CONST 5
+ THEN
+ STR_CONST 5
+ ELSE
+ IF
+ OBJECTID i
+ INT_CONST 6
+ THEN
+ STR_CONST 6
+ ELSE
+ IF
+ OBJECTID i
+ INT_CONST 7
+ THEN
+ STR_CONST 7
+ ELSE
+ IF
+ OBJECTID i
+ INT_CONST 8
+ THEN
+ STR_CONST 8
+ ELSE
+ IF
+ OBJECTID i
+ INT_CONST 9
+ THEN
+ STR_CONST 9
+ ELSE
+ '{' 
+ OBJECTID abort
+ '(' 
+ ')' 
+ ';' 
+ STR_CONST 
+ ';' 
+ '}' 
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ FI
+ '}' 
+ ';' 
+ '(' 
+ '*' 
+ OBJECTID a2i
+ OBJECTID converts
+ OBJECTID an
+ TYPEID ASCII
+ OBJECTID string
+ OBJECTID into
+ OBJECTID an
+ OBJECTID integer
+ '.' 
+ TYPEID The
+ OBJECTID empty
+ OBJECTID string
+ OBJECTID is
+ OBJECTID converted
+ OBJECTID to
+ INT_CONST 0
+ '.' 
+ TYPEID Signed
+ OBJECTID and
+ OBJECTID unsigned
+ OBJECTID strings
+ OBJECTID are
+ OBJECTID handled
+ '.' 
+ TYPEID The
+ OBJECTID method
+ OBJECTID aborts
+ IF
+ OBJECTID the
+ OBJECTID string
+ OBJECTID does
+ NOT
+ OBJECTID represent
+ OBJECTID an
+ OBJECTID integer
+ '.' 
+ TYPEID Very
+ OBJECTID long
+ OBJECTID strings
+ OF
+ OBJECTID digits
+ OBJECTID produce
+ OBJECTID strange
+ OBJECTID answers
+ OBJECTID because
+ OF
+ OBJECTID arithmetic
+ OBJECTID overflow
+ '.' 
+ '*' 
+ ')' 
+ OBJECTID a2i
+ '(' 
+ OBJECTID s
+ ':' 
+ TYPEID String
+ ')' 
+ ':' 
+ TYPEID Int
+ '{' 
+ IF
+ OBJECTID s
+ '.' 
+ OBJECTID length
+ '(' 
+ ')' 
+ INT_CONST 0
+ THEN
+ INT_CONST 0
+ ELSE
+ IF
+ OBJECTID s
+ '.' 
+ OBJECTID substr
+ '(' 
+ INT_CONST 0
+ ',' 
+ INT_CONST 1
+ ')' 
+ STR_CONST -
+ THEN
+ '~' 
+ OBJECTID a2i_aux
+ '(' 
+ OBJECTID s
+ '.' 
+ OBJECTID substr
+ '(' 
+ INT_CONST 1
+ ',' 
+ OBJECTID s
+ '.' 
+ OBJECTID length
+ '(' 
+ ')' 
+ '-' 
+ INT_CONST 1
+ ')' 
+ ')' 
+ ELSE
+ IF
+ OBJECTID s
+ '.' 
+ OBJECTID substr
+ '(' 
+ INT_CONST 0
+ ',' 
+ INT_CONST 1
+ ')' 
+ STR_CONST +
+ THEN
+ OBJECTID a2i_aux
+ '(' 
+ OBJECTID s
+ '.' 
+ OBJECTID substr
+ '(' 
+ INT_CONST 1
+ ',' 
+ OBJECTID s
+ '.' 
+ OBJECTID length
+ '(' 
+ ')' 
+ '-' 
+ INT_CONST 1
+ ')' 
+ ')' 
+ ELSE
+ OBJECTID a2i_aux
+ '(' 
+ OBJECTID s
+ ')' 
+ FI
+ FI
+ FI
+ '}' 
+ ';' 
+ '(' 
+ '*' 
+ OBJECTID a2i_aux
+ OBJECTID converts
+ OBJECTID the
+ OBJECTID usigned
+ OBJECTID portion
+ OF
+ OBJECTID the
+ OBJECTID string
+ '.' 
+ TYPEID As
+ OBJECTID a
+ OBJECTID programming
+ OBJECTID example
+ ',' 
+ OBJECTID this
+ OBJECTID method
+ OBJECTID is
+ OBJECTID written
+ OBJECTID iteratively
+ '.' 
+ '*' 
+ ')' 
+ OBJECTID a2i_aux
+ '(' 
+ OBJECTID s
+ ':' 
+ TYPEID String
+ ')' 
+ ':' 
+ TYPEID Int
+ '{' 
+ '(' 
+ LET
+ OBJECTID int
+ ':' 
+ TYPEID Int
+ ASSIGN
+ INT_CONST 0
+ IN
+ '{' 
+ '(' 
+ LET
+ OBJECTID j
+ ':' 
+ TYPEID Int
+ ASSIGN
+ OBJECTID s
+ '.' 
+ OBJECTID length
+ '(' 
+ ')' 
+ IN
+ '(' 
+ LET
+ OBJECTID i
+ ':' 
+ TYPEID Int
+ ASSIGN
+ INT_CONST 0
+ IN
+ WHILE
+ OBJECTID i
+ '<' 
+ OBJECTID j
+ LOOP
+ '{' 
+ OBJECTID int
+ ASSIGN
+ OBJECTID int
+ '*' 
+ INT_CONST 10
+ '+' 
+ OBJECTID c2i
+ '(' 
+ OBJECTID s
+ '.' 
+ OBJECTID substr
+ '(' 
+ OBJECTID i
+ ',' 
+ INT_CONST 1
+ ')' 
+ ')' 
+ ';' 
+ OBJECTID i
+ ASSIGN
+ OBJECTID i
+ '+' 
+ INT_CONST 1
+ ';' 
+ '}' 
+ POOL
+ ')' 
+ ')' 
+ ';' 
+ OBJECTID int
+ ';' 
+ '}' 
+ ')' 
+ '}' 
+ ';' 
+ '(' 
+ '*' 
+ OBJECTID i2a
+ OBJECTID converts
+ OBJECTID an
+ OBJECTID integer
+ OBJECTID to
+ OBJECTID a
+ OBJECTID string
+ '.' 
+ TYPEID Positive
+ OBJECTID and
+ OBJECTID negative
+ OBJECTID numbers
+ OBJECTID are
+ OBJECTID handled
+ OBJECTID correctly
+ '.' 
+ '*' 
+ ')' 
+ OBJECTID i2a
+ '(' 
+ OBJECTID i
+ ':' 
+ TYPEID Int
+ ')' 
+ ':' 
+ TYPEID String
+ '{' 
+ IF
+ OBJECTID i
+ INT_CONST 0
+ THEN
+ STR_CONST 0
+ ELSE
+ IF
+ INT_CONST 0
+ '<' 
+ OBJECTID i
+ THEN
+ OBJECTID i2a_aux
+ '(' 
+ OBJECTID i
+ ')' 
+ ELSE
+ STR_CONST -
+ '.' 
+ OBJECTID concat
+ '(' 
+ OBJECTID i2a_aux
+ '(' 
+ OBJECTID i
+ '*' 
+ '~' 
+ INT_CONST 1
+ ')' 
+ ')' 
+ FI
+ FI
+ '}' 
+ ';' 
+ '(' 
+ '*' 
+ OBJECTID i2a_aux
+ OBJECTID is
+ OBJECTID an
+ OBJECTID example
+ OBJECTID using
+ OBJECTID recursion
+ '.' 
+ '*' 
+ ')' 
+ OBJECTID i2a_aux
+ '(' 
+ OBJECTID i
+ ':' 
+ TYPEID Int
+ ')' 
+ ':' 
+ TYPEID String
+ '{' 
+ IF
+ OBJECTID i
+ INT_CONST 0
+ THEN
+ STR_CONST 
+ ELSE
+ '(' 
+ LET
+ OBJECTID next
+ ':' 
+ TYPEID Int
+ ASSIGN
+ OBJECTID i
+ '/' 
+ INT_CONST 10
+ IN
+ OBJECTID i2a_aux
+ '(' 
+ OBJECTID next
+ ')' 
+ '.' 
+ OBJECTID concat
+ '(' 
+ OBJECTID i2c
+ '(' 
+ OBJECTID i
+ '-' 
+ OBJECTID next
+ '*' 
+ INT_CONST 10
+ ')' 
+ ')' 
+ ')' 
+ FI
+ '}' 
+ ';' 
+ '}' 
+ ';'
