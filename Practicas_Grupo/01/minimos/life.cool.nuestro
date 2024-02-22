@@ -260,7 +260,7 @@
  '{' 
  OBJECTID out_string
  '(' 
- STR_CONST \n
+ STR_CONST "\n"
  ')' 
  ';' 
  WHILE
@@ -283,7 +283,7 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \n
+ STR_CONST "\n"
  ')' 
  ';' 
  OBJECTID i
@@ -297,7 +297,7 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \n
+ STR_CONST "\n"
  ')' 
  ';' 
  OBJECTID self
@@ -336,7 +336,7 @@
  '<' 
  OBJECTID position
  THEN
- STR_CONST  
+ STR_CONST " "
  ELSE
  OBJECTID population_map
  '.' 
@@ -367,7 +367,7 @@
  '<' 
  INT_CONST 0
  THEN
- STR_CONST  
+ STR_CONST " "
  ELSE
  OBJECTID cell
  '(' 
@@ -396,7 +396,7 @@
  OBJECTID columns
  ')' 
  THEN
- STR_CONST  
+ STR_CONST " "
  ELSE
  OBJECTID cell
  '(' 
@@ -437,7 +437,7 @@
  INT_CONST 1
  ')' 
  THEN
- STR_CONST  
+ STR_CONST " "
  ELSE
  OBJECTID cell
  '(' 
@@ -462,7 +462,7 @@
  '=' 
  INT_CONST 0
  THEN
- STR_CONST  
+ STR_CONST " "
  ELSE
  IF
  '(' 
@@ -477,7 +477,7 @@
  '=' 
  OBJECTID position
  THEN
- STR_CONST  
+ STR_CONST " "
  ELSE
  OBJECTID cell
  '(' 
@@ -507,7 +507,7 @@
  '<' 
  INT_CONST 0
  THEN
- STR_CONST  
+ STR_CONST " "
  ELSE
  IF
  '(' 
@@ -522,7 +522,7 @@
  '=' 
  OBJECTID position
  THEN
- STR_CONST  
+ STR_CONST " "
  ELSE
  OBJECTID north
  '(' 
@@ -552,7 +552,7 @@
  '<' 
  INT_CONST 0
  THEN
- STR_CONST  
+ STR_CONST " "
  ELSE
  IF
  '(' 
@@ -575,7 +575,7 @@
  INT_CONST 1
  ')' 
  THEN
- STR_CONST  
+ STR_CONST " "
  ELSE
  OBJECTID north
  '(' 
@@ -605,7 +605,7 @@
  OBJECTID columns
  ')' 
  THEN
- STR_CONST  
+ STR_CONST " "
  ELSE
  IF
  '(' 
@@ -628,7 +628,7 @@
  INT_CONST 1
  ')' 
  THEN
- STR_CONST  
+ STR_CONST " "
  ELSE
  OBJECTID south
  '(' 
@@ -658,7 +658,7 @@
  OBJECTID columns
  ')' 
  THEN
- STR_CONST  
+ STR_CONST " "
  ELSE
  IF
  '(' 
@@ -673,7 +673,7 @@
  '=' 
  OBJECTID position
  THEN
- STR_CONST  
+ STR_CONST " "
  ELSE
  OBJECTID south
  '(' 
@@ -701,7 +701,7 @@
  OBJECTID position
  ')' 
  '=' 
- STR_CONST X
+ STR_CONST "X"
  THEN
  INT_CONST 1
  ELSE
@@ -714,7 +714,7 @@
  OBJECTID position
  ')' 
  '=' 
- STR_CONST X
+ STR_CONST "X"
  THEN
  INT_CONST 1
  ELSE
@@ -727,7 +727,7 @@
  OBJECTID position
  ')' 
  '=' 
- STR_CONST X
+ STR_CONST "X"
  THEN
  INT_CONST 1
  ELSE
@@ -740,7 +740,7 @@
  OBJECTID position
  ')' 
  '=' 
- STR_CONST X
+ STR_CONST "X"
  THEN
  INT_CONST 1
  ELSE
@@ -753,7 +753,7 @@
  OBJECTID position
  ')' 
  '=' 
- STR_CONST X
+ STR_CONST "X"
  THEN
  INT_CONST 1
  ELSE
@@ -766,7 +766,7 @@
  OBJECTID position
  ')' 
  '=' 
- STR_CONST X
+ STR_CONST "X"
  THEN
  INT_CONST 1
  ELSE
@@ -779,7 +779,7 @@
  OBJECTID position
  ')' 
  '=' 
- STR_CONST X
+ STR_CONST "X"
  THEN
  INT_CONST 1
  ELSE
@@ -792,7 +792,7 @@
  OBJECTID position
  ')' 
  '=' 
- STR_CONST X
+ STR_CONST "X"
  THEN
  INT_CONST 1
  ELSE
@@ -819,7 +819,7 @@
  '=' 
  INT_CONST 3
  THEN
- STR_CONST X
+ STR_CONST "X"
  ELSE
  IF
  OBJECTID neighbors
@@ -835,14 +835,14 @@
  OBJECTID position
  ')' 
  '=' 
- STR_CONST X
+ STR_CONST "X"
  THEN
- STR_CONST X
+ STR_CONST "X"
  ELSE
- STR_CONST -
+ STR_CONST "-"
  FI
  ELSE
- STR_CONST -
+ STR_CONST "-"
  FI
  FI
  '}' 
@@ -933,117 +933,117 @@
  '{' 
  OBJECTID out_string
  '(' 
- STR_CONST \nPlease chose a number:\n
+ STR_CONST "\nPlease chose a number:\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t1: A cross\n
+ STR_CONST "\t1: A cross\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t2: A slash from the upper left to lower right\n
+ STR_CONST "\t2: A slash from the upper left to lower right\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t3: A slash from the upper right to lower left\n
+ STR_CONST "\t3: A slash from the upper right to lower left\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t4: An X\n
+ STR_CONST "\t4: An X\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t5: A greater than sign \n
+ STR_CONST "\t5: A greater than sign \n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t6: A less than sign\n
+ STR_CONST "\t6: A less than sign\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t7: Two greater than signs\n
+ STR_CONST "\t7: Two greater than signs\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t8: Two less than signs\n
+ STR_CONST "\t8: Two less than signs\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t9: A 'V'\n
+ STR_CONST "\t9: A 'V'\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t10: An inverse 'V'\n
+ STR_CONST "\t10: An inverse 'V'\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t11: Numbers 9 and 10 combined\n
+ STR_CONST "\t11: Numbers 9 and 10 combined\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t12: A full grid\n
+ STR_CONST "\t12: A full grid\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t13: A 'T'\n
+ STR_CONST "\t13: A 'T'\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t14: A plus '+'\n
+ STR_CONST "\t14: A plus '+'\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t15: A 'W'\n
+ STR_CONST "\t15: A 'W'\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t16: An 'M'\n
+ STR_CONST "\t16: An 'M'\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t17: An 'E'\n
+ STR_CONST "\t17: An 'E'\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t18: A '3'\n
+ STR_CONST "\t18: A '3'\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t19: An 'O'\n
+ STR_CONST "\t19: An 'O'\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t20: An '8'\n
+ STR_CONST "\t20: An '8'\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \t21: An 'S'\n
+ STR_CONST "\t21: An 'S'\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST Your choice => 
+ STR_CONST "Your choice => "
  ')' 
  ';' 
  OBJECTID num
@@ -1054,7 +1054,7 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \n
+ STR_CONST "\n"
  ')' 
  ';' 
  IF
@@ -1062,149 +1062,149 @@
  '=' 
  INT_CONST 1
  THEN
- STR_CONST  XX  XXXX XXXX  XX  
+ STR_CONST " XX  XXXX XXXX  XX  "
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 2
  THEN
- STR_CONST     X   X   X   X   X    
+ STR_CONST "    X   X   X   X   X    "
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 3
  THEN
- STR_CONST X     X     X     X     X
+ STR_CONST "X     X     X     X     X"
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 4
  THEN
- STR_CONST X   X X X   X   X X X   X
+ STR_CONST "X   X X X   X   X X X   X"
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 5
  THEN
- STR_CONST X     X     X   X   X    
+ STR_CONST "X     X     X   X   X    "
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 6
  THEN
- STR_CONST     X   X   X     X     X
+ STR_CONST "    X   X   X     X     X"
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 7
  THEN
- STR_CONST X  X  X  XX  X      
+ STR_CONST "X  X  X  XX  X      "
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 8
  THEN
- STR_CONST  X  XX  X  X  X     
+ STR_CONST " X  XX  X  X  X     "
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 9
  THEN
- STR_CONST X   X X X   X  
+ STR_CONST "X   X X X   X  "
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 10
  THEN
- STR_CONST   X   X X X   X
+ STR_CONST "  X   X X X   X"
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 11
  THEN
- STR_CONST X X X X X X X X
+ STR_CONST "X X X X X X X X"
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 12
  THEN
- STR_CONST XXXXXXXXXXXXXXXXXXXXXXXXX
+ STR_CONST "XXXXXXXXXXXXXXXXXXXXXXXXX"
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 13
  THEN
- STR_CONST XXXXX  X    X    X    X  
+ STR_CONST "XXXXX  X    X    X    X  "
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 14
  THEN
- STR_CONST   X    X  XXXXX  X    X  
+ STR_CONST "  X    X  XXXXX  X    X  "
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 15
  THEN
- STR_CONST X     X X X X   X X  
+ STR_CONST "X     X X X X   X X  "
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 16
  THEN
- STR_CONST   X X   X X X X     X
+ STR_CONST "  X X   X X X X     X"
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 17
  THEN
- STR_CONST XXXXX   X   XXXXX   X   XXXX
+ STR_CONST "XXXXX   X   XXXXX   X   XXXX"
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 18
  THEN
- STR_CONST XXX    X   X  X    X   XXXX 
+ STR_CONST "XXX    X   X  X    X   XXXX "
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 19
  THEN
- STR_CONST  XX X  XX  X XX 
+ STR_CONST " XX X  XX  X XX "
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 20
  THEN
- STR_CONST  XX X  XX  X XX X  XX  X XX 
+ STR_CONST " XX X  XX  X XX X  XX  X XX "
  ELSE
  IF
  OBJECTID num
  '=' 
  INT_CONST 21
  THEN
- STR_CONST  XXXX   X    XX    X   XXXX 
+ STR_CONST " XXXX   X    XX    X   XXXX "
  ELSE
- STR_CONST                          
+ STR_CONST "                         "
  FI
  FI
  FI
@@ -1249,12 +1249,12 @@
  '{' 
  OBJECTID out_string
  '(' 
- STR_CONST Would you like to continue with the next generation? \n
+ STR_CONST "Would you like to continue with the next generation? \n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST Please use lowercase y or n for your answer [y]: 
+ STR_CONST "Please use lowercase y or n for your answer [y]: "
  ')' 
  ';' 
  OBJECTID ans
@@ -1265,13 +1265,13 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \n
+ STR_CONST "\n"
  ')' 
  ';' 
  IF
  OBJECTID ans
  '=' 
- STR_CONST n
+ STR_CONST "n"
  THEN
  BOOL_CONST false
  ELSE
@@ -1299,17 +1299,17 @@
  '{' 
  OBJECTID out_string
  '(' 
- STR_CONST \n\n
+ STR_CONST "\n\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST Would you like to choose a background pattern? \n
+ STR_CONST "Would you like to choose a background pattern? \n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST Please use lowercase y or n for your answer [n]: 
+ STR_CONST "Please use lowercase y or n for your answer [n]: "
  ')' 
  ';' 
  OBJECTID ans
@@ -1321,7 +1321,7 @@
  IF
  OBJECTID ans
  '=' 
- STR_CONST y
+ STR_CONST "y"
  THEN
  BOOL_CONST true
  ELSE
@@ -1365,12 +1365,12 @@
  '{' 
  OBJECTID out_string
  '(' 
- STR_CONST Welcome to the Game of Life.\n
+ STR_CONST "Welcome to the Game of Life.\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST There are many initial states to choose from. \n
+ STR_CONST "There are many initial states to choose from. \n"
  ')' 
  ';' 
  WHILE

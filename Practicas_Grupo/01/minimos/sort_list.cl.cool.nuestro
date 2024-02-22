@@ -339,7 +339,7 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \n
+ STR_CONST "\n"
  ')' 
  ';' 
  OBJECTID xcdr
@@ -509,7 +509,7 @@
  '{' 
  OBJECTID out_string
  '(' 
- STR_CONST How many numbers to sort?
+ STR_CONST "How many numbers to sort?"
  ')' 
  ';' 
  OBJECTID iota

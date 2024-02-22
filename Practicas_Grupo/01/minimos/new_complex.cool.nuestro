@@ -44,12 +44,12 @@
  THEN
  OBJECTID out_string
  '(' 
- STR_CONST =)\n
+ STR_CONST "=)\n"
  ')' 
  ELSE
  OBJECTID out_string
  '(' 
- STR_CONST =(\n
+ STR_CONST "=(\n"
  ')' 
  FI
  ';' 
@@ -75,12 +75,12 @@
  THEN
  OBJECTID out_string
  '(' 
- STR_CONST =)\n
+ STR_CONST "=)\n"
  ')' 
  ELSE
  OBJECTID out_string
  '(' 
- STR_CONST =(\n
+ STR_CONST "=(\n"
  ')' 
  FI
  ';' 
@@ -153,7 +153,7 @@
  '.' 
  OBJECTID out_string
  '(' 
- STR_CONST +
+ STR_CONST "+"
  ')' 
  '.' 
  OBJECTID out_int
@@ -163,7 +163,7 @@
  '.' 
  OBJECTID out_string
  '(' 
- STR_CONST I
+ STR_CONST "I"
  ')' 
  FI
  '}' 

@@ -509,70 +509,70 @@
  IF
  OBJECTID char
  '=' 
- STR_CONST 0
+ STR_CONST "0"
  THEN
  INT_CONST 0
  ELSE
  IF
  OBJECTID char
  '=' 
- STR_CONST 1
+ STR_CONST "1"
  THEN
  INT_CONST 1
  ELSE
  IF
  OBJECTID char
  '=' 
- STR_CONST 2
+ STR_CONST "2"
  THEN
  INT_CONST 2
  ELSE
  IF
  OBJECTID char
  '=' 
- STR_CONST 3
+ STR_CONST "3"
  THEN
  INT_CONST 3
  ELSE
  IF
  OBJECTID char
  '=' 
- STR_CONST 4
+ STR_CONST "4"
  THEN
  INT_CONST 4
  ELSE
  IF
  OBJECTID char
  '=' 
- STR_CONST 5
+ STR_CONST "5"
  THEN
  INT_CONST 5
  ELSE
  IF
  OBJECTID char
  '=' 
- STR_CONST 6
+ STR_CONST "6"
  THEN
  INT_CONST 6
  ELSE
  IF
  OBJECTID char
  '=' 
- STR_CONST 7
+ STR_CONST "7"
  THEN
  INT_CONST 7
  ELSE
  IF
  OBJECTID char
  '=' 
- STR_CONST 8
+ STR_CONST "8"
  THEN
  INT_CONST 8
  ELSE
  IF
  OBJECTID char
  '=' 
- STR_CONST 9
+ STR_CONST "9"
  THEN
  INT_CONST 9
  ELSE
@@ -610,77 +610,77 @@
  '=' 
  INT_CONST 0
  THEN
- STR_CONST 0
+ STR_CONST "0"
  ELSE
  IF
  OBJECTID i
  '=' 
  INT_CONST 1
  THEN
- STR_CONST 1
+ STR_CONST "1"
  ELSE
  IF
  OBJECTID i
  '=' 
  INT_CONST 2
  THEN
- STR_CONST 2
+ STR_CONST "2"
  ELSE
  IF
  OBJECTID i
  '=' 
  INT_CONST 3
  THEN
- STR_CONST 3
+ STR_CONST "3"
  ELSE
  IF
  OBJECTID i
  '=' 
  INT_CONST 4
  THEN
- STR_CONST 4
+ STR_CONST "4"
  ELSE
  IF
  OBJECTID i
  '=' 
  INT_CONST 5
  THEN
- STR_CONST 5
+ STR_CONST "5"
  ELSE
  IF
  OBJECTID i
  '=' 
  INT_CONST 6
  THEN
- STR_CONST 6
+ STR_CONST "6"
  ELSE
  IF
  OBJECTID i
  '=' 
  INT_CONST 7
  THEN
- STR_CONST 7
+ STR_CONST "7"
  ELSE
  IF
  OBJECTID i
  '=' 
  INT_CONST 8
  THEN
- STR_CONST 8
+ STR_CONST "8"
  ELSE
  IF
  OBJECTID i
  '=' 
  INT_CONST 9
  THEN
- STR_CONST 9
+ STR_CONST "9"
  ELSE
  '{' 
  OBJECTID abort
  '(' 
  ')' 
  ';' 
- STR_CONST 
+ STR_CONST ""
  ';' 
  '}' 
  FI
@@ -725,7 +725,7 @@
  INT_CONST 1
  ')' 
  '=' 
- STR_CONST -
+ STR_CONST "-"
  THEN
  '~' 
  OBJECTID a2i_aux
@@ -756,7 +756,7 @@
  INT_CONST 1
  ')' 
  '=' 
- STR_CONST +
+ STR_CONST "+"
  THEN
  OBJECTID a2i_aux
  '(' 
@@ -878,7 +878,7 @@
  '=' 
  INT_CONST 0
  THEN
- STR_CONST 0
+ STR_CONST "0"
  ELSE
  IF
  INT_CONST 0
@@ -890,7 +890,7 @@
  OBJECTID i
  ')' 
  ELSE
- STR_CONST -
+ STR_CONST "-"
  '.' 
  OBJECTID concat
  '(' 
@@ -920,7 +920,7 @@
  '=' 
  INT_CONST 0
  THEN
- STR_CONST 
+ STR_CONST ""
  ELSE
  '(' 
  LET
@@ -986,7 +986,7 @@
  '{' 
  OBJECTID out_string
  '(' 
- STR_CONST \n\tTo add a number to 
+ STR_CONST "\n\tTo add a number to "
  ')' 
  ';' 
  OBJECTID print
@@ -996,12 +996,12 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST ...enter a:\n
+ STR_CONST "...enter a:\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \tTo negate 
+ STR_CONST "\tTo negate "
  ')' 
  ';' 
  OBJECTID print
@@ -1011,12 +1011,12 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST ...enter b:\n
+ STR_CONST "...enter b:\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \tTo find the difference between 
+ STR_CONST "\tTo find the difference between "
  ')' 
  ';' 
  OBJECTID print
@@ -1026,12 +1026,12 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST and another number...enter c:\n
+ STR_CONST "and another number...enter c:\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \tTo find the factorial of 
+ STR_CONST "\tTo find the factorial of "
  ')' 
  ';' 
  OBJECTID print
@@ -1041,12 +1041,12 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST ...enter d:\n
+ STR_CONST "...enter d:\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \tTo square 
+ STR_CONST "\tTo square "
  ')' 
  ';' 
  OBJECTID print
@@ -1056,12 +1056,12 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST ...enter e:\n
+ STR_CONST "...enter e:\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \tTo cube 
+ STR_CONST "\tTo cube "
  ')' 
  ';' 
  OBJECTID print
@@ -1071,12 +1071,12 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST ...enter f:\n
+ STR_CONST "...enter f:\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \tTo find out if 
+ STR_CONST "\tTo find out if "
  ')' 
  ';' 
  OBJECTID print
@@ -1086,12 +1086,12 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST is a multiple of 3...enter g:\n
+ STR_CONST "is a multiple of 3...enter g:\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \tTo divide 
+ STR_CONST "\tTo divide "
  ')' 
  ';' 
  OBJECTID print
@@ -1101,17 +1101,17 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST by 8...enter h:\n
+ STR_CONST "by 8...enter h:\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \tTo get a new number...enter j:\n
+ STR_CONST "\tTo get a new number...enter j:\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \tTo quit...enter q:\n\n
+ STR_CONST "\tTo quit...enter q:\n\n"
  ')' 
  ';' 
  OBJECTID in_string
@@ -1130,12 +1130,12 @@
  '{' 
  OBJECTID out_string
  '(' 
- STR_CONST \n
+ STR_CONST "\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST Please enter a number...  
+ STR_CONST "Please enter a number...  "
  ')' 
  ';' 
  OBJECTID in_string
@@ -1255,7 +1255,7 @@
  DARROW
  OBJECTID out_string
  '(' 
- STR_CONST Class type is now A\n
+ STR_CONST "Class type is now A\n"
  ')' 
  ';' 
  OBJECTID b
@@ -1264,7 +1264,7 @@
  DARROW
  OBJECTID out_string
  '(' 
- STR_CONST Class type is now B\n
+ STR_CONST "Class type is now B\n"
  ')' 
  ';' 
  OBJECTID c
@@ -1273,7 +1273,7 @@
  DARROW
  OBJECTID out_string
  '(' 
- STR_CONST Class type is now C\n
+ STR_CONST "Class type is now C\n"
  ')' 
  ';' 
  OBJECTID d
@@ -1282,7 +1282,7 @@
  DARROW
  OBJECTID out_string
  '(' 
- STR_CONST Class type is now D\n
+ STR_CONST "Class type is now D\n"
  ')' 
  ';' 
  OBJECTID e
@@ -1291,7 +1291,7 @@
  DARROW
  OBJECTID out_string
  '(' 
- STR_CONST Class type is now E\n
+ STR_CONST "Class type is now E\n"
  ')' 
  ';' 
  OBJECTID o
@@ -1300,7 +1300,7 @@
  DARROW
  OBJECTID out_string
  '(' 
- STR_CONST Oooops\n
+ STR_CONST "Oooops\n"
  ')' 
  ';' 
  ESAC
@@ -1341,7 +1341,7 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST  
+ STR_CONST " "
  ')' 
  ';' 
  '}' 
@@ -1368,7 +1368,7 @@
  '{' 
  OBJECTID out_string
  '(' 
- STR_CONST number 
+ STR_CONST "number "
  ')' 
  ';' 
  OBJECTID print
@@ -1388,12 +1388,12 @@
  THEN
  OBJECTID out_string
  '(' 
- STR_CONST is even!\n
+ STR_CONST "is even!\n"
  ')' 
  ELSE
  OBJECTID out_string
  '(' 
- STR_CONST is odd!\n
+ STR_CONST "is odd!\n"
  ')' 
  FI
  ';' 
@@ -1411,7 +1411,7 @@
  IF
  OBJECTID char
  '=' 
- STR_CONST a
+ STR_CONST "a"
  THEN
  '{' 
  OBJECTID a_var
@@ -1455,7 +1455,7 @@
  IF
  OBJECTID char
  '=' 
- STR_CONST b
+ STR_CONST "b"
  THEN
  CASE
  OBJECTID avar
@@ -1501,7 +1501,7 @@
  '{' 
  OBJECTID out_string
  '(' 
- STR_CONST Oooops\n
+ STR_CONST "Oooops\n"
  ')' 
  ';' 
  OBJECTID abort
@@ -1517,7 +1517,7 @@
  IF
  OBJECTID char
  '=' 
- STR_CONST c
+ STR_CONST "c"
  THEN
  '{' 
  OBJECTID a_var
@@ -1561,7 +1561,7 @@
  IF
  OBJECTID char
  '=' 
- STR_CONST d
+ STR_CONST "d"
  THEN
  OBJECTID avar
  ASSIGN
@@ -1584,7 +1584,7 @@
  IF
  OBJECTID char
  '=' 
- STR_CONST e
+ STR_CONST "e"
  THEN
  OBJECTID avar
  ASSIGN
@@ -1607,7 +1607,7 @@
  IF
  OBJECTID char
  '=' 
- STR_CONST f
+ STR_CONST "f"
  THEN
  OBJECTID avar
  ASSIGN
@@ -1630,7 +1630,7 @@
  IF
  OBJECTID char
  '=' 
- STR_CONST g
+ STR_CONST "g"
  THEN
  IF
  '(' 
@@ -1652,7 +1652,7 @@
  '{' 
  OBJECTID out_string
  '(' 
- STR_CONST number 
+ STR_CONST "number "
  ')' 
  ';' 
  OBJECTID print
@@ -1662,7 +1662,7 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST is divisible by 3.\n
+ STR_CONST "is divisible by 3.\n"
  ')' 
  ';' 
  '}' 
@@ -1670,7 +1670,7 @@
  '{' 
  OBJECTID out_string
  '(' 
- STR_CONST number 
+ STR_CONST "number "
  ')' 
  ';' 
  OBJECTID print
@@ -1680,7 +1680,7 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST is not divisible by 3.\n
+ STR_CONST "is not divisible by 3.\n"
  ')' 
  ';' 
  '}' 
@@ -1689,7 +1689,7 @@
  IF
  OBJECTID char
  '=' 
- STR_CONST h
+ STR_CONST "h"
  THEN
  '(' 
  LET
@@ -1741,7 +1741,7 @@
  '{' 
  OBJECTID out_string
  '(' 
- STR_CONST number 
+ STR_CONST "number "
  ')' 
  ';' 
  OBJECTID print
@@ -1751,7 +1751,7 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST is equal to 
+ STR_CONST "is equal to "
  ')' 
  ';' 
  OBJECTID print
@@ -1761,7 +1761,7 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST times 8 with a remainder of 
+ STR_CONST "times 8 with a remainder of "
  ')' 
  ';' 
  '(' 
@@ -1786,7 +1786,7 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST \n
+ STR_CONST "\n"
  ')' 
  ';' 
  '}' 
@@ -1805,7 +1805,7 @@
  IF
  OBJECTID char
  '=' 
- STR_CONST j
+ STR_CONST "j"
  THEN
  OBJECTID avar
  ASSIGN
@@ -1817,7 +1817,7 @@
  IF
  OBJECTID char
  '=' 
- STR_CONST q
+ STR_CONST "q"
  THEN
  OBJECTID flag
  ASSIGN

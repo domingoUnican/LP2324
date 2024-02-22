@@ -48,7 +48,7 @@
  '{' 
  OBJECTID out_string
  '(' 
- STR_CONST title:      
+ STR_CONST "title:      "
  ')' 
  '.' 
  OBJECTID out_string
@@ -58,12 +58,12 @@
  '.' 
  OBJECTID out_string
  '(' 
- STR_CONST \n
+ STR_CONST "\n"
  ')' 
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST author:     
+ STR_CONST "author:     "
  ')' 
  '.' 
  OBJECTID out_string
@@ -73,7 +73,7 @@
  '.' 
  OBJECTID out_string
  '(' 
- STR_CONST \n
+ STR_CONST "\n"
  ')' 
  ';' 
  OBJECTID self
@@ -143,7 +143,7 @@
  ';' 
  OBJECTID out_string
  '(' 
- STR_CONST periodical:  
+ STR_CONST "periodical:  "
  ')' 
  '.' 
  OBJECTID out_string
@@ -153,7 +153,7 @@
  '.' 
  OBJECTID out_string
  '(' 
- STR_CONST \n
+ STR_CONST "\n"
  ')' 
  ';' 
  OBJECTID self
@@ -347,7 +347,7 @@
  DARROW
  OBJECTID out_string
  '(' 
- STR_CONST - dynamic type was Book -\n
+ STR_CONST "- dynamic type was Book -\n"
  ')' 
  ';' 
  OBJECTID dummy
@@ -356,7 +356,7 @@
  DARROW
  OBJECTID out_string
  '(' 
- STR_CONST - dynamic type was Article -\n
+ STR_CONST "- dynamic type was Article -\n"
  ')' 
  ';' 
  ESAC
@@ -423,9 +423,9 @@
  '.' 
  OBJECTID initBook
  '(' 
- STR_CONST Compilers, Principles, Techniques, and Tools
+ STR_CONST "Compilers, Principles, Techniques, and Tools"
  ',' 
- STR_CONST Aho, Sethi, and Ullman
+ STR_CONST "Aho, Sethi, and Ullman"
  ')' 
  IN
  '(' 
@@ -441,11 +441,11 @@
  '.' 
  OBJECTID initArticle
  '(' 
- STR_CONST The Top 100 CD_ROMs
+ STR_CONST "The Top 100 CD_ROMs"
  ',' 
- STR_CONST Ulanoff
+ STR_CONST "Ulanoff"
  ',' 
- STR_CONST PC Magazine
+ STR_CONST "PC Magazine"
  ')' 
  IN
  '{' 

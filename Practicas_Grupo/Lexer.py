@@ -19,7 +19,9 @@ class CoolLexer(Lexer):
                           for i in ['0', '1']
                           for j in range(16)] + [bytes.fromhex(hex(127)[-2:]).decode("ascii")]
 
+    
 
+    
     @_(r'"')
     def STR_CONST(self, t):
         self.begin(StringLexer)
@@ -200,9 +202,10 @@ class StringLexer(Lexer):
     @_('"')
     def VUELTA(self, t):
         t.type = "STR_CONST"
-        t.value = self._acumulado
+        t.value = str(self._acumulado)
         self._acumulado = ""
         self.begin(CoolLexer)
+        t.value = "\""+t.value+"\""
         return t
     
     @_(r'(.\Z)|(.\x00)') #error de string
@@ -243,3 +246,6 @@ class MultilineCommentRemover(Lexer):
     @_(r'.')
     def ignore_method(self, t):
         pass
+
+
+
