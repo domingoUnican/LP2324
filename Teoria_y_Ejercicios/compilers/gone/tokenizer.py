@@ -111,7 +111,7 @@ class GoneLexer(Lexer):
         ID, 
 
         # Literals
-        INTEGER,FLOAT,CHAR,
+        INTEGER,FLOAT,CHAR,FLOAT_SCIENTIFIC,INTEGER_HEX,INTEGER_OCT,INTEGER_BIN,CHAR_NEWLINE,CHAR_BACKSLASH,CHAR_QUOTE,CHAR_BYTE,FLOAT_SCIENT,
 
         # Operators 
         PLUS, MINUS, TIMES, DIVIDE, ASSIGN, SEMI,
@@ -142,11 +142,20 @@ class GoneLexer(Lexer):
     #
 
     # block-style comment (/* ... */)
-    ignore_COMMENT = r'\/\*(.|\n)*?\*\/'
+    #ignore_COMMENT = r'\/\*(.|\n)*?\*\/'
+    @_(r'\/\*(.|\n)*?\*\/')
+    def ignore_COMMENT(self, t):
+        self.lineno += t.value.count('\n')
+        pass
+
     # line-style comment (//...)
     ignore_COMMENT_LINE = r'\/\/.*'
     # One or more newlines \n\n\n...
-    ignore_NEWLINE = r'\n+'
+    #ignore_NEWLINE = r'\n+'
+    @_(r'\n+')
+    def ignore_NEWLINE(self, t):
+        self.lineno += t.value.count('\n')
+        return None
     # ----------------------------------------------------------------------
     # *** YOU MUST COMPLETE : write the regexs indicated below TODO***
     # 
@@ -188,8 +197,9 @@ class GoneLexer(Lexer):
 
     # ----- YOU IMPLEMENT
 
-    FLOAT = r'\d+\.\d+'
-    FLOAT_SCIENTIFIC = r'\d+(.\d+|[.\d+]?)e[\+\-]?\d+'
+    FLOAT = r'\d+\.\d*|\d+(.\d+|[.\d+]?)e[\+\-]?\d+|\.\d+'
+    #FLOAT_SCIENTIFIC = r'\d+(.\d+|[.\d+]?)e[\+\-]?\d+'
+    #FLOAT_SCIENT = r'\.\d+'
     #TODO .123 ?????
 
     # Integer literal
@@ -221,11 +231,11 @@ class GoneLexer(Lexer):
 
     # ----- YOU IMPLEMENT
     
-    CHAR = r"'.*?'"
-    CHAR_NEWLINE = r"'\\n'"
-    CHAR_BACKSLASH = r"'\\\\'"
-    CHAR_QUOTE = r"'\\''"
-    CHAR_BYTE = r"'\\x[0-9a-fA-F]{2}'"
+    CHAR = r"\'[a-zA-Z]\'|\'\\n\'|'\\\\\'|'\\\'\'|\'\\x[0-9a-fA-F]{2}\'"
+    # CHAR_NEWLINE = r'\\n'
+    # CHAR_BACKSLASH = r'\\\\'
+    # CHAR_QUOTE = r'\\'
+    # CHAR_BYTE = r"'\\x[0-9a-fA-F]{2}'"
 
 
     # ----------------------------------------------------------------------
