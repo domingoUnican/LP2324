@@ -1,7 +1,7 @@
 lista_tokens = [('NUM',3), '+', '*', ('NUM',4), '-', ('NUM',5)]
 
 
-def peek():
+def accept(tipp):
     return
 
 def expression(lista_tokes):
