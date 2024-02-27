@@ -7,12 +7,85 @@ import sys
 
 
 
+class Comment(Lexer):
+    tokens = {}
 
+    @_(r'\*\)')
+    def COMENT(self, t):
+        self.begin(CoolLexer)
+    
+    @_(r'.|\n')
+    def ERROR(self, t):
+        pass
+
+
+
+
+class STRING(Lexer):
+    tokens = {STR_CONST}
+
+    _num_string = ""    
+
+    @_(r'[\\ ]+\n')
+    def ESCAPESALTO(self, t):
+        self._num_string += "\\n"
+        print("Escape salto")
+        return
+
+    @_(r'\\\\')
+    def ESCAPAbarra(self, t):
+        self._num_string += "\\\\"
+        pass
+
+    
+
+    @_(r'\\[btnf\\\\n"]')
+    def ESCAPAR1(self, t):
+        self._num_string += t.value
+        pass
+
+    @_(r'\\.')
+    def ESCAPAR2(self, t):
+        self._num_string += t.value.replace("\\", "")
+        pass
+
+    @_(r'\\\"')
+    def COMILLAS(self, t):
+        self._num_string += "\\\""
+        pass
+
+    @_(r'\"')
+    def STR_CONST(self, t):
+        t.value = self._num_string.replace("\t", "\\t")
+        t.value = self._num_string.replace("\n", "\\n")
+        self._num_string = ""
+        t.value = "\"" + t.value + "\""
+        self.begin(CoolLexer)
+        return t
+
+
+    @_(r'[^\\\n]')
+    def BIEN(self, t):
+        self._num_string += t.value
+        pass
+    
+    
+
+    @_(r'\n')
+    def ERROR(self, t):
+        t.value = "Unterminated string constant"
+        print("Error")
+        self.begin(CoolLexer)
+        return t
+
+    
 
 class CoolLexer(Lexer):
 
-    #ignore = '\t '
-    literals = {';',':','{','}','(',')','+','-','*','\\'}
+
+    ignore = '\t '
+    literals = {';',':','{','}','(',')','+','-','*','\\', '@', '~', '<','=','.',',','/'}
+
     # Ejemplo
     ELSE = r'\b[eE][lL][sS][eE]\b'
 
@@ -21,13 +94,15 @@ class CoolLexer(Lexer):
                           for j in range(16)] + [bytes.fromhex(hex(127)[-2:]).decode("ascii")]
     
 
-    @_(r'\b<=\b')
+
+    @_(r'<=')
     def LE(self,t):
         return t
 
-    @_(r'\"([^\"]|\\\")*\"')
+    @_(r'\"')
     def STR_CONST(self,t):
-        return t
+        self.begin(STRING)
+
         
     @_(r'\b[Ii][Ss][Vv][Oo][Ii][Dd]\b')
     def ISVOID(self,t):
@@ -97,8 +172,11 @@ class CoolLexer(Lexer):
     def INT_CONST(self,t):
         return t
     
-    @_(r"\bt[Rr][Uu][Ee]\b|\bf[Aa][Ll][Ss][Ee]\b")
+
+    @_(r"\bf[Aa][Ll][Ss][Ee]\b|\bt[Rr][Uu][Ee]\b")
     def BOOL_CONST(self,t):
+        t.value = t.value.upper() == "TRUE"
+
         return t
     
     @_(r'\b[Tt][Hh][Ee][Nn]\b')
@@ -113,26 +191,40 @@ class CoolLexer(Lexer):
     def TYPEID(self,t):
         return t
     
-    @_(r'\b=>\b')
+
+    @_(r'=>')
     def DARROW(self,t):
         return t
     
-    @_(r'\b<-\b')
+    @_(r'<-')
+
     def ASSIGN(self,t):
         return t
         
     @_(r'\t| |\v|\r|\f')
     def spaces(self, t):
         pass
-    
-    @_(r'(\(\*[^*]*\*\))|(\-\-[^-]*)')
-    def comments(self,t):
+
+    @_(r'(\-\-.*)')
+    def commentsDash(self,t):
         pass 
+
+    @_(r'(\(\*)')
+    def commentsSlash(self,t):
+        self.begin(Comment)
+
+    
+
+
 
     @_(r'\n+')
     def newline(self, t):
         self.lineno += t.value.count('\n')
 
+    @_(r'\_')
+    def ERROR(self, t):
+        t.value = "\"_\""
+        return t
     
     def error(self, t):
         self.index += 1
