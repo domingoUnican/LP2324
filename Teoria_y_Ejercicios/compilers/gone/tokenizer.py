@@ -142,10 +142,13 @@ class GoneLexer(Lexer):
     #
 
     # block-style comment (/* ... */)
+    ignore_COMMENT = r'\/\*.*?\*\/'
 
     # line-style comment (//...)
+    ignore_COMMENT_LINE = r'\/\/.*'
 
     # One or more newlines \n\n\n...
+    ignore_NEWLINE = r'\n+'
 
     # ----------------------------------------------------------------------
     # *** YOU MUST COMPLETE : write the regexs indicated below ***
@@ -158,6 +161,11 @@ class GoneLexer(Lexer):
 
     PLUS = r'\+'      # Regex for a single plus sign
     MINUS = r'-'      # Regex for a single minur sign
+    LPAREN = r'\('    # Regex for a left parenthesis
+    RPAREN = r'\)'    # Regex for a right parenthesis
+    ASSIGN = r'='     # Regex for an equal sign
+    PCOMA = r';'      # Regex for a semicolon
+    ESTRELLA = r'\*'  # Regex for an asterisk
 
     # ----------------------------------------------------------------------
     # *** YOU MUST COMPLETE : write the regexs and additional code below ***
@@ -171,12 +179,15 @@ class GoneLexer(Lexer):
     #   123.
     #   .123
     #
+    FLOAT = r'\d+\.\d+|\d+\.|\.\d+'
     # Bonus: Recognize floating point numbers in scientific notation 
     #
     #   1.23e1
     #   1.23e+1
     #   1.23e-1
     #   1e1
+
+    FLOAT_EXP = r'\d+\.\d+e[+-]?\d+|\d+\.e[+-]?\d+|\.\d+e[+-]?\d+|\d+e[+-]?\d+'
 
     # ----- YOU IMPLEMENT
 
@@ -187,6 +198,10 @@ class GoneLexer(Lexer):
     # Bonus: Recognize integers in different bases such as 0x1a, 0o13 or 0b111011.
 
     # ----- YOU IMPLEMENT
+    INTEGER = r'\d+'
+    INTEGER_HEX = r'0x[0-9a-fA-F]+'
+    INTEGER_OCT = r'0o[0-7]+'
+    INTEGER_BIN = r'0b[01]+'
 
     # Character constant. You must recognize a single letter enclosed in single quotes
     # For example:
@@ -201,6 +216,7 @@ class GoneLexer(Lexer):
     #     '\xhh'  - Generic byte
 
     # ----- YOU IMPLEMENT
+    CHAR = r"'(\\[n\\']|[^\\])'"
 
     # ----------------------------------------------------------------------
     # *** YOU MUST COMPLETE : Write the regex and add keywords ***
