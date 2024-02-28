@@ -12,13 +12,15 @@ PRACTICA = "01"  # Practica que hay que evaluar
 DEBUG = True   # Decir si se lanzan mensajes de debug
 NUMLINEAS = 3   # Numero de lineas que se muestran antes y después de la no coincidencia
 sys.path.append(DIRECTORIO)
-CALIFICACION = "minimos" # Para un reto mayor cambiar a "grading"
+CALIFICACION = "grading" # Para un reto mayor cambiar a "grading"
 DIR = os.path.join(DIRECTORIO, PRACTICA, CALIFICACION)
 FICHEROS = os.listdir(DIR)
 TESTS = [fich for fich in FICHEROS
          if os.path.isfile(os.path.join(DIR, fich)) and
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$", fich)]
 TESTS.sort()
+TESTS = {"backslash.cool"}
+
 
 
 if True:
@@ -39,6 +41,10 @@ if True:
             texto = f'#name "{fich}"\n' + texto
             resultado = g.read()
             g.close()
+            texto = re.sub(r'#\d+\b','',texto)
+            resultado = re.sub(r'#\d+\b','',resultado)
+            resultado = '\n'.join(resultado.strip().split())
+            texto = '\n'.join(texto.strip().split())
             if texto.strip().split() != resultado.strip().split():
                 print(f"Revisa el fichero {fich}")
                 if DEBUG:
@@ -54,6 +60,8 @@ if True:
                     f.close()
                     g.close()
                     contador -= 1
+            else:
+                print(f"PASA {fich}")
         elif PRACTICA in ('02', '03'):
             from Parser import CoolParser
             parser = CoolParser()

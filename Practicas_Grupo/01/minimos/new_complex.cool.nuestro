@@ -1,0 +1,29 @@
+#name "new_complex.cool"
+ CLASS
+ TYPEID Main
+ INHERITS
+ TYPEID IO
+ '{' 
+ OBJECTID main
+ '(' 
+ ')' 
+ ':' 
+ TYPEID SELF_TYPE
+ '{' 
+ '(' 
+ LET
+ OBJECTID c
+ ':' 
+ TYPEID Complex
+ '-' 
+ '(' 
+ NEW
+ TYPEID Complex
+ ')' 
+ OBJECTID init
+ '(' 
+ INT_CONST 1
+ INT_CONST 1
+ ')' 
+ IN
+ '{'
