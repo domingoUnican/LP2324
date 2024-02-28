@@ -264,6 +264,12 @@ class GoneLexer(Lexer):
 
     # ----------------------------------------------------------------------
     # Bad character error handling
+
+    # Errors: Your lexer must recognized and report the following error messages:
+
+    #  lineno: Illegal char 'c'         
+    #  lineno: Unterminated character constant     
+    #  lineno: Unterminated comment
     def error(self, t):
         error(self.lineno,"Illegal character %r" % t.value[0])
         self.index += 1
