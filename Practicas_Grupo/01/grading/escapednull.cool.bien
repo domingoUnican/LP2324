@@ -1,2 +1,2 @@
-#name "escapednull.cool"
-#1 ERROR "String contains escaped null character."
+#name "escapednull.cool"
+ ERROR "String contains escaped null character."

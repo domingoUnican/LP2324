@@ -1,8 +1,8 @@
 #name "escaped_chars_in_comment.cl.cool"
-#2 '*' 
-#2 ')' 
-#3 OBJECTID abc
-#5 OBJECTID jkl
-#6 '*' 
-#6 ')' 
-#7 OBJECTID mno
+ '*' 
+ ')' 
+ OBJECTID abc
+ OBJECTID jkl
+ '*' 
+ ')' 
+ OBJECTID mno
