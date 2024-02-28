@@ -1,28 +1,39 @@
-# ex1.py
+# simplelex.py
 
-import re
+from sly import Lexer
 
-ID = r'(?P<ID>[a-zA-Z_][a-zA-Z0-9_]*)'
-NUMBER = r'(?P<NUMBER>\d+)'
-SPACE = r'(?P<SPACE>\s+)'
+class SimpleLexer(Lexer):
+    # Token names
+    tokens = { ID, NUMBER, LT, LE, GT, GE, EQ, NE }
 
-patterns = [ID, NUMBER, SPACE]
+    # Ignored characters
+    ignore = ' \t'
 
-# Make the master regex pattern
-pat = re.compile('|'.join(patterns))
+    # Token regexs
+    ID = r'[a-zA-Z_][a-zA-Z0-9_]*'
+    NUMBER = r'\d+'
+    LT = r'<'
+    LE = r'<='
+    GT = r'>'
+    GE = r'>='
+    EQ = r'=='
+    NE = r'!='
 
-def tokenize(text):
-    index = 0
-    while index < len(text):
-        m = pat.match(text,index)
-        if m:
-            yield (m.lastgroup, m.group())
-            index = m.end()
-        else:
-            raise SyntaxError('Bad char %r' % text[index])
+    def error(self, t):
+        print(f'Bad character {t.value[0]}')
+        self.index += 1
 
-# Sample usage
-text = 'abc 123 cde 456'
-
-for tok in tokenize(text):
-    print(tok)
+# Example
+if __name__ == '__main__':
+    text = '''
+           a < b
+           a <= b
+           a > b
+           a >= b
+           a == b
+           a != b
+    '''
+    lexer = SimpleLexer()
+    for tok in lexer.tokenize(text):
+        if tok.type != 'WS':
+            print(tok)
