@@ -140,7 +140,11 @@ class GoneLexer(Lexer):
     #        ... some processing ...
     #        return None
     #
-
+    @_(r'\/\*[^\*]*$')
+    def comment_error(self, t):
+        error(self.lineno,"Unterminated comment")
+        self.index += 1
+    
     # block-style comment (/* ... */)
     ignore_COMMENT = r'\/\*(.|\n)*?\*\/'
 
@@ -252,9 +256,16 @@ class GoneLexer(Lexer):
 
     # ----------------------------------------------------------------------
     # Bad character error handling
+    @_(r'\'[^\']')
+    def char_error(self, t):
+        error(self.lineno,"Unterminated character constant")
+        self.index += 1
+
     def error(self, t):
         error(self.lineno,"Illegal character %r" % t.value[0])
         self.index += 1
+    
+    
     
 # ----------------------------------------------------------------------
 #                DO NOT CHANGE ANYTHING BELOW THIS PART
