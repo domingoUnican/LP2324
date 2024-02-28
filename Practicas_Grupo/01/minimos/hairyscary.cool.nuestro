@@ -1,12 +1,4 @@
 #name "hairyscary.cool"
- '(' 
- '*' 
- OBJECTID hairy
- '.' 
- '.' 
- '.' 
- '*' 
- ')' 
  CLASS
  TYPEID Foo
  INHERITS
@@ -291,14 +283,6 @@
  ';' 
  '}' 
  ';' 
- '(' 
- '*' 
- OBJECTID scary
- '.' 
- '.' 
- '.' 
- '*' 
- ')' 
  CLASS
  TYPEID Main
  '{' 

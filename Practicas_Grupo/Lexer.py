@@ -13,9 +13,9 @@ class CoolLexer(Lexer):
     tokens = {OBJECTID, INT_CONST, BOOL_CONST,ASSIGN, TYPEID,
             ELSE, IF, FI, THEN, NOT, IN, CASE, ESAC, CLASS,
             INHERITS, ISVOID, LET, LOOP, NEW, OF,
-            POOL, THEN, WHILE, NUMBER, STR_CONST, LE, DARROW, ERROR,COMMENT_1LINEA}
+            POOL, THEN, WHILE, NUMBER, STR_CONST, LE, DARROW, ERROR,COMMENT_1LINEA,COMMENT_BLOQUE}
     #ignore = '\t '
-    literals = {'==', '+', '-', '*', '/', '(', ')', '<', '>', '.',' ' ,';', ':', '@', ',','{', '}', '[', ']', '~'}
+    literals = {'==','=', '+', '-', '*', '/', '(', ')', '<', '>', '.',' ' ,';', ':', '@', ',','{', '}', '[', ']', '~'}
     # Ejemplo
     INT_CONST   = r'\d+'
     LE          = r'[<][=]'
@@ -75,6 +75,16 @@ class CoolLexer(Lexer):
     @_(r'--.*')
     def COMENT_1LINEA(self, t):
         pass
+
+    @_(r'\(\*')
+    def COMMENT_BLOQUE(self, t):
+        self.begin(Comment)
+
+    @_(r'\*\)')
+    def CMT_CONST_UNMATCHED(self, t):
+        t.value = "Unmatched *)"
+        t.type = 'ERROR'
+        return t
 
     @_(r"\s")
     def spaces(self, t):
@@ -155,6 +165,35 @@ class StringLexer(Lexer):
     
     def error(self, t):
         self.index += 1
+
+class Comment(Lexer):
+    tokens = {CMT_CONST}
+    cmt_id = 0
+
+    @_(r'\*\)')
+    def CMT_CONST(self, t):
+        if self.cmt_id == 0:
+            self.begin(CoolLexer)
+        else:
+            self.cmt_id -= 1
+
+    @_(r'\(\*')
+    def inside_CMT_CONST(self, t):
+        self.cmt_id += 1
+
+    @_(r'\n')
+    def salto_linea(self, t):
+        self.lineno += 1
+
+    @_(r'.$')
+    def EOF_CMT(self, t):
+        t.value = "EOF in comment"
+        t.type = 'ERROR'
+        return t
+
+    @_(r'.')
+    def caracter(self, t):
+        pass
 
 
     

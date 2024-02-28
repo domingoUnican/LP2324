@@ -1,360 +1,4 @@
 #name "life.cool"
- '(' 
- '*' 
- TYPEID The
- TYPEID Game
- OF
- TYPEID Life
- TYPEID Tendo
- TYPEID Kayiira
- ',' 
- TYPEID Summer
- INT_CONST 95
- TYPEID With
- OBJECTID code
- OBJECTID taken
- OBJECTID from
- '/' 
- OBJECTID private
- '/' 
- OBJECTID cool
- '/' 
- CLASS
- '/' 
- OBJECTID examples
- '/' 
- OBJECTID cells
- '.' 
- OBJECTID cl
- TYPEID This
- OBJECTID introduction
- OBJECTID was
- OBJECTID taken
- OBJECTID off
- OBJECTID the
- OBJECTID internet
- '.' 
- TYPEID It
- OBJECTID gives
- OBJECTID a
- OBJECTID brief
- OBJECTID description
- OF
- OBJECTID the
- TYPEID Game
- OF
- TYPEID Life
- '.' 
- TYPEID It
- OBJECTID also
- OBJECTID gives
- OBJECTID the
- OBJECTID rules
- OBJECTID by
- OBJECTID which
- OBJECTID this
- OBJECTID particular
- OBJECTID game
- OBJECTID follows
- '.' 
- TYPEID Introduction
- TYPEID John
- TYPEID Conway
- OBJECTID s
- TYPEID Game
- OF
- TYPEID Life
- OBJECTID is
- OBJECTID a
- OBJECTID mathematical
- OBJECTID amusement
- ',' 
- OBJECTID but
- OBJECTID it
- OBJECTID is
- OBJECTID also
- OBJECTID much
- OBJECTID more
- ':' 
- OBJECTID an
- OBJECTID insight
- OBJECTID into
- OBJECTID how
- OBJECTID a
- OBJECTID system
- OF
- OBJECTID simple
- OBJECTID cellualar
- OBJECTID automata
- OBJECTID can
- OBJECTID create
- OBJECTID complex
- ',' 
- OBJECTID odd
- ',' 
- OBJECTID and
- OBJECTID often
- OBJECTID aesthetically
- OBJECTID pleasing
- OBJECTID patterns
- '.' 
- TYPEID It
- OBJECTID is
- OBJECTID played
- OBJECTID on
- OBJECTID a
- OBJECTID cartesian
- OBJECTID grid
- OF
- OBJECTID cells
- OBJECTID which
- OBJECTID are
- OBJECTID either
- OBJECTID on
- OBJECTID or
- OBJECTID off
- TYPEID The
- OBJECTID game
- OBJECTID gets
- OBJECTID it
- OBJECTID s
- OBJECTID name
- OBJECTID from
- OBJECTID the
- OBJECTID similarity
- OBJECTID between
- OBJECTID the
- OBJECTID behaviour
- OF
- OBJECTID these
- OBJECTID cells
- OBJECTID and
- OBJECTID the
- OBJECTID behaviour
- OF
- OBJECTID living
- OBJECTID organisms
- '.' 
- TYPEID The
- TYPEID Rules
- TYPEID The
- OBJECTID playfield
- OBJECTID is
- OBJECTID a
- OBJECTID cartesian
- OBJECTID grid
- OF
- OBJECTID arbitrary
- OBJECTID size
- '.' 
- TYPEID Each
- OBJECTID cell
- IN
- OBJECTID this
- OBJECTID grid
- OBJECTID can
- OBJECTID be
- IN
- OBJECTID an
- OBJECTID on
- OBJECTID state
- OBJECTID or
- OBJECTID an
- OBJECTID off
- OBJECTID state
- '.' 
- TYPEID On
- OBJECTID each
- OBJECTID turn
- '(' 
- OBJECTID called
- OBJECTID a
- OBJECTID generation
- ',' 
- ')' 
- OBJECTID the
- OBJECTID state
- OF
- OBJECTID each
- OBJECTID cell
- OBJECTID changes
- OBJECTID simultaneously
- OBJECTID depending
- OBJECTID on
- OBJECTID it
- OBJECTID s
- OBJECTID state
- OBJECTID and
- OBJECTID the
- OBJECTID state
- OF
- OBJECTID all
- OBJECTID cells
- OBJECTID adjacent
- OBJECTID to
- OBJECTID it
- '.' 
- TYPEID For
- OBJECTID on
- OBJECTID cells
- ',' 
- IF
- OBJECTID the
- OBJECTID cell
- OBJECTID has
- INT_CONST 0
- OBJECTID or
- INT_CONST 1
- OBJECTID neighbours
- OBJECTID which
- OBJECTID are
- OBJECTID on
- ',' 
- OBJECTID the
- OBJECTID cell
- OBJECTID turns
- OBJECTID off
- '.' 
- '(' 
- OBJECTID dies
- OF
- OBJECTID loneliness
- ')' 
- IF
- OBJECTID the
- OBJECTID cell
- OBJECTID has
- INT_CONST 2
- OBJECTID or
- INT_CONST 3
- OBJECTID neighbours
- OBJECTID which
- OBJECTID are
- OBJECTID on
- ',' 
- OBJECTID the
- OBJECTID cell
- OBJECTID stays
- OBJECTID on
- '.' 
- '(' 
- OBJECTID nothing
- OBJECTID happens
- OBJECTID to
- OBJECTID that
- OBJECTID cell
- ')' 
- IF
- OBJECTID the
- OBJECTID cell
- OBJECTID has
- INT_CONST 4
- ',' 
- INT_CONST 5
- ',' 
- INT_CONST 6
- ',' 
- INT_CONST 7
- ',' 
- INT_CONST 8
- ',' 
- OBJECTID or
- INT_CONST 9
- OBJECTID neighbours
- OBJECTID which
- OBJECTID are
- OBJECTID on
- ',' 
- OBJECTID the
- OBJECTID cell
- OBJECTID turns
- OBJECTID off
- '.' 
- '(' 
- OBJECTID dies
- OF
- OBJECTID overcrowding
- ')' 
- TYPEID For
- OBJECTID off
- OBJECTID cells
- ',' 
- IF
- OBJECTID the
- OBJECTID cell
- OBJECTID has
- INT_CONST 0
- ',' 
- INT_CONST 1
- ',' 
- INT_CONST 2
- ',' 
- INT_CONST 4
- ',' 
- INT_CONST 5
- ',' 
- INT_CONST 6
- ',' 
- INT_CONST 7
- ',' 
- INT_CONST 8
- ',' 
- OBJECTID or
- INT_CONST 9
- OBJECTID neighbours
- OBJECTID which
- OBJECTID are
- OBJECTID on
- ',' 
- OBJECTID the
- OBJECTID cell
- OBJECTID stays
- OBJECTID off
- '.' 
- '(' 
- OBJECTID nothing
- OBJECTID happens
- OBJECTID to
- OBJECTID that
- OBJECTID cell
- ')' 
- IF
- OBJECTID the
- OBJECTID cell
- OBJECTID has
- INT_CONST 3
- OBJECTID neighbours
- OBJECTID which
- OBJECTID are
- OBJECTID on
- ',' 
- OBJECTID the
- OBJECTID cell
- OBJECTID turns
- OBJECTID on
- '.' 
- '(' 
- INT_CONST 3
- OBJECTID neighbouring
- OBJECTID alive
- OBJECTID cells
- OBJECTID give
- OBJECTID birth
- OBJECTID to
- OBJECTID a
- OBJECTID fourth
- '.' 
- ')' 
- TYPEID Repeat
- OBJECTID for
- OBJECTID as
- OBJECTID many
- OBJECTID generations
- OBJECTID as
- OBJECTID desired
- '.' 
- '*' 
- ')' 
  CLASS
  TYPEID Board
  INHERITS
@@ -411,6 +55,7 @@
  '{' 
  IF
  OBJECTID size
+ '=' 
  INT_CONST 15
  THEN
  '{' 
@@ -430,6 +75,7 @@
  ELSE
  IF
  OBJECTID size
+ '=' 
  INT_CONST 16
  THEN
  '{' 
@@ -449,6 +95,7 @@
  ELSE
  IF
  OBJECTID size
+ '=' 
  INT_CONST 20
  THEN
  '{' 
@@ -468,6 +115,7 @@
  ELSE
  IF
  OBJECTID size
+ '=' 
  INT_CONST 21
  THEN
  '{' 
@@ -487,6 +135,7 @@
  ELSE
  IF
  OBJECTID size
+ '=' 
  INT_CONST 25
  THEN
  '{' 
@@ -506,6 +155,7 @@
  ELSE
  IF
  OBJECTID size
+ '=' 
  INT_CONST 28
  THEN
  '{' 
@@ -780,6 +430,7 @@
  '*' 
  OBJECTID columns
  ')' 
+ '=' 
  '(' 
  OBJECTID position
  '+' 
@@ -808,6 +459,7 @@
  '{' 
  IF
  OBJECTID position
+ '=' 
  INT_CONST 0
  THEN
  STR_CONST  
@@ -822,6 +474,7 @@
  '*' 
  OBJECTID columns
  ')' 
+ '=' 
  OBJECTID position
  THEN
  STR_CONST  
@@ -866,6 +519,7 @@
  '*' 
  OBJECTID columns
  ')' 
+ '=' 
  OBJECTID position
  THEN
  STR_CONST  
@@ -914,6 +568,7 @@
  '*' 
  OBJECTID columns
  ')' 
+ '=' 
  '(' 
  OBJECTID position
  '+' 
@@ -966,6 +621,7 @@
  '*' 
  OBJECTID columns
  ')' 
+ '=' 
  '(' 
  OBJECTID position
  '+' 
@@ -1014,6 +670,7 @@
  '*' 
  OBJECTID columns
  ')' 
+ '=' 
  OBJECTID position
  THEN
  STR_CONST  
@@ -1043,6 +700,7 @@
  '(' 
  OBJECTID position
  ')' 
+ '=' 
  STR_CONST X
  THEN
  INT_CONST 1
@@ -1055,6 +713,7 @@
  '(' 
  OBJECTID position
  ')' 
+ '=' 
  STR_CONST X
  THEN
  INT_CONST 1
@@ -1067,6 +726,7 @@
  '(' 
  OBJECTID position
  ')' 
+ '=' 
  STR_CONST X
  THEN
  INT_CONST 1
@@ -1079,6 +739,7 @@
  '(' 
  OBJECTID position
  ')' 
+ '=' 
  STR_CONST X
  THEN
  INT_CONST 1
@@ -1091,6 +752,7 @@
  '(' 
  OBJECTID position
  ')' 
+ '=' 
  STR_CONST X
  THEN
  INT_CONST 1
@@ -1103,6 +765,7 @@
  '(' 
  OBJECTID position
  ')' 
+ '=' 
  STR_CONST X
  THEN
  INT_CONST 1
@@ -1115,6 +778,7 @@
  '(' 
  OBJECTID position
  ')' 
+ '=' 
  STR_CONST X
  THEN
  INT_CONST 1
@@ -1127,6 +791,7 @@
  '(' 
  OBJECTID position
  ')' 
+ '=' 
  STR_CONST X
  THEN
  INT_CONST 1
@@ -1137,43 +802,6 @@
  '}' 
  '}' 
  ';' 
- '(' 
- '*' 
- TYPEID A
- OBJECTID cell
- OBJECTID will
- OBJECTID live
- IF
- INT_CONST 2
- OBJECTID or
- INT_CONST 3
- OF
- OBJECTID it
- OBJECTID s
- OBJECTID neighbors
- OBJECTID are
- OBJECTID alive
- '.' 
- TYPEID It
- OBJECTID dies
- OBJECTID otherwise
- '.' 
- TYPEID A
- OBJECTID cell
- OBJECTID is
- OBJECTID born
- IF
- OBJECTID only
- INT_CONST 3
- OF
- OBJECTID it
- OBJECTID s
- OBJECTID neighbors
- OBJECTID are
- OBJECTID alive
- '.' 
- '*' 
- ')' 
  OBJECTID cell_at_next_evolution
  '(' 
  OBJECTID position
@@ -1188,6 +816,7 @@
  '(' 
  OBJECTID position
  ')' 
+ '=' 
  INT_CONST 3
  THEN
  STR_CONST X
@@ -1197,6 +826,7 @@
  '(' 
  OBJECTID position
  ')' 
+ '=' 
  INT_CONST 2
  THEN
  IF
@@ -1204,6 +834,7 @@
  '(' 
  OBJECTID position
  ')' 
+ '=' 
  STR_CONST X
  THEN
  STR_CONST X
@@ -1286,60 +917,6 @@
  ')' 
  '}' 
  ';' 
- '(' 
- '*' 
- TYPEID This
- OBJECTID is
- OBJECTID where
- OBJECTID the
- OBJECTID background
- OBJECTID pattern
- OBJECTID is
- OBJECTID detremined
- OBJECTID by
- OBJECTID the
- OBJECTID user
- '.' 
- TYPEID More
- OBJECTID patterns
- OBJECTID can
- OBJECTID be
- OBJECTID added
- OBJECTID as
- OBJECTID long
- OBJECTID as
- OBJECTID whoever
- OBJECTID adds
- OBJECTID keeps
- OBJECTID the
- OBJECTID board
- OBJECTID either
- INT_CONST 3
- OBJECTID x5
- ',' 
- INT_CONST 4
- OBJECTID x5
- ',' 
- INT_CONST 5
- OBJECTID x5
- ',' 
- INT_CONST 3
- OBJECTID x7
- ',' 
- INT_CONST 7
- OBJECTID x4
- ',' 
- INT_CONST 4
- OBJECTID x4
- OBJECTID with
- OBJECTID the
- OBJECTID row
- OBJECTID first
- THEN
- OBJECTID column
- '.' 
- '*' 
- ')' 
  OBJECTID option
  '(' 
  ')' 
@@ -1482,126 +1059,147 @@
  ';' 
  IF
  OBJECTID num
+ '=' 
  INT_CONST 1
  THEN
  STR_CONST  XX  XXXX XXXX  XX  
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 2
  THEN
  STR_CONST     X   X   X   X   X    
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 3
  THEN
  STR_CONST X     X     X     X     X
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 4
  THEN
  STR_CONST X   X X X   X   X X X   X
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 5
  THEN
  STR_CONST X     X     X   X   X    
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 6
  THEN
  STR_CONST     X   X   X     X     X
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 7
  THEN
  STR_CONST X  X  X  XX  X      
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 8
  THEN
  STR_CONST  X  XX  X  X  X     
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 9
  THEN
  STR_CONST X   X X X   X  
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 10
  THEN
  STR_CONST   X   X X X   X
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 11
  THEN
  STR_CONST X X X X X X X X
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 12
  THEN
  STR_CONST XXXXXXXXXXXXXXXXXXXXXXXXX
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 13
  THEN
  STR_CONST XXXXX  X    X    X    X  
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 14
  THEN
  STR_CONST   X    X  XXXXX  X    X  
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 15
  THEN
  STR_CONST X     X X X X   X X  
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 16
  THEN
  STR_CONST   X X   X X X X     X
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 17
  THEN
  STR_CONST XXXXX   X   XXXXX   X   XXXX
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 18
  THEN
  STR_CONST XXX    X   X  X    X   XXXX 
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 19
  THEN
  STR_CONST  XX X  XX  X XX 
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 20
  THEN
  STR_CONST  XX X  XX  X XX X  XX  X XX 
  ELSE
  IF
  OBJECTID num
+ '=' 
  INT_CONST 21
  THEN
  STR_CONST  XXXX   X    XX    X   XXXX 
@@ -1672,6 +1270,7 @@
  ';' 
  IF
  OBJECTID ans
+ '=' 
  STR_CONST n
  THEN
  BOOL_CONST false
@@ -1721,6 +1320,7 @@
  ';' 
  IF
  OBJECTID ans
+ '=' 
  STR_CONST y
  THEN
  BOOL_CONST true

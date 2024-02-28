@@ -19,6 +19,7 @@
  OBJECTID length
  '(' 
  ')' 
+ '=' 
  INT_CONST 0
  THEN
  BOOL_CONST true
@@ -29,6 +30,7 @@
  OBJECTID length
  '(' 
  ')' 
+ '=' 
  INT_CONST 1
  THEN
  BOOL_CONST true
@@ -42,6 +44,7 @@
  ',' 
  INT_CONST 1
  ')' 
+ '=' 
  OBJECTID s
  '.' 
  OBJECTID substr

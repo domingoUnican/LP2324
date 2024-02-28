@@ -168,44 +168,6 @@
  INHERITS
  TYPEID IO
  '{' 
- '(' 
- '*' 
- TYPEID Since
- OBJECTID abort
- STR_CONST returns
- OBJECTID type
- TYPEID Object
- ',' 
- OBJECTID we
- OBJECTID have
- OBJECTID to
- OBJECTID add
- OBJECTID an
- OBJECTID expression
- OF
- OBJECTID type
- TYPEID Bool
- OBJECTID here
- OBJECTID to
- OBJECTID satisfy
- OBJECTID the
- OBJECTID typechecker
- '.' 
- TYPEID This
- OBJECTID code
- OBJECTID is
- OBJECTID unreachable
- ',' 
- OBJECTID since
- OBJECTID abort
- '(' 
- ')' 
- OBJECTID halts
- OBJECTID the
- OBJECTID program
- '.' 
- '*' 
- ')' 
  OBJECTID isNil
  '(' 
  ')' 
@@ -251,44 +213,6 @@
  ')' 
  '}' 
  ';' 
- '(' 
- '*' 
- TYPEID Since
- OBJECTID abort
- STR_CONST returns
- OBJECTID type
- TYPEID Object
- ',' 
- OBJECTID we
- OBJECTID have
- OBJECTID to
- OBJECTID add
- OBJECTID an
- OBJECTID expression
- OF
- OBJECTID type
- TYPEID Book
- OBJECTID here
- OBJECTID to
- OBJECTID satisfy
- OBJECTID the
- OBJECTID typechecker
- '.' 
- TYPEID This
- OBJECTID code
- OBJECTID is
- OBJECTID unreachable
- ',' 
- OBJECTID since
- OBJECTID abort
- '(' 
- ')' 
- OBJECTID halts
- OBJECTID the
- OBJECTID program
- '.' 
- '*' 
- ')' 
  OBJECTID car
  '(' 
  ')' 
@@ -306,44 +230,6 @@
  '}' 
  '}' 
  ';' 
- '(' 
- '*' 
- TYPEID Since
- OBJECTID abort
- STR_CONST returns
- OBJECTID type
- TYPEID Object
- ',' 
- OBJECTID we
- OBJECTID have
- OBJECTID to
- OBJECTID add
- OBJECTID an
- OBJECTID expression
- OF
- OBJECTID type
- TYPEID BookList
- OBJECTID here
- OBJECTID to
- OBJECTID satisfy
- OBJECTID the
- OBJECTID typechecker
- '.' 
- TYPEID This
- OBJECTID code
- OBJECTID is
- OBJECTID unreachable
- ',' 
- OBJECTID since
- OBJECTID abort
- '(' 
- ')' 
- OBJECTID halts
- OBJECTID the
- OBJECTID program
- '.' 
- '*' 
- ')' 
  OBJECTID cdr
  '(' 
  ')' 
