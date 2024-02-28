@@ -71,15 +71,15 @@ class CoolParser(Parser):
 
     @_("CLASS TYPEID optInherit '{' lista_atr_met '}' ';'")
     def Clase():
-        pass
+        return Clase(nombre=p[1], padre = p[2], caracteristica = p[4])
     
     @_("")
     def optInherit(self, p):
-        pass
+        return "Object"
 
     @_("INHERITS TYPEID")
     def optInherit(self, p):
-        pass
+        return p[1]
 
     @_("")
     def lista_atr_met(self, p):
