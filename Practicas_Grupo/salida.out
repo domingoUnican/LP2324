@@ -1,0 +1,92 @@
+Grammar:
+
+Rule 0     S' -> Programa
+Rule 1     Programa -> CLASS OBJECTID
+
+Unused terminals:
+
+    ISVOID
+    OF
+    FI
+    ELSE
+    LOOP
+    IN
+    LE
+    IF
+    THEN
+    ESAC
+    DARROW
+    NUMBER
+    NOT
+    STR_CONST
+    WHILE
+    LET
+    BOOL_CONST
+    POOL
+    NEW
+    CASE
+    INT_CONST
+    ASSIGN
+    TYPEID
+    INHERITS
+    IGNORE
+
+Terminals, with rules where they appear:
+
+ASSIGN               : 
+BOOL_CONST           : 
+CASE                 : 
+CLASS                : 1
+DARROW               : 
+ELSE                 : 
+ESAC                 : 
+FI                   : 
+IF                   : 
+IGNORE               : 
+IN                   : 
+INHERITS             : 
+INT_CONST            : 
+ISVOID               : 
+LE                   : 
+LET                  : 
+LOOP                 : 
+NEW                  : 
+NOT                  : 
+NUMBER               : 
+OBJECTID             : 1
+OF                   : 
+POOL                 : 
+STR_CONST            : 
+THEN                 : 
+TYPEID               : 
+WHILE                : 
+error                : 
+
+Nonterminals, with rules where they appear:
+
+Programa             : 0
+
+
+state 0
+
+    (0) S' -> . Programa
+    (1) Programa -> . CLASS OBJECTID
+    CLASS           shift and go to state 2
+
+    Programa                       shift and go to state 1
+
+state 1
+
+    (0) S' -> Programa .
+
+
+state 2
+
+    (1) Programa -> CLASS . OBJECTID
+    OBJECTID        shift and go to state 3
+
+
+state 3
+
+    (1) Programa -> CLASS OBJECTID .
+    $end            reduce using rule 1 (Programa -> CLASS OBJECTID .)

@@ -87,7 +87,7 @@ Bonus: Think about how to write proper unit tests.
 # used to report all error messages issued by your lexer.  Unit tests and
 # other features of the compiler will rely on this function.  See the
 # file errors.py for more documentation about the error handling mechanism.
-from .errors import error
+from errors import error
 
 # -----------------------------------------------------------------------
 # The SLY package. https://github.com/dabeaz/sly
