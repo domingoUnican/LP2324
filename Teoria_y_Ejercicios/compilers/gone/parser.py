@@ -13,6 +13,11 @@ program : statements
 statements :  statements statement
            |  statement
 
+'''
+@_('statements statement')
+def statement(self, p):
+    return 
+'''           
 statement :  const_declaration
           |  var_declaration
           |  assign_statement

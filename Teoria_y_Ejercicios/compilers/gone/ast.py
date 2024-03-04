@@ -97,8 +97,14 @@ class PrintStatement(Statement):
 class IntegerLiteral(Literal):
     value : int
 
+    def __init__(self, value):
+        self.value = value
+
 class FloatLiteral(Literal):
     value : float
+
+    def __init__(self, value):
+        self.value = value
 
 class CharLiteral(Literal):
     value : str
@@ -110,6 +116,11 @@ class BinOp(Expression):
     op    : str
     left  : Expression
     right : Expression
+
+    def __init__(self, op, left, right):
+        self.op = op
+        self.left = left
+        self.right = right
 
 # ----------------------------------------------------------------------
 #                  DO NOT MODIFY ANYTHING BELOW HERE

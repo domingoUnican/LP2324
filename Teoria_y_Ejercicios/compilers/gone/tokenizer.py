@@ -105,16 +105,16 @@ class GoneLexer(Lexer):
 
     tokens = {
         # keywords
-        PRINT,
+        PRINT, CONST, VAR,
                  
         # Identifiers
         ID, 
 
         # Literals
-        INTEGER,
+        INTEGER,FLOAT,CHAR,FLOAT_SCIENTIFIC,INTEGER_HEX,INTEGER_OCT,INTEGER_BIN,CHAR_NEWLINE,CHAR_BACKSLASH,CHAR_QUOTE,CHAR_BYTE,FLOAT_SCIENT,
 
         # Operators 
-        PLUS, MINUS, 
+        PLUS, MINUS, TIMES, DIVIDE, ASSIGN, SEMI,
 
         # Other symbols
         LPAREN, RPAREN,
@@ -142,13 +142,22 @@ class GoneLexer(Lexer):
     #
 
     # block-style comment (/* ... */)
+    #ignore_COMMENT = r'\/\*(.|\n)*?\*\/'
+    @_(r'\/\*(.|\n)*?\*\/')
+    def ignore_COMMENT(self, t):
+        self.lineno += t.value.count('\n')
+        pass
 
     # line-style comment (//...)
-
+    ignore_COMMENT_LINE = r'\/\/.*'
     # One or more newlines \n\n\n...
-
+    #ignore_NEWLINE = r'\n+'
+    @_(r'\n+')
+    def ignore_NEWLINE(self, t):
+        self.lineno += t.value.count('\n')
+        return None
     # ----------------------------------------------------------------------
-    # *** YOU MUST COMPLETE : write the regexs indicated below ***
+    # *** YOU MUST COMPLETE : write the regexs indicated below TODO***
     # 
     # Tokens for simple symbols: + - * / = ( ) ; 
     #
@@ -158,9 +167,17 @@ class GoneLexer(Lexer):
 
     PLUS = r'\+'      # Regex for a single plus sign
     MINUS = r'-'      # Regex for a single minur sign
+    TIMES = r'\*'     # Regex for a single asterisk
+    DIVIDE = r'\/'     # Regex for a single forward slash
+    ASSIGN = r'='     # Regex for an equal sign
+
+    SEMI = r';'       # Regex for a semicolon
+
+    LPAREN = r'\('    # Regex for a left parenthesis
+    RPAREN = r'\)'    # Regex for a right parenthesis
 
     # ----------------------------------------------------------------------
-    # *** YOU MUST COMPLETE : write the regexs and additional code below ***
+    # *** YOU MUST COMPLETE : write the regexs and additional code below TODO***
     #
     # Tokens for literals, INTEGER, FLOAT, STRING. 
 
@@ -180,6 +197,11 @@ class GoneLexer(Lexer):
 
     # ----- YOU IMPLEMENT
 
+    FLOAT = r'\d+\.\d*|\d+(.\d+|[.\d+]?)e[\+\-]?\d+|\.\d+'
+    #FLOAT_SCIENTIFIC = r'\d+(.\d+|[.\d+]?)e[\+\-]?\d+'
+    #FLOAT_SCIENT = r'\.\d+'
+    #TODO .123 ?????
+
     # Integer literal
     #
     #     1234             (decimal)
@@ -187,6 +209,13 @@ class GoneLexer(Lexer):
     # Bonus: Recognize integers in different bases such as 0x1a, 0o13 or 0b111011.
 
     # ----- YOU IMPLEMENT
+
+    INTEGER = r'\d+'
+    INTEGER_HEX = r'0x[0-9a-fA-F]+'
+    INTEGER_OCT = r'0o[0-7]+'
+    INTEGER_BIN = r'0b[01]+'
+
+    
 
     # Character constant. You must recognize a single letter enclosed in single quotes
     # For example:
@@ -201,9 +230,16 @@ class GoneLexer(Lexer):
     #     '\xhh'  - Generic byte
 
     # ----- YOU IMPLEMENT
+    
+    CHAR = r"\'[a-zA-Z]\'|\'\\n\'|'\\\\\'|'\\\'\'|\'\\x[0-9a-fA-F]{2}\'"
+    # CHAR_NEWLINE = r'\\n'
+    # CHAR_BACKSLASH = r'\\\\'
+    # CHAR_QUOTE = r'\\'
+    # CHAR_BYTE = r"'\\x[0-9a-fA-F]{2}'"
+
 
     # ----------------------------------------------------------------------
-    # *** YOU MUST COMPLETE : Write the regex and add keywords ***
+    # *** YOU MUST COMPLETE : Write the regex and add keywords TODO***
     #
     # Identifiers and keywords. 
     #
@@ -220,8 +256,20 @@ class GoneLexer(Lexer):
 
     # ----- YOU IMPLEMENT
 
+    ID = r'[a-zA-Z_][a-zA-Z0-9_]*'
+    ID['const'] = CONST
+    ID['var'] = VAR
+    ID['print'] = PRINT
+
+
     # ----------------------------------------------------------------------
     # Bad character error handling
+
+    # Errors: Your lexer must recognized and report the following error messages:
+
+    #  lineno: Illegal char 'c'         
+    #  lineno: Unterminated character constant     
+    #  lineno: Unterminated comment
     def error(self, t):
         error(self.lineno,"Illegal character %r" % t.value[0])
         self.index += 1
