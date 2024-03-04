@@ -12,14 +12,13 @@ PRACTICA = "01"  # Practica que hay que evaluar
 DEBUG = True   # Decir si se lanzan mensajes de debug
 NUMLINEAS = 3   # Numero de lineas que se muestran antes y después de la no coincidencia
 sys.path.append(DIRECTORIO)
-CALIFICACION = "minimos" # Para un reto mayor cambiar a "grading"
+CALIFICACION = "grading" # Para un reto mayor cambiar a "grading"
 DIR = os.path.join(DIRECTORIO, PRACTICA, CALIFICACION)
 FICHEROS = os.listdir(DIR)
 TESTS = [fich for fich in FICHEROS
          if os.path.isfile(os.path.join(DIR, fich)) and
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$", fich)]
 TESTS.sort()
-
 
 if True:
     contador = len(TESTS)
@@ -36,14 +35,16 @@ if True:
         f.close()
         if PRACTICA == '01':
             texto = '\n'.join(lexer.salida(entrada))
-            texto = f'#name "{fich}"\n' + texto
+            texto = f'#name "{fich}"\n\n' + texto
             resultado = g.read()
             g.close()
+            texto = re.sub(r'#\d+\b','',texto)
+            resultado = re.sub(r'#\d+\b','',resultado)
             if texto.strip().split() != resultado.strip().split():
                 print(f"Revisa el fichero {fich}")
                 if DEBUG:
-                    texto = re.sub(r'#\d+\b','',texto)
-                    resultado = re.sub(r'#\d+\b','',resultado)
+                    #texto = re.sub(r'#\d+\b','',texto)
+                    #resultado = re.sub(r'#\d+\b','',resultado)
                     nuestro = [linea for linea in texto.split('\n') if linea]
                     bien = [linea for linea in resultado.split('\n') if linea]
                     linea = 0
