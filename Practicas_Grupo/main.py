@@ -39,6 +39,8 @@ if True:
             texto = f'#name "{fich}"\n' + texto
             resultado = g.read()
             g.close()
+            texto = re.sub(r'#\d+\b','',texto)
+            resultado = re.sub(r'#\d+\b','',resultado)
             if texto.strip().split() != resultado.strip().split():
                 print(f"Revisa el fichero {fich}")
                 if DEBUG:
