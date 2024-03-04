@@ -1,0 +1,345 @@
+#name "io.cool"
+ THE
+ IO
+ OBJECTID class
+ OBJECTID is
+ OBJECTID predefined
+ OBJECTID and
+ OBJECTID has
+ INT_CONST 4
+ OBJECTID methods
+ OBJECTID out_string
+ OBJECTID s
+ STRING
+ SELF
+ TYPE
+ OBJECTID out_int
+ OBJECTID i
+ INT
+ SELF
+ TYPE
+ OBJECTID in_string
+ STRING
+ OBJECTID in_int
+ INT
+ THE
+ OBJECTID out
+ OBJECTID operations
+ OBJECTID print
+ OBJECTID their
+ OBJECTID argument
+ OBJECTID to
+ OBJECTID the
+ OBJECTID terminal
+ THE
+ OBJECTID in_string
+ OBJECTID method
+ OBJECTID reads
+ OBJECTID an
+ OBJECTID entire
+ OBJECTID line
+ OBJECTID from
+ OBJECTID the
+ OBJECTID terminal
+ OBJECTID and
+ OBJECTID returns
+ OBJECTID a
+ OBJECTID string
+ OBJECTID not
+ OBJECTID containing
+ OBJECTID the
+ OBJECTID new
+ OBJECTID line
+ THE
+ OBJECTID in_int
+ OBJECTID method
+ OBJECTID also
+ OBJECTID reads
+ OBJECTID an
+ OBJECTID entire
+ OBJECTID line
+ OBJECTID from
+ OBJECTID the
+ OBJECTID terminal
+ OBJECTID and
+ OBJECTID returns
+ OBJECTID the
+ OBJECTID integer
+ OBJECTID corresponding
+ OBJECTID to
+ OBJECTID the
+ OBJECTID first
+ OBJECTID non
+ OBJECTID blank
+ OBJECTID word
+ OBJECTID on
+ OBJECTID the
+ OBJECTID line
+ IF
+ OBJECTID that
+ OBJECTID word
+ OBJECTID is
+ OBJECTID not
+ OBJECTID an
+ OBJECTID integer
+ OBJECTID it
+ OBJECTID returns
+ INT_CONST 0
+ BECAUSE
+ OBJECTID our
+ OBJECTID language
+ OBJECTID is
+ OBJECTID object
+ OBJECTID oriented
+ OBJECTID we
+ OBJECTID need
+ OBJECTID an
+ OBJECTID object
+ OBJECTID of
+ OBJECTID type
+ IO
+ OBJECTID in
+ OBJECTID order
+ OBJECTID to
+ OBJECTID call
+ OBJECTID any
+ OBJECTID of
+ OBJECTID these
+ OBJECTID methods
+ THERE
+ OBJECTID are
+ OBJECTID basically
+ OBJECTID two
+ OBJECTID ways
+ OBJECTID of
+ OBJECTID getting
+ OBJECTID access
+ OBJECTID to
+ IO
+ OBJECTID in
+ OBJECTID a
+ OBJECTID class
+ C
+ INT_CONST 1
+ DEFINE
+ C
+ OBJECTID to
+ INHERIT
+ OBJECTID from
+ IO
+ THIS
+ OBJECTID way
+ OBJECTID the
+ IO
+ OBJECTID methods
+ OBJECTID become
+ OBJECTID methods
+ OBJECTID of
+ C
+ OBJECTID and
+ OBJECTID they
+ OBJECTID can
+ OBJECTID be
+ OBJECTID called
+ OBJECTID using
+ OBJECTID the
+ OBJECTID abbreviated
+ OBJECTID dispatch
+ OBJECTID i
+ OBJECTID e
+ OBJECTID class
+ C
+ OBJECTID inherits
+ IO
+ OBJECTID is
+ OBJECTID out_string
+ HELLO
+ OBJECTID world
+ OBJECTID n
+ OBJECTID end
+ INT_CONST 2
+ IF
+ OBJECTID your
+ OBJECTID class
+ C
+ OBJECTID does
+ OBJECTID not
+ OBJECTID directly
+ OBJECTID or
+ OBJECTID indirectly
+ OBJECTID inherit
+ OBJECTID from
+ IO
+ OBJECTID the
+ OBJECTID best
+ OBJECTID way
+ OBJECTID to
+ OBJECTID access
+ IO
+ OBJECTID is
+ OBJECTID through
+ OBJECTID an
+ OBJECTID initialized
+ OBJECTID attribute
+ OBJECTID of
+ OBJECTID type
+ IO
+ OBJECTID class
+ C
+ OBJECTID inherits
+ FOO
+ OBJECTID is
+ OBJECTID io
+ IO
+ ASSIGN
+ OBJECTID new
+ IO
+ OBJECTID io
+ OBJECTID out_string
+ HELLO
+ OBJECTID world
+ OBJECTID n
+ OBJECTID end
+ APPROACH
+ INT_CONST 1
+ OBJECTID is
+ OBJECTID most
+ OBJECTID often
+ OBJECTID used
+ OBJECTID in
+ OBJECTID particular
+ OBJECTID when
+ OBJECTID you
+ OBJECTID need
+ IO
+ OBJECTID functions
+ OBJECTID in
+ OBJECTID the
+ MAIN
+ OBJECTID class
+ OBJECTID class
+ A
+ LET
+ OBJECTID s
+ OBJECTID assume
+ OBJECTID that
+ OBJECTID we
+ OBJECTID don
+ OBJECTID t
+ OBJECTID want
+ A
+ OBJECTID to
+ OBJECTID not
+ OBJECTID inherit
+ OBJECTID from
+ IO
+ OBJECTID io
+ IO
+ ASSIGN
+ OBJECTID new
+ IO
+ OBJECTID out_a
+ OBJECT
+ OBJECTID io
+ OBJECTID out_string
+ A
+ HELLO
+ OBJECTID world
+ OBJECTID n
+ OBJECTID class
+ B
+ OBJECTID inherits
+ A
+ B
+ OBJECTID does
+ OBJECTID not
+ OBJECTID have
+ OBJECTID to
+ OBJECTID an
+ OBJECTID extra
+ OBJECTID attribute
+ OBJECTID since
+ OBJECTID it
+ OBJECTID inherits
+ OBJECTID io
+ OBJECTID from
+ A
+ OBJECTID out_b
+ OBJECT
+ OBJECTID io
+ OBJECTID out_string
+ B
+ HELLO
+ OBJECTID world
+ OBJECTID n
+ OBJECTID class
+ C
+ OBJECTID inherits
+ IO
+ NOW
+ OBJECTID the
+ IO
+ OBJECTID methods
+ OBJECTID are
+ OBJECTID part
+ OBJECTID of
+ C
+ OBJECTID out_c
+ OBJECT
+ OBJECTID out_string
+ C
+ HELLO
+ OBJECTID world
+ OBJECTID n
+ NOTE
+ OBJECTID that
+ OBJECTID out_string
+ OBJECTID is
+ OBJECTID just
+ OBJECTID a
+ OBJECTID shorthand
+ OBJECTID for
+ OBJECTID self
+ OBJECTID out_string
+ OBJECTID class
+ D
+ OBJECTID inherits
+ C
+ INHERITS
+ IO
+ OBJECTID methods
+ OBJECTID from
+ C
+ OBJECTID out_d
+ OBJECT
+ OBJECTID out_string
+ D
+ HELLO
+ OBJECTID world
+ OBJECTID n
+ OBJECTID class
+ MAIN
+ OBJECTID inherits
+ IO
+ SAME
+ OBJECTID case
+ OBJECTID as
+ OBJECTID class
+ C
+ OBJECTID main
+ OBJECT
+ OBJECTID new
+ A
+ OBJECTID out_a
+ OBJECTID new
+ B
+ OBJECTID out_b
+ OBJECTID new
+ C
+ OBJECTID out_c
+ OBJECTID new
+ D
+ OBJECTID out_d
+ OBJECTID out_string
+ DONE
+ OBJECTID n

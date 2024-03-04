@@ -1,0 +1,352 @@
+#name "book_list.cl.cool"
+ OBJECTID example
+ OBJECTID of
+ OBJECTID static
+ OBJECTID and
+ OBJECTID dynamic
+ OBJECTID type
+ OBJECTID differing
+ OBJECTID for
+ OBJECTID a
+ OBJECTID dispatch
+ CLASS
+ BOOK
+ OBJECTID inherits
+ IO
+ OBJECTID title
+ STRING
+ OBJECTID author
+ STRING
+ OBJECTID initBook
+ OBJECTID title_p
+ STRING
+ OBJECTID author_p
+ STRING
+ BOOK
+ OBJECTID title
+ ASSIGN
+ OBJECTID title_p
+ OBJECTID author
+ ASSIGN
+ OBJECTID author_p
+ OBJECTID self
+ OBJECTID print
+ BOOK
+ OBJECTID out_string
+ OBJECTID title
+ OBJECTID out_string
+ OBJECTID title
+ OBJECTID out_string
+ OBJECTID n
+ OBJECTID out_string
+ OBJECTID author
+ OBJECTID out_string
+ OBJECTID author
+ OBJECTID out_string
+ OBJECTID n
+ OBJECTID self
+ CLASS
+ ARTICLE
+ OBJECTID inherits
+ BOOK
+ OBJECTID per_title
+ STRING
+ OBJECTID initArticle
+ OBJECTID title_p
+ STRING
+ OBJECTID author_p
+ STRING
+ OBJECTID per_title_p
+ STRING
+ ARTICLE
+ OBJECTID initBook
+ OBJECTID title_p
+ OBJECTID author_p
+ OBJECTID per_title
+ ASSIGN
+ OBJECTID per_title_p
+ OBJECTID self
+ OBJECTID print
+ BOOK
+ OBJECTID self
+ BOOK
+ OBJECTID print
+ OBJECTID out_string
+ OBJECTID periodical
+ OBJECTID out_string
+ OBJECTID per_title
+ OBJECTID out_string
+ OBJECTID n
+ OBJECTID self
+ CLASS
+ BOOKLIST
+ OBJECTID inherits
+ IO
+ SINCE
+ OBJECTID abort
+ OBJECTID returns
+ OBJECTID type
+ OBJECT
+ OBJECTID we
+ OBJECTID have
+ OBJECTID to
+ OBJECTID add
+ OBJECTID an
+ OBJECTID expression
+ OBJECTID of
+ OBJECTID type
+ BOOL
+ OBJECTID here
+ OBJECTID to
+ OBJECTID satisfy
+ OBJECTID the
+ OBJECTID typechecker
+ THIS
+ OBJECTID code
+ OBJECTID is
+ OBJECTID unreachable
+ OBJECTID since
+ OBJECTID abort
+ OBJECTID halts
+ OBJECTID the
+ OBJECTID program
+ OBJECTID isNil
+ BOOL
+ OBJECTID abort
+ OBJECTID true
+ OBJECTID cons
+ OBJECTID hd
+ BOOK
+ CONS
+ OBJECTID let
+ OBJECTID new_cell
+ CONS
+ ASSIGN
+ OBJECTID new
+ CONS
+ OBJECTID in
+ OBJECTID new_cell
+ OBJECTID init
+ OBJECTID hd
+ OBJECTID self
+ SINCE
+ OBJECTID abort
+ OBJECTID returns
+ OBJECTID type
+ OBJECT
+ OBJECTID we
+ OBJECTID have
+ OBJECTID to
+ OBJECTID add
+ OBJECTID an
+ OBJECTID expression
+ OBJECTID of
+ OBJECTID type
+ BOOK
+ OBJECTID here
+ OBJECTID to
+ OBJECTID satisfy
+ OBJECTID the
+ OBJECTID typechecker
+ THIS
+ OBJECTID code
+ OBJECTID is
+ OBJECTID unreachable
+ OBJECTID since
+ OBJECTID abort
+ OBJECTID halts
+ OBJECTID the
+ OBJECTID program
+ OBJECTID car
+ BOOK
+ OBJECTID abort
+ OBJECTID new
+ BOOK
+ SINCE
+ OBJECTID abort
+ OBJECTID returns
+ OBJECTID type
+ OBJECT
+ OBJECTID we
+ OBJECTID have
+ OBJECTID to
+ OBJECTID add
+ OBJECTID an
+ OBJECTID expression
+ OBJECTID of
+ OBJECTID type
+ BOOKLIST
+ OBJECTID here
+ OBJECTID to
+ OBJECTID satisfy
+ OBJECTID the
+ OBJECTID typechecker
+ THIS
+ OBJECTID code
+ OBJECTID is
+ OBJECTID unreachable
+ OBJECTID since
+ OBJECTID abort
+ OBJECTID halts
+ OBJECTID the
+ OBJECTID program
+ OBJECTID cdr
+ BOOKLIST
+ OBJECTID abort
+ OBJECTID new
+ BOOKLIST
+ OBJECTID print_list
+ OBJECT
+ OBJECTID abort
+ CLASS
+ CONS
+ OBJECTID inherits
+ BOOKLIST
+ OBJECTID xcar
+ BOOK
+ WE
+ OBJECTID keep
+ OBJECTID the
+ OBJECTID car
+ OBJECTID and
+ OBJECTID cdr
+ OBJECTID in
+ OBJECTID attributes
+ OBJECTID xcdr
+ BOOKLIST
+ BECAUSE
+ OBJECTID methods
+ OBJECTID and
+ OBJECTID features
+ OBJECTID must
+ OBJECTID have
+ OBJECTID different
+ OBJECTID names
+ OBJECTID we
+ OBJECTID use
+ OBJECTID xcar
+ OBJECTID and
+ OBJECTID xcdr
+ OBJECTID for
+ OBJECTID the
+ OBJECTID attributes
+ OBJECTID and
+ OBJECTID reserve
+ OBJECTID car
+ OBJECTID and
+ OBJECTID cdr
+ OBJECTID for
+ OBJECTID the
+ OBJECTID features
+ OBJECTID isNil
+ BOOL
+ OBJECTID false
+ OBJECTID init
+ OBJECTID hd
+ BOOK
+ OBJECTID tl
+ BOOKLIST
+ CONS
+ OBJECTID xcar
+ ASSIGN
+ OBJECTID hd
+ OBJECTID xcdr
+ ASSIGN
+ OBJECTID tl
+ OBJECTID self
+ OBJECTID car
+ BOOK
+ OBJECTID xcar
+ OBJECTID cdr
+ BOOKLIST
+ OBJECTID xcdr
+ OBJECTID print_list
+ OBJECT
+ OBJECTID case
+ OBJECTID xcar
+ OBJECTID print
+ OBJECTID of
+ OBJECTID dummy
+ BOOK
+ OBJECTID out_string
+ OBJECTID dynamic
+ OBJECTID type
+ OBJECTID was
+ BOOK
+ OBJECTID n
+ OBJECTID dummy
+ ARTICLE
+ OBJECTID out_string
+ OBJECTID dynamic
+ OBJECTID type
+ OBJECTID was
+ ARTICLE
+ OBJECTID n
+ OBJECTID esac
+ OBJECTID xcdr
+ OBJECTID print_list
+ CLASS
+ NIL
+ OBJECTID inherits
+ BOOKLIST
+ OBJECTID isNil
+ BOOL
+ OBJECTID true
+ OBJECTID print_list
+ OBJECT
+ OBJECTID true
+ CLASS
+ MAIN
+ OBJECTID books
+ BOOKLIST
+ OBJECTID main
+ OBJECT
+ OBJECTID let
+ OBJECTID a_book
+ BOOK
+ ASSIGN
+ OBJECTID new
+ BOOK
+ OBJECTID initBook
+ COMPILERS
+ PRINCIPLES
+ TECHNIQUES
+ OBJECTID and
+ TOOLS
+ AHO
+ SETHI
+ OBJECTID and
+ ULLMAN
+ OBJECTID in
+ OBJECTID let
+ OBJECTID an_article
+ ARTICLE
+ ASSIGN
+ OBJECTID new
+ ARTICLE
+ OBJECTID initArticle
+ THE
+ TOP
+ INT_CONST 100
+ CD
+ ROMS
+ ULANOFF
+ PC
+ MAGAZINE
+ OBJECTID in
+ OBJECTID books
+ ASSIGN
+ OBJECTID new
+ NIL
+ OBJECTID cons
+ OBJECTID a_book
+ OBJECTID cons
+ OBJECTID an_article
+ OBJECTID books
+ OBJECTID print_list
+ OBJECTID end
+ OBJECTID let
+ OBJECTID an_article
+ OBJECTID end
+ OBJECTID let
+ OBJECTID a_book
