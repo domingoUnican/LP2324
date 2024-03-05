@@ -17,7 +17,6 @@ class CoolLexer(Lexer):
     #ignore = '\t '
     literals = {'==','=', '+', '-', '*', '/', '(', ')', '<', '>', '.',' ' ,';', ':', '@', ',','{', '}', '[', ']', '~'}
     # Ejemplo
-    INT_CONST   = r'\d+'
     LE          = r'[<][=]'
     DARROW      = r'[=][>]'
     ASSIGN      = r'[<][-]'
@@ -38,12 +37,15 @@ class CoolLexer(Lexer):
     OF          = r'\b[oO][fF]\b'
     POOL        = r'\b[pP][oO][oO][lL]\b'
     WHILE       = r'\b[wW][hH][iI][lL][eE]\b'
+    TYPEID      = r'[A-Z]([a-zA-Z0-9_])*'
+    INT_CONST   = r'\d+'
+    
 
     CARACTERES_CONTROL = [bytes.fromhex(i+hex(j)[-1]).decode('ascii')
                         for i in ['0', '1']
                         for j in range(16)] + [bytes.fromhex(hex(127)[-2:]).decode("ascii")]
 
-    @_(r'\b[t][rR][uU][eE]|[f][aA][lL][sS][eE]\b')
+    @_(r'\b[tT][rR][uU][eE](?![a-zA-Z0-9])|[fF][aA][lL][sS][eE](?![a-zA-Z0-9])\b')
     def BOOL_CONST(self, t):
         t.type = 'BOOL_CONST'
         if t.value[0] == 't':
@@ -51,17 +53,10 @@ class CoolLexer(Lexer):
         elif t.value[0] == 'f':
             t.value = False
         return t
-    
-    @_('[A-Z]([a-zA-Z0-9_])*')
-    def TYPEID(self, t):
-        return t
 
     @_(r'[a-z]([a-zA-Z0-9_])*')
     def OBJECTID(self, t):
         return t
-    
-    
-
     
     @_(r'[_]|[!]|[#]|[$]|[%]|[&]|[>]|[?]|[`]|[[]|[]]|[\\]|[|]|[\^]|[\\x*[a-zA-Z0-9]+]|[]|[]|[]|[]')
     def ERROR(self, t):
@@ -132,12 +127,8 @@ class StringLexer(Lexer):
 
     @_(r'\\\n')
     def SALTOESCAPADO(self, t):
-        self._acumulado += "\\n"
+        self._acumulado += '\\n'
         self.lineno += 1
-    
-    @_(r'\\[btrn"]')
-    def caracter_escapado1(self, t):
-        self._acumulado += t.value[1]
     
     @_(r'\\\\')
     def DOBLE_BARRA(self, t):
@@ -149,12 +140,12 @@ class StringLexer(Lexer):
     
     @_(r'\\.') # El punto no representa el salto de linea
     def COMILLASESCAPADO(self, t):
-        self._acumulado += t.value
+        self._acumulado +=  t.value
 
     @_(r'"')
     def CIERRE(self, t):
         t.type = "STR_CONST"
-        t.value = self._acumulado
+        t.value = '"' + self._acumulado + '"'
         self._acumulado = ""
         self.begin(CoolLexer)
         return t
