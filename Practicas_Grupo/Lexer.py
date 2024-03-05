@@ -22,7 +22,7 @@ class CoolLexer(Lexer):
     
 
     
-    @_(r'"')
+    @_(r'\"')
     def STR_CONST(self, t):
         self.begin(StringLexer)
         pass 
@@ -193,13 +193,30 @@ class StringLexer(Lexer):
 
     _acumulado = ""
 
-    # @_('\\.')
-    # def ESCAPADO(self, t):
-    #     self._acumulado += t.value[1:]
-    #     #self._acumulado += t.value
-    #     pass
-    
-    @_('"')
+    #escapados
+    @_(r'\\\n')
+    def ESCAPADOSALTO(self, t):
+        self._acumulado += "\\n"
+        pass
+
+    @_(r'\\\"')
+    def ESCAPADOCOMILLAS(self, t):
+        self._acumulado += "\\\""
+        pass
+
+    #no se le quita la contrabarra a b t n r
+    @_(r'\\[^btnr]')
+    def ESCAPADO(self, t):
+        self._acumulado += t.value[1:]
+        pass
+
+    @_(r'\\[btnr]')
+    def ESCAPADO(self, t):
+        self._acumulado += t.value
+        #self._acumulado += t.value
+        pass
+
+    @_(r'\"')
     def VUELTA(self, t):
         t.type = "STR_CONST"
         t.value = str(self._acumulado)
