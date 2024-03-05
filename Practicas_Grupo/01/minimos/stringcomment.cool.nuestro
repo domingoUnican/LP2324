@@ -1,0 +1,11 @@
+#name "stringcomment.cool"
+#1 STR_CONST This is a string--and it's still a string
+#1 '-' 
+#1 '-' 
+#1 TYPEID This
+#1 OBJECTID is
+#1 OBJECTID a
+#1 OBJECTID comment
+#1 ',' 
+#1 STR_CONST not a string
+#1 STR_CONST (* not a comment *)
