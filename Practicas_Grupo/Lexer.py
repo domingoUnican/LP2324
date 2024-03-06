@@ -58,11 +58,13 @@ class CoolLexer(Lexer):
     def OBJECTID(self, t):
         return t
     
-    @_(r'[_]|[!]|[#]|[$]|[%]|[&]|[>]|[?]|[`]|[[]|[]]|[\\]|[|]|[\^]|[\\x*[a-zA-Z0-9]+]|[]|[]|[]|[]')
+    @_(r'[_]|[!]|[#]|[$]|[%]|[&]|[>]|[?]|[`]|[[]|[]]|[\\]|[|]|[\^]|[\\x*[a-zA-Z0-9]+][]|[]|[]|[]|\x00')
     def ERROR(self, t):
         t.type = 'ERROR'
         if t.value == '\\':
             t.value = '\\\\'
+        elif t.value == '\x00':
+            t.value = '"' + "\\000" + '"'
         elif t.value in self.CARACTERES_CONTROL:
             t.value = f'\\{t.value}'
         return t
@@ -140,30 +142,19 @@ class StringLexer(Lexer):
             self.begin(CoolLexer)
             t.value = '"' + t.value + '"'
             return t
-    """
-    @_(r'"')
-    def CIERRE(self, t):
-        if self.error_nullchar:
-            t.value = "String contains null character"
-            t.type = 'ERROR'
-            self.error_nullchar = False
-            return t
-        t.type = "STR_CONST"
-        t.value = '"' + self._acumulado + '"'
-        self._acumulado = ""
-        self.begin(CoolLexer)
-        return t"""
 
-    @_(r'\\\n')
+
+    @_(r'\\[\r\n]')
     def SALTOESCAPADO(self, t):
         print("SALTOESCAPADO")
         self._acumulado += "\\n"
         self.lineno += 1
     
-    @_(r'\\\x00')
+    @_(r'\\\Z')
     def NULLCHAR(self, t):
         self.error_nullchar = True
 
+    """
     @_(r'\n')
     def salto_linea_error(self, t):
         if not self.error_nullchar:
@@ -171,7 +162,7 @@ class StringLexer(Lexer):
             self.begin(CoolLexer)
             t.value = "Unterminated string constant"
             t.type = 'ERROR'
-            return t
+            return t"""
     
     @_(r'.$')
     def EOF(self, t):
@@ -187,7 +178,7 @@ class StringLexer(Lexer):
     def TABULADORESCAPADO(self, t):
         self._acumulado += '\\t'
     
-    @_(r'\\[^a-zA-Z0-9]')
+    @_(r'\\[^a-zA-Z0-9\n]')
     def CARACTERESPECIAL(self, t):
         self._acumulado += t.value
 

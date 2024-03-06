@@ -1,8 +1,0 @@
-#name "comment_in_string.cl.cool"
- STR_CONST "string (* 123 *) string"
- ERROR Unterminated string constant
- ERROR Unterminated string constant
- ERROR Unterminated string constant
- INT_CONST 123
- ERROR Unmatched *)
- ERROR Unterminated string constant

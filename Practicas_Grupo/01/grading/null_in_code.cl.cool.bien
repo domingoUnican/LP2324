@@ -1,9 +1,0 @@
-#name "null_in_code.cl.cool"
- OBJECTID null
- OBJECTID character
- OBJECTID is
- OBJECTID here
- DARROW
- ERROR "\000"
- ASSIGN
- ')'
