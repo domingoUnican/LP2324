@@ -1,2 +1,2 @@
-#name "escapedeof.cool"
-#2 ERROR "EOF in string constant"
+#name "escapedeof.cool"
+ ERROR "EOF in string constant"
