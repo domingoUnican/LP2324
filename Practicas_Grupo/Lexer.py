@@ -56,6 +56,7 @@ class STRING(Lexer):
 
     @_(r'\"')
     def STR_CONST(self, t):
+        print(t.value)
         t.value = self._num_string.replace("\t", "\\t")
         t.value = self._num_string.replace("\n", "\\n")
         self._num_string = ""
@@ -257,3 +258,8 @@ class CoolLexer(Lexer):
                 result = f'#{token.lineno} {token.type}'
             list_strings.append(result)
         return list_strings
+
+if __name__ == '__main__':
+    a = CoolLexer()
+    for i in a.tokenize('"hola\x09"'):
+        print(i)
