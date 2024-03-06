@@ -1,13 +1,9 @@
 #name "backslash2.cool"
-#1 TYPEID I
-#1 OBJECTID m
-#1 NOT
-#1 OBJECTID going
-#1 OBJECTID to
-#1 OBJECTID escape
-#1 OBJECTID this
-#1 OBJECTID newline
-#4 STR_CONST "This is also not escaped \\\n"
-#7 STR_CONST "This is, though \\\\n"
-#10 STR_CONST "\\"
-#12 STR_CONST "It's fine to have this: \n in a string"
+ ERROR "Unterminated string constant"
+ ERROR "Unterminated string constant"
+ ERROR "Unterminated string constant"
+ ERROR "Unterminated string constant"
+ ERROR "Unterminated string constant"
+ ERROR "Unterminated string constant"
+ STR_CONST "\\"
+ STR_CONST "It's fine to have this: \n in a string"
