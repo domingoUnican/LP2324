@@ -1,8 +1,2 @@
 #name "escapedeof.cool"
-#1 TYPEID What
-#1 OBJECTID happens
-#1 IF
-#1 TYPEID I
-#1 OBJECTID escape
-#1 OBJECTID an
-#1 TYPEID EOF
+ ERROR Unterminated string constant

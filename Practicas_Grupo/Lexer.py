@@ -124,12 +124,61 @@ class CoolLexer(Lexer):
 class StringLexer(Lexer):
     tokens = {STR_CONST, ERROR}
     _acumulado = ""
+    error_nullchar = False
+
+    
+    @_(r'"')
+    def STR_CONST(self, t):
+        if self.error_nullchar:
+            t.value = "String contains null character"
+            t.type = 'ERROR'
+            self.error_nullchar = False
+            return t
+        else:
+            t.value = self._acumulado
+            self._acumulado = ""
+            self.begin(CoolLexer)
+            t.value = '"' + t.value + '"'
+            return t
+    """
+    @_(r'"')
+    def CIERRE(self, t):
+        if self.error_nullchar:
+            t.value = "String contains null character"
+            t.type = 'ERROR'
+            self.error_nullchar = False
+            return t
+        t.type = "STR_CONST"
+        t.value = '"' + self._acumulado + '"'
+        self._acumulado = ""
+        self.begin(CoolLexer)
+        return t"""
 
     @_(r'\\\n')
     def SALTOESCAPADO(self, t):
-        self._acumulado += '\\n'
+        print("SALTOESCAPADO")
+        self._acumulado += "\\n"
         self.lineno += 1
     
+    @_(r'\\\x00')
+    def NULLCHAR(self, t):
+        self.error_nullchar = True
+
+    @_(r'\n')
+    def salto_linea_error(self, t):
+        if not self.error_nullchar:
+            self._caracteres = ''
+            self.begin(CoolLexer)
+            t.value = "Unterminated string constant"
+            t.type = 'ERROR'
+            return t
+    
+    @_(r'.$')
+    def EOF(self, t):
+        t.value = "EOF in string constant"
+        t.type = 'ERROR'
+        return t
+
     @_(r'\\\\')
     def DOBLE_BARRA(self, t):
         self._acumulado += t.value[0:]
@@ -138,17 +187,27 @@ class StringLexer(Lexer):
     def TABULADORESCAPADO(self, t):
         self._acumulado += '\\t'
     
+    @_(r'\\[^a-zA-Z0-9]')
+    def CARACTERESPECIAL(self, t):
+        self._acumulado += t.value
+
     @_(r'\\.') # El punto no representa el salto de linea
     def COMILLASESCAPADO(self, t):
+        if t.value[1] == 'b':
+            t.value = '\\b'
+        elif t.value[1] == 'n':
+            t.value = '\\n'
+        elif t.value[1] == 'f':
+            t.value = '\\f'
+        elif t.value[1] == 't':
+            t.value = '\\t'
+        else:
+            t.value = t.value[1:]
+        
         self._acumulado +=  t.value
 
-    @_(r'"')
-    def CIERRE(self, t):
-        t.type = "STR_CONST"
-        t.value = '"' + self._acumulado + '"'
-        self._acumulado = ""
-        self.begin(CoolLexer)
-        return t
+    
+    
 
     @_(r'.')
     def CUALQUIER_COSA(self, t):
