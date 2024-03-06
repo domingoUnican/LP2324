@@ -1,10 +1,26 @@
-#name "wq0607-c3.cool"
-#3 STR_CONST "\\"
-#3 STR_CONST "\"
-#3 STR_CONST ""
-#3 STR_CONST ""
-#3 STR_CONST "\\"
-#3 STR_CONST "\\"
-#3 STR_CONST ""
-#3 STR_CONST "\"
-#3 STR_CONST "\"
+#name
+"wq0607-c3.cool"
+STR_CONST
+"\\"
+STR_CONST
+"\"\""
+'\'
+'\'
+STR_CONST
+""
+'\'
+STR_CONST
+"\\"
+'\'
+STR_CONST
+"\\"
+STR_CONST
+""
+'\'
+STR_CONST
+"\""
+'\'
+ERROR
+Unterminated
+string
+constant

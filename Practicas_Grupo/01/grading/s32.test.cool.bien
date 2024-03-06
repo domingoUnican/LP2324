@@ -1,2 +1,5 @@
-#name "s32.test.cool"
-#2 ERROR "Unmatched *)"
+#name
+"s32.test.cool"
+ERROR
+"Unmatched
+*)"

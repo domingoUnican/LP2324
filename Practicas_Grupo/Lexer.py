@@ -18,16 +18,14 @@ class Comment(Lexer):
     def ERROR(self, t):
         pass
 
-
-
-
 class STRING(Lexer):
     tokens = {STR_CONST}
 
     _num_string = ""    
-
+    
     @_(r'[\\ ]+\n')
     def ESCAPESALTO(self, t):
+        
         self._num_string += "\\n"
         print("Escape salto")
         return
@@ -36,8 +34,6 @@ class STRING(Lexer):
     def ESCAPAbarra(self, t):
         self._num_string += "\\\\"
         pass
-
-    
 
     @_(r'\\[btnf\\\\n"]')
     def ESCAPAR1(self, t):
@@ -57,7 +53,7 @@ class STRING(Lexer):
     @_(r'\"')
     def STR_CONST(self, t):
         t.value = self._num_string.replace("\t", "\\t")
-        t.value = self._num_string.replace("\n", "\\n")
+        t.value = t.value.replace("\n", "\\n")
         self._num_string = ""
         t.value = "\"" + t.value + "\""
         self.begin(CoolLexer)
@@ -69,12 +65,11 @@ class STRING(Lexer):
         self._num_string += t.value
         pass
     
-    
 
     @_(r'\n')
     def ERROR(self, t):
         t.value = "Unterminated string constant"
-        print("Error")
+        # print("Error")
         self.begin(CoolLexer)
         return t
 
@@ -83,7 +78,7 @@ class STRING(Lexer):
 class CoolLexer(Lexer):
 
 
-    ignore = '\t '
+    # ignore = '\t '
     literals = {';',':','{','}','(',')','+','-','*','\\', '@', '~', '<','=','.',',','/'}
 
     # Ejemplo
@@ -92,8 +87,6 @@ class CoolLexer(Lexer):
     CARACTERES_CONTROL = [bytes.fromhex(i+hex(j)[-1]).decode('ascii')
                           for i in ['0', '1']
                           for j in range(16)] + [bytes.fromhex(hex(127)[-2:]).decode("ascii")]
-    
-
 
     @_(r'<=')
     def LE(self,t):
@@ -197,7 +190,6 @@ class CoolLexer(Lexer):
         return t
     
     @_(r'<-')
-
     def ASSIGN(self,t):
         return t
         
@@ -212,10 +204,6 @@ class CoolLexer(Lexer):
     @_(r'(\(\*)')
     def commentsSlash(self,t):
         self.begin(Comment)
-
-    
-
-
 
     @_(r'\n+')
     def newline(self, t):

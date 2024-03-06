@@ -1,8 +1,13 @@
-#name "lineno2.cool"
-#3 OBJECTID fdjsk
-#3 ';' 
-#3 OBJECTID ajs
-#4 '*' 
-#4 ')' 
-#6 OBJECTID fjdk
-#7 STR_CONST ""
+#name
+"lineno2.cool"
+OBJECTID
+fdjsk
+';'
+OBJECTID
+ajs
+'*'
+')'
+OBJECTID
+fjdk
+STR_CONST
+""

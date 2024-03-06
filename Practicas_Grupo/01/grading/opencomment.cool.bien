@@ -1,2 +1,6 @@
-#name "opencomment.cool"
-#4 ERROR "EOF in comment"
+#name
+"opencomment.cool"
+ERROR
+"EOF
+in
+comment"
