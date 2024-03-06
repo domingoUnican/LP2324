@@ -53,9 +53,9 @@ class CoolParser(Parser):
     def opcional_expr(self, p):
         return NoExpr()
 
-    @_("ASSIGN Expresion")
+    @_("OBJECTID ASSIGN Expresion")
     def opcional_expr(self, p):
-        return p.Expresion
+        return Asignacion(nombre=p.OBJECTID, cuerpo=p.Expresion)
 
     @_("OBJECTID '(' ')' ':' TYPEID '{' Expresion '}'")
     def Metodo(self, p):
@@ -127,11 +127,11 @@ class CoolParser(Parser):
 
     @_("Expresion '@' TYPEID '.' OBJECTID '(' ')'")
     def Expresion(self, p):
-        pass
+        return LlamadaMetodoEstatico(cuerpo=p[0],clase=p.TYPEID,nombre_metodo=p.OBJECTID,argumentos=[])
 
     @_("Expresion '@' TYPEID '.' OBJECTID '(' lista_expr Expresion ')'")
     def Expresion(self, p):
-        pass
+        return LlamadaMetodoEstatico(cuerpo=p[0],clase=p.TYPEID,nombre_metodo=p.OBJECTID,argumentos=p.lista_expr + [p[7]])
 
     @_("")
     def lista_expr(self, p):
@@ -141,50 +141,48 @@ class CoolParser(Parser):
     def lista_expr(self, p):
         return [p.Expresion] + p.lista_expr
 
-    @_("opcional_expr2 OBJECTID '(' lista_expr Expresion ')'")
+    @_("Expresion '.' OBJECTID '(' lista_expr Expresion ')'")
     def Expresion(self, p):
-        pass
+        return LlamadaMetodo(cuerpo=p[0],nombre_metodo=p.OBJECTID,argumentos=p.lista_expr + [p[5]])
 
-    @_("opcional_expr2 OBJECTID '(' ')'")
+    @_("Expresion '.' OBJECTID '(' ')'")
     def Expresion(self, p):
-        pass
-
-    @_("")
-    def opcional_expr2(self, p):
-        return NoExpr()
-
-    @_("Expresion '.'")
-    def opcional_expr2(self, p):
-        pass
+        return LlamadaMetodo(cuerpo=p.Expresion,nombre_metodo=p.OBJECTID,argumentos=[])
 
     @_("IF Expresion THEN Expresion ELSE Expresion FI")
     def Expresion(self, p):
-        return Condicional(condicion=p[]1,verdadero=p.[3],falso=p[5])
+        return Condicional(condicion=p[1],verdadero=p[3],falso=p[5])
 
     @_("WHILE Expresion LOOP Expresion POOL")
     def Expresion(self, p):
         return Bucle(condicion=p[1],cuerpo=p[3])
 
-    @_("LET OBJECTID ':' TYPEID opcional_expresion_let lista_expr_let IN Expresion")
+    @_("LET OBJECTID ':' TYPEID lista_expr_let IN Expresion")
     def Expresion(self, p):
-        #return Let(nombre=p.OBJECTID,tipo=p.TYPEID,inicializacion=,cuerpo=)
-        pass
-
-    @_("")
-    def opcional_expresion_let(self, p):
-        return NoExpr()
-
-    @_("'<-' Expresion")
-    def opcional_expresion_let(self, p):
-        return 
+        ultima_inicializacion = p.lista_expr_let[-1]
+        # Vamos a suponer que ultima_inicializacion = [nombre,tipo,inicializacion]
+        temp = Let(nombre=ultima_inicializacion[0],
+                   tipo=ultima_inicializacion[1],
+                   inicializacion=ultima_inicializacion[2],
+                   cuerpo=p.Expresion)
+        for i in range(len(p.lista_expr_let),0,-1):
+            ultima_inicializacion = p.lista_expr_let[i] 
+            temp = Let(nombre=ultima_inicializacion[0],
+                   tipo=ultima_inicializacion[1],
+                   inicializacion=ultima_inicializacion[2],
+                   cuerpo=temp)
+        return Let(nombre=p.OBJECTID,
+                   tipo=p.TYPEID,
+                   inicializacion=NoExpr(),
+                   cuerpo=temp)
 
     @_("")
     def lista_expr_let(self, p):
-        pass
+        return []
 
-    @_("',' OBJECTID ':' TYPEID opcional_expresion_let")
+    @_("',' OBJECTID ':' TYPEID '<-' Expresion")
     def lista_expr_let(self, p):
-        pass
+        return [p.OBJECTID,p.TYPEID,p.Expresion]
 
     @_("CASE Expresion OF '(' lista_expr_case ';' ESAC")
     def Expresion(self, p):
@@ -200,35 +198,35 @@ class CoolParser(Parser):
 
     @_("NEW TYPEID")
     def Expresion(self, p):
-        pass
+        return Nueva(tipo=p.TYPEID)
 
     @_("'{' lista_expr_pc '}'")
     def Expresion(self, p):
-        pass
+        return p.lista_expr_pc
 
     @_("Expresion ';'")
     def lista_expr_pc(self, p):
-        pass
+        return [p.Expresion]
 
     @_("Expresion ';' lista_expr_pc")
     def lista_expr_pc(self, p):
-        pass
+        return [p.Expresion] + p.lista_expr_pc
 
     @_("OBJECTID")
     def Expresion(self, p):
-        pass
+        return Objeto(nombre=p.OBJECTID)
 
     @_("INT_CONST")
     def Expresion(self, p):
-        pass
+        return Entero(valor=p.INT_CONST)
 
     @_("STR_CONST")
     def Expresion(self, p):
-        pass
+        return String(valor=p.STR_CONST)
 
     @_("BOOL_CONST")
     def Expresion(self, p):
-        pass
+        return Booleano(valor=p.BOOL_CONST)
 
 
 
