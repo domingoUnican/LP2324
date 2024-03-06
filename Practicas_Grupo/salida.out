@@ -1,0 +1,118 @@
+Grammar:
+
+Rule 0     S' -> Programa
+Rule 1     Programa -> CLASS OBJECTID
+
+Unused terminals:
+
+    ELSE
+    DARROW
+    ASSIGN
+    NEW
+    LET
+    NOT
+    BOOL_CONST
+    LT
+    THEN
+    COMMA
+    COLON
+    WHILE
+    MULT
+    SEMICOLON
+    IN
+    OF
+    LOOP
+    POOL
+    INT_CONST
+    AT
+    MINUS
+    GT
+    NUMBER
+    STR_CONST
+    TYPEID
+    ISVOID
+    ESAC
+    LE
+    DIV
+    RPAREN
+    PLUS
+    INHERITS
+    DOT
+    FI
+    CASE
+    IF
+    EQ
+    LPAREN
+
+Terminals, with rules where they appear:
+
+ASSIGN               : 
+AT                   : 
+BOOL_CONST           : 
+CASE                 : 
+CLASS                : 1
+COLON                : 
+COMMA                : 
+DARROW               : 
+DIV                  : 
+DOT                  : 
+ELSE                 : 
+EQ                   : 
+ESAC                 : 
+FI                   : 
+GT                   : 
+IF                   : 
+IN                   : 
+INHERITS             : 
+INT_CONST            : 
+ISVOID               : 
+LE                   : 
+LET                  : 
+LOOP                 : 
+LPAREN               : 
+LT                   : 
+MINUS                : 
+MULT                 : 
+NEW                  : 
+NOT                  : 
+NUMBER               : 
+OBJECTID             : 1
+OF                   : 
+PLUS                 : 
+POOL                 : 
+RPAREN               : 
+SEMICOLON            : 
+STR_CONST            : 
+THEN                 : 
+TYPEID               : 
+WHILE                : 
+error                : 
+
+Nonterminals, with rules where they appear:
+
+Programa             : 0
+
+
+state 0
+
+    (0) S' -> . Programa
+    (1) Programa -> . CLASS OBJECTID
+    CLASS           shift and go to state 2
+
+    Programa                       shift and go to state 1
+
+state 1
+
+    (0) S' -> Programa .
+
+
+state 2
+
+    (1) Programa -> CLASS . OBJECTID
+    OBJECTID        shift and go to state 3
+
+
+state 3
+
+    (1) Programa -> CLASS OBJECTID .
+    $end            reduce using rule 1 (Programa -> CLASS OBJECTID .)
