@@ -1,15 +1,8 @@
 #name "escapedeof.cool"
-
  TYPEID What
-
  OBJECTID happens
-
  IF
-
  TYPEID I
-
  OBJECTID escape
-
  OBJECTID an
-
  TYPEID EOF

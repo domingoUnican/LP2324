@@ -17,15 +17,15 @@ class CoolParser(Parser):
 
     @_("Clase")
     def Programa(self, p):
-        pass
+        return p[0]
 
     @_("Programa Clase")
     def Programa(self, p):
-        pass
+        return p[1]
 
     @_("CLASS TYPEID opcional '{' lista_atr_metodos'}'")
     def Clase(self, p):
-        pass
+        return p[4]
 
     @_("")
     def opcional(self, p):
@@ -33,11 +33,11 @@ class CoolParser(Parser):
 
     @_("inherits TYPEID")
     def opcional(self, p):
-        pass
+        return p[1]
 
     @_("OBJECT ';' TYPEID opcional_expr")
     def Atributo(self, p):
-        pass
+        return p[0]
 
     @_("")
     def lista_atr_metodos(self, p):
@@ -45,19 +45,19 @@ class CoolParser(Parser):
 
     @_("Atributo lista_atr_metodos")
     def lista_atr_metodos(self, p):
-        pass
+        return p[0] + p[1]
 
     @_("Metodo lista_atr_metodos")
     def lista_atr_metodos(self, p):
-        pass
+        return p[1]
 
-    @_("OBJECTID '('')' ':' TYPEID '{'Expresion'}'")
+    @_("OBJECTID '(' ')' ':' TYPEID '{' Expresion '}'")
     def Metodo(self, p):
-        pass
+        return p[6]
 
     @_("OBJECTID '(' Formal ',' Formal ')' ':' TYPEID '{' Expresion '}'' ';'")
     def Metodo(self, p):
-        pass
+        return p[9]
 
     @_('OBJECTID ":" TYPEID')
     def Formal(self, p):
@@ -66,57 +66,57 @@ class CoolParser(Parser):
     #OBJECTID ASSIGN ⟨Expresion⟩
     @_("OBJECTID ASSIGN Expresion")
     def Expresion(self, p):
-        pass
+        return p[2]
 
     # ⟨Expresion⟩ + ⟨Expresion⟩
     @_("Expresion '+' Expresion")
     def Expresion(self, p):
-        pass
+        return p[0] + p[2]
 
     # ⟨Expresion⟩ - ⟨Expresion⟩
     @_("Expresion '-' Expresion")
     def Expresion(self, p):
-        pass
+        return p[0] - p[2]
     
     # ⟨Expresion⟩ * ⟨Expresion⟩
     @_("Expresion '*' Expresion")
     def Expresion(self, p):
-        pass
+        return p[0] * p[2]
     
     # ⟨Expresion⟩ / ⟨Expresion⟩
     @_("Expresion '/' Expresion")
     def Expresion(self, p):
-        pass
+        return p[0] / p[2]
 
     # ⟨Expresion⟩ < ⟨Expresion⟩
     @_("Expresion LE Expresion")
     def Expresion(self, p):
-        pass
+        return p[0] < p[2]
     
     # ⟨Expresion⟩ <= ⟨Expresion⟩
     @_("Expresion LT Expresion")
     def Expresion(self, p):
-        pass
+        return p[0] <= p[2]
 
     # ⟨Expresion⟩ = ⟨Expresion⟩
     @_("Expresion EQUALS Expresion")
     def Expresion(self, p):
-        pass
+        return p[0] == p[2]
 
     #( ⟨Expresion⟩ )
     @_("'(' Expresion ')'")
     def Expresion(self, p):
-        pass
+        return p[1]
 
     #NOT ⟨Expresion⟩
     @_("NOT Expresion")
     def Expresion(self, p):
-        pass
+       return not p[1]
     
     # ISVOID ⟨Expresion⟩
     @_("ISVOID Expresion")
     def Expresion(self, p):
-        pass
+        return p[1] == None
     
     # ~ ⟨Expresion⟩
     @_("'~' Expresion")
@@ -126,16 +126,16 @@ class CoolParser(Parser):
     #⟨Expresion⟩ @ TYPEID . OBJECTID ( )
     @_("Expresion '@' TYPEID '.' OBJECTID '(' ')'")
     def Expresion(self, p):
-        pass
+        return p[4]
     
     #⟨Expresion⟩ @ TYPEID . OBJECTID ( (⟨Expresion⟩ ,)* ⟨Expresion⟩ )
     @_("Expresion '@' TYPEID '.' OBJECTID '(' lstExpr Expresion')'")
     def Expresion(self, p):
-        pass
+        return p[4]
     
     @_("Expresion ',' lstExpr")
     def lstExpr(self, p):
-        pass
+        return p[0] + p[2]
 
     @_("")
     def lstExpr(self, p):

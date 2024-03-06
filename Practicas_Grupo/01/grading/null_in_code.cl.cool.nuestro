@@ -1,15 +1,8 @@
 #name "null_in_code.cl.cool"
-
  OBJECTID null
-
  OBJECTID character
-
  OBJECTID is
-
  OBJECTID here
-
  DARROW
-
  ASSIGN
-
  ')'

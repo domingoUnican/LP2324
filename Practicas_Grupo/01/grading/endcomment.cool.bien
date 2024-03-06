@@ -1,7 +1,7 @@
-#name "endcomment.cool"
- TYPEID This
- OBJECTID comment
- OBJECTID was
- OBJECTID never
- OBJECTID begun
+#name "endcomment.cool"
+ TYPEID This
+ OBJECTID comment
+ OBJECTID was
+ OBJECTID never
+ OBJECTID begun
  ERROR "Unmatched *)"

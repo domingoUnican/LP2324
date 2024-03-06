@@ -1,3 +1,2 @@
 #name "s05.test.cool"
-
  STR_CONST "other unescaped whitespace: \t"

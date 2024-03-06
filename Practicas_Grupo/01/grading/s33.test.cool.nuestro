@@ -1,19 +1,10 @@
 #name "s33.test.cool"
-
  OBJECTID before_the_comment
-
  '('
-
  '*'
-
  OBJECTID this
-
  '*'
-
  OBJECTID won
-
  OBJECTID t
-
  '*'
-
  OBJECTID end

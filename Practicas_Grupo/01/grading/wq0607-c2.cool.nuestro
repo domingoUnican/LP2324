@@ -1,25 +1,13 @@
 #name "wq0607-c2.cool"
-
- STR_CONST "n*) Estos son comentarios anidadosnnnn"
-
+ STR_CONST "\n*) Estos son comentarios anidados\n\n\n\n"
  TYPEID Esto
-
  OBJECTID es
-
  OBJECTID el
-
  OBJECTID error
-
  OBJECTID de
-
  OBJECTID cerrar
-
  OBJECTID comentario
-
  OBJECTID sin
-
  OBJECTID abrirlo
-
  STR_CONST "*)(*"
-
  TYPEID String

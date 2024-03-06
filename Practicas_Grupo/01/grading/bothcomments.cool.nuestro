@@ -1,25 +1,13 @@
 #name "bothcomments.cool"
-
  OBJECTID what
-
  OBJECTID the
-
  OBJECTID programmer
-
  OBJECTID thought
-
  OBJECTID it
-
  OBJECTID was
-
  '*'
-
  ')'
-
  '.'
-
  IF
-
  INT_CONST 5
-
  THEN
