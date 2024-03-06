@@ -25,17 +25,13 @@ class CoolParser(Parser):
     def Programa(self, p):
         return Programa(secuencia = [p.Clase])
 
-    @_("CLASS TYPEID INHERITSTYPEID '{' '}'")
+    @_("CLASS TYPEID INHERITS TYPEID '{' '}'")
     def Clase(self, p):
-        return Clase(p.TYPEID0, p.TYPEID1, [])
+        return Clase(nombre=p[0], padre=p[2],nombre_fichero=self.nombre_fichero, caracteristicas=[])
 
-    @_("CLASS TYPEID INHERITSTYPEID '{' cuerpo_clase '}'")
+    @_("CLASS TYPEID INHERITS TYPEID '{' cuerpo_clase '}'")
     def Clase(self, p):
-        return Clase(p.TYPEID0, p.TYPEID1, p.cuerpo_clase)
-
-    @_("INHERITS TYPEID")
-    def INHERITSTYPEID(self, p):
-        return p.TYPEID
+        return Clase(nombre=p[0], padre=p[2],nombre_fichero=self.nombre_fichero, caracteristicas=[p.cuerpo_clase])
 
     @_("")
     def cuerpo_clase(self, p):
@@ -55,19 +51,23 @@ class CoolParser(Parser):
 
     @_("OBJECTID ':' TYPEID")
     def Atributo(self, p):
-        return Atributo(p.OBJECTID, p.TYPEID)
+        return Atributo(nombre=p[0], tipo=p[2], cuerpo=None)
 
     @_("OBJECTID ':' TYPEID ASSIGN expr")
     def Atributo(self, p):
-        return Atributo(p.OBJECTID, p.TYPEID, p.expr)
+        return Atributo(nombre=p[0], tipo=p[2],cuerpo=p.expr)
+
+    @_("OBJECTID '(' ')' ':' TYPEID '{' '}'")
+    def Metodo(self, p):
+        return Metodo(formales=[],nombre=p[0], tipo=p[4], cuerpo=None)
 
     @_("OBJECTID '(' ')' ':' TYPEID '{' expr '}'")
     def Metodo(self, p):
-        return Metodo(p.OBJECTID, p.TYPEID, [], p.expr)
+        return Metodo(formales=[],nombre=p.OBJECTID, tipo=p.TYPEID, cuerpo=p.expr)
 
     @_("OBJECTID '(' formal ')' ':' TYPEID '{' expr '}'")
     def Metodo(self, p):
-        return Metodo(p.OBJECTID, p.TYPEID, p.formal, p.expr)
+        return Metodo(nombre=p.OBJECTID, tipo=p.TYPEID, formales=[p.formal], cuerpo=p.expr)
 
     @_("")
     def formal(self, p):
@@ -75,15 +75,39 @@ class CoolParser(Parser):
 
     @_("OBJECTID ':' TYPEID")
     def formal(self, p):
-        return [Formal(p.OBJECTID, p.TYPEID)]
+        return [Formal(nombre_variable=p.OBJECTID,tipo= p.TYPEID)]
 
     @_("OBJECTID ASSIGN expr")
     def expr(self, p):
-        return Assign(p.OBJECTID, p.expr)
+        return Asignacion(nombre=p.OBJECTID, cuerpo=p.expr)
 
-    @_("expr '+' expr ',' expr '-' expr ',' expr '*' expr ',' expr '/' expr ',' expr '<' expr ',' expr LE expr ',' expr '=' expr")
+    @_("expr '+' expr")
     def expr(self, p):
-        return BinOp(p[1], p.expr0, p.expr1)
+        return Suma(izquierda=p.expr0, derecha=p.expr1)
+    
+    @_("expr '-' expr")
+    def expr(self, p):
+        return Resta(izquierda=p.expr0, derecha=p.expr1)
+    
+    @_("expr '*' expr")
+    def expr(self, p):
+        return Multiplicacion(izquierda=p.expr0, derecha=p.expr1)
+    
+    @_("expr '/' expr")
+    def expr(self, p):
+        return Division(izquierda=p.expr0, derecha=p.expr1)
+    
+    @_("expr '<' expr")
+    def expr(self, p):
+        return Menor(izquierda=p.expr0, derecha=p.expr1)
+    
+    @_("expr LE expr")
+    def expr(self, p):
+        return LeIgual(izquierda=p.expr0, derecha=p.expr1)
+    
+    @_("expr '=' expr")
+    def expr(self, p):
+        return Igual(izquierda=p.expr0, derecha=p.expr1)
 
     @_("NOT expr")
     def expr(self, p):
@@ -101,13 +125,13 @@ class CoolParser(Parser):
     def expr(self, p):
         return p.expr
 
-    @_("'@' TYPEID '.' OBJECTID '(' ')'")
+    @_("expr '@' TYPEID '.' OBJECTID '(' ')'")
     def expr(self, p):
-        return LlamadaMetodo(p.TYPEID,p.OBJECTID, [])
+        return LlamadaMetodo(cuerpo=p.expr,nombre_metodo=p.OBJECTID,argumentos=[])
 
-    @_("'@' TYPEID '.' OBJECTID '(' expr ')'")
+    @_(" expr '@' TYPEID '.' OBJECTID '(' expr ')'")
     def expr(self, p):
-        return LlamadaMetodo(p.TYPEID, p.OBJECTID, p.expr)
+        return LlamadaMetodo(cuerpo=p.expr0, nombre_metodo=p.OBJECTID, argumentos=[p.expr1])
 
     @_("OBJECTID '(' expr ')'")
     def expr(self, p):
