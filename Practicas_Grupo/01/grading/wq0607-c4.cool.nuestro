@@ -25,9 +25,6 @@
  ERROR \\
  STR_CONST "\""
  ERROR \\
- STR_CONST ""
- ERROR \\
- '-'
- ERROR \\
- STR_CONST ""
+ ERROR "Unterminated string constant"
+ STR_CONST "\-\""
  ERROR \\

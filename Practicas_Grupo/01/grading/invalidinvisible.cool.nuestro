@@ -1,6 +1,6 @@
 #name "invalidinvisible.cool"
  OBJECTID g
- ERROR \
- ERROR \
- ERROR \
+ ERROR "\"
+ ERROR "\"
+ ERROR "\"
  OBJECTID h

@@ -12,4 +12,4 @@
  ERROR \\
  STR_CONST "\""
  ERROR \\
- ERROR EOF in string constant
+ ERROR "Unterminated string constant"

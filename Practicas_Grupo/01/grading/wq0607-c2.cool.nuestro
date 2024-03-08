@@ -5,7 +5,7 @@
  OBJECTID anidados
  STR_CONST "(*"
  TYPEID String
- ERROR Unmatched *)
+ ERROR "Unmatched *)"
  TYPEID Esto
  OBJECTID es
  OBJECTID el

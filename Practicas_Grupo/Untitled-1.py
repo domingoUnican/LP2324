@@ -14,4 +14,4 @@ for i in range(1, 5):
     control_char = chr(i)
     print(f"[{control_char}]")
     print(f"\\{control_char}")
-print(f"\x00")
+print(f"\00")
