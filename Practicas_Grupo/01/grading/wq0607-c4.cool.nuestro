@@ -4,27 +4,27 @@
  STR_CONST "-\-"
  STR_CONST "\\"
  STR_CONST "\"--\""
- ERROR \\
+ ERROR "\\"
  '-'
- ERROR \\
+ ERROR "\\"
  STR_CONST ""
- ERROR \\
+ ERROR "\\"
  STR_CONST "--\\"
- ERROR \\
+ ERROR "\\"
  STR_CONST "\\"
  STR_CONST "\\"
  STR_CONST "\"--\""
- ERROR \\
- ERROR \\
+ ERROR "\\"
+ ERROR "\\"
  STR_CONST ""
- ERROR \\
+ ERROR "\\"
  STR_CONST "--\\"
- ERROR \\
+ ERROR "\\"
  STR_CONST "\\"
  STR_CONST "--"
- ERROR \\
+ ERROR "\\"
  STR_CONST "\""
- ERROR \\
+ ERROR "\\"
  ERROR "Unterminated string constant"
  STR_CONST "\-\""
- ERROR \\
+ ERROR "\\"

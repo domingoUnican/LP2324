@@ -58,17 +58,24 @@ class CoolLexer(Lexer):
     def OBJECTID(self, t):
         return t
     
-    @_(r'[_]|[!]|[#]|[$]|[%]|[&]|[>]|[?]|[`]|[[]|[]]|[\\]|[|]|[\^]|[\\x*[a-zA-Z0-9]+][]|[]|[]|[]|\x00')
+    @_(r'[_]|[!]|[#]|[$]|[%]|[&]|[>]|[?]|[`]|[[]|[]]|[\\]|[|]|[\^]|[\\x*[a-zA-Z0-9]+]|[]|[]|[]|[]|\x00')
     def ERROR(self, t):
         t.type = 'ERROR'
         if t.value == '\\':
             t.value = '\\\\'
         elif t.value == '\x00':
-            t.value = '"' + "\\000" + '"'
+            t.value = "\\000"
         elif t.value == '_':
-            t.value = '"_"'
-        elif t.value in self.CARACTERES_CONTROL:
-            t.value = '"' + f'\\{t.value}' + '"'
+            t.value = '_'
+        elif t.value == '':
+            t.value = '\\001'
+        elif t.value == '':
+            t.value = '\\002'
+        elif t.value == '':
+            t.value = '\\003'
+        elif t.value == '':
+            t.value = '\\004'
+        t.value = '"' + t.value + '"'
         return t
     
     @_(r'--.*')
@@ -128,16 +135,20 @@ class CoolLexer(Lexer):
 class StringLexer(Lexer):
     tokens = {STR_CONST, ERROR}
     _acumulado = ""
+    error_nullchar_escaped = False
     error_nullchar = False
 
     
     @_(r'"')
     def STR_CONST(self, t):
-        if self.error_nullchar:
+        if self.error_nullchar_escaped:
             t.value = '"' + "String contains escaped null character." + '"'
             t.type = 'ERROR'
-            self.error_nullchar = False
-            
+            self.error_nullchar_escaped = False
+        elif self.error_nullchar:
+            t.value = '"' + "String contains null character." + '"'
+            t.type = 'ERROR'
+            self.error_nullchar = False  
         else:
             t.value = self._acumulado
             self._acumulado = ""
@@ -153,7 +164,13 @@ class StringLexer(Lexer):
     
     
     @_(r'\\\x00')
+    def NULLCHAR_ESCAPED(self, t):
+        print("NULLCHAR")
+        self.error_nullchar_escaped = True
+
+    @_(r'\x00')
     def NULLCHAR(self, t):
+        print("NULLCHAR2")
         self.error_nullchar = True
     
 
@@ -176,6 +193,12 @@ class StringLexer(Lexer):
     @_(r'\\\f')
     def FORMFEED(self, t):
         self._acumulado += '\\f'
+    
+    
+    @_(r'\x1B')
+    def ESCAPE(self, t):
+        print("ESCAPE")
+        self._acumulado += "\033"
     
     @_(r'\\[^a-zA-Z0-9\n]')
     def CARACTERESPECIAL(self, t):
@@ -252,6 +275,7 @@ class Comment(Lexer):
 
     @_(r'.$')
     def EOF_CMT(self, t):
+        print("EOF comment")
         t.value = "EOF in comment"
         t.type = 'ERROR'
         return t

@@ -1,4 +1,2 @@
 #name "null_in_string_unescaped_newline.cl.cool"
- ERROR "Unterminated string constant"
- OBJECTID a
- '+'
+ ERROR "EOF in string constant"
