@@ -3,4 +3,4 @@
  STR_CONST "This is a backspace:\b"
  STR_CONST "This is a formfeed:\f"
  STR_CONST "This is a carriage return:"
- STR_CONST "This is an escape:"
+ STR_CONST "This is an escape:\033"

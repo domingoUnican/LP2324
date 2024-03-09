@@ -137,6 +137,7 @@ class StringLexer(Lexer):
     _acumulado = ""
     error_nullchar_escaped = False
     error_nullchar = False
+    num_caracteres = 0
 
     
     @_(r'"')
@@ -148,11 +149,16 @@ class StringLexer(Lexer):
         elif self.error_nullchar:
             t.value = '"' + "String contains null character." + '"'
             t.type = 'ERROR'
-            self.error_nullchar = False  
+            self.error_nullchar = False
+        elif self.num_caracteres > 1024:
+            self._acumulado = ""
+            t.value = '"' + "String constant too long" + '"'
+            t.type = 'ERROR'  
         else:
             t.value = self._acumulado
             self._acumulado = ""
             t.value = '"' + t.value + '"'
+        self.num_caracteres = 0
         self.begin(CoolLexer)
         return t
 
@@ -161,48 +167,86 @@ class StringLexer(Lexer):
     def SALTOESCAPADO(self, t):
         self._acumulado += "\\n"
         self.lineno += 1
+        self.num_caracteres += 1
+        
     
     
     @_(r'\\\x00')
     def NULLCHAR_ESCAPED(self, t):
         print("NULLCHAR")
         self.error_nullchar_escaped = True
+        
 
     @_(r'\x00')
     def NULLCHAR(self, t):
         print("NULLCHAR2")
         self.error_nullchar = True
+        
     
 
     @_(r'\\\\')
     def DOBLE_BARRA(self, t):
         self._acumulado += t.value[0:]
+        self.num_caracteres += 1  
+        
 
     @_(r'\t')
     def TABULADORESCAPADO(self, t):
         self._acumulado += '\\t'
+        self.num_caracteres += 1
+        
     
     @_(r'\\\t')
     def TABULADOR(self, t):
         self._acumulado += '\\t'
+        self.num_caracteres += 1
+        
     
     @_(r'\\\x08')
     def BACKSPACE(self, t):
         self._acumulado += '\\b'
+        self.num_caracteres += 1
     
-    @_(r'\\\f')
+    @_(r'\f')
     def FORMFEED(self, t):
         self._acumulado += '\\f'
+        self.num_caracteres += 1
     
+    @_(r'\\\f')
+    def FORMFEED_ESCAPADO(self, t):
+        self._acumulado += '\\f'
+        self.num_caracteres += 1
+        
+    @_(r'\x12')
+    def DC2(self, t):
+        self._acumulado += '\\022'
+        self.num_caracteres += 1
+    
+    @_(r'\x0B')
+    def VT(self, t):
+        self._acumulado += '\\013'
+        self.num_caracteres += 1
     
     @_(r'\x1B')
     def ESCAPE(self, t):
         print("ESCAPE")
-        self._acumulado += "\033"
+        self._acumulado += "\\033"
     
+    @_(r'\\-')
+    def GUION(self, t):
+        self._acumulado += t.value[1:]
+        self.num_caracteres += 1
+    
+    @_(r'(?:\\")$')
+    def QUOTE_EOF(self, t):
+        t.value = '"' + "EOF in string constant" + '"'
+        t.type = 'ERROR'
+        return t
+
     @_(r'\\[^a-zA-Z0-9\n]')
     def CARACTERESPECIAL(self, t):
         self._acumulado += t.value
+        
     
     @_(r'\\.') # El punto no representa el salto de linea
     def COMILLASESCAPADO(self, t):
@@ -218,6 +262,8 @@ class StringLexer(Lexer):
             t.value = t.value[1:]
         
         self._acumulado +=  t.value
+        self.num_caracteres += 1
+        
 
     @_(r'[^\\]\n')
     def salto_linea_error(self, t):
@@ -234,15 +280,15 @@ class StringLexer(Lexer):
         t.type = 'ERROR'
         return t
 
-    @_(r'(?:\\")$')
-    def QUOTE_EOF(self, t):
-        t.value = '"' + "EOF in string constant" + '"'
-        t.type = 'ERROR'
-        return t
     
     @_(r'[^"]$')
     def EOF(self, t):
         print("EOF")
+        if self.error_nullchar:
+            t.value = '"' + "String contains null character." + '"'
+            t.type = 'ERROR'
+            self.error_nullchar = False
+            return t
         t.value = '"' + "EOF in string constant" + '"'
         t.type = 'ERROR'
         return t
@@ -250,6 +296,7 @@ class StringLexer(Lexer):
     @_(r'.')
     def CUALQUIER_COSA(self, t):
         self._acumulado += t.value
+        self.num_caracteres += 1
     
     def error(self, t):
         self.index += 1
@@ -276,7 +323,7 @@ class Comment(Lexer):
     @_(r'.$')
     def EOF_CMT(self, t):
         print("EOF comment")
-        t.value = "EOF in comment"
+        t.value = '"' + "EOF in comment" + '"'
         t.type = 'ERROR'
         return t
 
