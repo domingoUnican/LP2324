@@ -303,18 +303,18 @@ class StringLexer(Lexer):
 
 class Comment(Lexer):
     tokens = {CMT_CONST}
-    cmt_id = 0
+    comments_inside = 0
 
     @_(r'\*\)')
     def CMT_CONST(self, t):
-        if self.cmt_id == 0:
+        if self.comments_inside == 0:
             self.begin(CoolLexer)
         else:
-            self.cmt_id -= 1
+            self.comments_inside -= 1
 
     @_(r'\(\*')
     def inside_CMT_CONST(self, t):
-        self.cmt_id += 1
+        self.comments_inside += 1
 
     @_(r'\n')
     def salto_linea(self, t):
