@@ -48,15 +48,16 @@ Rule 44    expr -> OBJECTID ASSIGN expr  [precedence=right, level=1]
 Rule 45    lista_inicia -> OBJECTID : TYPEID
 Rule 46    cuerpo_case -> cuerpo_case OBJECTID : TYPEID DARROW expr ;
 Rule 47    cuerpo_case -> <empty>
-Rule 48    bloque -> bloque expr ;
-Rule 49    bloque -> expr ;
+Rule 48    bloque -> bloque error
+Rule 49    bloque -> bloque expr ;
+Rule 50    bloque -> expr ;
 
 Unused terminals:
 
-    NUMBER
-    COMMENT_BLOQUE
     COMMENT_1LINEA
     ERROR
+    COMMENT_BLOQUE
+    NUMBER
 
 Terminals, with rules where they appear:
 
@@ -68,7 +69,7 @@ Terminals, with rules where they appear:
 .                    : 31 32
 /                    : 40
 :                    : 11 12 13 14 15 16 26 45 46
-;                    : 2 7 9 10 46 48 49
+;                    : 2 7 9 10 46 49 50
 <                    : 39
 =                    : 37
 @                    : 31 32
@@ -101,7 +102,7 @@ STR_CONST            : 19
 THEN                 : 28
 TYPEID               : 3 3 4 4 5 6 11 12 13 14 15 16 23 26 31 32 45 46
 WHILE                : 27
-error                : 1
+error                : 1 48
 {                    : 3 4 5 6 13 14 15 22 24 25
 }                    : 3 4 5 6 13 14 15 22 24 25
 ~                    : 34
@@ -112,11 +113,11 @@ Atributo             : 10
 Clase                : 2
 Metodo               : 9
 Programa             : 1 0
-bloque               : 48
+bloque               : 48 49
 caracteristica       : 7
 cuerpo_case          : 24 46
 cuerpo_clase         : 3 5 7
-expr                 : 11 13 14 22 24 25 26 27 27 28 28 28 30 31 31 32 33 34 35 36 37 37 38 38 39 39 40 40 41 41 42 42 43 43 44 46 48 49
+expr                 : 11 13 14 22 24 25 26 27 27 28 28 28 30 31 31 32 33 34 35 36 37 37 38 38 39 39 40 40 41 41 42 42 43 43 44 46 49 50
 formal               : 13
 lista_inicia         : 26
 

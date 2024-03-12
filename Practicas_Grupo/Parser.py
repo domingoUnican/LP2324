@@ -195,11 +195,11 @@ class CoolParser(Parser):
 
     @_("CASE expr OF '{' '}' ESAC")
     def expr(self, p):
-        return Case(p.expr, [])
+        return Swicht(expr=p.expr, casos=[])
 
     @_("CASE expr OF '{' cuerpo_case '}' ESAC")
     def expr(self, p):
-        return Case(p.expr, p.cuerpo_case)
+        return Swicht(expr=p.expr, casos=[p.cuerpo_case])
 
     @_("")
     def cuerpo_case(self, p):
@@ -207,11 +207,11 @@ class CoolParser(Parser):
 
     @_("cuerpo_case OBJECTID ':' TYPEID DARROW expr ';' ")
     def cuerpo_case(self, p):
-        return p.cuerpo_case + [(p.OBJECTID, p.TYPEID, p.expr)]
+        return RamaCase(nombre_variable=p.OBJECTID,tipo=p.TYPEID,cuerpo=p.expr)
 
     @_("NEW TYPEID")
     def expr(self, p):
-        return New(p.TYPEID)
+        return Nueva(p.TYPEID)
 
     @_("'{' expr '}'")
     def expr(self, p):
