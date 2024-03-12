@@ -13,21 +13,21 @@ class CoolParser(Parser):
     debugfile = "salida.out"
     errores = []
 
-    @_("Clase")
+    @_("Clase ';' ")
     def Programa(self, p):
         return Programa(secuencia=[p.Clase])
     
-    @_("Programa Clase")
+    @_("Programa Clase ';' ")
     def Programa(self, p):
         return Programa(secuencia=p.Programa.secuencia + [p.Clase])
     
     @_("CLASS TYPEID opcionalPadre '{' lista_atr_metodos '}'")
     def Clase(self, p):
-        return Clase(nombre=p.TYPEID,padre=p.opcionalPadre,caracteristicas=p.lista_atr_metodos)
+        return Clase(nombre=p.TYPEID,padre=p.opcionalPadre,caracteristicas=p.lista_atr_metodos, nombre_fichero=self.nombre_fichero)
     
     @_("")
     def opcionalPadre(self, p):
-        return "Object"
+        return Objeto()
     
     @_("INHERITS TYPEID")
     def opcionalPadre(self, p):
@@ -37,15 +37,15 @@ class CoolParser(Parser):
     def lista_atr_metodos(self, p):
         return []
     
-    @_("Atributo lista_atr_metodos")
+    @_("Atributo ';' lista_atr_metodos")
     def lista_atr_metodos(self, p):
         return [p.Atributo] + p.lista_atr_metodos
     
-    @_("Metodo lista_atr_metodos")
+    @_("Metodo ';' lista_atr_metodos")
     def lista_atr_metodos(self, p):
         return [p.Metodo] + p.lista_atr_metodos
     
-    @_("OBJECTID ':' TYPEID opcional_expr")
+    @_("OBJECTID ':' TYPEID opcional_expr ")
     def Atributo(self, p):
         return Atributo(nombre=p.OBJECTID,tipo=p.TYPEID,cuerpo=p.opcional_expr)
     
@@ -59,9 +59,9 @@ class CoolParser(Parser):
 
     @_("OBJECTID '(' ')' ':' TYPEID '{' Expresion '}'")
     def Metodo(self, p):
-        return Metodo(nombre=p.OBJECTID,tipo=p.TYPEID,cuerpo=p.Expresion)
+        return Metodo(nombre=p.OBJECTID,tipo=p.TYPEID,cuerpo=p.Expresion, formales=[])
 
-    @_("OBJECTID '(' lista_formal Formal ')' ':' TYPEID '{' Expresion '}'")
+    @_("OBJECTID '(' Formal lista_formal ')' ':' TYPEID '{' Expresion '}'")
     def Metodo(self, p):
         return Metodo(nombre=p.OBJECTID,tipo=p.TYPEID,cuerpo=p.Expresion,formales=p.lista_formal + [p.Formal])
 
@@ -69,17 +69,17 @@ class CoolParser(Parser):
     def lista_formal(self, p):
         return []
 
-    @_("Formal ',' lista_formal")
+    @_("',' Formal lista_formal")
     def lista_formal(self, p):
         return [p.Formal] + p.lista_formal
 
     @_("OBJECTID ':' TYPEID")
     def Formal(self, p):
-        return Objeto(nombre=p.OBJECTID)
+        return Formal(nombre_variable=p.OBJECTID, tipo=p.TYPEID)
 
     @_("OBJECTID ASSIGN Expresion")
     def Expresion(self, p):
-        pass
+        return Asignacion(nombre=p.OBJECTID, cuerpo=p.Expresion)
 
     @_("Expresion '+' Expresion")
     def Expresion(self, p):
@@ -101,7 +101,7 @@ class CoolParser(Parser):
     def Expresion(self, p):
         return Menor(izquierda=p[0], derecha=p[2])
 
-    @_("Expresion '<=' Expresion")
+    @_("Expresion DARROW Expresion")
     def Expresion(self, p):
         return LeIgual(izquierda=p[0], derecha=p[2])
 
@@ -129,7 +129,7 @@ class CoolParser(Parser):
     def Expresion(self, p):
         return LlamadaMetodoEstatico(cuerpo=p[0],clase=p.TYPEID,nombre_metodo=p.OBJECTID,argumentos=[])
 
-    @_("Expresion '@' TYPEID '.' OBJECTID '(' lista_expr Expresion ')'")
+    @_("Expresion '@' TYPEID '.' OBJECTID '(' Expresion lista_expr ')'")
     def Expresion(self, p):
         return LlamadaMetodoEstatico(cuerpo=p[0],clase=p.TYPEID,nombre_metodo=p.OBJECTID,argumentos=p.lista_expr + [p[7]])
 
@@ -137,17 +137,25 @@ class CoolParser(Parser):
     def lista_expr(self, p):
         return []
 
-    @_("Expresion ',' lista_expr")
+    @_("',' Expresion lista_expr")
     def lista_expr(self, p):
         return [p.Expresion] + p.lista_expr
 
-    @_("Expresion '.' OBJECTID '(' lista_expr Expresion ')'")
+    @_("Expresion '.' OBJECTID '(' Expresion lista_expr ')'")
     def Expresion(self, p):
-        return LlamadaMetodo(cuerpo=p[0],nombre_metodo=p.OBJECTID,argumentos=p.lista_expr + [p[5]])
+        return LlamadaMetodo(cuerpo=p[0],nombre_metodo=p.OBJECTID,argumentos=[p[5]] + p.lista_expr)
 
     @_("Expresion '.' OBJECTID '(' ')'")
     def Expresion(self, p):
         return LlamadaMetodo(cuerpo=p.Expresion,nombre_metodo=p.OBJECTID,argumentos=[])
+    
+    @_("OBJECTID '(' Expresion lista_expr ')'")
+    def Expresion(self, p):
+        return LlamadaMetodo(nombre_metodo=p.OBJECTID,argumentos=[p[3]] + p.lista_expr)
+
+    @_("OBJECTID '(' ')'")
+    def Expresion(self, p):
+        return LlamadaMetodo(nombre_metodo=p.OBJECTID,argumentos=[])
 
     @_("IF Expresion THEN Expresion ELSE Expresion FI")
     def Expresion(self, p):
@@ -157,6 +165,7 @@ class CoolParser(Parser):
     def Expresion(self, p):
         return Bucle(condicion=p[1],cuerpo=p[3])
 
+    
     @_("LET OBJECTID ':' TYPEID lista_expr_let IN Expresion")
     def Expresion(self, p):
         ultima_inicializacion = p.lista_expr_let[-1]
@@ -180,21 +189,21 @@ class CoolParser(Parser):
     def lista_expr_let(self, p):
         return []
 
-    @_("',' OBJECTID ':' TYPEID '<-' Expresion")
+    @_("',' OBJECTID ':' TYPEID ASSIGN Expresion")
     def lista_expr_let(self, p):
         return [p.OBJECTID,p.TYPEID,p.Expresion]
 
-    @_("CASE Expresion OF '(' lista_expr_case ';' ESAC")
+    @_("CASE Expresion OF lista_expr_case ESAC")
     def Expresion(self, p):
-        pass
+        return Swicht(expr=p.Expresion, casos=p.lista_expr_case) 
 
-    @_("OBJECTID ':' TYPEID DARROW '<' Expresion '>'")
+    @_("OBJECTID ':' TYPEID DARROW Expresion ';'")
     def lista_expr_case(self, p):
-        pass
+        return [RamaCase(nombre_variable=p.OBJECTID, cast=p.TYPEID, cuerpo=p.Expresion)]
 
-    @_("OBJECTID ':' TYPEID DARROW '<' Expresion '>' lista_expr_case")
+    @_("OBJECTID ':' TYPEID DARROW Expresion ';' lista_expr_case")
     def lista_expr_case(self, p):
-        pass
+        return [RamaCase(nombre_variable=p.OBJECTID, cast=p.TYPEID, cuerpo=p.Expresion)] + p.lista_expr_case
 
     @_("NEW TYPEID")
     def Expresion(self, p):
@@ -202,7 +211,7 @@ class CoolParser(Parser):
 
     @_("'{' lista_expr_pc '}'")
     def Expresion(self, p):
-        return p.lista_expr_pc
+        return Bloque(expresiones=p.lista_expr_pc)
 
     @_("Expresion ';'")
     def lista_expr_pc(self, p):

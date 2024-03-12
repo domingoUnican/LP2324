@@ -1,1 +1,45 @@
-Compilation halted due to lex and parse errors
+_program
+  _class
+    Hello
+    Objeto(linea=0, nombre='_no_set')
+    "associativity+.test"
+    (
+    _attr
+      foo
+      Int
+      _no_expr
+      : _no_type
+    _method
+      moo2
+      _formal
+        b
+        Int
+      _formal
+        c
+        Int
+      _formal
+        d
+        Int
+      _formal
+        a
+        String
+      Hello
+      _plus
+        _object
+          a
+        : _no_type
+        _plus
+          _object
+            b
+          : _no_type
+          _plus
+            _object
+              c
+            : _no_type
+            _object
+              d
+            : _no_type
+          : _no_type
+        : _no_type
+      : _no_type
+    )

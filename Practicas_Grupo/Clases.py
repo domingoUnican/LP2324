@@ -755,7 +755,7 @@ class Ambito:
                 if nodo_temp.nombre == cast:
                     break
                 l.extend(nodo_temp.hijos)"""
-            if nombre_metodo is not 'self' and metodos[-1] == "SELF_TYPE":
+            if nombre_metodo != 'self' and metodos[-1] == "SELF_TYPE":
                 metodos = [metodos[:-1],cast]
             return metodos
         else:

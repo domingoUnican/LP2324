@@ -1,1 +1,17 @@
-Compilation halted due to lex and parse errors
+_program
+  _class
+    Hello
+    Objeto(linea=0, nombre='_no_set')
+    "classtwofields.test"
+    (
+    _attr
+      foo
+      Int
+      _no_expr
+      : _no_type
+    _attr
+      bar
+      String
+      _no_expr
+      : _no_type
+    )

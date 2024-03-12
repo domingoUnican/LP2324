@@ -77,7 +77,11 @@ class STRING(Lexer):
 
 class CoolLexer(Lexer):
 
-
+    tokens = {OBJECTID, INT_CONST, BOOL_CONST, TYPEID,
+            ELSE, IF, FI, THEN, NOT, IN, CASE, ESAC, CLASS,
+            INHERITS, ISVOID, LET, LOOP, NEW, OF,
+            POOL, THEN, WHILE, STR_CONST, LE, DARROW, ASSIGN}
+    
     # ignore = '\t '
     literals = {';',':','{','}','(',')','+','-','*','\\', '@', '~', '<','=','.',',','/'}
 
@@ -217,10 +221,6 @@ class CoolLexer(Lexer):
     def error(self, t):
         self.index += 1
 
-    tokens = {OBJECTID, INT_CONST, BOOL_CONST, TYPEID,
-            ELSE, IF, FI, THEN, NOT, IN, CASE, ESAC, CLASS,
-            INHERITS, ISVOID, LET, LOOP, NEW, OF,
-            POOL, THEN, WHILE, NUMBER, STR_CONST, LE, DARROW, ASSIGN}
     
     def salida(self, texto):
         lexer = CoolLexer()

@@ -1,1 +1,59 @@
-Compilation halted due to lex and parse errors
+_program
+  _class
+    A
+    Objeto(linea=0, nombre='_no_set')
+    "formallists.test"
+    (
+    _method
+      f
+      Int
+      _int
+        5
+      : _no_type
+    _method
+      g
+      _formal
+        x
+        Bool
+      IO
+      _object
+        self
+      : _no_type
+    _method
+      h
+      _formal
+        z
+        Int
+      _formal
+        y
+        SELF_TYPE
+      SELF_TYPE
+      _object
+        x
+      : _no_type
+    _method
+      f
+      _formal
+        b
+        Bool
+      _formal
+        c
+        Object
+      _formal
+        a
+        Int
+      Object
+      _plus
+        _object
+          a
+        : _no_type
+        _plus
+          _object
+            b
+          : _no_type
+          _object
+            c
+          : _no_type
+        : _no_type
+      : _no_type
+    )
