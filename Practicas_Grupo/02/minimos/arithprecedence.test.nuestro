@@ -1,1 +1,168 @@
-Compilation halted due to lex and parse errors
+_program
+  _class
+    A
+    Object
+    "arithprecedence.test"
+    (
+    _method
+      f
+      Int
+      _block
+        _plus
+          _object
+            a
+          : _no_type
+          _sub
+            _object
+              b
+            : _no_type
+            _object
+              c
+            : _no_type
+          : _no_type
+        : _no_type
+        _sub
+          _object
+            a
+          : _no_type
+          _plus
+            _object
+              b
+            : _no_type
+            _object
+              c
+            : _no_type
+          : _no_type
+        : _no_type
+        _plus
+          _object
+            a
+          : _no_type
+          _mul
+            _object
+              b
+            : _no_type
+            _object
+              c
+            : _no_type
+          : _no_type
+        : _no_type
+        _mul
+          _object
+            a
+          : _no_type
+          _plus
+            _object
+              b
+            : _no_type
+            _object
+              c
+            : _no_type
+          : _no_type
+        : _no_type
+        _plus
+          _object
+            a
+          : _no_type
+          _divide
+            _object
+              b
+            : _no_type
+            _object
+              c
+            : _no_type
+          : _no_type
+        : _no_type
+        _divide
+          _object
+            a
+          : _no_type
+          _plus
+            _object
+              b
+            : _no_type
+            _object
+              c
+            : _no_type
+          : _no_type
+        : _no_type
+        _sub
+          _object
+            a
+          : _no_type
+          _mul
+            _object
+              b
+            : _no_type
+            _object
+              c
+            : _no_type
+          : _no_type
+        : _no_type
+        _mul
+          _object
+            a
+          : _no_type
+          _sub
+            _object
+              b
+            : _no_type
+            _object
+              c
+            : _no_type
+          : _no_type
+        : _no_type
+        _sub
+          _object
+            a
+          : _no_type
+          _divide
+            _object
+              b
+            : _no_type
+            _object
+              c
+            : _no_type
+          : _no_type
+        : _no_type
+        _divide
+          _object
+            a
+          : _no_type
+          _sub
+            _object
+              b
+            : _no_type
+            _object
+              c
+            : _no_type
+          : _no_type
+        : _no_type
+        _mul
+          _object
+            a
+          : _no_type
+          _divide
+            _object
+              b
+            : _no_type
+            _object
+              c
+            : _no_type
+          : _no_type
+        : _no_type
+        _divide
+          _object
+            a
+          : _no_type
+          _mul
+            _object
+              b
+            : _no_type
+            _object
+              c
+            : _no_type
+          : _no_type
+        : _no_type
+      : _no_type
+    )

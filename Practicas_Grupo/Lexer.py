@@ -9,7 +9,8 @@ class CoolLexer(Lexer):
     tokens = {OBJECTID, INT_CONST, BOOL_CONST, TYPEID,
               ELSE, IF, FI, THEN, NOT, IN, CASE, ESAC, CLASS,
               INHERITS, ISVOID, LET, LOOP, NEW, OF,
-              POOL, THEN, WHILE, NUMBER, STR_CONST, LE, DARROW, ASSIGN}
+              POOL, THEN, WHILE, #NUMBER,
+                STR_CONST, LE, DARROW, ASSIGN}
     # ignore = '\t '
     literals = {"=","+","-","*","/","(",")","<",">",".",";",":","@",'"','{','}','~',','}
     # Ejemplo
@@ -204,6 +205,11 @@ class StringLexer(Lexer):
         self._acumulado += "\\\""
         pass
 
+    @_(r'\t')
+    def TABULADOR(self, t):
+        self._acumulado += "\\t"
+        pass
+
     #no se le quita la contrabarra a b t n r
     @_(r'\\[^btnr]')
     def ESCAPADO(self, t):
@@ -213,7 +219,6 @@ class StringLexer(Lexer):
     @_(r'\\[btnr]')
     def ESCAPADO(self, t):
         self._acumulado += t.value
-        #self._acumulado += t.value
         pass
 
     @_(r'\"')
