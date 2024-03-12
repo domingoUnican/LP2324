@@ -1,0 +1,3 @@
+"complex.test", line 1: syntax error at or near <-
+"complex.test", line 1: syntax error at or near y
+Compilation halted due to lex and parse errors

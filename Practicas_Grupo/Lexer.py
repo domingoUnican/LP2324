@@ -94,7 +94,7 @@ class CoolLexer(Lexer):
 
     @_(r"\s")
     def spaces(self, t):
-        pass
+        self.lineno += t.value.count('\n')
 
     @_(r'"')
     def STR_CONST(self, t):

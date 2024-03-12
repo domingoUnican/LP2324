@@ -1,0 +1,3 @@
+"badfeaturenames.test", line 1: syntax error at or near F
+"badfeaturenames.test", line 1: syntax error at or near Y
+Compilation halted due to lex and parse errors

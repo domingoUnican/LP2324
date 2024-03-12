@@ -20,10 +20,23 @@ class CoolParser(Parser):
         ('left', "*", "/"),
         ('left', "ISVOID"),
     )
-
-    @_("Clase")
+    
+    @_("Clase ';'")
     def Programa(self, p):
         return Programa(secuencia = [p.Clase])
+
+    @_("Programa error")
+    def Programa(self, p):
+        self.errores.append(f", line {p.error.lineno}: syntax error at or near {p.error.value}")
+        return Programa(secuencia = [p.Programa])
+
+    @_("CLASS TYPEID '{' '}'")
+    def Clase(self, p):
+        return Clase(nombre=p[0], padre="Object",nombre_fichero=self.nombre_fichero, caracteristicas=[])
+
+    @_("CLASS TYPEID '{' cuerpo_clase '}'")
+    def Clase(self, p):
+        return Clase(nombre=p[0], padre="Object",nombre_fichero=self.nombre_fichero, caracteristicas=[p.cuerpo_clase])
 
     @_("CLASS TYPEID INHERITS TYPEID '{' '}'")
     def Clase(self, p):
@@ -143,11 +156,11 @@ class CoolParser(Parser):
 
     @_("IF expr THEN expr ELSE expr FI")
     def expr(self, p):
-        return If(p.expr0, p.expr1, p.expr2)
+        return Condicional(condicion=p.expr0,verdadero=p.expr1, falso=p.expr2)
 
     @_("WHILE expr LOOP expr POOL")
     def expr(self, p):
-        return While(p.expr0, p.expr1)
+        return Bucle(condicion=p.expr0, cuerpo=p.expr1)
 
     @_("LET OBJECTID ':' TYPEID lista_inicia IN expr")
     def expr(self, p):
@@ -206,19 +219,34 @@ class CoolParser(Parser):
 
     @_("OBJECTID")
     def expr(self, p):
-        return p.OBJECTID
+        return Objeto(p.OBJECTID)
 
     @_("INT_CONST")
     def expr(self, p):
-        return p.INT_CONST
+        return Entero(p.INT_CONST)
 
     @_("STR_CONST")
     def expr(self, p):
-        return p.STR_CONST
+        return String(p.STR_CONST)
 
     @_("BOOL_CONST")
     def expr(self, p):
-        return p.BOOL_CONST
+        return Booleano(p.BOOL_CONST)
+    
+    @_("expr ';'")
+    def bloque(self,p):
+        return p.expr
+    
+    @_("bloque expr ';'")
+    def bloque(self, p):
+        return Bloque(expresiones=[p.bloque, p.expr])
+    
 
+    def error(self, p):
+        if p is None:
+            self.errores.append(f"EOF: syntax error")
+        else:
+            self.errores.append(f"\"{self.nombre_fichero}\", line {p.lineno}: syntax error at or near {p.value}")
+        
 
-
+    
