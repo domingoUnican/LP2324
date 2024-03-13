@@ -99,7 +99,15 @@ class CoolParser(Parser):
     tokens = CoolLexer.tokens
     debugfile = "salida.out"
     errores = []
-
+    precedence = (
+        ('nonassoc', 'LE', '<', '='), # Nonassociative operators
+        ('left', '+', '-'),
+        ('left', '*', '/'),
+        ('right', 'NOT', 'ISVOID', '~'),
+        ('left', '@'),
+        ('left', '.')
+    
+    )
     
 
     @_("Programa Clase")
@@ -194,7 +202,7 @@ class CoolParser(Parser):
 
     @_("Expresion '+' Expresion")
     def Expresion(self, p):
-        return Suma(izquierda=p[0], derecha=p[2])#asi ??
+        return Suma(izquierda=p[0], derecha=p[2])
         
     @_("Expresion '-' Expresion")
     def Expresion(self, p):
@@ -223,7 +231,7 @@ class CoolParser(Parser):
 
     @_("ISVOID Expresion")
     def Expresion(self, p):
-        return EsNulo(str=p[1])
+        return EsNulo(expr=p[1])
 
     @_("'~' Expresion")
     def Expresion(self, p):
@@ -231,11 +239,11 @@ class CoolParser(Parser):
 
     @_("Expresion '@' TYPEID '.' OBJECTID '(' ')'")
     def Expresion(self, p):
-        return LlamadaMetodoEstatico(objeto=p[0], tipo=p[2], nombre=p[4], argumentos=[])
+        return LlamadaMetodoEstatico(cuerpo=p[0], clase=p[2], nombre_metodo=p[4], argumentos=[])
 
     @_("Expresion '@' TYPEID '.' OBJECTID '(' listaExpresiones ')'")
     def Expresion(self, p):
-        return LlamadaMetodoEstatico(objeto=p[0], tipo=p[2], nombre=p[4], argumentos=p[6])
+        return LlamadaMetodoEstatico(cuerpo=p[0], clase=p[2], nombre_metodo=[4], argumentos=p[6])
 
     @_("Expresion")
     def listaExpresiones(self, p):
@@ -273,7 +281,16 @@ class CoolParser(Parser):
 
     @_("LET OBJECTID ':' TYPEID optArrow starFormal IN Expresion")
     def Expresion(self, p):
-        pass
+        #return Let(nombre=p[1], tipo=p[3], inicializacion=p[4], cuerpo=p[7])
+
+        listaFormales = [[p[1], p[3], p[4]]] + p[5]
+        body = p[7]
+
+        while listaFormales:
+            valores = listaFormales.pop()
+            body = Let(nombre=valores[0], tipo=valores[1], inicializacion=valores[2], cuerpo=body)
+
+        return body
 
     @_("")
     def optArrow(self, p):
@@ -281,16 +298,18 @@ class CoolParser(Parser):
     
     @_("ASSIGN Expresion")
     def optArrow(self, p):
-        return Asignacion(nombre=None, cuerpo=p[2])
+        # return Asignacion(nombre=None, cuerpo=p[2])
+        # return Expresion(p[1])
+        return p[1]
 
     @_("")
     def starFormal(self, p):
-        return NoExpr()
+        return []
     
     @_("',' OBJECTID ':' TYPEID optArrow starFormal")
     def starFormal(self, p):
         # return Formal(nombre=p[1], tipo=p[3], inicializacion=p[4]) + p[5]
-        pass
+        return [[p[1], p[3], p[4]]] + p[5]
 
     ################################################### FIN LET
 
@@ -317,6 +336,17 @@ class CoolParser(Parser):
     @_("Expresion ';'")
     def bloque(self, p):
         return [p[0]]
+
+    def error(self, p):
+        self.errores.append(p)
+
+    @_("error ';' Expresion ';'")
+    def bloque(self, p):
+        return [p[2]]
+
+    @_("error ';'")
+    def bloque(self, p):
+        pass
 
     @_("Expresion ';' bloque")
     def bloque(self, p):
