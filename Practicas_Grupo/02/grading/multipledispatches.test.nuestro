@@ -1,2 +1,4 @@
-"multipledispatches.test", line 1: syntax error at or near ;
+"multipledispatches.test", line 5: syntax error at or near ,
+"multipledispatches.test", line 6: syntax error at or near ,
+"multipledispatches.test", line 7: syntax error at or near ,
 Compilation halted due to lex and parse errors

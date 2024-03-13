@@ -1,2 +1,16 @@
-"classmethodonearg.test", line 1: syntax error at or near }
-Compilation halted due to lex and parse errors
+_program
+  _class
+    class
+    Object
+    "classmethodonearg.test"
+    (
+    _method
+      cow
+      _formal
+        a
+        Int
+      SELF_TYPE
+      _object
+        self
+      : _no_type
+    )

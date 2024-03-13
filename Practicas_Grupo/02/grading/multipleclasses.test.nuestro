@@ -1,3 +1,5 @@
-"multipleclasses.test", line 1: syntax error at or near bar
-"multipleclasses.test", line 1: syntax error at or near bar
+"multipleclasses.test", line 6: syntax error at or near extends
+, line 6: syntax error at or near extends
+"multipleclasses.test", line 15: syntax error at or near implements
+, line 15: syntax error at or near implements
 Compilation halted due to lex and parse errors

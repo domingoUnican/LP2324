@@ -1,2 +1,3 @@
-"classonefield.test", line 1: syntax error at or near }
+"classonefield.test", line 5: syntax error at or near If
+, line 5: syntax error at or near If
 Compilation halted due to lex and parse errors

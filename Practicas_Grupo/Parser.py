@@ -36,19 +36,19 @@ class CoolParser(Parser):
 
     @_("CLASS TYPEID '{' '}'")
     def Clase(self, p):
-        return Clase(nombre=p[0], padre="Object",nombre_fichero=self.nombre_fichero, caracteristicas=[])
+        return Clase(nombre=p[1], padre="Object",nombre_fichero=self.nombre_fichero, caracteristicas=[])
 
     @_("CLASS TYPEID '{' cuerpo_clase '}'")
     def Clase(self, p):
-        return Clase(nombre=p[0], padre="Object",nombre_fichero=self.nombre_fichero, caracteristicas=p.cuerpo_clase)
+        return Clase(nombre=p[1], padre="Object",nombre_fichero=self.nombre_fichero, caracteristicas=p.cuerpo_clase)
 
     @_("CLASS TYPEID INHERITS TYPEID '{' '}'")
     def Clase(self, p):
-        return Clase(nombre=p[0], padre=p[2],nombre_fichero=self.nombre_fichero, caracteristicas=[])
+        return Clase(nombre=p[1], padre=p[3],nombre_fichero=self.nombre_fichero, caracteristicas=[])
 
     @_("CLASS TYPEID INHERITS TYPEID '{' cuerpo_clase '}'")
     def Clase(self, p):
-        return Clase(nombre=p[0], padre=p[2],nombre_fichero=self.nombre_fichero, caracteristicas=p.cuerpo_clase)
+        return Clase(nombre=p[1], padre=p[3],nombre_fichero=self.nombre_fichero, caracteristicas=p.cuerpo_clase)
 
     @_("")
     def cuerpo_clase(self, p):
@@ -82,17 +82,21 @@ class CoolParser(Parser):
     def Metodo(self, p):
         return Metodo(formales=[],nombre=p.OBJECTID, tipo=p.TYPEID, cuerpo=p.expr)
 
-    @_("OBJECTID '(' formal ')' ':' TYPEID '{' expr '}'")
+    @_("OBJECTID '(' formales ')' ':' TYPEID '{' expr '}'")
     def Metodo(self, p):
-        return Metodo(nombre=p.OBJECTID, tipo=p.TYPEID, formales=p.formal, cuerpo=p.expr)
+        return Metodo(nombre=p.OBJECTID, tipo=p.TYPEID, formales=p.formales, cuerpo=p.expr)
 
-    @_("")
-    def formal(self, p):
-        return []
+    @_("formal")
+    def formales(self, p):
+        return [p.formal]
+    
+    @_("formal ',' formales")
+    def formales(self, p):
+        return [p.formal] + p.formales
 
     @_("OBJECTID ':' TYPEID")
     def formal(self, p):
-        return [Formal(nombre_variable=p.OBJECTID,tipo= p.TYPEID)]
+        return Formal(nombre_variable=p.OBJECTID,tipo= p.TYPEID)
 
     @_("OBJECTID ASSIGN expr")
     def expr(self, p):
@@ -128,15 +132,15 @@ class CoolParser(Parser):
 
     @_("NOT expr")
     def expr(self, p):
-        return Not(p.expr)
+        return Not(expr=p.expr)
 
     @_("ISVOID expr")
     def expr(self, p):
-        return EsNulo(p.expr)
+        return EsNulo(expr=p.expr)
 
     @_("'~' expr")
     def expr(self, p):
-        return Neg(p.expr)
+        return Neg(expr=p.expr)
 
     @_("'(' expr ')'")
     def expr(self, p):
@@ -152,11 +156,27 @@ class CoolParser(Parser):
 
     @_("OBJECTID '(' expr ')'")
     def expr(self, p):
-        return LlamadaMetodoEstatico(nombre_metodo=p.OBJECTID, argumentos=p.expr)
+        return LlamadaMetodoEstatico(cuerpo=Objeto(nombre="self"),nombre_metodo=p.OBJECTID, argumentos=p.expr)
 
     @_("OBJECTID '(' ')'")
     def expr(self, p):
-        return LlamadaMetodoEstatico(nombre_metodo=p.OBJECTID, argumentos=[])
+        return LlamadaMetodoEstatico(cuerpo=Objeto(nombre="self"),nombre_metodo=p.OBJECTID, argumentos=[])
+    
+    @_("expr '.' OBJECTID '(' ')'")
+    def expr(self, p):
+        return LlamadaMetodo(cuerpo=p.expr,nombre_metodo=p.OBJECTID, argumentos=[])
+    
+    @_("expr '.' OBJECTID '(' lista_argumentos ')'")
+    def expr(self, p):
+        return LlamadaMetodo(cuerpo=p.expr,nombre_metodo=p.OBJECTID, argumentos=p.lista_argumentos)
+    
+    @_("expr")
+    def lista_argumentos(self, p):
+        return [p.expr]
+
+    @_("expr ',' lista_argumentos")
+    def lista_argumentos(self, p):
+        return [p.expr] + p.lista_argumentos
 
     @_("IF expr THEN expr ELSE expr FI")
     def expr(self, p):
@@ -183,18 +203,6 @@ class CoolParser(Parser):
     @_("OBJECTID ':' TYPEID")
     def lista_inicia(self, p):
         return [p.lista_inicia] + [p.asignacion]
-
-    # @_("LET declaraciones IN expr")
-    # def expr(self, p):
-    #     return Let(p.declaraciones, p.expr)
-
-    # @_("OBJECTID ':' TYPEID asignacion")
-    # def declaraciones(self, p):
-    #     return [(p.OBJECTID, p.TYPEID, p.asignacion)]
-
-    # @_("OBJECTID ':' TYPEID")
-    # def declaraciones(self, p):
-    #     return [(p.OBJECTID, p.TYPEID, None)]
 
 
     @_("CASE expr OF '{' '}' ESAC")
@@ -239,7 +247,7 @@ class CoolParser(Parser):
     
     @_("'{' bloque '}'")
     def expr(self, p):
-        print(p.bloque)
+        #print(p.bloque)
         return Bloque(expresiones=p.bloque)
     
     @_("expr ';'")

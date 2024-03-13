@@ -1,2 +1,2 @@
-"associativity-times.test", line 1: syntax error at or near moo2
+"associativity-times.test", line 4: syntax error at or near ,
 Compilation halted due to lex and parse errors
