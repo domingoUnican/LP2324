@@ -31,26 +31,26 @@ Rule 27    Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr Expresion )
 Rule 28    Expresion -> Expresion @ TYPEID . OBJECTID ( )
 Rule 29    Expresion -> ~ Expresion
 Rule 30    Expresion -> ISVOID Expresion  [precedence=left, level=5]
-Rule 31    Expresion -> NOT Expresion
+Rule 31    Expresion -> NOT Expresion  [precedence=nonassoc, level=2]
 Rule 32    Expresion -> ( Expresion )
 Rule 33    Expresion -> Expresion = Expresion
-Rule 34    Expresion -> Expresion DARROW Expresion  [precedence=left, level=2]
-Rule 35    Expresion -> Expresion LE Expresion
+Rule 34    Expresion -> Expresion DARROW Expresion  [precedence=nonassoc, level=2]
+Rule 35    Expresion -> Expresion LE Expresion  [precedence=nonassoc, level=2]
 Rule 36    Expresion -> Expresion / Expresion  [precedence=left, level=4]
 Rule 37    Expresion -> Expresion * Expresion  [precedence=left, level=4]
 Rule 38    Expresion -> Expresion - Expresion  [precedence=left, level=3]
 Rule 39    Expresion -> NUMBER
 Rule 40    Expresion -> Expresion + Expresion  [precedence=left, level=3]
 Rule 41    Expresion -> IGNORE
-Rule 42    Expresion -> OBJECTID ASSIGN Expresion  [precedence=left, level=1]
+Rule 42    Expresion -> OBJECTID ASSIGN Expresion  [precedence=right, level=1]
 Rule 43    lstExpr -> Expresion
 Rule 44    lstExpr -> Expresion , lstExpr
 Rule 45    lstArrow -> <empty>
 Rule 46    lstArrow -> , OBJECTID : TYPEID exprOpcional lstArrow
 Rule 47    exprOpcional -> Expresion .  [precedence=left, level=7]
 Rule 48    exprOpcional -> <empty>
-Rule 49    exprOpcional -> ASSIGN Expresion  [precedence=left, level=1]
-Rule 50    Case -> OBJECTID : TYPEID DARROW Expresion  [precedence=left, level=2]
+Rule 49    exprOpcional -> ASSIGN Expresion  [precedence=right, level=1]
+Rule 50    Case -> OBJECTID : TYPEID DARROW Expresion  [precedence=nonassoc, level=2]
 Rule 51    CaseList -> Case
 Rule 52    CaseList -> Case CaseList
 Rule 53    listNueva -> Expresion ;
@@ -2030,15 +2030,9 @@ state 74
     (38) Expresion -> Expresion . - Expresion
     (40) Expresion -> Expresion . + Expresion
     (47) exprOpcional -> Expresion . .
-  ! shift/reduce conflict for @ resolved as shift
-  ! shift/reduce conflict for = resolved as shift
-  ! shift/reduce conflict for DARROW resolved as shift
-  ! shift/reduce conflict for LE resolved as shift
-  ! shift/reduce conflict for / resolved as shift
-  ! shift/reduce conflict for * resolved as shift
-  ! shift/reduce conflict for - resolved as shift
-  ! shift/reduce conflict for + resolved as shift
-  ! shift/reduce conflict for . resolved as shift
+    =               reduce using rule 31 (Expresion -> NOT Expresion .)
+    DARROW          reduce using rule 31 (Expresion -> NOT Expresion .)
+    LE              reduce using rule 31 (Expresion -> NOT Expresion .)
     ;               reduce using rule 31 (Expresion -> NOT Expresion .)
     OF              reduce using rule 31 (Expresion -> NOT Expresion .)
     LOOP            reduce using rule 31 (Expresion -> NOT Expresion .)
@@ -2067,9 +2061,6 @@ state 74
     ELSE            reduce using rule 31 (Expresion -> NOT Expresion .)
     FI              reduce using rule 31 (Expresion -> NOT Expresion .)
     @               shift and go to state 54
-    =               shift and go to state 56
-    DARROW          shift and go to state 57
-    LE              shift and go to state 58
     /               shift and go to state 59
     *               shift and go to state 60
     -               shift and go to state 61
@@ -2181,7 +2172,6 @@ state 78
     (40) Expresion -> Expresion . + Expresion
     (47) exprOpcional -> Expresion . .
     =               reduce using rule 42 (Expresion -> OBJECTID ASSIGN Expresion .)
-    LE              reduce using rule 42 (Expresion -> OBJECTID ASSIGN Expresion .)
     ;               reduce using rule 42 (Expresion -> OBJECTID ASSIGN Expresion .)
     OF              reduce using rule 42 (Expresion -> OBJECTID ASSIGN Expresion .)
     LOOP            reduce using rule 42 (Expresion -> OBJECTID ASSIGN Expresion .)
@@ -2211,6 +2201,7 @@ state 78
     FI              reduce using rule 42 (Expresion -> OBJECTID ASSIGN Expresion .)
     @               shift and go to state 54
     DARROW          shift and go to state 57
+    LE              shift and go to state 58
     /               shift and go to state 59
     *               shift and go to state 60
     -               shift and go to state 61
@@ -2355,15 +2346,9 @@ state 83
     (38) Expresion -> Expresion . - Expresion
     (40) Expresion -> Expresion . + Expresion
     (47) exprOpcional -> Expresion . .
-  ! shift/reduce conflict for @ resolved as shift
-  ! shift/reduce conflict for = resolved as shift
-  ! shift/reduce conflict for DARROW resolved as shift
-  ! shift/reduce conflict for LE resolved as shift
-  ! shift/reduce conflict for / resolved as shift
-  ! shift/reduce conflict for * resolved as shift
-  ! shift/reduce conflict for - resolved as shift
-  ! shift/reduce conflict for + resolved as shift
-  ! shift/reduce conflict for . resolved as shift
+    =               reduce using rule 35 (Expresion -> Expresion LE Expresion .)
+    DARROW          reduce using rule 35 (Expresion -> Expresion LE Expresion .)
+    LE              reduce using rule 35 (Expresion -> Expresion LE Expresion .)
     ;               reduce using rule 35 (Expresion -> Expresion LE Expresion .)
     OF              reduce using rule 35 (Expresion -> Expresion LE Expresion .)
     LOOP            reduce using rule 35 (Expresion -> Expresion LE Expresion .)
@@ -2392,9 +2377,6 @@ state 83
     ELSE            reduce using rule 35 (Expresion -> Expresion LE Expresion .)
     FI              reduce using rule 35 (Expresion -> Expresion LE Expresion .)
     @               shift and go to state 54
-    =               shift and go to state 56
-    DARROW          shift and go to state 57
-    LE              shift and go to state 58
     /               shift and go to state 59
     *               shift and go to state 60
     -               shift and go to state 61
@@ -4347,15 +4329,6 @@ shift/reduce conflict for * in state 72 resolved as shift
 shift/reduce conflict for - in state 72 resolved as shift
 shift/reduce conflict for + in state 72 resolved as shift
 shift/reduce conflict for . in state 72 resolved as shift
-shift/reduce conflict for @ in state 74 resolved as shift
-shift/reduce conflict for = in state 74 resolved as shift
-shift/reduce conflict for DARROW in state 74 resolved as shift
-shift/reduce conflict for LE in state 74 resolved as shift
-shift/reduce conflict for / in state 74 resolved as shift
-shift/reduce conflict for * in state 74 resolved as shift
-shift/reduce conflict for - in state 74 resolved as shift
-shift/reduce conflict for + in state 74 resolved as shift
-shift/reduce conflict for . in state 74 resolved as shift
 shift/reduce conflict for OBJECTID in state 77 resolved as shift
 shift/reduce conflict for @ in state 81 resolved as shift
 shift/reduce conflict for = in state 81 resolved as shift
@@ -4366,15 +4339,6 @@ shift/reduce conflict for * in state 81 resolved as shift
 shift/reduce conflict for - in state 81 resolved as shift
 shift/reduce conflict for + in state 81 resolved as shift
 shift/reduce conflict for . in state 81 resolved as shift
-shift/reduce conflict for @ in state 83 resolved as shift
-shift/reduce conflict for = in state 83 resolved as shift
-shift/reduce conflict for DARROW in state 83 resolved as shift
-shift/reduce conflict for LE in state 83 resolved as shift
-shift/reduce conflict for / in state 83 resolved as shift
-shift/reduce conflict for * in state 83 resolved as shift
-shift/reduce conflict for - in state 83 resolved as shift
-shift/reduce conflict for + in state 83 resolved as shift
-shift/reduce conflict for . in state 83 resolved as shift
 shift/reduce conflict for OBJECTID in state 89 resolved as shift
 shift/reduce conflict for OBJECTID in state 92 resolved as shift
 shift/reduce conflict for OBJECTID in state 93 resolved as shift

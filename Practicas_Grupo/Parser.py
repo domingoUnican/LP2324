@@ -54,8 +54,8 @@ class CoolParser(Parser):
     errores = []
 
     precedence = (
-        ('left', ASSIGN),
-        ('left', DARROW),
+        ('right', ASSIGN),
+        ('nonassoc', LE, DARROW, NOT),
        ('left', '+', '-'),
        ('left', '*', '/'),
        ('left', ISVOID),
@@ -234,24 +234,24 @@ class CoolParser(Parser):
     #LET OBJECTID : TYPEID [<- ⟨Expresion⟩] (, OBJECTID : TYPEID [<- ⟨Expresion⟩])* IN ⟨Expresion⟩
     @_("LET OBJECTID ':' TYPEID exprOpcional lstArrow IN Expresion")
     def Expresion(self, p):
-        return Let(nombre=p.OBJECTID, tipo=p.TYPEID, inicializacion=p.lstArrow, cuerpo=p.Expresion)
-        """if p.lstArrow == []:
+        lista = [p.exprOpcional] + p.lstArrow
+        if lista == []:
             return p.Expresion
         else:
-            ultima_inicia = p.lstArrow[-1] #-1
+            ultima_inicia = lista[-1] #-1
             temp  = Let(nombre = ultima_inicia[0],
                     tipo=ultima_inicia[1],
                     inicializacion=ultima_inicia[2],
                     cuerpo = p.Expresion
                     )
-            for i in range(len(p.lista_inicia, 0, -1)):
-                ultima_inicia = p.lista_inicia[i]
+            for i in range(len(lista, 0, -1)):
+                ultima_inicia = lista[i]
                 temp  = Let(nombre = ultima_inicia[0],
                     tipo=ultima_inicia[1],
                     inicializacion=ultima_inicia[2],
                     cuerpo = p.Expresion
                     )
-            return temp"""
+            return temp
             
 
     @_("',' OBJECTID ':' TYPEID exprOpcional lstArrow")
