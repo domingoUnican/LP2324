@@ -27,7 +27,7 @@ class CoolParser(Parser):
     
     @_("")
     def opcionalPadre(self, p):
-        return Objeto()
+        return "Object"
     
     @_("INHERITS TYPEID")
     def opcionalPadre(self, p):
@@ -63,7 +63,7 @@ class CoolParser(Parser):
 
     @_("OBJECTID '(' Formal lista_formal ')' ':' TYPEID '{' Expresion '}'")
     def Metodo(self, p):
-        return Metodo(nombre=p.OBJECTID,tipo=p.TYPEID,cuerpo=p.Expresion,formales=p.lista_formal + [p.Formal])
+        return Metodo(nombre=p.OBJECTID,tipo=p.TYPEID,cuerpo=p.Expresion,formales=[p.Formal] + p.lista_formal)
 
     @_("")
     def lista_formal(self, p):
@@ -80,15 +80,7 @@ class CoolParser(Parser):
     @_("OBJECTID ASSIGN Expresion")
     def Expresion(self, p):
         return Asignacion(nombre=p.OBJECTID, cuerpo=p.Expresion)
-
-    @_("Expresion '+' Expresion")
-    def Expresion(self, p):
-        return Suma(izquierda=p[0], derecha=p[2])
-
-    @_("Expresion '-' Expresion")
-    def Expresion(self, p):
-        return Resta(izquierda=p[0], derecha=p[2])
-
+    
     @_("Expresion '*' Expresion")
     def Expresion(self, p):
         return Multiplicacion(izquierda=p[0], derecha=p[2])
@@ -96,6 +88,15 @@ class CoolParser(Parser):
     @_("Expresion '/' Expresion")
     def Expresion(self, p):
         return Division(izquierda=p[0], derecha=p[2])
+    
+    @_("Expresion '+' Expresion")
+    def Expresion(self, p):
+        return Suma(izquierda=p[0], derecha=p[2])
+
+    @_("Expresion '-' Expresion")
+    def Expresion(self, p):
+        return Resta(izquierda=p[0], derecha=p[2])
+    
 
     @_("Expresion '<' Expresion")
     def Expresion(self, p):
@@ -131,7 +132,7 @@ class CoolParser(Parser):
 
     @_("Expresion '@' TYPEID '.' OBJECTID '(' Expresion lista_expr ')'")
     def Expresion(self, p):
-        return LlamadaMetodoEstatico(cuerpo=p[0],clase=p.TYPEID,nombre_metodo=p.OBJECTID,argumentos=p.lista_expr + [p[7]])
+        return LlamadaMetodoEstatico(cuerpo=p[0],clase=p.TYPEID,nombre_metodo=p.OBJECTID,argumentos=[p[6]] + p.lista_expr)
 
     @_("")
     def lista_expr(self, p):
@@ -143,7 +144,7 @@ class CoolParser(Parser):
 
     @_("Expresion '.' OBJECTID '(' Expresion lista_expr ')'")
     def Expresion(self, p):
-        return LlamadaMetodo(cuerpo=p[0],nombre_metodo=p.OBJECTID,argumentos=[p[5]] + p.lista_expr)
+        return LlamadaMetodo(cuerpo=p[0],nombre_metodo=p.OBJECTID,argumentos=[p[4]] + p.lista_expr)
 
     @_("Expresion '.' OBJECTID '(' ')'")
     def Expresion(self, p):
@@ -151,11 +152,11 @@ class CoolParser(Parser):
     
     @_("OBJECTID '(' Expresion lista_expr ')'")
     def Expresion(self, p):
-        return LlamadaMetodo(nombre_metodo=p.OBJECTID,argumentos=[p[3]] + p.lista_expr)
+        return LlamadaMetodo(cuerpo=Objeto(nombre="self"),nombre_metodo=p.OBJECTID,argumentos=[p[2]] + p.lista_expr)
 
     @_("OBJECTID '(' ')'")
     def Expresion(self, p):
-        return LlamadaMetodo(nombre_metodo=p.OBJECTID,argumentos=[])
+        return LlamadaMetodo(cuerpo=Objeto(nombre="self"),nombre_metodo=p.OBJECTID,argumentos=[])
 
     @_("IF Expresion THEN Expresion ELSE Expresion FI")
     def Expresion(self, p):
@@ -165,7 +166,7 @@ class CoolParser(Parser):
     def Expresion(self, p):
         return Bucle(condicion=p[1],cuerpo=p[3])
 
-    
+    '''
     @_("LET OBJECTID ':' TYPEID lista_expr_let IN Expresion")
     def Expresion(self, p):
         ultima_inicializacion = p.lista_expr_let[-1]
@@ -183,7 +184,8 @@ class CoolParser(Parser):
         return Let(nombre=p.OBJECTID,
                    tipo=p.TYPEID,
                    inicializacion=NoExpr(),
-                   cuerpo=temp)
+                   cuerpo=temp)'''
+        
 
     @_("")
     def lista_expr_let(self, p):

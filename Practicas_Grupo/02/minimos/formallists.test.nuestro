@@ -1,7 +1,7 @@
 _program
   _class
     A
-    Objeto(linea=0, nombre='_no_set')
+    Object
     "formallists.test"
     (
     _method
@@ -22,11 +22,11 @@ _program
     _method
       h
       _formal
-        z
-        Int
-      _formal
         y
         SELF_TYPE
+      _formal
+        z
+        Int
       SELF_TYPE
       _object
         x
@@ -34,14 +34,14 @@ _program
     _method
       f
       _formal
+        a
+        Int
+      _formal
         b
         Bool
       _formal
         c
         Object
-      _formal
-        a
-        Int
       Object
       _plus
         _object

@@ -1,7 +1,7 @@
 import os
 import re
 import sys
-
+import traceback
 
 DIRECTORIO = os.path.expanduser("./")
 sys.path.append(DIRECTORIO)

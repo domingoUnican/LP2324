@@ -1,7 +1,7 @@
 _program
   _class
     Test
-    Objeto(linea=0, nombre='_no_set')
+    Object
     "casemultiplebranch.test"
     (
     _attr

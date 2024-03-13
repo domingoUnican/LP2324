@@ -1,7 +1,7 @@
 _program
   _class
     Hello
-    Objeto(linea=0, nombre='_no_set')
+    Object
     "associativitydiv.test"
     (
     _attr
@@ -12,6 +12,9 @@ _program
     _method
       moo2
       _formal
+        a
+        String
+      _formal
         b
         Int
       _formal
@@ -20,9 +23,6 @@ _program
       _formal
         d
         Int
-      _formal
-        a
-        String
       Hello
       _divide
         _object
