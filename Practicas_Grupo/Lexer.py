@@ -157,6 +157,7 @@ class StringLexer(Lexer):
         else:
             t.value = self._acumulado
             self._acumulado = ""
+            t.value = t.value.replace('\r', '\\015')
             t.value = '"' + t.value + '"'
         self.num_caracteres = 0
         self.begin(CoolLexer)
@@ -288,9 +289,11 @@ class StringLexer(Lexer):
             t.value = '"' + "String contains null character." + '"'
             t.type = 'ERROR'
             self.error_nullchar = False
+            self.begin(CoolLexer)
             return t
         t.value = '"' + "EOF in string constant" + '"'
         t.type = 'ERROR'
+        self.begin(CoolLexer)
         return t
 
     @_(r'.')
@@ -304,6 +307,16 @@ class StringLexer(Lexer):
 class Comment(Lexer):
     tokens = {CMT_CONST}
     comments_inside = 0
+
+    @_(r'\*\)\Z')
+    def CMT_CONST2(self, t):
+        if self.comments_inside == 0:
+            self.begin(CoolLexer)
+        else:
+            t.value = '"EOF in comment"' 
+            t.type = 'ERROR'
+            self.begin(CoolLexer)
+            return t
 
     @_(r'\*\)')
     def CMT_CONST(self, t):

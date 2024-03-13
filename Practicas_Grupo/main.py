@@ -1,6 +1,7 @@
 import os
 import re
 import sys
+import traceback
 
 
 DIRECTORIO = os.path.expanduser("./")
@@ -8,7 +9,7 @@ sys.path.append(DIRECTORIO)
 
 from Lexer import CoolLexer
 
-PRACTICA = "02"  # Practica que hay que evaluar
+PRACTICA = "01"  # Practica que hay que evaluar
 DEBUG = True   # Decir si se lanzan mensajes de debug
 NUMLINEAS = 3   # Numero de lineas que se muestran antes y después de la no coincidencia
 sys.path.append(DIRECTORIO)
@@ -19,7 +20,7 @@ TESTS = [fich for fich in FICHEROS
          if os.path.isfile(os.path.join(DIR, fich)) and
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$", fich)]
 TESTS.sort()
-TESTS = ["while.test"]
+#TESTS = ["while.test"]
 
 if True:
     contador = len(TESTS)
@@ -83,5 +84,6 @@ if True:
                         contador -= 1
             except Exception as e:
                 print(f"Lanza excepción en {fich} con el texto {e}")
+                #traceback.print_exc(e)
                 contador -= 1
     print(f'Ficheros correctos: {contador}/{len(TESTS)}')
