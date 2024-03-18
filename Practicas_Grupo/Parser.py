@@ -148,15 +148,23 @@ class CoolParser(Parser):
 
     @_("expr '@' TYPEID '.' OBJECTID '(' ')'")
     def expr(self, p):
-        return LlamadaMetodo(cuerpo=p.expr,nombre_metodo=p.OBJECTID,argumentos=[])
+        return LlamadaMetodoEstatico(cuerpo=p.expr,clase=p.TYPEID,nombre_metodo=p.OBJECTID,argumentos=[])
 
-    @_(" expr '@' TYPEID '.' OBJECTID '(' expr ')'")
+    @_("expr '@' TYPEID '.' OBJECTID '(' argumentos ')'")
     def expr(self, p):
-        return LlamadaMetodo(cuerpo=p.expr0, nombre_metodo=p.OBJECTID, argumentos=[p.expr1])
+        return LlamadaMetodoEstatico(cuerpo=p.expr,clase=p.TYPEID, nombre_metodo=p.OBJECTID, argumentos=p.argumentos)
+    
+    @_("expr")
+    def argumentos(self, p):
+        return [p.expr]
 
-    @_("OBJECTID '(' expr ')'")
+    @_("expr ',' argumentos")
+    def argumentos(self, p):
+        return [p.expr] + p.argumentos
+
+    @_("OBJECTID '(' lista_argumentos ')'")
     def expr(self, p):
-        return LlamadaMetodoEstatico(cuerpo=Objeto(nombre="self"),nombre_metodo=p.OBJECTID, argumentos=p.expr)
+        return LlamadaMetodoEstatico(cuerpo=Objeto(nombre="self"),nombre_metodo=p.OBJECTID, argumentos=p.lista_argumentos)
 
     @_("OBJECTID '(' ')'")
     def expr(self, p):
@@ -202,28 +210,52 @@ class CoolParser(Parser):
     
     @_("OBJECTID ':' TYPEID")
     def lista_inicia(self, p):
-        return [p.lista_inicia] + [p.asignacion]
+        return [p.lista_inicia] + [p.OBJECTID, p.TYPEID]
+    
+    @_("opcionales ',' OBJECTID ':' TYPEID asignacion")
+    def lista_inicia(self, p):
+        return p.opcionales + [p.OBJECTID, p.TYPEID] + p.asignacion
+    
+    @_("ASSIGN expr")
+    def opcionales(self, p):
+        return [p.expr]
+    
+    @_("")
+    def opcionales(self, p):
+        return []
+    
+    @_("")
+    def asignacion(self, p):
+        return []
+
+    @_("ASSIGN expr")
+    def asignacion(self, p):
+        return [p.expr]
 
 
-    @_("CASE expr OF '{' '}' ESAC")
+    @_("CASE expr OF ESAC")
     def expr(self, p):
         return Swicht(expr=p.expr, casos=[])
 
-    @_("CASE expr OF '{' cuerpo_case '}' ESAC")
+    @_("CASE expr OF cuerpo_case ESAC")
     def expr(self, p):
-        return Swicht(expr=p.expr, casos=[p.cuerpo_case])
+        return Swicht(expr=p.expr, casos=p.cuerpo_case)
 
-    @_("")
+    @_("OBJECTID ':' TYPEID DARROW expr ';'")
     def cuerpo_case(self, p):
-        return []
-
-    @_("cuerpo_case OBJECTID ':' TYPEID DARROW expr ';' ")
+        return RamaCase(nombre_variable=p.OBJECTID, tipo=p.TYPEID, cuerpo=p.expr)
+    
+    @_("cuerpo_case cuerpo_case ';'")
     def cuerpo_case(self, p):
-        return RamaCase(nombre_variable=p.OBJECTID,tipo=p.TYPEID,cuerpo=p.expr)
+        return p.cuerpo_case + [p.cuerpo_case]
+    
+    @_("cuerpo_case ';'")
+    def cuerpo_case(self, p):
+        return [p.cuerpo_case]
 
     @_("NEW TYPEID")
     def expr(self, p):
-        return Nueva(p.TYPEID)
+        return Nueva(tipo=p.TYPEID)
 
     @_("'{' expr '}'")
     def expr(self, p):
