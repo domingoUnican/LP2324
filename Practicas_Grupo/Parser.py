@@ -8,7 +8,8 @@ from Clases import *
 
 #################################################################
 ###CLASES###
-"""Nodo
+"""
+Nodo
 Formal
 Expresion
 Asignacion
@@ -116,10 +117,18 @@ class CoolParser(Parser):
     def Formal(self, p):
         return Formal(nombre_variable= p.OBJECTID, tipo=p.TYPEID)
 
-    @_("OBJECTID '(' Formal ',' Formal ')' ':' TYPEID '{' Expresion  '}' ';'")
+    @_("OBJECTID '(' Formal ',' ListFormal ')' ':' TYPEID '{' Expresion '}'")
     def Metodo(self, p):
-        formales = [p.Formal0, p.Formal1]
+        formales = [p.Formal] + p.ListFormal
         return Metodo(nombre=p.OBJECTID, formales = formales, tipo = p.TYPEID, cuerpo=p.Expresion)
+    
+    @_("Formal ',' ListFormal")
+    def ListFormal(self, p):
+        return [p.Formal] + p.ListFormal
+
+    @_("Formal")
+    def ListFormal(self, p):
+        return [p.Formal]
     
     #OBJECTID ASSIGN ⟨Expresion⟩
     @_("OBJECTID ASSIGN Expresion")
@@ -130,7 +139,6 @@ class CoolParser(Parser):
     @_("IGNORE")
     def Expresion(self, p):
         pass
-
 
     # ⟨Expresion⟩ + ⟨Expresion⟩
     @_("Expresion '+' Expresion")
@@ -195,31 +203,31 @@ class CoolParser(Parser):
     #⟨Expresion⟩ @ TYPEID . OBJECTID ( )
     @_("Expresion '@' TYPEID '.' OBJECTID '(' ')'")
     def Expresion(self, p):
-        return p[4]
+        return LlamadaMetodoEstatico(clase=p.TYPEID, cuerpo= p.Expresion, nombre_metodo=p.OBJECTID,argumentos=[])
     
     #⟨Expresion⟩ @ TYPEID . OBJECTID ( (⟨Expresion⟩ ,)* ⟨Expresion⟩ )
-    @_("Expresion '@' TYPEID '.' OBJECTID '(' lstExpr Expresion ')'")
+    @_("Expresion '@' TYPEID '.' OBJECTID '(' lstExpr ')'")
     def Expresion(self, p):
-        return p[4]
+        return LlamadaMetodoEstatico(clase=p.TYPEID, cuerpo= p.Expresion, nombre_metodo=p.OBJECTID,argumentos=p.lstExpr)
     
+    #⟨Expresion⟩ @ TYPEID . OBJECTID ( )
+    @_("Expresion '.' OBJECTID '(' ')'")
+    def Expresion(self, p):
+        return LlamadaMetodo(cuerpo= p.Expresion, nombre_metodo=p.OBJECTID,argumentos=[])
+    
+    #⟨Expresion⟩ @ TYPEID . OBJECTID ( (⟨Expresion⟩ ,)* ⟨Expresion⟩ )
+    @_("Expresion '.' OBJECTID '(' lstExpr ')'")
+    def Expresion(self, p):
+        return LlamadaMetodo(cuerpo= p.Expresion, nombre_metodo=p.OBJECTID,argumentos=p.lstExpr)
+    
+
     @_("Expresion ',' lstExpr")
     def lstExpr(self, p):
-        return p[0] + p[2]
+        return [p[0]] + p[2]
     
     @_("Expresion")
     def lstExpr(self, p):
-        return p.Expresion
-
-    #[ ⟨Expresion⟩ .] OBJECTID ( (⟨Expresion⟩ ,)* ⟨Expresion⟩ )
-    @_("exprOpcional OBJECTID '(' lstExpr Expresion ')'")
-    def Expresion(self, p):
-        return 1
-
-    # [ ⟨Expresion⟩ .] OBJECTID ( )
-    @_("exprOpcional OBJECTID '(' ')'")
-    def Expresion(self, p):
-        #return Expresion(p.OBJECTID, None, [])
-        return p.exprOpcional
+        return [p.Expresion]
     
     #IF ⟨Expresion⟩ THEN ⟨Expresion⟩ ELSE ⟨Expresion⟩ FI
     @_("IF Expresion THEN Expresion ELSE Expresion FI")
@@ -234,29 +242,22 @@ class CoolParser(Parser):
     #LET OBJECTID : TYPEID [<- ⟨Expresion⟩] (, OBJECTID : TYPEID [<- ⟨Expresion⟩])* IN ⟨Expresion⟩
     @_("LET OBJECTID ':' TYPEID exprOpcional lstArrow IN Expresion")
     def Expresion(self, p):
-        lista = [p.exprOpcional] + p.lstArrow
+        lista = [(p.OBJECTID, p.TYPEID, p.exprOpcional)] + p.lstArrow
         if lista == []:
             return p.Expresion
         else:
-            ultima_inicia = lista[-1] #-1
-            temp  = Let(nombre = ultima_inicia[0],
-                    tipo=ultima_inicia[1],
-                    inicializacion=ultima_inicia[2],
-                    cuerpo = p.Expresion
-                    )
-            for i in range(len(lista, 0, -1)):
-                ultima_inicia = lista[i]
-                temp  = Let(nombre = ultima_inicia[0],
-                    tipo=ultima_inicia[1],
-                    inicializacion=ultima_inicia[2],
-                    cuerpo = p.Expresion
+            temp = p.Expresion
+            for nombrevar, tipovar, inicializacionvar in reversed(lista):
+                temp  = Let(nombre = nombrevar,
+                    tipo=tipovar,
+                    inicializacion=inicializacionvar,
+                    cuerpo = temp
                     )
             return temp
-            
 
     @_("',' OBJECTID ':' TYPEID exprOpcional lstArrow")
     def lstArrow(self, p):
-        return [p.exprOpcional] + [p.lstArrow]
+        return [(p.OBJECTID, p.TYPEID, p.exprOpcional)] + p.lstArrow
 
     @_("ASSIGN Expresion")
     def exprOpcional(self, p):
@@ -265,29 +266,25 @@ class CoolParser(Parser):
     @_("")
     def exprOpcional(self, p):
         return NoExpr()
-
-    @_("Expresion '.'")
-    def exprOpcional(self, p):
-        return p.Expresion
     
     @_("")
     def lstArrow(self, p):
         return []
 
     #CASE ⟨Expresion⟩ OF (OBJECTID : TYPEID DARROW <Expresion>)+ ; ESAC
-    @_("Case Expresion OF CaseList ';' ESAC")
+    @_("CASE Expresion OF CaseList ESAC")
     def Expresion(self, p):
-        return p.CaseList
+        return Swicht(expr=p.Expresion, casos=p.CaseList)
 
     @_("OBJECTID ':' TYPEID DARROW Expresion")
     def Case(self, p):
         return RamaCase(nombre_variable=p.OBJECTID, tipo=p.TYPEID, cuerpo=p.Expresion)
 
-    @_("Case CaseList")
+    @_("Case ';' CaseList")
     def CaseList(self, p):
         return [p.Case] + p.CaseList
 
-    @_("Case")
+    @_("Case ';'")
     def CaseList(self, p):
         return [p.Case]
 
@@ -297,7 +294,7 @@ class CoolParser(Parser):
         return Nueva(tipo=p.TYPEID)
 
     #{ (⟨Expresion⟩ ;) + }
-    @_("'{' listNueva '}' ")
+    @_("'{' listNueva '}'")
     def Expresion(self, p):
         return Bloque(expresiones=p.listNueva)
 
