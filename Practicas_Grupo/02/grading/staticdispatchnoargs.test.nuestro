@@ -1,0 +1,23 @@
+_program
+  _class
+    class
+    Object
+    "staticdispatchnoargs.test"
+    (
+    _attr
+      foo
+      Int
+      _no_expr
+      : _no_type
+    _method
+      bar
+      Object
+      _dispatch
+        _object
+          self
+        : _no_type
+        bar
+        (
+        )
+      : _no_type
+    )

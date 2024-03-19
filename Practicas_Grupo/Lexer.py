@@ -17,7 +17,6 @@ class CoolLexer(Lexer):
     #ignore = '\t '
     literals = {'==','=', '+', '-', '*', '/', '(', ')', '<', '>', '.',' ' ,';', ':', '@', ',','{', '}', '[', ']', '~'}
     # Ejemplo
-    INT_CONST   = r'\d+'
     LE          = r'[<][=]'
     DARROW      = r'[=][>]'
     ASSIGN      = r'[<][-]'
@@ -38,12 +37,15 @@ class CoolLexer(Lexer):
     OF          = r'\b[oO][fF]\b'
     POOL        = r'\b[pP][oO][oO][lL]\b'
     WHILE       = r'\b[wW][hH][iI][lL][eE]\b'
+    TYPEID      = r'[A-Z]([a-zA-Z0-9_])*'
+    INT_CONST   = r'\d+'
+    
 
     CARACTERES_CONTROL = [bytes.fromhex(i+hex(j)[-1]).decode('ascii')
                         for i in ['0', '1']
                         for j in range(16)] + [bytes.fromhex(hex(127)[-2:]).decode("ascii")]
 
-    @_(r'\b[t][rR][uU][eE]|[f][aA][lL][sS][eE]\b')
+    @_(r'\b[tT][rR][uU][eE](?![a-zA-Z0-9])|[fF][aA][lL][sS][eE](?![a-zA-Z0-9])\b')
     def BOOL_CONST(self, t):
         t.type = 'BOOL_CONST'
         if t.value[0] == 't':
@@ -51,25 +53,29 @@ class CoolLexer(Lexer):
         elif t.value[0] == 'f':
             t.value = False
         return t
-    
-    @_('[A-Z]([a-zA-Z0-9_])*')
-    def TYPEID(self, t):
-        return t
 
     @_(r'[a-z]([a-zA-Z0-9_])*')
     def OBJECTID(self, t):
         return t
     
-    
-
-    
-    @_(r'[_]|[!]|[#]|[$]|[%]|[&]|[>]|[?]|[`]|[[]|[]]|[\\]|[|]|[\^]|[\\x*[a-zA-Z0-9]+]|[]|[]|[]|[]')
+    @_(r'[_]|[!]|[#]|[$]|[%]|[&]|[>]|[?]|[`]|[[]|[]]|[\\]|[|]|[\^]|[\\x*[a-zA-Z0-9]+]|[]|[]|[]|[]|\x00')
     def ERROR(self, t):
         t.type = 'ERROR'
         if t.value == '\\':
             t.value = '\\\\'
-        elif t.value in self.CARACTERES_CONTROL:
-            t.value = f'\\{t.value}'
+        elif t.value == '\x00':
+            t.value = "\\000"
+        elif t.value == '_':
+            t.value = '_'
+        elif t.value == '':
+            t.value = '\\001'
+        elif t.value == '':
+            t.value = '\\002'
+        elif t.value == '':
+            t.value = '\\003'
+        elif t.value == '':
+            t.value = '\\004'
+        t.value = '"' + t.value + '"'
         return t
     
     @_(r'--.*')
@@ -81,14 +87,14 @@ class CoolLexer(Lexer):
         self.begin(Comment)
 
     @_(r'\*\)')
-    def CMT_CONST_UNMATCHED(self, t):
-        t.value = "Unmatched *)"
+    def COMMENT_UNMATCHED(self, t):
+        t.value = '"' + "Unmatched *)" + '"'
         t.type = 'ERROR'
         return t
 
     @_(r"\s")
     def spaces(self, t):
-        pass
+        self.lineno += t.value.count('\n')
 
     @_(r'"')
     def STR_CONST(self, t):
@@ -129,57 +135,199 @@ class CoolLexer(Lexer):
 class StringLexer(Lexer):
     tokens = {STR_CONST, ERROR}
     _acumulado = ""
+    error_nullchar_escaped = False
+    error_nullchar = False
+    num_caracteres = 0
 
-    @_(r'\\\n')
+    
+    @_(r'"')
+    def STR_CONST(self, t):
+        if self.error_nullchar_escaped:
+            t.value = '"' + "String contains escaped null character." + '"'
+            t.type = 'ERROR'
+            self.error_nullchar_escaped = False
+        elif self.error_nullchar:
+            t.value = '"' + "String contains null character." + '"'
+            t.type = 'ERROR'
+            self.error_nullchar = False
+        elif self.num_caracteres > 1024:
+            self._acumulado = ""
+            t.value = '"' + "String constant too long" + '"'
+            t.type = 'ERROR'  
+        else:
+            t.value = self._acumulado
+            self._acumulado = ""
+            t.value = t.value.replace('\r', '\\015')
+            t.value = '"' + t.value + '"'
+        self.num_caracteres = 0
+        self.begin(CoolLexer)
+        return t
+
+
+    @_(r'\\[\r\n]')
     def SALTOESCAPADO(self, t):
         self._acumulado += "\\n"
         self.lineno += 1
+        self.num_caracteres += 1
+        
     
-    @_(r'\\[btrn"]')
-    def caracter_escapado1(self, t):
-        self._acumulado += t.value[1]
     
+    @_(r'\\\x00')
+    def NULLCHAR_ESCAPED(self, t):
+        print("NULLCHAR")
+        self.error_nullchar_escaped = True
+        
+
+    @_(r'\x00')
+    def NULLCHAR(self, t):
+        print("NULLCHAR2")
+        self.error_nullchar = True
+        
+    
+
     @_(r'\\\\')
     def DOBLE_BARRA(self, t):
         self._acumulado += t.value[0:]
+        self.num_caracteres += 1  
+        
 
     @_(r'\t')
     def TABULADORESCAPADO(self, t):
         self._acumulado += '\\t'
+        self.num_caracteres += 1
+        
+    
+    @_(r'\\\t')
+    def TABULADOR(self, t):
+        self._acumulado += '\\t'
+        self.num_caracteres += 1
+        
+    
+    @_(r'\\\x08')
+    def BACKSPACE(self, t):
+        self._acumulado += '\\b'
+        self.num_caracteres += 1
+    
+    @_(r'\f')
+    def FORMFEED(self, t):
+        self._acumulado += '\\f'
+        self.num_caracteres += 1
+    
+    @_(r'\\\f')
+    def FORMFEED_ESCAPADO(self, t):
+        self._acumulado += '\\f'
+        self.num_caracteres += 1
+        
+    @_(r'\x12')
+    def DC2(self, t):
+        self._acumulado += '\\022'
+        self.num_caracteres += 1
+    
+    @_(r'\x0B')
+    def VT(self, t):
+        self._acumulado += '\\013'
+        self.num_caracteres += 1
+    
+    @_(r'\x1B')
+    def ESCAPE(self, t):
+        print("ESCAPE")
+        self._acumulado += "\\033"
+    
+    @_(r'\\-')
+    def GUION(self, t):
+        self._acumulado += t.value[1:]
+        self.num_caracteres += 1
+    
+    @_(r'(?:\\")$')
+    def QUOTE_EOF(self, t):
+        t.value = '"' + "EOF in string constant" + '"'
+        t.type = 'ERROR'
+        return t
+
+    @_(r'\\[^a-zA-Z0-9\n]')
+    def CARACTERESPECIAL(self, t):
+        self._acumulado += t.value
+        
     
     @_(r'\\.') # El punto no representa el salto de linea
     def COMILLASESCAPADO(self, t):
-        self._acumulado += t.value
+        if t.value[1] == 'b':
+            t.value = '\\b'
+        elif t.value[1] == 'n':
+            t.value = '\\n'
+        elif t.value[1] == 'f':
+            t.value = '\\f'
+        elif t.value[1] == 't':
+            t.value = '\\t'
+        else:
+            t.value = t.value[1:]
+        
+        self._acumulado +=  t.value
+        self.num_caracteres += 1
+        
 
-    @_(r'"')
-    def CIERRE(self, t):
-        t.type = "STR_CONST"
-        t.value = self._acumulado
-        self._acumulado = ""
+    @_(r'[^\\]\n')
+    def salto_linea_error(self, t):
+        if not self.error_nullchar:
+            self._acumulado = ''
+            self.begin(CoolLexer)
+            t.value = '"' + "Unterminated string constant" + '"'
+            t.type = 'ERROR'
+            return t
+    
+    @_(r'[\\\n]$')
+    def salto_linea_escapado_y_EOF(self, t):
+        t.value = '"' + "EOF in string constant" + '"'
+        t.type = 'ERROR'
+        return t
+
+    
+    @_(r'[^"]$')
+    def EOF(self, t):
+        print("EOF")
+        if self.error_nullchar:
+            t.value = '"' + "String contains null character." + '"'
+            t.type = 'ERROR'
+            self.error_nullchar = False
+            self.begin(CoolLexer)
+            return t
+        t.value = '"' + "EOF in string constant" + '"'
+        t.type = 'ERROR'
         self.begin(CoolLexer)
         return t
 
     @_(r'.')
     def CUALQUIER_COSA(self, t):
         self._acumulado += t.value
+        self.num_caracteres += 1
     
     def error(self, t):
         self.index += 1
 
 class Comment(Lexer):
     tokens = {CMT_CONST}
-    cmt_id = 0
+    comments_inside = 0
+
+    @_(r'\*\)\Z')
+    def CMT_CONST2(self, t):
+        if self.comments_inside == 0:
+            self.begin(CoolLexer)
+        else:
+            t.value = '"EOF in comment"' 
+            t.type = 'ERROR'
+            self.begin(CoolLexer)
+            return t
 
     @_(r'\*\)')
     def CMT_CONST(self, t):
-        if self.cmt_id == 0:
+        if self.comments_inside == 0:
             self.begin(CoolLexer)
         else:
-            self.cmt_id -= 1
+            self.comments_inside -= 1
 
     @_(r'\(\*')
     def inside_CMT_CONST(self, t):
-        self.cmt_id += 1
+        self.comments_inside += 1
 
     @_(r'\n')
     def salto_linea(self, t):
@@ -187,7 +335,8 @@ class Comment(Lexer):
 
     @_(r'.$')
     def EOF_CMT(self, t):
-        t.value = "EOF in comment"
+        print("EOF comment")
+        t.value = '"' + "EOF in comment" + '"'
         t.type = 'ERROR'
         return t
 
