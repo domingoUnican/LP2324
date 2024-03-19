@@ -2157,8 +2157,8 @@ state 88
     THEN            reduce using rule 44 (Expresion -> OBJECTID ASSIGN Expresion .)
     )               reduce using rule 44 (Expresion -> OBJECTID ASSIGN Expresion .)
     }               reduce using rule 44 (Expresion -> OBJECTID ASSIGN Expresion .)
-    ,               reduce using rule 44 (Expresion -> OBJECTID ASSIGN Expresion .)
-    POOL            reduce using rule 44 (Expresion -> OBJECTID ASSIGN Expresion .)
+    ,      educe conflict for @ resolved as shift
+  ! shift/red       reduce using rule 44 (Expresion -> OBJECTID ASSIGN Expresion .)
     ELSE            reduce using rule 44 (Expresion -> OBJECTID ASSIGN Expresion .)
     IN              reduce using rule 44 (Expresion -> OBJECTID ASSIGN Expresion .)
     FI              reduce using rule 44 (Expresion -> OBJECTID ASSIGN Expresion .)
