@@ -1,0 +1,2 @@
+Error de sintaxis en la linea 5 y token Token(type='IF', value='If', lineno=5, index=31, end=33) y columna 31 en el fichero classonefield.test
+Compilation halted due to lex and parse errors

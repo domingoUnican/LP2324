@@ -1,2 +1,2 @@
-"casenoexpr.test", line 7: syntax error at or near OF
+Error de sintaxis en la linea 7 y token Token(type='OF', value='of', lineno=7, index=99, end=101) y columna 99 en el fichero casenoexpr.test
 Compilation halted due to lex and parse errors

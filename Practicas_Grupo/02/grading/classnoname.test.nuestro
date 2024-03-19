@@ -1,0 +1,2 @@
+Error de sintaxis en la linea 1 y token Token(type='{', value='{', lineno=1, index=6, end=7) y columna 6 en el fichero classnoname.test
+Compilation halted due to lex and parse errors

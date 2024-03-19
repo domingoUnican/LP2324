@@ -104,8 +104,10 @@ class CoolParser(Parser):
         ('left', '+', '-'),
         ('left', '*', '/'),
         ('right', 'NOT', 'ISVOID', '~'),
-        ('left', '@'),
-        ('left', '.')
+        # ('left', '@'),
+        ('left', '.'),
+        # ('left', 'OBJECTID')
+        ('left', '@')
     
     )
     
@@ -227,7 +229,7 @@ class CoolParser(Parser):
 
     @_("NOT Expresion")
     def Expresion(self, p):
-        return Not(izquierda=p[1])
+        return Not(expr=p[1])
 
     @_("ISVOID Expresion")
     def Expresion(self, p):
@@ -235,7 +237,7 @@ class CoolParser(Parser):
 
     @_("'~' Expresion")
     def Expresion(self, p):
-        return Neg(izquierda=p[1])
+        return Neg(expr=p[1])
 
     @_("Expresion '@' TYPEID '.' OBJECTID '(' ')'")
     def Expresion(self, p):
@@ -253,21 +255,64 @@ class CoolParser(Parser):
     def listaExpresiones(self, p):
         return [p[0]] + p[2]
 
-    @_("optExpresion OBJECTID '(' listaExpresiones ')'")
+    # @_("optExpresion OBJECTID '(' listaExpresiones ')'")
+    # def Expresion(self, p):
+    #     return LlamadaMetodo(cuerpo=p[0], nombre_metodo=p[1], argumentos=p[3])
+
+    # @_("optExpresion OBJECTID '(' ')'")
+    # def Expresion(self, p):
+    #     return LlamadaMetodo(cuerpo=p[0], nombre_metodo=p[1], argumentos=[])
+
+    # @_("")
+    # def optExpresion(self, p):
+    #     return NoExpr()
+
+    # @_("Expresion '.'")
+    # def optExpresion(self, p):
+    #     return p[0]
+
+    # @_("optExpresion '(' listaExpresiones ')'")
+    # def Expresion(self, p):
+    #     return LlamadaMetodo(cuerpo=p[0][0], nombre_metodo=p[0][1], argumentos=p[3])
+    
+    # @_("OBJECTID '(' listaExpresiones ')'")
+    # def Expresion(self, p):
+    #     return LlamadaMetodo(cuerpo=Objeto(nombre = "self"), nombre_metodo=p[0], argumentos=p[2])
+
+    # @_("Expresion '.' OBJECTID '(' ')'")
+    # def Expresion(self, p):
+    #     return LlamadaMetodo(cuerpo=p[0], nombre_metodo=p[2], argumentos=p[4])
+
+    # @_("OBJECTID '(' ')'")
+    # def Expresion(self, p):
+    #     return LlamadaMetodo(cuerpo=Objeto(nombre = "self"), nombre_metodo=p[0], argumentos=[])
+
+    # @_("Expresion '.' OBJECTID '(' ')'")
+    # def Expresion(self, p):
+    #     return LlamadaMetodo(cuerpo=p[0], nombre_metodo=p[2], argumentos=[])
+
+    
+    @_("optExpresion '(' listaExpresiones ')'")
     def Expresion(self, p):
-        return LlamadaMetodo(cuerpo=p[0], nombre_metodo=p[1], argumentos=p[3])
+        return LlamadaMetodo(cuerpo=p[0][0], nombre_metodo=p[0][1], argumentos=p[2])
 
-    @_("optExpresion OBJECTID '(' ')'")
+    @_("optExpresion '(' ')'")
     def Expresion(self, p):
-        return LlamadaMetodo(cuerpo=p[0], nombre_metodo=p[1], argumentos=[])
+        return LlamadaMetodo(cuerpo=p[0][0], nombre_metodo=p[0][1], argumentos=[])
 
-    @_("")
-    def optExpresion(self, p):
-        return NoExpr()
 
-    @_("Expresion '.'")
+
+    # @_("optExpresion '(' ')'")
+    # def Expresion(self, p):
+    #     return LlamadaMetodo(cuerpo=p[0][0], nombre_metodo=p[0][1], argumentos=[])
+
+    @_("OBJECTID")
     def optExpresion(self, p):
-        return p[0]
+        return [Objeto(nombre='self'), p[0]]
+    
+    @_("Expresion '.' OBJECTID")
+    def optExpresion(self, p):
+        return [p[0], p[2]]
 
     @_("IF Expresion THEN Expresion ELSE Expresion FI")
     def Expresion(self, p):
@@ -313,17 +358,17 @@ class CoolParser(Parser):
 
     ################################################### FIN LET
 
-    @_("CASE Expresion OF plusExpresion ';' ESAC")
+    @_("CASE Expresion OF plusExpresion ESAC")
     def Expresion(self, p):
         return Swicht(expr=p[1], casos=p[3])
 
-    @_("OBJECTID ':' TYPEID DARROW Expresion")
+    @_("OBJECTID ':' TYPEID DARROW Expresion ';'")
     def plusExpresion(self, p):
         return [RamaCase(nombre_variable=p[0], tipo=p[2], cuerpo=p[4])]
 
-    @_("OBJECTID ':' TYPEID DARROW Expresion plusExpresion")
+    @_("OBJECTID ':' TYPEID DARROW Expresion ';' plusExpresion")
     def plusExpresion(self, p):
-        return [RamaCase(nombre_variable=p[0], tipo=p[2], cuerpo=p[4])] + p[5]
+        return [RamaCase(nombre_variable=p[0], tipo=p[2], cuerpo=p[4])] + p[6]
 
     @_("NEW TYPEID")
     def Expresion(self, p):
@@ -338,7 +383,7 @@ class CoolParser(Parser):
         return [p[0]]
 
     def error(self, p):
-        self.errores.append(p)
+        self.errores.append(f"Error de sintaxis en la linea {p.lineno} y token {p} y columna {p.index} en el fichero {self.nombre_fichero}")	
 
     @_("error ';' Expresion ';'")
     def bloque(self, p):
@@ -346,7 +391,7 @@ class CoolParser(Parser):
 
     @_("error ';'")
     def bloque(self, p):
-        pass
+        return []
 
     @_("Expresion ';' bloque")
     def bloque(self, p):

@@ -1,0 +1,2 @@
+Error de sintaxis en la linea 7 y token Token(type='TYPEID', value='A', lineno=7, index=99, end=100) y columna 99 en el fichero assigngetstype.test
+Compilation halted due to lex and parse errors

@@ -1,0 +1,2 @@
+Error de sintaxis en la linea 4 y token Token(type=';', value=';', lineno=4, index=56, end=57) y columna 56 en el fichero emptyassign.test
+Compilation halted due to lex and parse errors

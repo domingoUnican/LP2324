@@ -1,0 +1,2 @@
+Error de sintaxis en la linea 1 y token Token(type='OBJECTID', value='test', lineno=1, index=6, end=10) y columna 6 en el fichero classbadname.test
+Compilation halted due to lex and parse errors

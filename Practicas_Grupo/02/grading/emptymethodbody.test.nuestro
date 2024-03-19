@@ -1,0 +1,2 @@
+Error de sintaxis en la linea 3 y token Token(type='}', value='}', lineno=3, index=38, end=39) y columna 38 en el fichero emptymethodbody.test
+Compilation halted due to lex and parse errors

@@ -82,6 +82,9 @@ if True:
                         g.close()
                         contador -= 1
             except Exception as e:
+                import traceback
+                traceback.print_exception(e)
                 print(f"Lanza excepción en {fich} con el texto {e}")
                 contador -= 1
+                
     print(f'Ficheros correctos: {contador}/{len(TESTS)}')
