@@ -2,18 +2,29 @@ _program
   _class
     Foo
     Object
-    "letparens.test"
+    "unaryassociativity.test"
     (
     _method
       bar
       Int
       _block
-        _let
-          a
-          Int
-          _no_expr
+        _plus
+          _isvoid
+            _object
+              a
+            : _no_type
           : _no_type
-          _plus
+          _mul
+            _object
+              b
+            : _no_type
+            _object
+              c
+            : _no_type
+          : _no_type
+        : _no_type
+        _comp
+          _lt
             _object
               a
             : _no_type
@@ -23,31 +34,13 @@ _program
           : _no_type
         : _no_type
         _plus
-          _let
-            a
-            Int
-            _no_expr
-            : _no_type
+          _neg
             _object
               a
             : _no_type
           : _no_type
           _object
             b
-          : _no_type
-        : _no_type
-        _let
-          a
-          Int
-          _no_expr
-          : _no_type
-          _plus
-            _object
-              a
-            : _no_type
-            _object
-              b
-            : _no_type
           : _no_type
         : _no_type
       : _no_type

@@ -1,6 +1,6 @@
 _program
   _class
-    class
+    Test
     Object
     "lteassociativity.test"
     (

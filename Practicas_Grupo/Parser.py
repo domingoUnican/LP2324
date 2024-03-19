@@ -194,43 +194,41 @@ class CoolParser(Parser):
     def expr(self, p):
         return Bucle(condicion=p.expr0, cuerpo=p.expr1)
 
-    @_("LET OBJECTID ':' TYPEID lista_inicia IN expr")
+    @_("LET OBJECTID ':' TYPEID opcionales lista_inicia IN expr")
     def expr(self, p):
-        ultima_inicia = p.lista_inicia[-1]
-        # Vamos a suponer que ultima_inicia = [nombre, tipo, inicializacion]
-        temp = Let(nombre = ultima_inicia[0],
-                    tipo = ultima_inicia[1], 
-                    inicializacion=ultima_inicia[2], 
-                    cuerpo = p.expr)
-        
-        for i in range(len(p.lista_inicia), 0, -1):
-            ultima_inicia = p.lista_inicia[i]
-            temp = Let(nombre=ultima_inicia[0])
-        return temp
+        if p.lista_inicia != []:
+            print(len(p.lista_inicia))
+            ultima_inicia = p.lista_inicia[-1]
+            # Vamos a suponer que ultima_inicia = [nombre, tipo, inicializacion]
+            temp = Let(nombre = ultima_inicia[0],
+                        tipo = ultima_inicia[1], 
+                        inicializacion=ultima_inicia[2], 
+                        cuerpo = p.expr)
+            
+            for ultima_inicia in reversed(p.lista_inicia[:-1]):
+                temp = Let(nombre=ultima_inicia[0],tipo = ultima_inicia[1], 
+                        inicializacion=ultima_inicia[2], 
+                        cuerpo = temp)
+            return Let(nombre=p.OBJECTID, tipo=p.TYPEID, inicializacion=p.opcionales, cuerpo=temp)
+        else:
+            return Let(nombre=p.OBJECTID, tipo=p.TYPEID, inicializacion=p.opcionales, cuerpo=p.expr)
     
-    @_("OBJECTID ':' TYPEID")
+    @_("")
     def lista_inicia(self, p):
-        return [p.lista_inicia] + [p.OBJECTID, p.TYPEID]
+        return []
     
-    @_("opcionales ',' OBJECTID ':' TYPEID asignacion")
+    @_("lista_inicia ',' OBJECTID ':' TYPEID opcionales")
     def lista_inicia(self, p):
-        return p.opcionales + [p.OBJECTID, p.TYPEID] + p.asignacion
+        print(p.OBJECTID,"Algo")
+        return p.lista_inicia + [(p.OBJECTID, p.TYPEID ,p.opcionales)]
     
     @_("ASSIGN expr")
     def opcionales(self, p):
-        return [p.expr]
+        return p.expr
     
     @_("")
     def opcionales(self, p):
-        return []
-    
-    @_("")
-    def asignacion(self, p):
-        return []
-
-    @_("ASSIGN expr")
-    def asignacion(self, p):
-        return [p.expr]
+        return NoExpr()
 
 
     @_("CASE expr OF ESAC")
