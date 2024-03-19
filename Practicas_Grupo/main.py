@@ -8,7 +8,7 @@ sys.path.append(DIRECTORIO)
 
 from Lexer import CoolLexer
 
-PRACTICA = "01"  # Practica que hay que evaluar
+PRACTICA = "02"  # Practica que hay que evaluar
 DEBUG = True   # Decir si se lanzan mensajes de debug
 NUMLINEAS = 3   # Numero de lineas que se muestran antes y después de la no coincidencia
 sys.path.append(DIRECTORIO)
@@ -30,7 +30,7 @@ if True:
         if os.path.isfile(os.path.join(DIR, fich)+'.nuestro'):
             os.remove(os.path.join(DIR, fich)+'.nuestro')
         if os.path.isfile(os.path.join(DIR, fich)+'.bien'):
-            os.remove(os.path.join(DIR, fich)+'.bien')            
+            os.remove(os.path.join(DIR, fich)+'.bien')
         texto = ''
         entrada = f.read()
         f.close()
@@ -38,12 +38,14 @@ if True:
             texto = '\n'.join(lexer.salida(entrada))
             texto = f'#name "{fich}"\n' + texto
             resultado = g.read()
+            texto = re.sub(r'#\d+\b', '', texto)
+            resultado = re.sub(r'#\d+\b', '', resultado)
+            texto = re.sub(r'\s+\n', '\n', texto)
+            resultado = re.sub(r'\s+\n', '\n', resultado)
             g.close()
             if texto.strip().split() != resultado.strip().split():
                 print(f"Revisa el fichero {fich}")
                 if DEBUG:
-                    texto = re.sub(r'#\d+\b','',texto)
-                    resultado = re.sub(r'#\d+\b','',resultado)
                     nuestro = [linea for linea in texto.split('\n') if linea]
                     bien = [linea for linea in resultado.split('\n') if linea]
                     linea = 0

@@ -53,25 +53,74 @@ from Clases import *
         
 '''
 
+
+'''
+clases
+nodo
+formal
+Expresion
+asignacion
+llamadaMetodoEstatico
+llamadaMetodo
+Condicional
+Bucle
+Let
+Bloque
+RamaCase
+Swicht
+Nueva
+OperacionBinaria
+Resta
+Multiplicacion
+Division
+Menor
+LeIgual
+Igual
+Neg
+Not
+EsNulo
+Objeto
+NoExpr
+Entero
+String
+Booleano
+IterableNodo
+Programa(IterableNodo)
+Caracteristica
+Clase(nodo)
+Metodo
+Atributo
+Arbol
+Ambito
+
+'''
 class CoolParser(Parser):
     nombre_fichero = ''
     tokens = CoolLexer.tokens
     debugfile = "salida.out"
     errores = []
-
+    precedence = (
+        ('nonassoc', 'LE', '<', '='), # Nonassociative operators
+        ('left', '+', '-'),
+        ('left', '*', '/'),
+        ('right', 'NOT', 'ISVOID', '~'),
+        ('left', '@'),
+        ('left', '.')
+    
+    )
     
 
     @_("Programa Clase")
     def Programa(self, p):
-        return Programa(secuencia=[p.Programa.secuencia + [p.Clase])
+        return Programa(secuencia=p[0].secuencia + [p[1]])
 
     @_("Clase")
     def Programa(self, p):
-        return Programa(secuencia=[p.Clase])
+        return Programa(secuencia=[p[0]])
 
     @_("CLASS TYPEID optInherit '{' lista_atr_met '}' ';'")
-    def Clase():
-        return Clase(nombre=p[1], padre = p[2], caracteristica = p[4])
+    def Clase(self, p):
+        return Clase(nombre=p[1], padre = p[2], nombre_fichero=self.nombre_fichero, caracteristicas = p[4])
     
     @_("")
     def optInherit(self, p):
@@ -83,228 +132,243 @@ class CoolParser(Parser):
 
     @_("")
     def lista_atr_met(self, p):
-        pass
+        return []
 
     @_("Atributo")
     def lista_atr_met(self, p):
-        pass
+        return p[0]
 
     @_("Metodo")
     def lista_atr_met(self, p):
-        pass
+        return p[0]
 
     @_("Atributo lista_atr_met")
     def lista_atr_met(self, p):
-        pass
+        return [p[0]] + p[1]
 
     @_("Metodo lista_atr_met")
     def lista_atr_met(self, p):
-        pass
+        return [p[0]] + p[1]
 
     @_("OBJECTID ':' TYPEID optAssign ';'")
     def Atributo(self, p):
-        pass
+        return Atributo(nombre=p[0], tipo=p[2], cuerpo=p[3])
 
     @_("")
     def optAssign(self, p):
-        pass
+        return NoExpr()
 
     @_("ASSIGN Expresion")
     def optAssign(self, p):
-        pass
+        return p[1]
 
     @_("OBJECTID '(' ')' ':' TYPEID '{' Expresion '}' ';'")
     def Metodo(self, p):
-        pass
+        return Metodo(nombre=p[0], tipo=p[4], cuerpo=p[6])
 
     @_("OBJECTID '(' listaFormales ')' ':' TYPEID '{' Expresion '}' ';'")
     def Metodo(self, p):
-        pass
+        return Metodo(nombre=p[0], tipo=p[5], cuerpo=p[7], formales=p[2])
 
     @_("Formal")
     def listaFormales(self, p):
-        pass
+        return [p[0]]
 
     @_("Formal ',' listaFormales")
     def listaFormales(self, p):
-        pass
+        return [p[0]] + p[2]
 
-    @_("OBJECTID : TYPEID")
+    @_("OBJECTID ':' TYPEID")
     def Formal(self, p):
         # #return Formal(p.OBJECTID, p.TYPEID)
-        pass
+        return Formal(nombre_variable=p[0], tipo=p[2])
 
-    @_("OBJECTID : ASSIGN Expresion")
+    @_("OBJECTID ASSIGN Expresion")
     def Expresion(self, p):
-        pass
+        return Asignacion(nombre=p[0], cuerpo=p[2])
 
     # @_("TYPEID")
     # def typeID(self, p):
     #     # #return TypeID(p.TYPEID)
     #     pass
 
-    
-    @_("Expresion '+' Expresion")
-    def Expresion(self, p):
-        #return BinOp('+', p.Expresion0, p.Expresion1)
-        pass
-
-    @_("Expresion '-' Expresion")
-    def Expresion(self, p):
-        #return BinOp('-', p.Expresion0, p.Expresion1)
-        pass
-
     @_("Expresion '*' Expresion")
     def Expresion(self, p):
-        #return BinOp('*', p.Expresion0, p.Expresion1)
-        pass
+        return Multiplicacion(izquierda=p[0], derecha=p[2])
 
     @_("Expresion '/' Expresion")
     def Expresion(self, p):
-        #return BinOp('/', p.Expresion0, p.Expresion1)
-        pass
+        return Division(izquierda=p[0], derecha=p[2])
 
+    @_("Expresion '+' Expresion")
+    def Expresion(self, p):
+        return Suma(izquierda=p[0], derecha=p[2])
+        
+    @_("Expresion '-' Expresion")
+    def Expresion(self, p):
+        return Resta(izquierda=p[0], derecha=p[2])
+        
+    @_("Expresion LE Expresion")
+    def Expresion(self, p):
+        return LeIgual(izquierda=p[0], derecha=p[2])
+    
     @_("Expresion '<' Expresion")
     def Expresion(self, p):
-        #return BinOp('<', p.Expresion0, p.Expresion1)
-        pass
-
-    @_("Expresion '<=' Expresion")
-    def Expresion(self, p):
-        #return BinOp('<=', p.Expresion0, p.Expresion1)
-        pass
+        return Menor(izquierda=p[0], derecha=p[2])
 
     @_("Expresion '=' Expresion")
     def Expresion(self, p):
-        #return BinOp('=', p.Expresion0, p.Expresion1)
-        pass
+        return Igual(izquierda=p[0], derecha=p[2])
 
     @_("'(' Expresion ')'")
     def Expresion(self, p):
-        #return p.Expresion
-        pass
+        return p[1]
+        
 
     @_("NOT Expresion")
     def Expresion(self, p):
-        #return UnOp('not', p.Expresion)
-        pass
+        return Not(izquierda=p[1])
 
     @_("ISVOID Expresion")
     def Expresion(self, p):
-        #return UnOp('isvoid', p.Expresion)
-        pass
+        return EsNulo(expr=p[1])
 
     @_("'~' Expresion")
     def Expresion(self, p):
-        #return UnOp('~', p.Expresion)
-        pass
+        return Neg(izquierda=p[1])
 
     @_("Expresion '@' TYPEID '.' OBJECTID '(' ')'")
     def Expresion(self, p):
-        pass
+        return LlamadaMetodoEstatico(cuerpo=p[0], clase=p[2], nombre_metodo=p[4], argumentos=[])
 
     @_("Expresion '@' TYPEID '.' OBJECTID '(' listaExpresiones ')'")
     def Expresion(self, p):
-        pass
+        return LlamadaMetodoEstatico(cuerpo=p[0], clase=p[2], nombre_metodo=[4], argumentos=p[6])
 
     @_("Expresion")
     def listaExpresiones(self, p):
-        pass
+        return [p[0]]
 
     @_("Expresion ',' listaExpresiones")
     def listaExpresiones(self, p):
-        pass
+        return [p[0]] + p[2]
 
     @_("optExpresion OBJECTID '(' listaExpresiones ')'")
     def Expresion(self, p):
-        pass
+        return LlamadaMetodo(cuerpo=p[0], nombre_metodo=p[1], argumentos=p[3])
 
     @_("optExpresion OBJECTID '(' ')'")
     def Expresion(self, p):
-        pass
+        return LlamadaMetodo(cuerpo=p[0], nombre_metodo=p[1], argumentos=[])
 
     @_("")
     def optExpresion(self, p):
-        pass
+        return NoExpr()
 
     @_("Expresion '.'")
     def optExpresion(self, p):
-        pass
+        return p[0]
 
     @_("IF Expresion THEN Expresion ELSE Expresion FI")
     def Expresion(self, p):
-        pass
+        return Condicional(condicion = p[1], verdadero = p[3], falso=p[5])
 
     @_("WHILE Expresion LOOP Expresion POOL")
     def Expresion(self, p):
-        pass
+        return Bucle(condicion=p[1], cuerpo=p[3])
+    
+    ####################################### TODO LET FOTO 6 DE MARZO
 
     @_("LET OBJECTID ':' TYPEID optArrow starFormal IN Expresion")
     def Expresion(self, p):
-        pass
+        #return Let(nombre=p[1], tipo=p[3], inicializacion=p[4], cuerpo=p[7])
+
+        listaFormales = [[p[1], p[3], p[4]]] + p[5]
+        body = p[7]
+
+        while listaFormales:
+            valores = listaFormales.pop()
+            body = Let(nombre=valores[0], tipo=valores[1], inicializacion=valores[2], cuerpo=body)
+
+        return body
 
     @_("")
     def optArrow(self, p):
-        pass
+        return NoExpr()
     
-    @_("'<-' Expresion")
+    @_("ASSIGN Expresion")
     def optArrow(self, p):
-        pass
+        # return Asignacion(nombre=None, cuerpo=p[2])
+        # return Expresion(p[1])
+        return p[1]
 
     @_("")
     def starFormal(self, p):
-        pass
-
+        return []
+    
     @_("',' OBJECTID ':' TYPEID optArrow starFormal")
     def starFormal(self, p):
-        pass
+        # return Formal(nombre=p[1], tipo=p[3], inicializacion=p[4]) + p[5]
+        return [[p[1], p[3], p[4]]] + p[5]
+
+    ################################################### FIN LET
 
     @_("CASE Expresion OF plusExpresion ';' ESAC")
     def Expresion(self, p):
-        pass
+        return Swicht(expr=p[1], casos=p[3])
 
     @_("OBJECTID ':' TYPEID DARROW Expresion")
     def plusExpresion(self, p):
-        pass
+        return [RamaCase(nombre_variable=p[0], tipo=p[2], cuerpo=p[4])]
 
     @_("OBJECTID ':' TYPEID DARROW Expresion plusExpresion")
     def plusExpresion(self, p):
-        pass
+        return [RamaCase(nombre_variable=p[0], tipo=p[2], cuerpo=p[4])] + p[5]
 
     @_("NEW TYPEID")
     def Expresion(self, p):
-        pass
+        return Nueva(tipo=p[1])
     
-    @_("'{'expresiones'}'")
+    @_("'{' bloque '}'")
     def Expresion(self, p):
-        pass
+        return Bloque(expresiones=p[1])
 
     @_("Expresion ';'")
-    def expresiones(self, p):
+    def bloque(self, p):
+        return [p[0]]
+
+    def error(self, p):
+        self.errores.append(p)
+
+    @_("error ';' Expresion ';'")
+    def bloque(self, p):
+        return [p[2]]
+
+    @_("error ';'")
+    def bloque(self, p):
         pass
 
-    @_("Expresion ';' expresiones")
-    def expresiones(self, p):
-        pass
+    @_("Expresion ';' bloque")
+    def bloque(self, p):
+        return [p[0]] + p[2]
     
     @_("OBJECTID")
     def Expresion(self, p):
-        #return ObjectID(p.OBJECTID)
-        pass
+        return Objeto(nombre=p[0])
 
     @_("INT_CONST")
     def Expresion(self, p):
         #return IntConst(p.INT_CONST)
-        pass
+        return Entero(valor=p[0]) 
 
     @_("STR_CONST")
     def Expresion(self, p):
         # #return StrConst(p.STR_CONST)
-        pass
+        return String(valor=p[0]) 
+        
 
     @_("BOOL_CONST")
     def Expresion(self, p):
-        #return BoolConst(p.BOOL_CONST)
-        pass
+        return Booleano(valor=p[0])
 
     
