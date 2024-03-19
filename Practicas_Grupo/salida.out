@@ -58,19 +58,18 @@ Rule 54    lista_inicia -> lista_inicia , OBJECTID : TYPEID opcionales
 Rule 55    lista_inicia -> <empty>
 Rule 56    opcionales -> <empty>
 Rule 57    opcionales -> ASSIGN expr  [precedence=right, level=1]
-Rule 58    cuerpo_case -> cuerpo_case ;
-Rule 59    cuerpo_case -> cuerpo_case cuerpo_case ;
-Rule 60    cuerpo_case -> OBJECTID : TYPEID DARROW expr ;
-Rule 61    bloque -> bloque error ;
-Rule 62    bloque -> bloque expr ;
-Rule 63    bloque -> expr ;
+Rule 58    cuerpo_case -> cuerpo_case cuerpo_case ;
+Rule 59    cuerpo_case -> OBJECTID : TYPEID DARROW expr ;
+Rule 60    bloque -> bloque error ;
+Rule 61    bloque -> bloque expr ;
+Rule 62    bloque -> expr ;
 
 Unused terminals:
 
-    NUMBER
     COMMENT_BLOQUE
-    ERROR
+    NUMBER
     COMMENT_1LINEA
+    ERROR
 
 Terminals, with rules where they appear:
 
@@ -82,8 +81,8 @@ Terminals, with rules where they appear:
 -                    : 47
 .                    : 32 33 36 37
 /                    : 45
-:                    : 12 13 14 15 16 19 29 54 60
-;                    : 2 3 8 58 59 60 61 62 63
+:                    : 12 13 14 15 16 19 29 54 59
+;                    : 2 3 8 58 59 60 61 62
 <                    : 44
 =                    : 42
 @                    : 36 37
@@ -93,7 +92,7 @@ CASE                 : 27 28
 CLASS                : 4 5 6 7
 COMMENT_1LINEA       : 
 COMMENT_BLOQUE       : 
-DARROW               : 60
+DARROW               : 59
 ELSE                 : 31
 ERROR                : 
 ESAC                 : 27 28
@@ -109,14 +108,14 @@ LOOP                 : 30
 NEW                  : 26
 NOT                  : 41
 NUMBER               : 
-OBJECTID             : 12 13 14 15 16 19 24 29 32 33 34 35 36 37 49 54 60
+OBJECTID             : 12 13 14 15 16 19 24 29 32 33 34 35 36 37 49 54 59
 OF                   : 27 28
 POOL                 : 30
 STR_CONST            : 22
 THEN                 : 31
-TYPEID               : 4 4 5 5 6 7 12 13 14 15 16 19 26 29 36 37 54 60
+TYPEID               : 4 4 5 5 6 7 12 13 14 15 16 19 26 29 36 37 54 59
 WHILE                : 30
-error                : 1 61
+error                : 1 60
 {                    : 4 5 6 7 14 15 16 20 25
 }                    : 4 5 6 7 14 15 16 20 25
 ~                    : 39
@@ -128,11 +127,11 @@ Clase                : 2 3
 Metodo               : 10
 Programa             : 1 2 0
 argumentos           : 36 50
-bloque               : 20 61 62
+bloque               : 20 60 61
 caracteristica       : 8
-cuerpo_case          : 27 58 59 59
+cuerpo_case          : 27 58 58
 cuerpo_clase         : 4 6 8
-expr                 : 12 14 15 25 27 28 29 30 30 31 31 31 32 33 36 37 38 39 40 41 42 42 43 43 44 44 45 45 46 46 47 47 48 48 49 50 51 52 53 57 60 62 63
+expr                 : 12 14 15 25 27 28 29 30 30 31 31 31 32 33 36 37 38 39 40 41 42 42 43 43 44 44 45 45 46 46 47 47 48 48 49 50 51 52 53 57 59 61 62
 formal               : 17 18
 formales             : 14 17
 lista_argumentos     : 32 35 52
@@ -580,9 +579,9 @@ state 42
 
     (20) expr -> { . bloque }
     (25) expr -> { . expr }
-    (61) bloque -> . bloque error ;
-    (62) bloque -> . bloque expr ;
-    (63) bloque -> . expr ;
+    (60) bloque -> . bloque error ;
+    (61) bloque -> . bloque expr ;
+    (62) bloque -> . expr ;
     (20) expr -> . { bloque }
     (21) expr -> . BOOL_CONST
     (22) expr -> . STR_CONST
@@ -1599,8 +1598,8 @@ state 67
 state 68
 
     (20) expr -> { bloque . }
-    (61) bloque -> bloque . error ;
-    (62) bloque -> bloque . expr ;
+    (60) bloque -> bloque . error ;
+    (61) bloque -> bloque . expr ;
     (20) expr -> . { bloque }
     (21) expr -> . BOOL_CONST
     (22) expr -> . STR_CONST
@@ -1653,7 +1652,7 @@ state 68
 state 69
 
     (25) expr -> { expr . }
-    (63) bloque -> expr . ;
+    (62) bloque -> expr . ;
     (32) expr -> expr . . OBJECTID ( lista_argumentos )
     (33) expr -> expr . . OBJECTID ( )
     (36) expr -> expr . @ TYPEID . OBJECTID ( argumentos )
@@ -2428,13 +2427,13 @@ state 95
 
 state 96
 
-    (61) bloque -> bloque error . ;
+    (60) bloque -> bloque error . ;
     ;               shift and go to state 111
 
 
 state 97
 
-    (62) bloque -> bloque expr . ;
+    (61) bloque -> bloque expr . ;
     (32) expr -> expr . . OBJECTID ( lista_argumentos )
     (33) expr -> expr . . OBJECTID ( )
     (36) expr -> expr . @ TYPEID . OBJECTID ( argumentos )
@@ -2485,32 +2484,31 @@ state 98
 
 state 99
 
-    (63) bloque -> expr ; .
-    }               reduce using rule 63 (bloque -> expr ; .)
-    error           reduce using rule 63 (bloque -> expr ; .)
-    {               reduce using rule 63 (bloque -> expr ; .)
-    BOOL_CONST      reduce using rule 63 (bloque -> expr ; .)
-    STR_CONST       reduce using rule 63 (bloque -> expr ; .)
-    INT_CONST       reduce using rule 63 (bloque -> expr ; .)
-    OBJECTID        reduce using rule 63 (bloque -> expr ; .)
-    NEW             reduce using rule 63 (bloque -> expr ; .)
-    CASE            reduce using rule 63 (bloque -> expr ; .)
-    LET             reduce using rule 63 (bloque -> expr ; .)
-    WHILE           reduce using rule 63 (bloque -> expr ; .)
-    IF              reduce using rule 63 (bloque -> expr ; .)
-    (               reduce using rule 63 (bloque -> expr ; .)
-    ~               reduce using rule 63 (bloque -> expr ; .)
-    ISVOID          reduce using rule 63 (bloque -> expr ; .)
-    NOT             reduce using rule 63 (bloque -> expr ; .)
+    (62) bloque -> expr ; .
+    }               reduce using rule 62 (bloque -> expr ; .)
+    error           reduce using rule 62 (bloque -> expr ; .)
+    {               reduce using rule 62 (bloque -> expr ; .)
+    BOOL_CONST      reduce using rule 62 (bloque -> expr ; .)
+    STR_CONST       reduce using rule 62 (bloque -> expr ; .)
+    INT_CONST       reduce using rule 62 (bloque -> expr ; .)
+    OBJECTID        reduce using rule 62 (bloque -> expr ; .)
+    NEW             reduce using rule 62 (bloque -> expr ; .)
+    CASE            reduce using rule 62 (bloque -> expr ; .)
+    LET             reduce using rule 62 (bloque -> expr ; .)
+    WHILE           reduce using rule 62 (bloque -> expr ; .)
+    IF              reduce using rule 62 (bloque -> expr ; .)
+    (               reduce using rule 62 (bloque -> expr ; .)
+    ~               reduce using rule 62 (bloque -> expr ; .)
+    ISVOID          reduce using rule 62 (bloque -> expr ; .)
+    NOT             reduce using rule 62 (bloque -> expr ; .)
 
 
 state 100
 
     (27) expr -> CASE expr OF . cuerpo_case ESAC
     (28) expr -> CASE expr OF . ESAC
-    (58) cuerpo_case -> . cuerpo_case ;
-    (59) cuerpo_case -> . cuerpo_case cuerpo_case ;
-    (60) cuerpo_case -> . OBJECTID : TYPEID DARROW expr ;
+    (58) cuerpo_case -> . cuerpo_case cuerpo_case ;
+    (59) cuerpo_case -> . OBJECTID : TYPEID DARROW expr ;
     ESAC            shift and go to state 114
     OBJECTID        shift and go to state 115
 
@@ -2821,56 +2819,53 @@ state 110
 
 state 111
 
-    (61) bloque -> bloque error ; .
-    }               reduce using rule 61 (bloque -> bloque error ; .)
-    error           reduce using rule 61 (bloque -> bloque error ; .)
-    {               reduce using rule 61 (bloque -> bloque error ; .)
-    BOOL_CONST      reduce using rule 61 (bloque -> bloque error ; .)
-    STR_CONST       reduce using rule 61 (bloque -> bloque error ; .)
-    INT_CONST       reduce using rule 61 (bloque -> bloque error ; .)
-    OBJECTID        reduce using rule 61 (bloque -> bloque error ; .)
-    NEW             reduce using rule 61 (bloque -> bloque error ; .)
-    CASE            reduce using rule 61 (bloque -> bloque error ; .)
-    LET             reduce using rule 61 (bloque -> bloque error ; .)
-    WHILE           reduce using rule 61 (bloque -> bloque error ; .)
-    IF              reduce using rule 61 (bloque -> bloque error ; .)
-    (               reduce using rule 61 (bloque -> bloque error ; .)
-    ~               reduce using rule 61 (bloque -> bloque error ; .)
-    ISVOID          reduce using rule 61 (bloque -> bloque error ; .)
-    NOT             reduce using rule 61 (bloque -> bloque error ; .)
+    (60) bloque -> bloque error ; .
+    }               reduce using rule 60 (bloque -> bloque error ; .)
+    error           reduce using rule 60 (bloque -> bloque error ; .)
+    {               reduce using rule 60 (bloque -> bloque error ; .)
+    BOOL_CONST      reduce using rule 60 (bloque -> bloque error ; .)
+    STR_CONST       reduce using rule 60 (bloque -> bloque error ; .)
+    INT_CONST       reduce using rule 60 (bloque -> bloque error ; .)
+    OBJECTID        reduce using rule 60 (bloque -> bloque error ; .)
+    NEW             reduce using rule 60 (bloque -> bloque error ; .)
+    CASE            reduce using rule 60 (bloque -> bloque error ; .)
+    LET             reduce using rule 60 (bloque -> bloque error ; .)
+    WHILE           reduce using rule 60 (bloque -> bloque error ; .)
+    IF              reduce using rule 60 (bloque -> bloque error ; .)
+    (               reduce using rule 60 (bloque -> bloque error ; .)
+    ~               reduce using rule 60 (bloque -> bloque error ; .)
+    ISVOID          reduce using rule 60 (bloque -> bloque error ; .)
+    NOT             reduce using rule 60 (bloque -> bloque error ; .)
 
 
 state 112
 
-    (62) bloque -> bloque expr ; .
-    }               reduce using rule 62 (bloque -> bloque expr ; .)
-    error           reduce using rule 62 (bloque -> bloque expr ; .)
-    {               reduce using rule 62 (bloque -> bloque expr ; .)
-    BOOL_CONST      reduce using rule 62 (bloque -> bloque expr ; .)
-    STR_CONST       reduce using rule 62 (bloque -> bloque expr ; .)
-    INT_CONST       reduce using rule 62 (bloque -> bloque expr ; .)
-    OBJECTID        reduce using rule 62 (bloque -> bloque expr ; .)
-    NEW             reduce using rule 62 (bloque -> bloque expr ; .)
-    CASE            reduce using rule 62 (bloque -> bloque expr ; .)
-    LET             reduce using rule 62 (bloque -> bloque expr ; .)
-    WHILE           reduce using rule 62 (bloque -> bloque expr ; .)
-    IF              reduce using rule 62 (bloque -> bloque expr ; .)
-    (               reduce using rule 62 (bloque -> bloque expr ; .)
-    ~               reduce using rule 62 (bloque -> bloque expr ; .)
-    ISVOID          reduce using rule 62 (bloque -> bloque expr ; .)
-    NOT             reduce using rule 62 (bloque -> bloque expr ; .)
+    (61) bloque -> bloque expr ; .
+    }               reduce using rule 61 (bloque -> bloque expr ; .)
+    error           reduce using rule 61 (bloque -> bloque expr ; .)
+    {               reduce using rule 61 (bloque -> bloque expr ; .)
+    BOOL_CONST      reduce using rule 61 (bloque -> bloque expr ; .)
+    STR_CONST       reduce using rule 61 (bloque -> bloque expr ; .)
+    INT_CONST       reduce using rule 61 (bloque -> bloque expr ; .)
+    OBJECTID        reduce using rule 61 (bloque -> bloque expr ; .)
+    NEW             reduce using rule 61 (bloque -> bloque expr ; .)
+    CASE            reduce using rule 61 (bloque -> bloque expr ; .)
+    LET             reduce using rule 61 (bloque -> bloque expr ; .)
+    WHILE           reduce using rule 61 (bloque -> bloque expr ; .)
+    IF              reduce using rule 61 (bloque -> bloque expr ; .)
+    (               reduce using rule 61 (bloque -> bloque expr ; .)
+    ~               reduce using rule 61 (bloque -> bloque expr ; .)
+    ISVOID          reduce using rule 61 (bloque -> bloque expr ; .)
+    NOT             reduce using rule 61 (bloque -> bloque expr ; .)
 
 
 state 113
 
     (27) expr -> CASE expr OF cuerpo_case . ESAC
-    (58) cuerpo_case -> cuerpo_case . ;
-    (59) cuerpo_case -> cuerpo_case . cuerpo_case ;
-    (58) cuerpo_case -> . cuerpo_case ;
-    (59) cuerpo_case -> . cuerpo_case cuerpo_case ;
-    (60) cuerpo_case -> . OBJECTID : TYPEID DARROW expr ;
+    (58) cuerpo_case -> cuerpo_case . cuerpo_case ;
+    (58) cuerpo_case -> . cuerpo_case cuerpo_case ;
+    (59) cuerpo_case -> . OBJECTID : TYPEID DARROW expr ;
     ESAC            shift and go to state 125
-    ;               shift and go to state 126
     OBJECTID        shift and go to state 115
 
     cuerpo_case                    shift and go to state 124
@@ -2902,8 +2897,8 @@ state 114
 
 state 115
 
-    (60) cuerpo_case -> OBJECTID . : TYPEID DARROW expr ;
-    :               shift and go to state 127
+    (59) cuerpo_case -> OBJECTID . : TYPEID DARROW expr ;
+    :               shift and go to state 126
 
 
 state 116
@@ -2913,9 +2908,9 @@ state 116
     (57) opcionales -> . ASSIGN expr
     IN              reduce using rule 56 (opcionales -> .)
     ,               reduce using rule 56 (opcionales -> .)
-    ASSIGN          shift and go to state 129
+    ASSIGN          shift and go to state 128
 
-    opcionales                     shift and go to state 128
+    opcionales                     shift and go to state 127
 
 state 117
 
@@ -2931,7 +2926,7 @@ state 117
     (46) expr -> expr . * expr
     (47) expr -> expr . - expr
     (48) expr -> expr . + expr
-    POOL            shift and go to state 130
+    POOL            shift and go to state 129
     .               shift and go to state 59
     @               shift and go to state 60
     =               shift and go to state 61
@@ -2957,7 +2952,7 @@ state 118
     (46) expr -> expr . * expr
     (47) expr -> expr . - expr
     (48) expr -> expr . + expr
-    ELSE            shift and go to state 131
+    ELSE            shift and go to state 130
     .               shift and go to state 59
     @               shift and go to state 60
     =               shift and go to state 61
@@ -2984,7 +2979,7 @@ state 120
 state 121
 
     (32) expr -> expr . OBJECTID ( lista_argumentos . )
-    )               shift and go to state 132
+    )               shift and go to state 131
 
 
 state 122
@@ -3016,18 +3011,16 @@ state 123
 
     (36) expr -> expr @ TYPEID . OBJECTID . ( argumentos )
     (37) expr -> expr @ TYPEID . OBJECTID . ( )
-    (               shift and go to state 133
+    (               shift and go to state 132
 
 
 state 124
 
-    (59) cuerpo_case -> cuerpo_case cuerpo_case . ;
-    (58) cuerpo_case -> cuerpo_case . ;
-    (59) cuerpo_case -> cuerpo_case . cuerpo_case ;
-    (58) cuerpo_case -> . cuerpo_case ;
-    (59) cuerpo_case -> . cuerpo_case cuerpo_case ;
-    (60) cuerpo_case -> . OBJECTID : TYPEID DARROW expr ;
-    ;               shift and go to state 134
+    (58) cuerpo_case -> cuerpo_case cuerpo_case . ;
+    (58) cuerpo_case -> cuerpo_case . cuerpo_case ;
+    (58) cuerpo_case -> . cuerpo_case cuerpo_case ;
+    (59) cuerpo_case -> . OBJECTID : TYPEID DARROW expr ;
+    ;               shift and go to state 133
     OBJECTID        shift and go to state 115
 
     cuerpo_case                    shift and go to state 124
@@ -3059,19 +3052,11 @@ state 125
 
 state 126
 
-    (58) cuerpo_case -> cuerpo_case ; .
-    ESAC            reduce using rule 58 (cuerpo_case -> cuerpo_case ; .)
-    ;               reduce using rule 58 (cuerpo_case -> cuerpo_case ; .)
-    OBJECTID        reduce using rule 58 (cuerpo_case -> cuerpo_case ; .)
+    (59) cuerpo_case -> OBJECTID : . TYPEID DARROW expr ;
+    TYPEID          shift and go to state 134
 
 
 state 127
-
-    (60) cuerpo_case -> OBJECTID : . TYPEID DARROW expr ;
-    TYPEID          shift and go to state 135
-
-
-state 128
 
     (29) expr -> LET OBJECTID : TYPEID opcionales . lista_inicia IN expr
     (54) lista_inicia -> . lista_inicia , OBJECTID : TYPEID opcionales
@@ -3079,9 +3064,9 @@ state 128
     IN              reduce using rule 55 (lista_inicia -> .)
     ,               reduce using rule 55 (lista_inicia -> .)
 
-    lista_inicia                   shift and go to state 136
+    lista_inicia                   shift and go to state 135
 
-state 129
+state 128
 
     (57) opcionales -> ASSIGN . expr
     (20) expr -> . { bloque }
@@ -3129,9 +3114,9 @@ state 129
     ISVOID          shift and go to state 53
     NOT             shift and go to state 54
 
-    expr                           shift and go to state 137
+    expr                           shift and go to state 136
 
-state 130
+state 129
 
     (30) expr -> WHILE expr LOOP expr POOL .
     .               reduce using rule 30 (expr -> WHILE expr LOOP expr POOL .)
@@ -3156,7 +3141,7 @@ state 130
     FI              reduce using rule 30 (expr -> WHILE expr LOOP expr POOL .)
 
 
-state 131
+state 130
 
     (31) expr -> IF expr THEN expr ELSE . expr FI
     (20) expr -> . { bloque }
@@ -3204,9 +3189,9 @@ state 131
     ISVOID          shift and go to state 53
     NOT             shift and go to state 54
 
-    expr                           shift and go to state 138
+    expr                           shift and go to state 137
 
-state 132
+state 131
 
     (32) expr -> expr . OBJECTID ( lista_argumentos ) .
     .               reduce using rule 32 (expr -> expr . OBJECTID ( lista_argumentos ) .)
@@ -3231,7 +3216,7 @@ state 132
     FI              reduce using rule 32 (expr -> expr . OBJECTID ( lista_argumentos ) .)
 
 
-state 133
+state 132
 
     (36) expr -> expr @ TYPEID . OBJECTID ( . argumentos )
     (37) expr -> expr @ TYPEID . OBJECTID ( . )
@@ -3267,7 +3252,7 @@ state 133
     (47) expr -> . expr - expr
     (48) expr -> . expr + expr
     (49) expr -> . OBJECTID ASSIGN expr
-    )               shift and go to state 141
+    )               shift and go to state 140
     {               shift and go to state 42
     BOOL_CONST      shift and go to state 43
     STR_CONST       shift and go to state 44
@@ -3283,35 +3268,32 @@ state 133
     ISVOID          shift and go to state 53
     NOT             shift and go to state 54
 
-    expr                           shift and go to state 139
-    argumentos                     shift and go to state 140
+    expr                           shift and go to state 138
+    argumentos                     shift and go to state 139
+
+state 133
+
+    (58) cuerpo_case -> cuerpo_case cuerpo_case ; .
+    ESAC            reduce using rule 58 (cuerpo_case -> cuerpo_case cuerpo_case ; .)
+    OBJECTID        reduce using rule 58 (cuerpo_case -> cuerpo_case cuerpo_case ; .)
+    ;               reduce using rule 58 (cuerpo_case -> cuerpo_case cuerpo_case ; .)
+
 
 state 134
 
-    (59) cuerpo_case -> cuerpo_case cuerpo_case ; .
-    (58) cuerpo_case -> cuerpo_case ; .
-  ! reduce/reduce conflict for ; resolved using rule 59 (cuerpo_case -> cuerpo_case cuerpo_case ; .)
-  ! reduce/reduce conflict for OBJECTID resolved using rule 59 (cuerpo_case -> cuerpo_case cuerpo_case ; .)
-    ESAC            reduce using rule 59 (cuerpo_case -> cuerpo_case cuerpo_case ; .)
-    ;               reduce using rule 59 (cuerpo_case -> cuerpo_case cuerpo_case ; .)
-    OBJECTID        reduce using rule 59 (cuerpo_case -> cuerpo_case cuerpo_case ; .)
+    (59) cuerpo_case -> OBJECTID : TYPEID . DARROW expr ;
+    DARROW          shift and go to state 141
 
 
 state 135
 
-    (60) cuerpo_case -> OBJECTID : TYPEID . DARROW expr ;
-    DARROW          shift and go to state 142
+    (29) expr -> LET OBJECTID : TYPEID opcionales lista_inicia . IN expr
+    (54) lista_inicia -> lista_inicia . , OBJECTID : TYPEID opcionales
+    IN              shift and go to state 142
+    ,               shift and go to state 143
 
 
 state 136
-
-    (29) expr -> LET OBJECTID : TYPEID opcionales lista_inicia . IN expr
-    (54) lista_inicia -> lista_inicia . , OBJECTID : TYPEID opcionales
-    IN              shift and go to state 143
-    ,               shift and go to state 144
-
-
-state 137
 
     (57) opcionales -> ASSIGN expr .
     (32) expr -> expr . . OBJECTID ( lista_argumentos )
@@ -3338,7 +3320,7 @@ state 137
     +               shift and go to state 67
 
 
-state 138
+state 137
 
     (31) expr -> IF expr THEN expr ELSE expr . FI
     (32) expr -> expr . . OBJECTID ( lista_argumentos )
@@ -3352,7 +3334,7 @@ state 138
     (46) expr -> expr . * expr
     (47) expr -> expr . - expr
     (48) expr -> expr . + expr
-    FI              shift and go to state 145
+    FI              shift and go to state 144
     .               shift and go to state 59
     @               shift and go to state 60
     =               shift and go to state 61
@@ -3364,7 +3346,7 @@ state 138
     +               shift and go to state 67
 
 
-state 139
+state 138
 
     (50) argumentos -> expr . , argumentos
     (51) argumentos -> expr .
@@ -3379,7 +3361,7 @@ state 139
     (46) expr -> expr . * expr
     (47) expr -> expr . - expr
     (48) expr -> expr . + expr
-    ,               shift and go to state 146
+    ,               shift and go to state 145
     )               reduce using rule 51 (argumentos -> expr .)
     .               shift and go to state 59
     @               shift and go to state 60
@@ -3392,13 +3374,13 @@ state 139
     +               shift and go to state 67
 
 
-state 140
+state 139
 
     (36) expr -> expr @ TYPEID . OBJECTID ( argumentos . )
-    )               shift and go to state 147
+    )               shift and go to state 146
 
 
-state 141
+state 140
 
     (37) expr -> expr @ TYPEID . OBJECTID ( ) .
     .               reduce using rule 37 (expr -> expr @ TYPEID . OBJECTID ( ) .)
@@ -3423,9 +3405,59 @@ state 141
     FI              reduce using rule 37 (expr -> expr @ TYPEID . OBJECTID ( ) .)
 
 
+state 141
+
+    (59) cuerpo_case -> OBJECTID : TYPEID DARROW . expr ;
+    (20) expr -> . { bloque }
+    (21) expr -> . BOOL_CONST
+    (22) expr -> . STR_CONST
+    (23) expr -> . INT_CONST
+    (24) expr -> . OBJECTID
+    (25) expr -> . { expr }
+    (26) expr -> . NEW TYPEID
+    (27) expr -> . CASE expr OF cuerpo_case ESAC
+    (28) expr -> . CASE expr OF ESAC
+    (29) expr -> . LET OBJECTID : TYPEID opcionales lista_inicia IN expr
+    (30) expr -> . WHILE expr LOOP expr POOL
+    (31) expr -> . IF expr THEN expr ELSE expr FI
+    (32) expr -> . expr . OBJECTID ( lista_argumentos )
+    (33) expr -> . expr . OBJECTID ( )
+    (34) expr -> . OBJECTID ( )
+    (35) expr -> . OBJECTID ( lista_argumentos )
+    (36) expr -> . expr @ TYPEID . OBJECTID ( argumentos )
+    (37) expr -> . expr @ TYPEID . OBJECTID ( )
+    (38) expr -> . ( expr )
+    (39) expr -> . ~ expr
+    (40) expr -> . ISVOID expr
+    (41) expr -> . NOT expr
+    (42) expr -> . expr = expr
+    (43) expr -> . expr LE expr
+    (44) expr -> . expr < expr
+    (45) expr -> . expr / expr
+    (46) expr -> . expr * expr
+    (47) expr -> . expr - expr
+    (48) expr -> . expr + expr
+    (49) expr -> . OBJECTID ASSIGN expr
+    {               shift and go to state 42
+    BOOL_CONST      shift and go to state 43
+    STR_CONST       shift and go to state 44
+    INT_CONST       shift and go to state 45
+    OBJECTID        shift and go to state 40
+    NEW             shift and go to state 46
+    CASE            shift and go to state 47
+    LET             shift and go to state 48
+    WHILE           shift and go to state 49
+    IF              shift and go to state 50
+    (               shift and go to state 51
+    ~               shift and go to state 52
+    ISVOID          shift and go to state 53
+    NOT             shift and go to state 54
+
+    expr                           shift and go to state 147
+
 state 142
 
-    (60) cuerpo_case -> OBJECTID : TYPEID DARROW . expr ;
+    (29) expr -> LET OBJECTID : TYPEID opcionales lista_inicia IN . expr
     (20) expr -> . { bloque }
     (21) expr -> . BOOL_CONST
     (22) expr -> . STR_CONST
@@ -3475,61 +3507,11 @@ state 142
 
 state 143
 
-    (29) expr -> LET OBJECTID : TYPEID opcionales lista_inicia IN . expr
-    (20) expr -> . { bloque }
-    (21) expr -> . BOOL_CONST
-    (22) expr -> . STR_CONST
-    (23) expr -> . INT_CONST
-    (24) expr -> . OBJECTID
-    (25) expr -> . { expr }
-    (26) expr -> . NEW TYPEID
-    (27) expr -> . CASE expr OF cuerpo_case ESAC
-    (28) expr -> . CASE expr OF ESAC
-    (29) expr -> . LET OBJECTID : TYPEID opcionales lista_inicia IN expr
-    (30) expr -> . WHILE expr LOOP expr POOL
-    (31) expr -> . IF expr THEN expr ELSE expr FI
-    (32) expr -> . expr . OBJECTID ( lista_argumentos )
-    (33) expr -> . expr . OBJECTID ( )
-    (34) expr -> . OBJECTID ( )
-    (35) expr -> . OBJECTID ( lista_argumentos )
-    (36) expr -> . expr @ TYPEID . OBJECTID ( argumentos )
-    (37) expr -> . expr @ TYPEID . OBJECTID ( )
-    (38) expr -> . ( expr )
-    (39) expr -> . ~ expr
-    (40) expr -> . ISVOID expr
-    (41) expr -> . NOT expr
-    (42) expr -> . expr = expr
-    (43) expr -> . expr LE expr
-    (44) expr -> . expr < expr
-    (45) expr -> . expr / expr
-    (46) expr -> . expr * expr
-    (47) expr -> . expr - expr
-    (48) expr -> . expr + expr
-    (49) expr -> . OBJECTID ASSIGN expr
-    {               shift and go to state 42
-    BOOL_CONST      shift and go to state 43
-    STR_CONST       shift and go to state 44
-    INT_CONST       shift and go to state 45
-    OBJECTID        shift and go to state 40
-    NEW             shift and go to state 46
-    CASE            shift and go to state 47
-    LET             shift and go to state 48
-    WHILE           shift and go to state 49
-    IF              shift and go to state 50
-    (               shift and go to state 51
-    ~               shift and go to state 52
-    ISVOID          shift and go to state 53
-    NOT             shift and go to state 54
+    (54) lista_inicia -> lista_inicia , . OBJECTID : TYPEID opcionales
+    OBJECTID        shift and go to state 149
 
-    expr                           shift and go to state 149
 
 state 144
-
-    (54) lista_inicia -> lista_inicia , . OBJECTID : TYPEID opcionales
-    OBJECTID        shift and go to state 150
-
-
-state 145
 
     (31) expr -> IF expr THEN expr ELSE expr FI .
     .               reduce using rule 31 (expr -> IF expr THEN expr ELSE expr FI .)
@@ -3554,7 +3536,7 @@ state 145
     FI              reduce using rule 31 (expr -> IF expr THEN expr ELSE expr FI .)
 
 
-state 146
+state 145
 
     (50) argumentos -> expr , . argumentos
     (50) argumentos -> . expr , argumentos
@@ -3604,10 +3586,10 @@ state 146
     ISVOID          shift and go to state 53
     NOT             shift and go to state 54
 
-    expr                           shift and go to state 139
-    argumentos                     shift and go to state 151
+    expr                           shift and go to state 138
+    argumentos                     shift and go to state 150
 
-state 147
+state 146
 
     (36) expr -> expr @ TYPEID . OBJECTID ( argumentos ) .
     .               reduce using rule 36 (expr -> expr @ TYPEID . OBJECTID ( argumentos ) .)
@@ -3632,9 +3614,9 @@ state 147
     FI              reduce using rule 36 (expr -> expr @ TYPEID . OBJECTID ( argumentos ) .)
 
 
-state 148
+state 147
 
-    (60) cuerpo_case -> OBJECTID : TYPEID DARROW expr . ;
+    (59) cuerpo_case -> OBJECTID : TYPEID DARROW expr . ;
     (32) expr -> expr . . OBJECTID ( lista_argumentos )
     (33) expr -> expr . . OBJECTID ( )
     (36) expr -> expr . @ TYPEID . OBJECTID ( argumentos )
@@ -3646,7 +3628,7 @@ state 148
     (46) expr -> expr . * expr
     (47) expr -> expr . - expr
     (48) expr -> expr . + expr
-    ;               shift and go to state 152
+    ;               shift and go to state 151
     .               shift and go to state 59
     @               shift and go to state 60
     =               shift and go to state 61
@@ -3658,7 +3640,7 @@ state 148
     +               shift and go to state 67
 
 
-state 149
+state 148
 
     (29) expr -> LET OBJECTID : TYPEID opcionales lista_inicia IN expr .
     (32) expr -> expr . . OBJECTID ( lista_argumentos )
@@ -3703,44 +3685,44 @@ state 149
     +               shift and go to state 67
 
 
-state 150
+state 149
 
     (54) lista_inicia -> lista_inicia , OBJECTID . : TYPEID opcionales
-    :               shift and go to state 153
+    :               shift and go to state 152
 
 
-state 151
+state 150
 
     (50) argumentos -> expr , argumentos .
     )               reduce using rule 50 (argumentos -> expr , argumentos .)
 
 
+state 151
+
+    (59) cuerpo_case -> OBJECTID : TYPEID DARROW expr ; .
+    ESAC            reduce using rule 59 (cuerpo_case -> OBJECTID : TYPEID DARROW expr ; .)
+    OBJECTID        reduce using rule 59 (cuerpo_case -> OBJECTID : TYPEID DARROW expr ; .)
+    ;               reduce using rule 59 (cuerpo_case -> OBJECTID : TYPEID DARROW expr ; .)
+
+
 state 152
 
-    (60) cuerpo_case -> OBJECTID : TYPEID DARROW expr ; .
-    ESAC            reduce using rule 60 (cuerpo_case -> OBJECTID : TYPEID DARROW expr ; .)
-    ;               reduce using rule 60 (cuerpo_case -> OBJECTID : TYPEID DARROW expr ; .)
-    OBJECTID        reduce using rule 60 (cuerpo_case -> OBJECTID : TYPEID DARROW expr ; .)
+    (54) lista_inicia -> lista_inicia , OBJECTID : . TYPEID opcionales
+    TYPEID          shift and go to state 153
 
 
 state 153
-
-    (54) lista_inicia -> lista_inicia , OBJECTID : . TYPEID opcionales
-    TYPEID          shift and go to state 154
-
-
-state 154
 
     (54) lista_inicia -> lista_inicia , OBJECTID : TYPEID . opcionales
     (56) opcionales -> .
     (57) opcionales -> . ASSIGN expr
     IN              reduce using rule 56 (opcionales -> .)
     ,               reduce using rule 56 (opcionales -> .)
-    ASSIGN          shift and go to state 129
+    ASSIGN          shift and go to state 128
 
-    opcionales                     shift and go to state 155
+    opcionales                     shift and go to state 154
 
-state 155
+state 154
 
     (54) lista_inicia -> lista_inicia , OBJECTID : TYPEID opcionales .
     IN              reduce using rule 54 (lista_inicia -> lista_inicia , OBJECTID : TYPEID opcionales .)
@@ -3787,14 +3769,12 @@ shift/reduce conflict for / in state 90 resolved as shift
 shift/reduce conflict for * in state 90 resolved as shift
 shift/reduce conflict for - in state 90 resolved as shift
 shift/reduce conflict for + in state 90 resolved as shift
-shift/reduce conflict for . in state 149 resolved as shift
-shift/reduce conflict for @ in state 149 resolved as shift
-shift/reduce conflict for = in state 149 resolved as shift
-shift/reduce conflict for LE in state 149 resolved as shift
-shift/reduce conflict for < in state 149 resolved as shift
-shift/reduce conflict for / in state 149 resolved as shift
-shift/reduce conflict for * in state 149 resolved as shift
-shift/reduce conflict for - in state 149 resolved as shift
-shift/reduce conflict for + in state 149 resolved as shift
-reduce/reduce conflict in state 134 resolved using rule cuerpo_case -> cuerpo_case cuerpo_case ;
-rejected rule (cuerpo_case -> cuerpo_case ;) in state 134
+shift/reduce conflict for . in state 148 resolved as shift
+shift/reduce conflict for @ in state 148 resolved as shift
+shift/reduce conflict for = in state 148 resolved as shift
+shift/reduce conflict for LE in state 148 resolved as shift
+shift/reduce conflict for < in state 148 resolved as shift
+shift/reduce conflict for / in state 148 resolved as shift
+shift/reduce conflict for * in state 148 resolved as shift
+shift/reduce conflict for - in state 148 resolved as shift
+shift/reduce conflict for + in state 148 resolved as shift

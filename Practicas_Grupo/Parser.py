@@ -162,13 +162,14 @@ class CoolParser(Parser):
     def argumentos(self, p):
         return [p.expr] + p.argumentos
 
+    
     @_("OBJECTID '(' lista_argumentos ')'")
     def expr(self, p):
-        return LlamadaMetodoEstatico(cuerpo=Objeto(nombre="self"),nombre_metodo=p.OBJECTID, argumentos=p.lista_argumentos)
+        return LlamadaMetodo(cuerpo=Objeto(nombre="self"),nombre_metodo=p.OBJECTID, argumentos=p.lista_argumentos)
 
     @_("OBJECTID '(' ')'")
     def expr(self, p):
-        return LlamadaMetodoEstatico(cuerpo=Objeto(nombre="self"),nombre_metodo=p.OBJECTID, argumentos=[])
+        return LlamadaMetodo(cuerpo=Objeto(nombre="self"),nombre_metodo=p.OBJECTID, argumentos=[])
     
     @_("expr '.' OBJECTID '(' ')'")
     def expr(self, p):
@@ -219,7 +220,7 @@ class CoolParser(Parser):
     
     @_("lista_inicia ',' OBJECTID ':' TYPEID opcionales")
     def lista_inicia(self, p):
-        print(p.OBJECTID,"Algo")
+        #print(p.OBJECTID,"Algo")
         return p.lista_inicia + [(p.OBJECTID, p.TYPEID ,p.opcionales)]
     
     @_("ASSIGN expr")
@@ -246,10 +247,10 @@ class CoolParser(Parser):
     @_("cuerpo_case cuerpo_case ';'")
     def cuerpo_case(self, p):
         return p.cuerpo_case + [p.cuerpo_case]
-    
-    @_("cuerpo_case ';'")
+    """
+    @_("cuerpo_case")
     def cuerpo_case(self, p):
-        return [p.cuerpo_case]
+        return [p.cuerpo_case]"""
 
     @_("NEW TYPEID")
     def expr(self, p):
