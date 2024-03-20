@@ -16,11 +16,14 @@ class CoolParser(Parser):
     precedence = (
         ('right', "ASSIGN"),
         ('left', "NOT"),
+        ('nonassoc', "<", "LE",'='),
         ('left', "+", "-"),
         ('left', "*", "/"),
         ('left', "ISVOID"),
         ('left', '~'),
-        ('nonassoc', "<", "LE"),
+        ('left', '@'),
+        ('left', '.'),
+        
     )
     
     @_("Clase ';'")
@@ -58,6 +61,10 @@ class CoolParser(Parser):
     @_("cuerpo_clase caracteristica ';'")
     def cuerpo_clase(self, p):
         return p.cuerpo_clase + [p.caracteristica]
+    
+    @_("cuerpo_clase error ';'")
+    def cuerpo_clase(self, p):
+        return []
 
     @_("Atributo")
     def caracteristica(self, p):
@@ -70,6 +77,10 @@ class CoolParser(Parser):
     @_("OBJECTID ':' TYPEID")
     def Atributo(self, p):
         return Atributo(nombre=p[0], tipo=p[2], cuerpo=NoExpr())
+    
+    @_("OBJECTID ':' error")
+    def Atributo(self, p):
+        return NoExpr()
 
     @_("OBJECTID ':' TYPEID ASSIGN expr")
     def Atributo(self, p):
@@ -78,10 +89,26 @@ class CoolParser(Parser):
     @_("OBJECTID '(' ')' ':' TYPEID '{' expr '}'")
     def Metodo(self, p):
         return Metodo(formales=[],nombre=p.OBJECTID, tipo=p.TYPEID, cuerpo=p.expr)
+    
+    @_("OBJECTID '(' ')' ':' error")
+    def Metodo(self, p):
+        return p.error
+
+    @_("OBJECTID '(' ')' ':' TYPEID '{' error '}'")
+    def Metodo(self, p):
+        return p.error
 
     @_("OBJECTID '(' formales ')' ':' TYPEID '{' expr '}'")
     def Metodo(self, p):
         return Metodo(nombre=p.OBJECTID, tipo=p.TYPEID, formales=p.formales, cuerpo=p.expr)
+    
+    @_("OBJECTID '(' formales ')' ':' TYPEID '{' error '}'")
+    def Metodo(self, p):
+        return NoExpr()
+    
+    @_("OBJECTID '(' error ')' ':' TYPEID '{' expr '}'")
+    def Metodo(self, p):
+        return NoExpr()
 
     @_("formal")
     def formales(self, p):
@@ -187,6 +214,10 @@ class CoolParser(Parser):
     @_("IF expr THEN expr ELSE expr FI")
     def expr(self, p):
         return Condicional(condicion=p.expr0,verdadero=p.expr1, falso=p.expr2)
+    
+    @_("IF expr THEN expr error FI")
+    def expr(self, p):
+        return NoExpr()
 
     @_("WHILE expr LOOP expr POOL")
     def expr(self, p):
@@ -210,6 +241,10 @@ class CoolParser(Parser):
         else:
             return Let(nombre=p.OBJECTID, tipo=p.TYPEID, inicializacion=p.opcionales, cuerpo=p.expr)
     
+    @_("LET OBJECTID ':' TYPEID opcionales lista_inicia IN error")
+    def expr(self, p):
+        return NoExpr()
+
     @_("")
     def lista_inicia(self, p):
         return []
@@ -221,6 +256,10 @@ class CoolParser(Parser):
     @_("ASSIGN expr")
     def opcionales(self, p):
         return p.expr
+    
+    @_("ASSIGN error")
+    def opcionales(self, p):
+        return NoExpr()
     
     @_("")
     def opcionales(self, p):
@@ -239,9 +278,13 @@ class CoolParser(Parser):
     def cuerpo_case(self, p):
         return [RamaCase(nombre_variable=p.OBJECTID, tipo=p.TYPEID, cuerpo=p.expr)]
     
-    @_("cuerpo_case cuerpo_case ';'")
+    @_("cuerpo_case OBJECTID ':' TYPEID DARROW expr ';'")
     def cuerpo_case(self, p):
-        return p.cuerpo_case + [p.cuerpo_case]
+        return p.cuerpo_case + [RamaCase(nombre_variable=p.OBJECTID, tipo=p.TYPEID, cuerpo=p.expr)]
+    
+    @_("cuerpo_case OBJECTID ':' TYPEID DARROW error ';'")
+    def cuerpo_case(self, p):
+        return NoExpr()
 
     @_("NEW TYPEID")
     def expr(self, p):
@@ -271,6 +314,10 @@ class CoolParser(Parser):
     def expr(self, p):
         return Bloque(expresiones=p.bloque)
     
+    # @_("'{' error '}'")
+    # def expr(self, p):
+    #     return NoExpr()
+    
     @_("expr ';'")
     def bloque(self,p):
         return [p.expr]
@@ -291,6 +338,8 @@ class CoolParser(Parser):
             if p.value in CoolLexer.literals:
                 self.errores.append(f"\"{self.nombre_fichero}\", line {p.lineno}: syntax error at or near '{p.value}'")
             elif p.type == p.value.upper():
+                self.errores.append(f"\"{self.nombre_fichero}\", line {p.lineno}: syntax error at or near {p.type}")
+            elif p.type == "LE":
                 self.errores.append(f"\"{self.nombre_fichero}\", line {p.lineno}: syntax error at or near {p.type}")
             else:
                 self.errores.append(f"\"{self.nombre_fichero}\", line {p.lineno}: syntax error at or near {p.type} = {p.value}")
