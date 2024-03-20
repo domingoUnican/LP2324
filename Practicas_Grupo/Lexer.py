@@ -146,6 +146,7 @@ class CoolLexer(Lexer):
 
     @_(r'\-\-.+\n?')  
     def line_comment(self, t):
+        self.lineno += t.value.count('\n')
         pass
 
     @_(r'(?<!\\)\(\*')
@@ -156,6 +157,8 @@ class CoolLexer(Lexer):
     # @_(r'(?<!\\)\(\*(.|\n)+(?<!\\)\*\)')
     # def multiline_comment(self, t):
     #     pass
+
+    
 
     @_(r'\n+')
     def newline(self, t):
@@ -211,13 +214,13 @@ class StringLexer(Lexer):
         pass
 
     #no se le quita la contrabarra a b t n r
-    @_(r'\\[^btnr]')
-    def ESCAPADO(self, t):
+    @_(r'\\[^btnrf\\]')
+    def ESCAPADO1(self, t):
         self._acumulado += t.value[1:]
         pass
 
-    @_(r'\\[btnr]')
-    def ESCAPADO(self, t):
+    @_(r'\\[btnrf\\]')
+    def ESCAPADO2(self, t):
         self._acumulado += t.value
         pass
 
@@ -236,6 +239,14 @@ class StringLexer(Lexer):
         self.begin(CoolLexer)
         return t
     
+    @_(r'\n') #error \ en salto de linea
+    def ERROR2(self, t):
+        t.type = "ERROR"
+        t.value = '"Unterminated string constant"'
+        self._acumulado = ""
+        self.begin(CoolLexer)
+        return t
+    
     @_(r'.')
     def CUALQUIERCOSA(self, t):
         self._acumulado += t.value
@@ -247,25 +258,50 @@ class MultilineCommentRemover(Lexer):
 
     _nestcomments = 0
 
-    @_(r'(?<!\\)\(\*')
-    def registrar(self, t):
-        self._nestcomments += 1
+    # @_(r'(?<!\\)\(\*')
+    # def registrar(self, t):
+    #     self._nestcomments += 1
+    #     pass
+
+    @_(r'\(\*')
+    def anidar(self, t):
+       self._nestcomments += 1
+       pass
+    
+    @_(r'\([^\*]')
+    def ignorar_apertura(self, t):
+        if (t.value[1] == '\n'):
+            self.lineno += 1
         pass
 
-    @_(r'(?<!\\)\*\)')
-    def volvedor(self, t):
+    @_(r'\*\)')
+    def desanidar(self, t):
         if (self._nestcomments == 0):
             self.begin(CoolLexer)
         else:
             self._nestcomments -= 1
         pass
 
+    @_(r'\*[^\)]')
+    def ignorar_cierre(self, t):
+        if (t.value[1] == '\n'):
+            self.lineno += 1
+        pass
+
+    # @_(r'(?<!\\)\*\)')
+    # def volvedor(self, t):
+    #     if (self._nestcomments == 0):
+    #         self.begin(CoolLexer)
+    #     else:
+    #         self._nestcomments -= 1
+    #     pass
+
     @_(r'\n+')
     def newline(self, t):
         self.lineno += t.value.count('\n')
 
 
-    @_(r'.')
+    @_(r'[^\n\(\*]') # Que pille de todo menos '\n', '(' y '*')
     def ignore_method(self, t):
         pass
 
