@@ -1,7 +1,7 @@
 import os
 import re
 import sys
-
+from Base_clases import *
 
 DIRECTORIO = os.path.expanduser("./")
 sys.path.append(DIRECTORIO)
