@@ -240,7 +240,6 @@ class CoolParser(Parser):
     
     @_("CASE error OF lista_expr_case ESAC")
     def Expresion(self, p):
-        print("LLEGA?")
         return Swicht(expr=NoExpr(), casos=p.lista_expr_case) 
 
     @_("OBJECTID ':' TYPEID DARROW Expresion ';'")
@@ -309,10 +308,11 @@ class CoolParser(Parser):
         return Booleano(valor=p.BOOL_CONST)
     
     def error(self, p):
+        casoSoloNear = {'FI', 'OF'}
         if p :
             if (p.type in CoolLexer.literals):
                 self.errores.append(f'"{self.nombre_fichero}", line {p.lineno}: syntax error at or near \'{p.value}\'')
-            elif (p.type == 'FI'):
+            elif p.type in casoSoloNear:
                 self.errores.append(f'"{self.nombre_fichero}", line {p.lineno}: syntax error at or near {p.type}')
             else:
                 self.errores.append(f'"{self.nombre_fichero}", line {p.lineno}: syntax error at or near  {p.type} = {p.value}')
