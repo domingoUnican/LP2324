@@ -75,7 +75,7 @@ class CoolParser(Parser):
 
     @_("CLASS TYPEID opcional '{' lista_atr_metodos '}' ';'")
     def Clase(self, p):
-        return Clase(nombre= p.TYPEID, padre="Object",caracteristicas=p.lista_atr_metodos, nombre_fichero=self.nombre_fichero)
+        return Clase(nombre= p.TYPEID, padre=p.opcional,caracteristicas=p.lista_atr_metodos, nombre_fichero=self.nombre_fichero)
 
     @_("Atributo ';' lista_atr_metodos")
     def lista_atr_metodos(self, p):
@@ -117,10 +117,9 @@ class CoolParser(Parser):
     def Formal(self, p):
         return Formal(nombre_variable= p.OBJECTID, tipo=p.TYPEID)
 
-    @_("OBJECTID '(' Formal ',' ListFormal ')' ':' TYPEID '{' Expresion '}'")
+    @_("OBJECTID '(' ListFormal ')' ':' TYPEID '{' Expresion '}'")
     def Metodo(self, p):
-        formales = [p.Formal] + p.ListFormal
-        return Metodo(nombre=p.OBJECTID, formales = formales, tipo = p.TYPEID, cuerpo=p.Expresion)
+        return Metodo(nombre=p.OBJECTID, formales = p.ListFormal, tipo = p.TYPEID, cuerpo=p.Expresion)
     
     @_("Formal ',' ListFormal")
     def ListFormal(self, p):
@@ -165,12 +164,12 @@ class CoolParser(Parser):
         return Division(izquierda=p[0], derecha=p[2])
 
     # ⟨Expresion⟩ < ⟨Expresion⟩
-    @_("Expresion LE Expresion")
+    @_("Expresion '<' Expresion")
     def Expresion(self, p):
         return Menor(izquierda=p[0], derecha=p[2])
     
     # ⟨Expresion⟩ <= ⟨Expresion⟩
-    @_("Expresion DARROW Expresion")
+    @_("Expresion LE Expresion")
     def Expresion(self, p):
         return p[0] <= p[2]
 
@@ -219,6 +218,14 @@ class CoolParser(Parser):
     @_("Expresion '.' OBJECTID '(' lstExpr ')'")
     def Expresion(self, p):
         return LlamadaMetodo(cuerpo= p.Expresion, nombre_metodo=p.OBJECTID,argumentos=p.lstExpr)
+
+    @_("OBJECTID '(' lstExpr ')'")
+    def Expresion(self, p):
+        return LlamadaMetodo(cuerpo = Objeto(nombre="self"), nombre_metodo=p.OBJECTID,argumentos=p.lstExpr)
+
+    @_("OBJECTID '(' ')'")
+    def Expresion(self, p):
+        return LlamadaMetodo(cuerpo = Objeto(nombre="self"), nombre_metodo=p.OBJECTID,argumentos=[])
     
 
     @_("Expresion ',' lstExpr")
