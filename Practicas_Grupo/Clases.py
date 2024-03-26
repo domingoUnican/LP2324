@@ -203,6 +203,11 @@ class Suma(OperacionBinaria):
         resultado += self.derecha.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n=0):
+        codigo = ""
+        codigo = f'{self.izquierda.genera_codigo(n)} + {self.derecha.genera_codigo(0)}'
+        return codigo
 
 @dataclass
 class Resta(OperacionBinaria):
@@ -215,6 +220,11 @@ class Resta(OperacionBinaria):
         resultado += self.derecha.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n=0):
+        codigo = ""
+        codigo = f'{self.izquierda.genera_codigo(n)} - {self.derecha.genera_codigo(0)}'
+        return codigo
 
 
 
@@ -229,6 +239,11 @@ class Multiplicacion(OperacionBinaria):
         resultado += self.derecha.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n=0):    
+        codigo = ""
+        codigo = f'{self.izquierda.genera_codigo(n)} * {self.derecha.genera_codigo(0)}'
+        return codigo
 
 @dataclass
 class Division(OperacionBinaria):
@@ -241,7 +256,11 @@ class Division(OperacionBinaria):
         resultado += self.derecha.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
-
+    
+    def genera_codigo(self, n=0):    
+        codigo = ""
+        codigo = f'{self.izquierda.genera_codigo(n)} / {self.derecha.genera_codigo(0)}'
+        return codigo
 
 @dataclass
 class Menor(OperacionBinaria):
@@ -254,6 +273,11 @@ class Menor(OperacionBinaria):
         resultado += self.derecha.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n=0):    
+        codigo = ""
+        codigo = f'{self.izquierda.genera_codigo(n)} < {self.derecha.genera_codigo(0)}'
+        return codigo
 
 
 
@@ -268,6 +292,11 @@ class LeIgual(OperacionBinaria):
         resultado += self.derecha.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n=0):    
+        codigo = ""
+        codigo = f'{self.izquierda.genera_codigo(n)} <= {self.derecha.genera_codigo(0)}'
+        return codigo
 
 
 @dataclass
@@ -282,7 +311,7 @@ class Igual(OperacionBinaria):
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
     
-    def genera_codigo(self, n):
+    def genera_codigo(self, n=0):    
         codigo = ""
         codigo = f'{self.izquierda.genera_codigo(n)} == {self.derecha.genera_codigo(0)}'
         return codigo
@@ -301,6 +330,11 @@ class Neg(Expresion):
         resultado += self.expr.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n=0):    
+        codigo = ""
+        codigo = f'not {self.expr.genera_codigo(0)}'
+        return codigo
 
 @dataclass
 class Not(Expresion):
@@ -313,6 +347,11 @@ class Not(Expresion):
         resultado += self.expr.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n=0):
+        codigo = ""
+        codigo = f'not {self.expr.genera_codigo(0)}'
+        return codigo
 
 @dataclass
 class EsNulo(Expresion):
@@ -324,6 +363,11 @@ class EsNulo(Expresion):
         resultado += self.expr.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n=0):
+        codigo = ""
+        codigo = f'{self.expr.genera_codigo(0)} is None'
+        return codigo
 
 @dataclass
 class Objeto(Expresion):
@@ -393,7 +437,7 @@ class Programa(IterableNodo):
         resultado += f'{" "*n}_program\n'
         resultado += ''.join([c.str(n+2) for c in self.secuencia])
         return resultado
-    def genera_codigo(self, n): # genera codigo tiene que tener un indentado 
+    def genera_codigo(self, n=0): # genera codigo tiene que tener un indentado 
         #----------------------------------
         codigo =""
         for clase in self.secuencia:
@@ -430,7 +474,7 @@ class Clase(Nodo):
         return resultado
     
     #------------------
-    def genera_codigo(self,n):
+    def genera_codigo(self,n=0):
         codigo =""
         codigo = f"{' '*n}class {self.nombre}({self.padre}):\n"
         for caracteristica in self.caracteristicas:
