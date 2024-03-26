@@ -14,18 +14,22 @@ class CoolParser(Parser):
     errores = []
     
     precedence = (
-        ('left', ASSIGN),
-        ('left', LE, '<', '=', NOT),
+        ('left', ASSIGN, NOT),
+        ('nonassoc', '='),
        ('left', '+', '-'),
+       ('left', LE, '<', '~'),
        ('left', '*', '/'),
         ('left', ISVOID),
         ('left', '@'),
         ('left', '.')
     )
 
+    
+    
     @_("Clase ';' ")
     def Programa(self, p):
         return Programa(secuencia=[p.Clase])
+    
     
     @_("Programa Clase ';' ")
     def Programa(self, p):
@@ -131,6 +135,7 @@ class CoolParser(Parser):
     @_("Expresion '=' Expresion")
     def Expresion(self, p):
         return Igual(izquierda=p[0], derecha=p[2])
+    
 
     @_("'(' Expresion ')'")
     def Expresion(self, p):
@@ -213,7 +218,14 @@ class CoolParser(Parser):
                    cuerpo=p[7])
             '''
         
-
+    @_("',' OBJECTID ':' TYPEID ASSIGN error lista_expr_let")
+    def lista_expr_let(self, p):
+        return []
+    
+    @_("OBJECTID ':' TYPEID ASSIGN error lista_expr_let")
+    def lista_expr_let(self, p):
+        return []
+    
     @_("")
     def lista_expr_let(self, p):
         return []
@@ -240,7 +252,6 @@ class CoolParser(Parser):
     
     @_("CASE error OF lista_expr_case ESAC")
     def Expresion(self, p):
-        print("LLEGA?")
         return Swicht(expr=NoExpr(), casos=p.lista_expr_case) 
 
     @_("OBJECTID ':' TYPEID DARROW Expresion ';'")
@@ -309,13 +320,16 @@ class CoolParser(Parser):
         return Booleano(valor=p.BOOL_CONST)
     
     def error(self, p):
+        casoSoloNear = {'FI', 'OF', 'DARROW', 'ESAC', 'ELSE', 'LE', 'LOOP', 'POOL'}
         if p :
             if (p.type in CoolLexer.literals):
                 self.errores.append(f'"{self.nombre_fichero}", line {p.lineno}: syntax error at or near \'{p.value}\'')
-            elif (p.type == 'FI'):
+            elif p.type in casoSoloNear:
                 self.errores.append(f'"{self.nombre_fichero}", line {p.lineno}: syntax error at or near {p.type}')
             else:
                 self.errores.append(f'"{self.nombre_fichero}", line {p.lineno}: syntax error at or near  {p.type} = {p.value}')
+        else:
+            self.errores.append(f'"{self.nombre_fichero}", line 0: syntax error at or near EOF')
             
 
 
