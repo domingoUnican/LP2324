@@ -1,0 +1,3573 @@
+Grammar:
+
+Rule 0     S' -> Programa
+Rule 1     Programa -> Programa Clase
+Rule 2     Programa -> Clase
+Rule 3     Clase -> CLASS TYPEID opcional { lista_atr_metodos } ;
+Rule 4     lista_atr_metodos -> Metodo ; lista_atr_metodos
+Rule 5     lista_atr_metodos -> <empty>
+Rule 6     lista_atr_metodos -> Atributo ; lista_atr_metodos
+Rule 7     opcional -> INHERITS TYPEID
+Rule 8     opcional -> <empty>
+Rule 9     Atributo -> OBJECTID : TYPEID opcional_expr
+Rule 10    opcional_expr -> <empty>
+Rule 11    opcional_expr -> Expresion
+Rule 12    Metodo -> OBJECTID ( ListFormal ) : TYPEID { Expresion }
+Rule 13    Metodo -> OBJECTID ( ) : TYPEID { Expresion }
+Rule 14    Formal -> OBJECTID : TYPEID
+Rule 15    ListFormal -> Formal
+Rule 16    ListFormal -> Formal , ListFormal
+Rule 17    Expresion -> BOOL_CONST
+Rule 18    Expresion -> STR_CONST
+Rule 19    Expresion -> INT_CONST
+Rule 20    Expresion -> OBJECTID
+Rule 21    Expresion -> { listNueva }
+Rule 22    Expresion -> NEW TYPEID
+Rule 23    Expresion -> CASE Expresion OF CaseList ESAC
+Rule 24    Expresion -> LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+Rule 25    Expresion -> WHILE Expresion LOOP Expresion POOL
+Rule 26    Expresion -> IF Expresion THEN Expresion ELSE Expresion FI
+Rule 27    Expresion -> OBJECTID ( )
+Rule 28    Expresion -> OBJECTID ( lstExpr )
+Rule 29    Expresion -> Expresion . OBJECTID ( lstExpr )
+Rule 30    Expresion -> Expresion . OBJECTID ( )
+Rule 31    Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr )
+Rule 32    Expresion -> Expresion @ TYPEID . OBJECTID ( )
+Rule 33    Expresion -> ~ Expresion
+Rule 34    Expresion -> ISVOID Expresion  [precedence=left, level=5]
+Rule 35    Expresion -> NOT Expresion  [precedence=nonassoc, level=2]
+Rule 36    Expresion -> ( Expresion )
+Rule 37    Expresion -> Expresion = Expresion
+Rule 38    Expresion -> Expresion LE Expresion  [precedence=nonassoc, level=2]
+Rule 39    Expresion -> Expresion < Expresion
+Rule 40    Expresion -> Expresion / Expresion  [precedence=left, level=4]
+Rule 41    Expresion -> Expresion * Expresion  [precedence=left, level=4]
+Rule 42    Expresion -> Expresion - Expresion  [precedence=left, level=3]
+Rule 43    Expresion -> NUMBER
+Rule 44    Expresion -> Expresion + Expresion  [precedence=left, level=3]
+Rule 45    Expresion -> IGNORE
+Rule 46    Expresion -> OBJECTID ASSIGN Expresion  [precedence=right, level=1]
+Rule 47    lstExpr -> Expresion
+Rule 48    lstExpr -> Expresion , lstExpr
+Rule 49    lstArrow -> <empty>
+Rule 50    lstArrow -> , OBJECTID : TYPEID exprOpcional lstArrow
+Rule 51    exprOpcional -> <empty>
+Rule 52    exprOpcional -> ASSIGN Expresion  [precedence=right, level=1]
+Rule 53    Case -> OBJECTID : TYPEID DARROW Expresion  [precedence=nonassoc, level=2]
+Rule 54    CaseList -> Case ;
+Rule 55    CaseList -> Case ; CaseList
+Rule 56    listNueva -> Expresion ;
+Rule 57    listNueva -> Expresion ; listNueva
+
+Terminals, with rules where they appear:
+
+(                    : 12 13 27 28 29 30 31 32 36
+)                    : 12 13 27 28 29 30 31 32 36
+*                    : 41
++                    : 44
+,                    : 16 48 50
+-                    : 42
+.                    : 29 30 31 32
+/                    : 40
+:                    : 9 12 13 14 24 50 53
+;                    : 3 4 6 54 55 56 57
+<                    : 39
+=                    : 37
+@                    : 31 32
+ASSIGN               : 46 52
+BOOL_CONST           : 17
+CASE                 : 23
+CLASS                : 3
+DARROW               : 53
+ELSE                 : 26
+ESAC                 : 23
+FI                   : 26
+IF                   : 26
+IGNORE               : 45
+IN                   : 24
+INHERITS             : 7
+INT_CONST            : 19
+ISVOID               : 34
+LE                   : 38
+LET                  : 24
+LOOP                 : 25
+NEW                  : 22
+NOT                  : 35
+NUMBER               : 43
+OBJECTID             : 9 12 13 14 20 24 27 28 29 30 31 32 46 50 53
+OF                   : 23
+POOL                 : 25
+STR_CONST            : 18
+THEN                 : 26
+TYPEID               : 3 7 9 12 13 14 22 24 31 32 50 53
+WHILE                : 25
+error                : 
+{                    : 3 12 13 21
+}                    : 3 12 13 21
+~                    : 33
+
+Nonterminals, with rules where they appear:
+
+Atributo             : 6
+Case                 : 54 55
+CaseList             : 23 55
+Clase                : 1 2
+Expresion            : 11 12 13 23 24 25 25 26 26 26 29 30 31 32 33 34 35 36 37 37 38 38 39 39 40 40 41 41 42 42 44 44 46 47 48 52 53 56 57
+Formal               : 15 16
+ListFormal           : 12 16
+Metodo               : 4
+Programa             : 1 0
+exprOpcional         : 24 50
+listNueva            : 21 57
+lista_atr_metodos    : 3 4 6
+lstArrow             : 24 50
+lstExpr              : 28 29 31 48
+opcional             : 3
+opcional_expr        : 9
+
+
+state 0
+
+    (0) S' -> . Programa
+    (1) Programa -> . Programa Clase
+    (2) Programa -> . Clase
+    (3) Clase -> . CLASS TYPEID opcional { lista_atr_metodos } ;
+    CLASS           shift and go to state 3
+
+    Programa                       shift and go to state 1
+    Clase                          shift and go to state 2
+
+state 1
+
+    (0) S' -> Programa .
+    (1) Programa -> Programa . Clase
+    (3) Clase -> . CLASS TYPEID opcional { lista_atr_metodos } ;
+    CLASS           shift and go to state 3
+
+    Clase                          shift and go to state 4
+
+state 2
+
+    (2) Programa -> Clase .
+    CLASS           reduce using rule 2 (Programa -> Clase .)
+    $end            reduce using rule 2 (Programa -> Clase .)
+
+
+state 3
+
+    (3) Clase -> CLASS . TYPEID opcional { lista_atr_metodos } ;
+    TYPEID          shift and go to state 5
+
+
+state 4
+
+    (1) Programa -> Programa Clase .
+    CLASS           reduce using rule 1 (Programa -> Programa Clase .)
+    $end            reduce using rule 1 (Programa -> Programa Clase .)
+
+
+state 5
+
+    (3) Clase -> CLASS TYPEID . opcional { lista_atr_metodos } ;
+    (7) opcional -> . INHERITS TYPEID
+    (8) opcional -> .
+    INHERITS        shift and go to state 7
+    {               reduce using rule 8 (opcional -> .)
+
+    opcional                       shift and go to state 6
+
+state 6
+
+    (3) Clase -> CLASS TYPEID opcional . { lista_atr_metodos } ;
+    {               shift and go to state 8
+
+
+state 7
+
+    (7) opcional -> INHERITS . TYPEID
+    TYPEID          shift and go to state 9
+
+
+state 8
+
+    (3) Clase -> CLASS TYPEID opcional { . lista_atr_metodos } ;
+    (4) lista_atr_metodos -> . Metodo ; lista_atr_metodos
+    (5) lista_atr_metodos -> .
+    (6) lista_atr_metodos -> . Atributo ; lista_atr_metodos
+    (12) Metodo -> . OBJECTID ( ListFormal ) : TYPEID { Expresion }
+    (13) Metodo -> . OBJECTID ( ) : TYPEID { Expresion }
+    (9) Atributo -> . OBJECTID : TYPEID opcional_expr
+    }               reduce using rule 5 (lista_atr_metodos -> .)
+    OBJECTID        shift and go to state 13
+
+    lista_atr_metodos              shift and go to state 10
+    Metodo                         shift and go to state 11
+    Atributo                       shift and go to state 12
+
+state 9
+
+    (7) opcional -> INHERITS TYPEID .
+    {               reduce using rule 7 (opcional -> INHERITS TYPEID .)
+
+
+state 10
+
+    (3) Clase -> CLASS TYPEID opcional { lista_atr_metodos . } ;
+    }               shift and go to state 14
+
+
+state 11
+
+    (4) lista_atr_metodos -> Metodo . ; lista_atr_metodos
+    ;               shift and go to state 15
+
+
+state 12
+
+    (6) lista_atr_metodos -> Atributo . ; lista_atr_metodos
+    ;               shift and go to state 16
+
+
+state 13
+
+    (12) Metodo -> OBJECTID . ( ListFormal ) : TYPEID { Expresion }
+    (13) Metodo -> OBJECTID . ( ) : TYPEID { Expresion }
+    (9) Atributo -> OBJECTID . : TYPEID opcional_expr
+    (               shift and go to state 17
+    :               shift and go to state 18
+
+
+state 14
+
+    (3) Clase -> CLASS TYPEID opcional { lista_atr_metodos } . ;
+    ;               shift and go to state 19
+
+
+state 15
+
+    (4) lista_atr_metodos -> Metodo ; . lista_atr_metodos
+    (4) lista_atr_metodos -> . Metodo ; lista_atr_metodos
+    (5) lista_atr_metodos -> .
+    (6) lista_atr_metodos -> . Atributo ; lista_atr_metodos
+    (12) Metodo -> . OBJECTID ( ListFormal ) : TYPEID { Expresion }
+    (13) Metodo -> . OBJECTID ( ) : TYPEID { Expresion }
+    (9) Atributo -> . OBJECTID : TYPEID opcional_expr
+    }               reduce using rule 5 (lista_atr_metodos -> .)
+    OBJECTID        shift and go to state 13
+
+    Metodo                         shift and go to state 11
+    lista_atr_metodos              shift and go to state 20
+    Atributo                       shift and go to state 12
+
+state 16
+
+    (6) lista_atr_metodos -> Atributo ; . lista_atr_metodos
+    (4) lista_atr_metodos -> . Metodo ; lista_atr_metodos
+    (5) lista_atr_metodos -> .
+    (6) lista_atr_metodos -> . Atributo ; lista_atr_metodos
+    (12) Metodo -> . OBJECTID ( ListFormal ) : TYPEID { Expresion }
+    (13) Metodo -> . OBJECTID ( ) : TYPEID { Expresion }
+    (9) Atributo -> . OBJECTID : TYPEID opcional_expr
+    }               reduce using rule 5 (lista_atr_metodos -> .)
+    OBJECTID        shift and go to state 13
+
+    Atributo                       shift and go to state 12
+    lista_atr_metodos              shift and go to state 21
+    Metodo                         shift and go to state 11
+
+state 17
+
+    (12) Metodo -> OBJECTID ( . ListFormal ) : TYPEID { Expresion }
+    (13) Metodo -> OBJECTID ( . ) : TYPEID { Expresion }
+    (15) ListFormal -> . Formal
+    (16) ListFormal -> . Formal , ListFormal
+    (14) Formal -> . OBJECTID : TYPEID
+    )               shift and go to state 24
+    OBJECTID        shift and go to state 22
+
+    ListFormal                     shift and go to state 23
+    Formal                         shift and go to state 25
+
+state 18
+
+    (9) Atributo -> OBJECTID : . TYPEID opcional_expr
+    TYPEID          shift and go to state 26
+
+
+state 19
+
+    (3) Clase -> CLASS TYPEID opcional { lista_atr_metodos } ; .
+    CLASS           reduce using rule 3 (Clase -> CLASS TYPEID opcional { lista_atr_metodos } ; .)
+    $end            reduce using rule 3 (Clase -> CLASS TYPEID opcional { lista_atr_metodos } ; .)
+
+
+state 20
+
+    (4) lista_atr_metodos -> Metodo ; lista_atr_metodos .
+    }               reduce using rule 4 (lista_atr_metodos -> Metodo ; lista_atr_metodos .)
+
+
+state 21
+
+    (6) lista_atr_metodos -> Atributo ; lista_atr_metodos .
+    }               reduce using rule 6 (lista_atr_metodos -> Atributo ; lista_atr_metodos .)
+
+
+state 22
+
+    (14) Formal -> OBJECTID . : TYPEID
+    :               shift and go to state 27
+
+
+state 23
+
+    (12) Metodo -> OBJECTID ( ListFormal . ) : TYPEID { Expresion }
+    )               shift and go to state 28
+
+
+state 24
+
+    (13) Metodo -> OBJECTID ( ) . : TYPEID { Expresion }
+    :               shift and go to state 29
+
+
+state 25
+
+    (15) ListFormal -> Formal .
+    (16) ListFormal -> Formal . , ListFormal
+    )               reduce using rule 15 (ListFormal -> Formal .)
+    ,               shift and go to state 30
+
+
+state 26
+
+    (9) Atributo -> OBJECTID : TYPEID . opcional_expr
+    (10) opcional_expr -> .
+    (11) opcional_expr -> . Expresion
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    ;               reduce using rule 10 (opcional_expr -> .)
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    opcional_expr                  shift and go to state 32
+    Expresion                      shift and go to state 33
+
+state 27
+
+    (14) Formal -> OBJECTID : . TYPEID
+    TYPEID          shift and go to state 49
+
+
+state 28
+
+    (12) Metodo -> OBJECTID ( ListFormal ) . : TYPEID { Expresion }
+    :               shift and go to state 50
+
+
+state 29
+
+    (13) Metodo -> OBJECTID ( ) : . TYPEID { Expresion }
+    TYPEID          shift and go to state 51
+
+
+state 30
+
+    (16) ListFormal -> Formal , . ListFormal
+    (15) ListFormal -> . Formal
+    (16) ListFormal -> . Formal , ListFormal
+    (14) Formal -> . OBJECTID : TYPEID
+    OBJECTID        shift and go to state 22
+
+    Formal                         shift and go to state 25
+    ListFormal                     shift and go to state 52
+
+state 31
+
+    (20) Expresion -> OBJECTID .
+    (27) Expresion -> OBJECTID . ( )
+    (28) Expresion -> OBJECTID . ( lstExpr )
+    (46) Expresion -> OBJECTID . ASSIGN Expresion
+    .               reduce using rule 20 (Expresion -> OBJECTID .)
+    @               reduce using rule 20 (Expresion -> OBJECTID .)
+    =               reduce using rule 20 (Expresion -> OBJECTID .)
+    LE              reduce using rule 20 (Expresion -> OBJECTID .)
+    <               reduce using rule 20 (Expresion -> OBJECTID .)
+    /               reduce using rule 20 (Expresion -> OBJECTID .)
+    *               reduce using rule 20 (Expresion -> OBJECTID .)
+    -               reduce using rule 20 (Expresion -> OBJECTID .)
+    +               reduce using rule 20 (Expresion -> OBJECTID .)
+    ;               reduce using rule 20 (Expresion -> OBJECTID .)
+    OF              reduce using rule 20 (Expresion -> OBJECTID .)
+    LOOP            reduce using rule 20 (Expresion -> OBJECTID .)
+    THEN            reduce using rule 20 (Expresion -> OBJECTID .)
+    )               reduce using rule 20 (Expresion -> OBJECTID .)
+    ,               reduce using rule 20 (Expresion -> OBJECTID .)
+    }               reduce using rule 20 (Expresion -> OBJECTID .)
+    POOL            reduce using rule 20 (Expresion -> OBJECTID .)
+    ELSE            reduce using rule 20 (Expresion -> OBJECTID .)
+    IN              reduce using rule 20 (Expresion -> OBJECTID .)
+    FI              reduce using rule 20 (Expresion -> OBJECTID .)
+    (               shift and go to state 53
+    ASSIGN          shift and go to state 54
+
+
+state 32
+
+    (9) Atributo -> OBJECTID : TYPEID opcional_expr .
+    ;               reduce using rule 9 (Atributo -> OBJECTID : TYPEID opcional_expr .)
+
+
+state 33
+
+    (11) opcional_expr -> Expresion .
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    ;               reduce using rule 11 (opcional_expr -> Expresion .)
+    .               shift and go to state 55
+    @               shift and go to state 56
+    =               shift and go to state 57
+    LE              shift and go to state 58
+    <               shift and go to state 59
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 34
+
+    (17) Expresion -> BOOL_CONST .
+    .               reduce using rule 17 (Expresion -> BOOL_CONST .)
+    @               reduce using rule 17 (Expresion -> BOOL_CONST .)
+    =               reduce using rule 17 (Expresion -> BOOL_CONST .)
+    LE              reduce using rule 17 (Expresion -> BOOL_CONST .)
+    <               reduce using rule 17 (Expresion -> BOOL_CONST .)
+    /               reduce using rule 17 (Expresion -> BOOL_CONST .)
+    *               reduce using rule 17 (Expresion -> BOOL_CONST .)
+    -               reduce using rule 17 (Expresion -> BOOL_CONST .)
+    +               reduce using rule 17 (Expresion -> BOOL_CONST .)
+    ;               reduce using rule 17 (Expresion -> BOOL_CONST .)
+    OF              reduce using rule 17 (Expresion -> BOOL_CONST .)
+    LOOP            reduce using rule 17 (Expresion -> BOOL_CONST .)
+    THEN            reduce using rule 17 (Expresion -> BOOL_CONST .)
+    )               reduce using rule 17 (Expresion -> BOOL_CONST .)
+    ,               reduce using rule 17 (Expresion -> BOOL_CONST .)
+    }               reduce using rule 17 (Expresion -> BOOL_CONST .)
+    POOL            reduce using rule 17 (Expresion -> BOOL_CONST .)
+    ELSE            reduce using rule 17 (Expresion -> BOOL_CONST .)
+    IN              reduce using rule 17 (Expresion -> BOOL_CONST .)
+    FI              reduce using rule 17 (Expresion -> BOOL_CONST .)
+
+
+state 35
+
+    (18) Expresion -> STR_CONST .
+    .               reduce using rule 18 (Expresion -> STR_CONST .)
+    @               reduce using rule 18 (Expresion -> STR_CONST .)
+    =               reduce using rule 18 (Expresion -> STR_CONST .)
+    LE              reduce using rule 18 (Expresion -> STR_CONST .)
+    <               reduce using rule 18 (Expresion -> STR_CONST .)
+    /               reduce using rule 18 (Expresion -> STR_CONST .)
+    *               reduce using rule 18 (Expresion -> STR_CONST .)
+    -               reduce using rule 18 (Expresion -> STR_CONST .)
+    +               reduce using rule 18 (Expresion -> STR_CONST .)
+    ;               reduce using rule 18 (Expresion -> STR_CONST .)
+    OF              reduce using rule 18 (Expresion -> STR_CONST .)
+    LOOP            reduce using rule 18 (Expresion -> STR_CONST .)
+    THEN            reduce using rule 18 (Expresion -> STR_CONST .)
+    )               reduce using rule 18 (Expresion -> STR_CONST .)
+    ,               reduce using rule 18 (Expresion -> STR_CONST .)
+    }               reduce using rule 18 (Expresion -> STR_CONST .)
+    POOL            reduce using rule 18 (Expresion -> STR_CONST .)
+    ELSE            reduce using rule 18 (Expresion -> STR_CONST .)
+    IN              reduce using rule 18 (Expresion -> STR_CONST .)
+    FI              reduce using rule 18 (Expresion -> STR_CONST .)
+
+
+state 36
+
+    (19) Expresion -> INT_CONST .
+    .               reduce using rule 19 (Expresion -> INT_CONST .)
+    @               reduce using rule 19 (Expresion -> INT_CONST .)
+    =               reduce using rule 19 (Expresion -> INT_CONST .)
+    LE              reduce using rule 19 (Expresion -> INT_CONST .)
+    <               reduce using rule 19 (Expresion -> INT_CONST .)
+    /               reduce using rule 19 (Expresion -> INT_CONST .)
+    *               reduce using rule 19 (Expresion -> INT_CONST .)
+    -               reduce using rule 19 (Expresion -> INT_CONST .)
+    +               reduce using rule 19 (Expresion -> INT_CONST .)
+    ;               reduce using rule 19 (Expresion -> INT_CONST .)
+    OF              reduce using rule 19 (Expresion -> INT_CONST .)
+    LOOP            reduce using rule 19 (Expresion -> INT_CONST .)
+    THEN            reduce using rule 19 (Expresion -> INT_CONST .)
+    )               reduce using rule 19 (Expresion -> INT_CONST .)
+    ,               reduce using rule 19 (Expresion -> INT_CONST .)
+    }               reduce using rule 19 (Expresion -> INT_CONST .)
+    POOL            reduce using rule 19 (Expresion -> INT_CONST .)
+    ELSE            reduce using rule 19 (Expresion -> INT_CONST .)
+    IN              reduce using rule 19 (Expresion -> INT_CONST .)
+    FI              reduce using rule 19 (Expresion -> INT_CONST .)
+
+
+state 37
+
+    (21) Expresion -> { . listNueva }
+    (56) listNueva -> . Expresion ;
+    (57) listNueva -> . Expresion ; listNueva
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    listNueva                      shift and go to state 64
+    Expresion                      shift and go to state 65
+
+state 38
+
+    (22) Expresion -> NEW . TYPEID
+    TYPEID          shift and go to state 66
+
+
+state 39
+
+    (23) Expresion -> CASE . Expresion OF CaseList ESAC
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 67
+
+state 40
+
+    (24) Expresion -> LET . OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    OBJECTID        shift and go to state 68
+
+
+state 41
+
+    (25) Expresion -> WHILE . Expresion LOOP Expresion POOL
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 69
+
+state 42
+
+    (26) Expresion -> IF . Expresion THEN Expresion ELSE Expresion FI
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 70
+
+state 43
+
+    (36) Expresion -> ( . Expresion )
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 71
+
+state 44
+
+    (33) Expresion -> ~ . Expresion
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 72
+
+state 45
+
+    (34) Expresion -> ISVOID . Expresion
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 73
+
+state 46
+
+    (35) Expresion -> NOT . Expresion
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 74
+
+state 47
+
+    (43) Expresion -> NUMBER .
+    .               reduce using rule 43 (Expresion -> NUMBER .)
+    @               reduce using rule 43 (Expresion -> NUMBER .)
+    =               reduce using rule 43 (Expresion -> NUMBER .)
+    LE              reduce using rule 43 (Expresion -> NUMBER .)
+    <               reduce using rule 43 (Expresion -> NUMBER .)
+    /               reduce using rule 43 (Expresion -> NUMBER .)
+    *               reduce using rule 43 (Expresion -> NUMBER .)
+    -               reduce using rule 43 (Expresion -> NUMBER .)
+    +               reduce using rule 43 (Expresion -> NUMBER .)
+    ;               reduce using rule 43 (Expresion -> NUMBER .)
+    OF              reduce using rule 43 (Expresion -> NUMBER .)
+    LOOP            reduce using rule 43 (Expresion -> NUMBER .)
+    THEN            reduce using rule 43 (Expresion -> NUMBER .)
+    )               reduce using rule 43 (Expresion -> NUMBER .)
+    ,               reduce using rule 43 (Expresion -> NUMBER .)
+    }               reduce using rule 43 (Expresion -> NUMBER .)
+    POOL            reduce using rule 43 (Expresion -> NUMBER .)
+    ELSE            reduce using rule 43 (Expresion -> NUMBER .)
+    IN              reduce using rule 43 (Expresion -> NUMBER .)
+    FI              reduce using rule 43 (Expresion -> NUMBER .)
+
+
+state 48
+
+    (45) Expresion -> IGNORE .
+    .               reduce using rule 45 (Expresion -> IGNORE .)
+    @               reduce using rule 45 (Expresion -> IGNORE .)
+    =               reduce using rule 45 (Expresion -> IGNORE .)
+    LE              reduce using rule 45 (Expresion -> IGNORE .)
+    <               reduce using rule 45 (Expresion -> IGNORE .)
+    /               reduce using rule 45 (Expresion -> IGNORE .)
+    *               reduce using rule 45 (Expresion -> IGNORE .)
+    -               reduce using rule 45 (Expresion -> IGNORE .)
+    +               reduce using rule 45 (Expresion -> IGNORE .)
+    ;               reduce using rule 45 (Expresion -> IGNORE .)
+    OF              reduce using rule 45 (Expresion -> IGNORE .)
+    LOOP            reduce using rule 45 (Expresion -> IGNORE .)
+    THEN            reduce using rule 45 (Expresion -> IGNORE .)
+    )               reduce using rule 45 (Expresion -> IGNORE .)
+    ,               reduce using rule 45 (Expresion -> IGNORE .)
+    }               reduce using rule 45 (Expresion -> IGNORE .)
+    POOL            reduce using rule 45 (Expresion -> IGNORE .)
+    ELSE            reduce using rule 45 (Expresion -> IGNORE .)
+    IN              reduce using rule 45 (Expresion -> IGNORE .)
+    FI              reduce using rule 45 (Expresion -> IGNORE .)
+
+
+state 49
+
+    (14) Formal -> OBJECTID : TYPEID .
+    ,               reduce using rule 14 (Formal -> OBJECTID : TYPEID .)
+    )               reduce using rule 14 (Formal -> OBJECTID : TYPEID .)
+
+
+state 50
+
+    (12) Metodo -> OBJECTID ( ListFormal ) : . TYPEID { Expresion }
+    TYPEID          shift and go to state 75
+
+
+state 51
+
+    (13) Metodo -> OBJECTID ( ) : TYPEID . { Expresion }
+    {               shift and go to state 76
+
+
+state 52
+
+    (16) ListFormal -> Formal , ListFormal .
+    )               reduce using rule 16 (ListFormal -> Formal , ListFormal .)
+
+
+state 53
+
+    (27) Expresion -> OBJECTID ( . )
+    (28) Expresion -> OBJECTID ( . lstExpr )
+    (47) lstExpr -> . Expresion
+    (48) lstExpr -> . Expresion , lstExpr
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    )               shift and go to state 77
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    lstExpr                        shift and go to state 78
+    Expresion                      shift and go to state 79
+
+state 54
+
+    (46) Expresion -> OBJECTID ASSIGN . Expresion
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 80
+
+state 55
+
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    OBJECTID        shift and go to state 81
+
+
+state 56
+
+    (31) Expresion -> Expresion @ . TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion @ . TYPEID . OBJECTID ( )
+    TYPEID          shift and go to state 82
+
+
+state 57
+
+    (37) Expresion -> Expresion = . Expresion
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 83
+
+state 58
+
+    (38) Expresion -> Expresion LE . Expresion
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 84
+
+state 59
+
+    (39) Expresion -> Expresion < . Expresion
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 85
+
+state 60
+
+    (40) Expresion -> Expresion / . Expresion
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 86
+
+state 61
+
+    (41) Expresion -> Expresion * . Expresion
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 87
+
+state 62
+
+    (42) Expresion -> Expresion - . Expresion
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 88
+
+state 63
+
+    (44) Expresion -> Expresion + . Expresion
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 89
+
+state 64
+
+    (21) Expresion -> { listNueva . }
+    }               shift and go to state 90
+
+
+state 65
+
+    (56) listNueva -> Expresion . ;
+    (57) listNueva -> Expresion . ; listNueva
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    ;               shift and go to state 91
+    .               shift and go to state 55
+    @               shift and go to state 56
+    =               shift and go to state 57
+    LE              shift and go to state 58
+    <               shift and go to state 59
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 66
+
+    (22) Expresion -> NEW TYPEID .
+    .               reduce using rule 22 (Expresion -> NEW TYPEID .)
+    @               reduce using rule 22 (Expresion -> NEW TYPEID .)
+    =               reduce using rule 22 (Expresion -> NEW TYPEID .)
+    LE              reduce using rule 22 (Expresion -> NEW TYPEID .)
+    <               reduce using rule 22 (Expresion -> NEW TYPEID .)
+    /               reduce using rule 22 (Expresion -> NEW TYPEID .)
+    *               reduce using rule 22 (Expresion -> NEW TYPEID .)
+    -               reduce using rule 22 (Expresion -> NEW TYPEID .)
+    +               reduce using rule 22 (Expresion -> NEW TYPEID .)
+    ;               reduce using rule 22 (Expresion -> NEW TYPEID .)
+    OF              reduce using rule 22 (Expresion -> NEW TYPEID .)
+    LOOP            reduce using rule 22 (Expresion -> NEW TYPEID .)
+    THEN            reduce using rule 22 (Expresion -> NEW TYPEID .)
+    )               reduce using rule 22 (Expresion -> NEW TYPEID .)
+    ,               reduce using rule 22 (Expresion -> NEW TYPEID .)
+    }               reduce using rule 22 (Expresion -> NEW TYPEID .)
+    POOL            reduce using rule 22 (Expresion -> NEW TYPEID .)
+    ELSE            reduce using rule 22 (Expresion -> NEW TYPEID .)
+    IN              reduce using rule 22 (Expresion -> NEW TYPEID .)
+    FI              reduce using rule 22 (Expresion -> NEW TYPEID .)
+
+
+state 67
+
+    (23) Expresion -> CASE Expresion . OF CaseList ESAC
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    OF              shift and go to state 92
+    .               shift and go to state 55
+    @               shift and go to state 56
+    =               shift and go to state 57
+    LE              shift and go to state 58
+    <               shift and go to state 59
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 68
+
+    (24) Expresion -> LET OBJECTID . : TYPEID exprOpcional lstArrow IN Expresion
+    :               shift and go to state 93
+
+
+state 69
+
+    (25) Expresion -> WHILE Expresion . LOOP Expresion POOL
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    LOOP            shift and go to state 94
+    .               shift and go to state 55
+    @               shift and go to state 56
+    =               shift and go to state 57
+    LE              shift and go to state 58
+    <               shift and go to state 59
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 70
+
+    (26) Expresion -> IF Expresion . THEN Expresion ELSE Expresion FI
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    THEN            shift and go to state 95
+    .               shift and go to state 55
+    @               shift and go to state 56
+    =               shift and go to state 57
+    LE              shift and go to state 58
+    <               shift and go to state 59
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 71
+
+    (36) Expresion -> ( Expresion . )
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    )               shift and go to state 96
+    .               shift and go to state 55
+    @               shift and go to state 56
+    =               shift and go to state 57
+    LE              shift and go to state 58
+    <               shift and go to state 59
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 72
+
+    (33) Expresion -> ~ Expresion .
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+  ! shift/reduce conflict for . resolved as shift
+  ! shift/reduce conflict for @ resolved as shift
+  ! shift/reduce conflict for = resolved as shift
+  ! shift/reduce conflict for LE resolved as shift
+  ! shift/reduce conflict for < resolved as shift
+  ! shift/reduce conflict for / resolved as shift
+  ! shift/reduce conflict for * resolved as shift
+  ! shift/reduce conflict for - resolved as shift
+  ! shift/reduce conflict for + resolved as shift
+    ;               reduce using rule 33 (Expresion -> ~ Expresion .)
+    OF              reduce using rule 33 (Expresion -> ~ Expresion .)
+    LOOP            reduce using rule 33 (Expresion -> ~ Expresion .)
+    THEN            reduce using rule 33 (Expresion -> ~ Expresion .)
+    )               reduce using rule 33 (Expresion -> ~ Expresion .)
+    ,               reduce using rule 33 (Expresion -> ~ Expresion .)
+    }               reduce using rule 33 (Expresion -> ~ Expresion .)
+    POOL            reduce using rule 33 (Expresion -> ~ Expresion .)
+    ELSE            reduce using rule 33 (Expresion -> ~ Expresion .)
+    IN              reduce using rule 33 (Expresion -> ~ Expresion .)
+    FI              reduce using rule 33 (Expresion -> ~ Expresion .)
+    .               shift and go to state 55
+    @               shift and go to state 56
+    =               shift and go to state 57
+    LE              shift and go to state 58
+    <               shift and go to state 59
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 73
+
+    (34) Expresion -> ISVOID Expresion .
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    =               reduce using rule 34 (Expresion -> ISVOID Expresion .)
+    LE              reduce using rule 34 (Expresion -> ISVOID Expresion .)
+    <               reduce using rule 34 (Expresion -> ISVOID Expresion .)
+    /               reduce using rule 34 (Expresion -> ISVOID Expresion .)
+    *               reduce using rule 34 (Expresion -> ISVOID Expresion .)
+    -               reduce using rule 34 (Expresion -> ISVOID Expresion .)
+    +               reduce using rule 34 (Expresion -> ISVOID Expresion .)
+    ;               reduce using rule 34 (Expresion -> ISVOID Expresion .)
+    OF              reduce using rule 34 (Expresion -> ISVOID Expresion .)
+    LOOP            reduce using rule 34 (Expresion -> ISVOID Expresion .)
+    THEN            reduce using rule 34 (Expresion -> ISVOID Expresion .)
+    )               reduce using rule 34 (Expresion -> ISVOID Expresion .)
+    ,               reduce using rule 34 (Expresion -> ISVOID Expresion .)
+    }               reduce using rule 34 (Expresion -> ISVOID Expresion .)
+    POOL            reduce using rule 34 (Expresion -> ISVOID Expresion .)
+    ELSE            reduce using rule 34 (Expresion -> ISVOID Expresion .)
+    IN              reduce using rule 34 (Expresion -> ISVOID Expresion .)
+    FI              reduce using rule 34 (Expresion -> ISVOID Expresion .)
+    .               shift and go to state 55
+    @               shift and go to state 56
+
+
+state 74
+
+    (35) Expresion -> NOT Expresion .
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    =               reduce using rule 35 (Expresion -> NOT Expresion .)
+    LE              reduce using rule 35 (Expresion -> NOT Expresion .)
+    <               reduce using rule 35 (Expresion -> NOT Expresion .)
+    ;               reduce using rule 35 (Expresion -> NOT Expresion .)
+    OF              reduce using rule 35 (Expresion -> NOT Expresion .)
+    LOOP            reduce using rule 35 (Expresion -> NOT Expresion .)
+    THEN            reduce using rule 35 (Expresion -> NOT Expresion .)
+    )               reduce using rule 35 (Expresion -> NOT Expresion .)
+    ,               reduce using rule 35 (Expresion -> NOT Expresion .)
+    }               reduce using rule 35 (Expresion -> NOT Expresion .)
+    POOL            reduce using rule 35 (Expresion -> NOT Expresion .)
+    ELSE            reduce using rule 35 (Expresion -> NOT Expresion .)
+    IN              reduce using rule 35 (Expresion -> NOT Expresion .)
+    FI              reduce using rule 35 (Expresion -> NOT Expresion .)
+    .               shift and go to state 55
+    @               shift and go to state 56
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 75
+
+    (12) Metodo -> OBJECTID ( ListFormal ) : TYPEID . { Expresion }
+    {               shift and go to state 97
+
+
+state 76
+
+    (13) Metodo -> OBJECTID ( ) : TYPEID { . Expresion }
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 98
+
+state 77
+
+    (27) Expresion -> OBJECTID ( ) .
+    .               reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+    @               reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+    =               reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+    LE              reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+    <               reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+    /               reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+    *               reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+    -               reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+    +               reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+    ;               reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+    OF              reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+    LOOP            reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+    THEN            reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+    )               reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+    ,               reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+    }               reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+    POOL            reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+    ELSE            reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+    IN              reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+    FI              reduce using rule 27 (Expresion -> OBJECTID ( ) .)
+
+
+state 78
+
+    (28) Expresion -> OBJECTID ( lstExpr . )
+    )               shift and go to state 99
+
+
+state 79
+
+    (47) lstExpr -> Expresion .
+    (48) lstExpr -> Expresion . , lstExpr
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    )               reduce using rule 47 (lstExpr -> Expresion .)
+    ,               shift and go to state 100
+    .               shift and go to state 55
+    @               shift and go to state 56
+    =               shift and go to state 57
+    LE              shift and go to state 58
+    <               shift and go to state 59
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 80
+
+    (46) Expresion -> OBJECTID ASSIGN Expresion .
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    =               reduce using rule 46 (Expresion -> OBJECTID ASSIGN Expresion .)
+    <               reduce using rule 46 (Expresion -> OBJECTID ASSIGN Expresion .)
+    ;               reduce using rule 46 (Expresion -> OBJECTID ASSIGN Expresion .)
+    OF              reduce using rule 46 (Expresion -> OBJECTID ASSIGN Expresion .)
+    LOOP            reduce using rule 46 (Expresion -> OBJECTID ASSIGN Expresion .)
+    THEN            reduce using rule 46 (Expresion -> OBJECTID ASSIGN Expresion .)
+    )               reduce using rule 46 (Expresion -> OBJECTID ASSIGN Expresion .)
+    ,               reduce using rule 46 (Expresion -> OBJECTID ASSIGN Expresion .)
+    }               reduce using rule 46 (Expresion -> OBJECTID ASSIGN Expresion .)
+    POOL            reduce using rule 46 (Expresion -> OBJECTID ASSIGN Expresion .)
+    ELSE            reduce using rule 46 (Expresion -> OBJECTID ASSIGN Expresion .)
+    IN              reduce using rule 46 (Expresion -> OBJECTID ASSIGN Expresion .)
+    FI              reduce using rule 46 (Expresion -> OBJECTID ASSIGN Expresion .)
+    .               shift and go to state 55
+    @               shift and go to state 56
+    LE              shift and go to state 58
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 81
+
+    (29) Expresion -> Expresion . OBJECTID . ( lstExpr )
+    (30) Expresion -> Expresion . OBJECTID . ( )
+    (               shift and go to state 101
+
+
+state 82
+
+    (31) Expresion -> Expresion @ TYPEID . . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion @ TYPEID . . OBJECTID ( )
+    .               shift and go to state 102
+
+
+state 83
+
+    (37) Expresion -> Expresion = Expresion .
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+  ! shift/reduce conflict for . resolved as shift
+  ! shift/reduce conflict for @ resolved as shift
+  ! shift/reduce conflict for = resolved as shift
+  ! shift/reduce conflict for LE resolved as shift
+  ! shift/reduce conflict for < resolved as shift
+  ! shift/reduce conflict for / resolved as shift
+  ! shift/reduce conflict for * resolved as shift
+  ! shift/reduce conflict for - resolved as shift
+  ! shift/reduce conflict for + resolved as shift
+    ;               reduce using rule 37 (Expresion -> Expresion = Expresion .)
+    OF              reduce using rule 37 (Expresion -> Expresion = Expresion .)
+    LOOP            reduce using rule 37 (Expresion -> Expresion = Expresion .)
+    THEN            reduce using rule 37 (Expresion -> Expresion = Expresion .)
+    )               reduce using rule 37 (Expresion -> Expresion = Expresion .)
+    ,               reduce using rule 37 (Expresion -> Expresion = Expresion .)
+    }               reduce using rule 37 (Expresion -> Expresion = Expresion .)
+    POOL            reduce using rule 37 (Expresion -> Expresion = Expresion .)
+    ELSE            reduce using rule 37 (Expresion -> Expresion = Expresion .)
+    IN              reduce using rule 37 (Expresion -> Expresion = Expresion .)
+    FI              reduce using rule 37 (Expresion -> Expresion = Expresion .)
+    .               shift and go to state 55
+    @               shift and go to state 56
+    =               shift and go to state 57
+    LE              shift and go to state 58
+    <               shift and go to state 59
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 84
+
+    (38) Expresion -> Expresion LE Expresion .
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    =               reduce using rule 38 (Expresion -> Expresion LE Expresion .)
+    LE              reduce using rule 38 (Expresion -> Expresion LE Expresion .)
+    <               reduce using rule 38 (Expresion -> Expresion LE Expresion .)
+    ;               reduce using rule 38 (Expresion -> Expresion LE Expresion .)
+    OF              reduce using rule 38 (Expresion -> Expresion LE Expresion .)
+    LOOP            reduce using rule 38 (Expresion -> Expresion LE Expresion .)
+    THEN            reduce using rule 38 (Expresion -> Expresion LE Expresion .)
+    )               reduce using rule 38 (Expresion -> Expresion LE Expresion .)
+    ,               reduce using rule 38 (Expresion -> Expresion LE Expresion .)
+    }               reduce using rule 38 (Expresion -> Expresion LE Expresion .)
+    POOL            reduce using rule 38 (Expresion -> Expresion LE Expresion .)
+    ELSE            reduce using rule 38 (Expresion -> Expresion LE Expresion .)
+    IN              reduce using rule 38 (Expresion -> Expresion LE Expresion .)
+    FI              reduce using rule 38 (Expresion -> Expresion LE Expresion .)
+    .               shift and go to state 55
+    @               shift and go to state 56
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 85
+
+    (39) Expresion -> Expresion < Expresion .
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+  ! shift/reduce conflict for . resolved as shift
+  ! shift/reduce conflict for @ resolved as shift
+  ! shift/reduce conflict for = resolved as shift
+  ! shift/reduce conflict for LE resolved as shift
+  ! shift/reduce conflict for < resolved as shift
+  ! shift/reduce conflict for / resolved as shift
+  ! shift/reduce conflict for * resolved as shift
+  ! shift/reduce conflict for - resolved as shift
+  ! shift/reduce conflict for + resolved as shift
+    ;               reduce using rule 39 (Expresion -> Expresion < Expresion .)
+    OF              reduce using rule 39 (Expresion -> Expresion < Expresion .)
+    LOOP            reduce using rule 39 (Expresion -> Expresion < Expresion .)
+    THEN            reduce using rule 39 (Expresion -> Expresion < Expresion .)
+    )               reduce using rule 39 (Expresion -> Expresion < Expresion .)
+    ,               reduce using rule 39 (Expresion -> Expresion < Expresion .)
+    }               reduce using rule 39 (Expresion -> Expresion < Expresion .)
+    POOL            reduce using rule 39 (Expresion -> Expresion < Expresion .)
+    ELSE            reduce using rule 39 (Expresion -> Expresion < Expresion .)
+    IN              reduce using rule 39 (Expresion -> Expresion < Expresion .)
+    FI              reduce using rule 39 (Expresion -> Expresion < Expresion .)
+    .               shift and go to state 55
+    @               shift and go to state 56
+    =               shift and go to state 57
+    LE              shift and go to state 58
+    <               shift and go to state 59
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 86
+
+    (40) Expresion -> Expresion / Expresion .
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    =               reduce using rule 40 (Expresion -> Expresion / Expresion .)
+    LE              reduce using rule 40 (Expresion -> Expresion / Expresion .)
+    <               reduce using rule 40 (Expresion -> Expresion / Expresion .)
+    /               reduce using rule 40 (Expresion -> Expresion / Expresion .)
+    *               reduce using rule 40 (Expresion -> Expresion / Expresion .)
+    -               reduce using rule 40 (Expresion -> Expresion / Expresion .)
+    +               reduce using rule 40 (Expresion -> Expresion / Expresion .)
+    ;               reduce using rule 40 (Expresion -> Expresion / Expresion .)
+    OF              reduce using rule 40 (Expresion -> Expresion / Expresion .)
+    LOOP            reduce using rule 40 (Expresion -> Expresion / Expresion .)
+    THEN            reduce using rule 40 (Expresion -> Expresion / Expresion .)
+    )               reduce using rule 40 (Expresion -> Expresion / Expresion .)
+    ,               reduce using rule 40 (Expresion -> Expresion / Expresion .)
+    }               reduce using rule 40 (Expresion -> Expresion / Expresion .)
+    POOL            reduce using rule 40 (Expresion -> Expresion / Expresion .)
+    ELSE            reduce using rule 40 (Expresion -> Expresion / Expresion .)
+    IN              reduce using rule 40 (Expresion -> Expresion / Expresion .)
+    FI              reduce using rule 40 (Expresion -> Expresion / Expresion .)
+    .               shift and go to state 55
+    @               shift and go to state 56
+
+
+state 87
+
+    (41) Expresion -> Expresion * Expresion .
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    =               reduce using rule 41 (Expresion -> Expresion * Expresion .)
+    LE              reduce using rule 41 (Expresion -> Expresion * Expresion .)
+    <               reduce using rule 41 (Expresion -> Expresion * Expresion .)
+    /               reduce using rule 41 (Expresion -> Expresion * Expresion .)
+    *               reduce using rule 41 (Expresion -> Expresion * Expresion .)
+    -               reduce using rule 41 (Expresion -> Expresion * Expresion .)
+    +               reduce using rule 41 (Expresion -> Expresion * Expresion .)
+    ;               reduce using rule 41 (Expresion -> Expresion * Expresion .)
+    OF              reduce using rule 41 (Expresion -> Expresion * Expresion .)
+    LOOP            reduce using rule 41 (Expresion -> Expresion * Expresion .)
+    THEN            reduce using rule 41 (Expresion -> Expresion * Expresion .)
+    )               reduce using rule 41 (Expresion -> Expresion * Expresion .)
+    ,               reduce using rule 41 (Expresion -> Expresion * Expresion .)
+    }               reduce using rule 41 (Expresion -> Expresion * Expresion .)
+    POOL            reduce using rule 41 (Expresion -> Expresion * Expresion .)
+    ELSE            reduce using rule 41 (Expresion -> Expresion * Expresion .)
+    IN              reduce using rule 41 (Expresion -> Expresion * Expresion .)
+    FI              reduce using rule 41 (Expresion -> Expresion * Expresion .)
+    .               shift and go to state 55
+    @               shift and go to state 56
+
+
+state 88
+
+    (42) Expresion -> Expresion - Expresion .
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    =               reduce using rule 42 (Expresion -> Expresion - Expresion .)
+    LE              reduce using rule 42 (Expresion -> Expresion - Expresion .)
+    <               reduce using rule 42 (Expresion -> Expresion - Expresion .)
+    -               reduce using rule 42 (Expresion -> Expresion - Expresion .)
+    +               reduce using rule 42 (Expresion -> Expresion - Expresion .)
+    ;               reduce using rule 42 (Expresion -> Expresion - Expresion .)
+    OF              reduce using rule 42 (Expresion -> Expresion - Expresion .)
+    LOOP            reduce using rule 42 (Expresion -> Expresion - Expresion .)
+    THEN            reduce using rule 42 (Expresion -> Expresion - Expresion .)
+    )               reduce using rule 42 (Expresion -> Expresion - Expresion .)
+    ,               reduce using rule 42 (Expresion -> Expresion - Expresion .)
+    }               reduce using rule 42 (Expresion -> Expresion - Expresion .)
+    POOL            reduce using rule 42 (Expresion -> Expresion - Expresion .)
+    ELSE            reduce using rule 42 (Expresion -> Expresion - Expresion .)
+    IN              reduce using rule 42 (Expresion -> Expresion - Expresion .)
+    FI              reduce using rule 42 (Expresion -> Expresion - Expresion .)
+    .               shift and go to state 55
+    @               shift and go to state 56
+    /               shift and go to state 60
+    *               shift and go to state 61
+
+
+state 89
+
+    (44) Expresion -> Expresion + Expresion .
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    =               reduce using rule 44 (Expresion -> Expresion + Expresion .)
+    LE              reduce using rule 44 (Expresion -> Expresion + Expresion .)
+    <               reduce using rule 44 (Expresion -> Expresion + Expresion .)
+    -               reduce using rule 44 (Expresion -> Expresion + Expresion .)
+    +               reduce using rule 44 (Expresion -> Expresion + Expresion .)
+    ;               reduce using rule 44 (Expresion -> Expresion + Expresion .)
+    OF              reduce using rule 44 (Expresion -> Expresion + Expresion .)
+    LOOP            reduce using rule 44 (Expresion -> Expresion + Expresion .)
+    THEN            reduce using rule 44 (Expresion -> Expresion + Expresion .)
+    )               reduce using rule 44 (Expresion -> Expresion + Expresion .)
+    ,               reduce using rule 44 (Expresion -> Expresion + Expresion .)
+    }               reduce using rule 44 (Expresion -> Expresion + Expresion .)
+    POOL            reduce using rule 44 (Expresion -> Expresion + Expresion .)
+    ELSE            reduce using rule 44 (Expresion -> Expresion + Expresion .)
+    IN              reduce using rule 44 (Expresion -> Expresion + Expresion .)
+    FI              reduce using rule 44 (Expresion -> Expresion + Expresion .)
+    .               shift and go to state 55
+    @               shift and go to state 56
+    /               shift and go to state 60
+    *               shift and go to state 61
+
+
+state 90
+
+    (21) Expresion -> { listNueva } .
+    .               reduce using rule 21 (Expresion -> { listNueva } .)
+    @               reduce using rule 21 (Expresion -> { listNueva } .)
+    =               reduce using rule 21 (Expresion -> { listNueva } .)
+    LE              reduce using rule 21 (Expresion -> { listNueva } .)
+    <               reduce using rule 21 (Expresion -> { listNueva } .)
+    /               reduce using rule 21 (Expresion -> { listNueva } .)
+    *               reduce using rule 21 (Expresion -> { listNueva } .)
+    -               reduce using rule 21 (Expresion -> { listNueva } .)
+    +               reduce using rule 21 (Expresion -> { listNueva } .)
+    ;               reduce using rule 21 (Expresion -> { listNueva } .)
+    OF              reduce using rule 21 (Expresion -> { listNueva } .)
+    LOOP            reduce using rule 21 (Expresion -> { listNueva } .)
+    THEN            reduce using rule 21 (Expresion -> { listNueva } .)
+    )               reduce using rule 21 (Expresion -> { listNueva } .)
+    ,               reduce using rule 21 (Expresion -> { listNueva } .)
+    }               reduce using rule 21 (Expresion -> { listNueva } .)
+    POOL            reduce using rule 21 (Expresion -> { listNueva } .)
+    ELSE            reduce using rule 21 (Expresion -> { listNueva } .)
+    IN              reduce using rule 21 (Expresion -> { listNueva } .)
+    FI              reduce using rule 21 (Expresion -> { listNueva } .)
+
+
+state 91
+
+    (56) listNueva -> Expresion ; .
+    (57) listNueva -> Expresion ; . listNueva
+    (56) listNueva -> . Expresion ;
+    (57) listNueva -> . Expresion ; listNueva
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    }               reduce using rule 56 (listNueva -> Expresion ; .)
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 65
+    listNueva                      shift and go to state 103
+
+state 92
+
+    (23) Expresion -> CASE Expresion OF . CaseList ESAC
+    (54) CaseList -> . Case ;
+    (55) CaseList -> . Case ; CaseList
+    (53) Case -> . OBJECTID : TYPEID DARROW Expresion
+    OBJECTID        shift and go to state 106
+
+    CaseList                       shift and go to state 104
+    Case                           shift and go to state 105
+
+state 93
+
+    (24) Expresion -> LET OBJECTID : . TYPEID exprOpcional lstArrow IN Expresion
+    TYPEID          shift and go to state 107
+
+
+state 94
+
+    (25) Expresion -> WHILE Expresion LOOP . Expresion POOL
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 108
+
+state 95
+
+    (26) Expresion -> IF Expresion THEN . Expresion ELSE Expresion FI
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 109
+
+state 96
+
+    (36) Expresion -> ( Expresion ) .
+    .               reduce using rule 36 (Expresion -> ( Expresion ) .)
+    @               reduce using rule 36 (Expresion -> ( Expresion ) .)
+    =               reduce using rule 36 (Expresion -> ( Expresion ) .)
+    LE              reduce using rule 36 (Expresion -> ( Expresion ) .)
+    <               reduce using rule 36 (Expresion -> ( Expresion ) .)
+    /               reduce using rule 36 (Expresion -> ( Expresion ) .)
+    *               reduce using rule 36 (Expresion -> ( Expresion ) .)
+    -               reduce using rule 36 (Expresion -> ( Expresion ) .)
+    +               reduce using rule 36 (Expresion -> ( Expresion ) .)
+    ;               reduce using rule 36 (Expresion -> ( Expresion ) .)
+    OF              reduce using rule 36 (Expresion -> ( Expresion ) .)
+    LOOP            reduce using rule 36 (Expresion -> ( Expresion ) .)
+    THEN            reduce using rule 36 (Expresion -> ( Expresion ) .)
+    )               reduce using rule 36 (Expresion -> ( Expresion ) .)
+    ,               reduce using rule 36 (Expresion -> ( Expresion ) .)
+    }               reduce using rule 36 (Expresion -> ( Expresion ) .)
+    POOL            reduce using rule 36 (Expresion -> ( Expresion ) .)
+    ELSE            reduce using rule 36 (Expresion -> ( Expresion ) .)
+    IN              reduce using rule 36 (Expresion -> ( Expresion ) .)
+    FI              reduce using rule 36 (Expresion -> ( Expresion ) .)
+
+
+state 97
+
+    (12) Metodo -> OBJECTID ( ListFormal ) : TYPEID { . Expresion }
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 110
+
+state 98
+
+    (13) Metodo -> OBJECTID ( ) : TYPEID { Expresion . }
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    }               shift and go to state 111
+    .               shift and go to state 55
+    @               shift and go to state 56
+    =               shift and go to state 57
+    LE              shift and go to state 58
+    <               shift and go to state 59
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 99
+
+    (28) Expresion -> OBJECTID ( lstExpr ) .
+    .               reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+    @               reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+    =               reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+    LE              reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+    <               reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+    /               reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+    *               reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+    -               reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+    +               reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+    ;               reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+    OF              reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+    LOOP            reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+    THEN            reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+    )               reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+    ,               reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+    }               reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+    POOL            reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+    ELSE            reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+    IN              reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+    FI              reduce using rule 28 (Expresion -> OBJECTID ( lstExpr ) .)
+
+
+state 100
+
+    (48) lstExpr -> Expresion , . lstExpr
+    (47) lstExpr -> . Expresion
+    (48) lstExpr -> . Expresion , lstExpr
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 79
+    lstExpr                        shift and go to state 112
+
+state 101
+
+    (29) Expresion -> Expresion . OBJECTID ( . lstExpr )
+    (30) Expresion -> Expresion . OBJECTID ( . )
+    (47) lstExpr -> . Expresion
+    (48) lstExpr -> . Expresion , lstExpr
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    )               shift and go to state 114
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 79
+    lstExpr                        shift and go to state 113
+
+state 102
+
+    (31) Expresion -> Expresion @ TYPEID . . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion @ TYPEID . . OBJECTID ( )
+    OBJECTID        shift and go to state 115
+
+
+state 103
+
+    (57) listNueva -> Expresion ; listNueva .
+    }               reduce using rule 57 (listNueva -> Expresion ; listNueva .)
+
+
+state 104
+
+    (23) Expresion -> CASE Expresion OF CaseList . ESAC
+    ESAC            shift and go to state 116
+
+
+state 105
+
+    (54) CaseList -> Case . ;
+    (55) CaseList -> Case . ; CaseList
+    ;               shift and go to state 117
+
+
+state 106
+
+    (53) Case -> OBJECTID . : TYPEID DARROW Expresion
+    :               shift and go to state 118
+
+
+state 107
+
+    (24) Expresion -> LET OBJECTID : TYPEID . exprOpcional lstArrow IN Expresion
+    (51) exprOpcional -> .
+    (52) exprOpcional -> . ASSIGN Expresion
+    ,               reduce using rule 51 (exprOpcional -> .)
+    IN              reduce using rule 51 (exprOpcional -> .)
+    ASSIGN          shift and go to state 120
+
+    exprOpcional                   shift and go to state 119
+
+state 108
+
+    (25) Expresion -> WHILE Expresion LOOP Expresion . POOL
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    POOL            shift and go to state 121
+    .               shift and go to state 55
+    @               shift and go to state 56
+    =               shift and go to state 57
+    LE              shift and go to state 58
+    <               shift and go to state 59
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 109
+
+    (26) Expresion -> IF Expresion THEN Expresion . ELSE Expresion FI
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    ELSE            shift and go to state 122
+    .               shift and go to state 55
+    @               shift and go to state 56
+    =               shift and go to state 57
+    LE              shift and go to state 58
+    <               shift and go to state 59
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 110
+
+    (12) Metodo -> OBJECTID ( ListFormal ) : TYPEID { Expresion . }
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    }               shift and go to state 123
+    .               shift and go to state 55
+    @               shift and go to state 56
+    =               shift and go to state 57
+    LE              shift and go to state 58
+    <               shift and go to state 59
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 111
+
+    (13) Metodo -> OBJECTID ( ) : TYPEID { Expresion } .
+    ;               reduce using rule 13 (Metodo -> OBJECTID ( ) : TYPEID { Expresion } .)
+
+
+state 112
+
+    (48) lstExpr -> Expresion , lstExpr .
+    )               reduce using rule 48 (lstExpr -> Expresion , lstExpr .)
+
+
+state 113
+
+    (29) Expresion -> Expresion . OBJECTID ( lstExpr . )
+    )               shift and go to state 124
+
+
+state 114
+
+    (30) Expresion -> Expresion . OBJECTID ( ) .
+    .               reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+    @               reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+    =               reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+    LE              reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+    <               reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+    /               reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+    *               reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+    -               reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+    +               reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+    ;               reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+    OF              reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+    LOOP            reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+    THEN            reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+    )               reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+    ,               reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+    }               reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+    POOL            reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+    ELSE            reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+    IN              reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+    FI              reduce using rule 30 (Expresion -> Expresion . OBJECTID ( ) .)
+
+
+state 115
+
+    (31) Expresion -> Expresion @ TYPEID . OBJECTID . ( lstExpr )
+    (32) Expresion -> Expresion @ TYPEID . OBJECTID . ( )
+    (               shift and go to state 125
+
+
+state 116
+
+    (23) Expresion -> CASE Expresion OF CaseList ESAC .
+    .               reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+    @               reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+    =               reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+    LE              reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+    <               reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+    /               reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+    *               reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+    -               reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+    +               reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+    ;               reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+    OF              reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+    LOOP            reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+    THEN            reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+    )               reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+    ,               reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+    }               reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+    POOL            reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+    ELSE            reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+    IN              reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+    FI              reduce using rule 23 (Expresion -> CASE Expresion OF CaseList ESAC .)
+
+
+state 117
+
+    (54) CaseList -> Case ; .
+    (55) CaseList -> Case ; . CaseList
+    (54) CaseList -> . Case ;
+    (55) CaseList -> . Case ; CaseList
+    (53) Case -> . OBJECTID : TYPEID DARROW Expresion
+    ESAC            reduce using rule 54 (CaseList -> Case ; .)
+    OBJECTID        shift and go to state 106
+
+    Case                           shift and go to state 105
+    CaseList                       shift and go to state 126
+
+state 118
+
+    (53) Case -> OBJECTID : . TYPEID DARROW Expresion
+    TYPEID          shift and go to state 127
+
+
+state 119
+
+    (24) Expresion -> LET OBJECTID : TYPEID exprOpcional . lstArrow IN Expresion
+    (49) lstArrow -> .
+    (50) lstArrow -> . , OBJECTID : TYPEID exprOpcional lstArrow
+    IN              reduce using rule 49 (lstArrow -> .)
+    ,               shift and go to state 129
+
+    lstArrow                       shift and go to state 128
+
+state 120
+
+    (52) exprOpcional -> ASSIGN . Expresion
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 130
+
+state 121
+
+    (25) Expresion -> WHILE Expresion LOOP Expresion POOL .
+    .               reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    @               reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    =               reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    LE              reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    <               reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    /               reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    *               reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    -               reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    +               reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    ;               reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    OF              reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    LOOP            reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    THEN            reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    )               reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    ,               reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    }               reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    POOL            reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    ELSE            reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    IN              reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    FI              reduce using rule 25 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+
+
+state 122
+
+    (26) Expresion -> IF Expresion THEN Expresion ELSE . Expresion FI
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 131
+
+state 123
+
+    (12) Metodo -> OBJECTID ( ListFormal ) : TYPEID { Expresion } .
+    ;               reduce using rule 12 (Metodo -> OBJECTID ( ListFormal ) : TYPEID { Expresion } .)
+
+
+state 124
+
+    (29) Expresion -> Expresion . OBJECTID ( lstExpr ) .
+    .               reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+    @               reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+    =               reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+    LE              reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+    <               reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+    /               reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+    *               reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+    -               reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+    +               reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+    ;               reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+    OF              reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+    LOOP            reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+    THEN            reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+    )               reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+    ,               reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+    }               reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+    POOL            reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+    ELSE            reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+    IN              reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+    FI              reduce using rule 29 (Expresion -> Expresion . OBJECTID ( lstExpr ) .)
+
+
+state 125
+
+    (31) Expresion -> Expresion @ TYPEID . OBJECTID ( . lstExpr )
+    (32) Expresion -> Expresion @ TYPEID . OBJECTID ( . )
+    (47) lstExpr -> . Expresion
+    (48) lstExpr -> . Expresion , lstExpr
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    )               shift and go to state 133
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 79
+    lstExpr                        shift and go to state 132
+
+state 126
+
+    (55) CaseList -> Case ; CaseList .
+    ESAC            reduce using rule 55 (CaseList -> Case ; CaseList .)
+
+
+state 127
+
+    (53) Case -> OBJECTID : TYPEID . DARROW Expresion
+    DARROW          shift and go to state 134
+
+
+state 128
+
+    (24) Expresion -> LET OBJECTID : TYPEID exprOpcional lstArrow . IN Expresion
+    IN              shift and go to state 135
+
+
+state 129
+
+    (50) lstArrow -> , . OBJECTID : TYPEID exprOpcional lstArrow
+    OBJECTID        shift and go to state 136
+
+
+state 130
+
+    (52) exprOpcional -> ASSIGN Expresion .
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    ,               reduce using rule 52 (exprOpcional -> ASSIGN Expresion .)
+    IN              reduce using rule 52 (exprOpcional -> ASSIGN Expresion .)
+    .               shift and go to state 55
+    @               shift and go to state 56
+    =               shift and go to state 57
+    LE              shift and go to state 58
+    <               shift and go to state 59
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 131
+
+    (26) Expresion -> IF Expresion THEN Expresion ELSE Expresion . FI
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    FI              shift and go to state 137
+    .               shift and go to state 55
+    @               shift and go to state 56
+    =               shift and go to state 57
+    LE              shift and go to state 58
+    <               shift and go to state 59
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 132
+
+    (31) Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr . )
+    )               shift and go to state 138
+
+
+state 133
+
+    (32) Expresion -> Expresion @ TYPEID . OBJECTID ( ) .
+    .               reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    @               reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    =               reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    LE              reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    <               reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    /               reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    *               reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    -               reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    +               reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    ;               reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    OF              reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    LOOP            reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    THEN            reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    )               reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    ,               reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    }               reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    POOL            reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    ELSE            reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    IN              reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    FI              reduce using rule 32 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+
+
+state 134
+
+    (53) Case -> OBJECTID : TYPEID DARROW . Expresion
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 139
+
+state 135
+
+    (24) Expresion -> LET OBJECTID : TYPEID exprOpcional lstArrow IN . Expresion
+    (17) Expresion -> . BOOL_CONST
+    (18) Expresion -> . STR_CONST
+    (19) Expresion -> . INT_CONST
+    (20) Expresion -> . OBJECTID
+    (21) Expresion -> . { listNueva }
+    (22) Expresion -> . NEW TYPEID
+    (23) Expresion -> . CASE Expresion OF CaseList ESAC
+    (24) Expresion -> . LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion
+    (25) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (26) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (27) Expresion -> . OBJECTID ( )
+    (28) Expresion -> . OBJECTID ( lstExpr )
+    (29) Expresion -> . Expresion . OBJECTID ( lstExpr )
+    (30) Expresion -> . Expresion . OBJECTID ( )
+    (31) Expresion -> . Expresion @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (33) Expresion -> . ~ Expresion
+    (34) Expresion -> . ISVOID Expresion
+    (35) Expresion -> . NOT Expresion
+    (36) Expresion -> . ( Expresion )
+    (37) Expresion -> . Expresion = Expresion
+    (38) Expresion -> . Expresion LE Expresion
+    (39) Expresion -> . Expresion < Expresion
+    (40) Expresion -> . Expresion / Expresion
+    (41) Expresion -> . Expresion * Expresion
+    (42) Expresion -> . Expresion - Expresion
+    (43) Expresion -> . NUMBER
+    (44) Expresion -> . Expresion + Expresion
+    (45) Expresion -> . IGNORE
+    (46) Expresion -> . OBJECTID ASSIGN Expresion
+    BOOL_CONST      shift and go to state 34
+    STR_CONST       shift and go to state 35
+    INT_CONST       shift and go to state 36
+    OBJECTID        shift and go to state 31
+    {               shift and go to state 37
+    NEW             shift and go to state 38
+    CASE            shift and go to state 39
+    LET             shift and go to state 40
+    WHILE           shift and go to state 41
+    IF              shift and go to state 42
+    ~               shift and go to state 44
+    ISVOID          shift and go to state 45
+    NOT             shift and go to state 46
+    (               shift and go to state 43
+    NUMBER          shift and go to state 47
+    IGNORE          shift and go to state 48
+
+    Expresion                      shift and go to state 140
+
+state 136
+
+    (50) lstArrow -> , OBJECTID . : TYPEID exprOpcional lstArrow
+    :               shift and go to state 141
+
+
+state 137
+
+    (26) Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .
+    .               reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    @               reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    =               reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    LE              reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    <               reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    /               reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    *               reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    -               reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    +               reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    ;               reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    OF              reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    LOOP            reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    THEN            reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    )               reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    ,               reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    }               reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    POOL            reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    ELSE            reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    IN              reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    FI              reduce using rule 26 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+
+
+state 138
+
+    (31) Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .
+    .               reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+    @               reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+    =               reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+    LE              reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+    <               reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+    /               reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+    *               reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+    -               reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+    +               reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+    ;               reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+    OF              reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+    LOOP            reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+    THEN            reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+    )               reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+    ,               reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+    }               reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+    POOL            reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+    ELSE            reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+    IN              reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+    FI              reduce using rule 31 (Expresion -> Expresion @ TYPEID . OBJECTID ( lstExpr ) .)
+
+
+state 139
+
+    (53) Case -> OBJECTID : TYPEID DARROW Expresion .
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+    ;               reduce using rule 53 (Case -> OBJECTID : TYPEID DARROW Expresion .)
+    .               shift and go to state 55
+    @               shift and go to state 56
+    =               shift and go to state 57
+    LE              shift and go to state 58
+    <               shift and go to state 59
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 140
+
+    (24) Expresion -> LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion .
+    (29) Expresion -> Expresion . . OBJECTID ( lstExpr )
+    (30) Expresion -> Expresion . . OBJECTID ( )
+    (31) Expresion -> Expresion . @ TYPEID . OBJECTID ( lstExpr )
+    (32) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (37) Expresion -> Expresion . = Expresion
+    (38) Expresion -> Expresion . LE Expresion
+    (39) Expresion -> Expresion . < Expresion
+    (40) Expresion -> Expresion . / Expresion
+    (41) Expresion -> Expresion . * Expresion
+    (42) Expresion -> Expresion . - Expresion
+    (44) Expresion -> Expresion . + Expresion
+  ! shift/reduce conflict for . resolved as shift
+  ! shift/reduce conflict for @ resolved as shift
+  ! shift/reduce conflict for = resolved as shift
+  ! shift/reduce conflict for LE resolved as shift
+  ! shift/reduce conflict for < resolved as shift
+  ! shift/reduce conflict for / resolved as shift
+  ! shift/reduce conflict for * resolved as shift
+  ! shift/reduce conflict for - resolved as shift
+  ! shift/reduce conflict for + resolved as shift
+    ;               reduce using rule 24 (Expresion -> LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion .)
+    OF              reduce using rule 24 (Expresion -> LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion .)
+    LOOP            reduce using rule 24 (Expresion -> LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion .)
+    THEN            reduce using rule 24 (Expresion -> LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion .)
+    )               reduce using rule 24 (Expresion -> LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion .)
+    ,               reduce using rule 24 (Expresion -> LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion .)
+    }               reduce using rule 24 (Expresion -> LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion .)
+    POOL            reduce using rule 24 (Expresion -> LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion .)
+    ELSE            reduce using rule 24 (Expresion -> LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion .)
+    IN              reduce using rule 24 (Expresion -> LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion .)
+    FI              reduce using rule 24 (Expresion -> LET OBJECTID : TYPEID exprOpcional lstArrow IN Expresion .)
+    .               shift and go to state 55
+    @               shift and go to state 56
+    =               shift and go to state 57
+    LE              shift and go to state 58
+    <               shift and go to state 59
+    /               shift and go to state 60
+    *               shift and go to state 61
+    -               shift and go to state 62
+    +               shift and go to state 63
+
+
+state 141
+
+    (50) lstArrow -> , OBJECTID : . TYPEID exprOpcional lstArrow
+    TYPEID          shift and go to state 142
+
+
+state 142
+
+    (50) lstArrow -> , OBJECTID : TYPEID . exprOpcional lstArrow
+    (51) exprOpcional -> .
+    (52) exprOpcional -> . ASSIGN Expresion
+    ,               reduce using rule 51 (exprOpcional -> .)
+    IN              reduce using rule 51 (exprOpcional -> .)
+    ASSIGN          shift and go to state 120
+
+    exprOpcional                   shift and go to state 143
+
+state 143
+
+    (50) lstArrow -> , OBJECTID : TYPEID exprOpcional . lstArrow
+    (49) lstArrow -> .
+    (50) lstArrow -> . , OBJECTID : TYPEID exprOpcional lstArrow
+    IN              reduce using rule 49 (lstArrow -> .)
+    ,               shift and go to state 129
+
+    lstArrow                       shift and go to state 144
+
+state 144
+
+    (50) lstArrow -> , OBJECTID : TYPEID exprOpcional lstArrow .
+    IN              reduce using rule 50 (lstArrow -> , OBJECTID : TYPEID exprOpcional lstArrow .)
+
+
+Conflicts:
+
+shift/reduce conflict for . in state 72 resolved as shift
+shift/reduce conflict for @ in state 72 resolved as shift
+shift/reduce conflict for = in state 72 resolved as shift
+shift/reduce conflict for LE in state 72 resolved as shift
+shift/reduce conflict for < in state 72 resolved as shift
+shift/reduce conflict for / in state 72 resolved as shift
+shift/reduce conflict for * in state 72 resolved as shift
+shift/reduce conflict for - in state 72 resolved as shift
+shift/reduce conflict for + in state 72 resolved as shift
+shift/reduce conflict for . in state 83 resolved as shift
+shift/reduce conflict for @ in state 83 resolved as shift
+shift/reduce conflict for = in state 83 resolved as shift
+shift/reduce conflict for LE in state 83 resolved as shift
+shift/reduce conflict for < in state 83 resolved as shift
+shift/reduce conflict for / in state 83 resolved as shift
+shift/reduce conflict for * in state 83 resolved as shift
+shift/reduce conflict for - in state 83 resolved as shift
+shift/reduce conflict for + in state 83 resolved as shift
+shift/reduce conflict for . in state 85 resolved as shift
+shift/reduce conflict for @ in state 85 resolved as shift
+shift/reduce conflict for = in state 85 resolved as shift
+shift/reduce conflict for LE in state 85 resolved as shift
+shift/reduce conflict for < in state 85 resolved as shift
+shift/reduce conflict for / in state 85 resolved as shift
+shift/reduce conflict for * in state 85 resolved as shift
+shift/reduce conflict for - in state 85 resolved as shift
+shift/reduce conflict for + in state 85 resolved as shift
+shift/reduce conflict for . in state 140 resolved as shift
+shift/reduce conflict for @ in state 140 resolved as shift
+shift/reduce conflict for = in state 140 resolved as shift
+shift/reduce conflict for LE in state 140 resolved as shift
+shift/reduce conflict for < in state 140 resolved as shift
+shift/reduce conflict for / in state 140 resolved as shift
+shift/reduce conflict for * in state 140 resolved as shift
+shift/reduce conflict for - in state 140 resolved as shift
+shift/reduce conflict for + in state 140 resolved as shift

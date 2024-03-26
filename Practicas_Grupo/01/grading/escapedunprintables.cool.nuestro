@@ -1,11 +1,6 @@
 #name "escapedunprintables.cool"
-
  STR_CONST "This is a tab:\\t"
-
  STR_CONST "This is a backspace:\"
-
  STR_CONST "This is a formfeed:\"
-
  STR_CONST "This is a carriage return:"
-
  STR_CONST "This is an escape:"

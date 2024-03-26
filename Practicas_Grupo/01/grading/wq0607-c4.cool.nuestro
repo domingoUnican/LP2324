@@ -1,39 +1,20 @@
 #name "wq0607-c4.cool"
-
  STR_CONST "\\-"
-
  '-'
-
  STR_CONST "-\-"
-
  STR_CONST "\\"
-
  STR_CONST "\"--\""
-
  '-'
-
  STR_CONST ""
-
  STR_CONST "--\\"
-
  STR_CONST "\\"
-
  STR_CONST "\\"
-
  STR_CONST "\"--\""
-
  STR_CONST ""
-
  STR_CONST "--\\"
-
  STR_CONST "\\"
-
  STR_CONST "--"
-
  STR_CONST "\""
-
- STR_CONST "n"
-
+ STR_CONST "\n"
  '-'
-
  STR_CONST ""
