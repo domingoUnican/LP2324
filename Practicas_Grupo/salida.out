@@ -38,17 +38,17 @@ Rule 34    Expresion -> Expresion . OBJECTID ( )
 Rule 35    Expresion -> Expresion . OBJECTID ( Expresion lista_expr )
 Rule 36    Expresion -> Expresion @ TYPEID . OBJECTID ( Expresion lista_expr )
 Rule 37    Expresion -> Expresion @ TYPEID . OBJECTID ( )
-Rule 38    Expresion -> ~ Expresion
-Rule 39    Expresion -> ISVOID Expresion  [precedence=left, level=5]
-Rule 40    Expresion -> NOT Expresion  [precedence=left, level=2]
+Rule 38    Expresion -> ~ Expresion  [precedence=left, level=4]
+Rule 39    Expresion -> ISVOID Expresion  [precedence=left, level=6]
+Rule 40    Expresion -> NOT Expresion  [precedence=left, level=1]
 Rule 41    Expresion -> ( Expresion )
-Rule 42    Expresion -> Expresion = Expresion  [precedence=left, level=2]
+Rule 42    Expresion -> Expresion = Expresion  [precedence=nonassoc, level=2]
 Rule 43    Expresion -> Expresion DARROW Expresion
-Rule 44    Expresion -> Expresion < Expresion  [precedence=left, level=2]
+Rule 44    Expresion -> Expresion < Expresion  [precedence=left, level=4]
 Rule 45    Expresion -> Expresion - Expresion  [precedence=left, level=3]
 Rule 46    Expresion -> Expresion + Expresion  [precedence=left, level=3]
-Rule 47    Expresion -> Expresion / Expresion  [precedence=left, level=4]
-Rule 48    Expresion -> Expresion * Expresion  [precedence=left, level=4]
+Rule 47    Expresion -> Expresion / Expresion  [precedence=left, level=5]
+Rule 48    Expresion -> Expresion * Expresion  [precedence=left, level=5]
 Rule 49    Expresion -> OBJECTID ASSIGN Expresion  [precedence=left, level=1]
 Rule 50    lista_expr -> , Expresion lista_expr
 Rule 51    lista_expr -> <empty>
@@ -57,14 +57,16 @@ Rule 53    lista_expr_let -> , OBJECTID : TYPEID lista_expr_let
 Rule 54    lista_expr_let -> OBJECTID : TYPEID ASSIGN Expresion lista_expr_let  [precedence=left, level=1]
 Rule 55    lista_expr_let -> , OBJECTID : TYPEID ASSIGN Expresion lista_expr_let  [precedence=left, level=1]
 Rule 56    lista_expr_let -> <empty>
-Rule 57    lista_expr_case -> OBJECTID : TYPEID DARROW error ; lista_expr_case
-Rule 58    lista_expr_case -> OBJECTID : TYPEID DARROW error ;
-Rule 59    lista_expr_case -> OBJECTID : TYPEID DARROW Expresion ; lista_expr_case
-Rule 60    lista_expr_case -> OBJECTID : TYPEID DARROW Expresion ;
-Rule 61    lista_expr_pc -> lista_expr_pc error ;
-Rule 62    lista_expr_pc -> lista_expr_pc Expresion ;
-Rule 63    lista_expr_pc -> error ;
-Rule 64    lista_expr_pc -> Expresion ;
+Rule 57    lista_expr_let -> OBJECTID : TYPEID ASSIGN error lista_expr_let
+Rule 58    lista_expr_let -> , OBJECTID : TYPEID ASSIGN error lista_expr_let
+Rule 59    lista_expr_case -> OBJECTID : TYPEID DARROW error ; lista_expr_case
+Rule 60    lista_expr_case -> OBJECTID : TYPEID DARROW error ;
+Rule 61    lista_expr_case -> OBJECTID : TYPEID DARROW Expresion ; lista_expr_case
+Rule 62    lista_expr_case -> OBJECTID : TYPEID DARROW Expresion ;
+Rule 63    lista_expr_pc -> lista_expr_pc error ;
+Rule 64    lista_expr_pc -> lista_expr_pc Expresion ;
+Rule 65    lista_expr_pc -> error ;
+Rule 66    lista_expr_pc -> Expresion ;
 
 Unused terminals:
 
@@ -76,20 +78,20 @@ Terminals, with rules where they appear:
 )                    : 13 14 15 16 32 33 34 35 36 37 41
 *                    : 48
 +                    : 46
-,                    : 17 50 53 55
+,                    : 17 50 53 55 58
 -                    : 45
 .                    : 34 35 36 37
 /                    : 47
-:                    : 10 13 14 15 16 19 52 53 54 55 57 58 59 60
-;                    : 1 2 6 7 8 57 58 59 60 61 62 63 64
+:                    : 10 13 14 15 16 19 52 53 54 55 57 58 59 60 61 62
+;                    : 1 2 6 7 8 59 60 61 62 63 64 65 66
 <                    : 44
 =                    : 42
 @                    : 36 37
-ASSIGN               : 11 49 54 55
+ASSIGN               : 11 49 54 55 57 58
 BOOL_CONST           : 20
 CASE                 : 27 28
 CLASS                : 3
-DARROW               : 43 57 58 59 60
+DARROW               : 43 59 60 61 62
 ELSE                 : 31
 ESAC                 : 27 28
 FI                   : 31
@@ -103,14 +105,14 @@ LET                  : 29
 LOOP                 : 30
 NEW                  : 26
 NOT                  : 40
-OBJECTID             : 10 13 14 15 16 19 23 32 33 34 35 36 37 49 52 53 54 55 57 58 59 60
+OBJECTID             : 10 13 14 15 16 19 23 32 33 34 35 36 37 49 52 53 54 55 57 58 59 60 61 62
 OF                   : 27 28
 POOL                 : 30
 STR_CONST            : 21
 THEN                 : 31
-TYPEID               : 3 4 10 13 14 15 16 19 26 36 37 52 53 54 55 57 58 59 60
+TYPEID               : 3 4 10 13 14 15 16 19 26 36 37 52 53 54 55 57 58 59 60 61 62
 WHILE                : 30
-error                : 7 13 14 24 27 57 58 61 63
+error                : 7 13 14 24 27 57 58 59 60 63 65
 {                    : 3 13 14 15 16 24 25
 }                    : 3 13 14 15 16 24 25
 ~                    : 38
@@ -119,15 +121,15 @@ Nonterminals, with rules where they appear:
 
 Atributo             : 8
 Clase                : 1 2
-Expresion            : 11 14 15 16 28 29 30 30 31 31 31 33 34 35 35 36 36 37 38 39 40 41 42 42 43 43 44 44 45 45 46 46 47 47 48 48 49 50 54 55 59 60 62 64
+Expresion            : 11 14 15 16 28 29 30 30 31 31 31 33 34 35 35 36 36 37 38 39 40 41 42 42 43 43 44 44 45 45 46 46 47 47 48 48 49 50 54 55 61 62 64 66
 Formal               : 13 14 15 17
 Metodo               : 6
 Programa             : 1 0
 lista_atr_metodos    : 3 6 7 8
 lista_expr           : 33 35 36 50
-lista_expr_case      : 27 28 57 59
-lista_expr_let       : 29 52 53 54 55
-lista_expr_pc        : 25 61 62
+lista_expr_case      : 27 28 59 61
+lista_expr_let       : 29 52 53 54 55 57 58
+lista_expr_pc        : 25 63 64
 lista_formal         : 13 15 17
 opcionalPadre        : 3
 opcional_expr        : 10
@@ -670,10 +672,10 @@ state 47
 
     (24) Expresion -> { . error }
     (25) Expresion -> { . lista_expr_pc }
-    (61) lista_expr_pc -> . lista_expr_pc error ;
-    (62) lista_expr_pc -> . lista_expr_pc Expresion ;
-    (63) lista_expr_pc -> . error ;
-    (64) lista_expr_pc -> . Expresion ;
+    (63) lista_expr_pc -> . lista_expr_pc error ;
+    (64) lista_expr_pc -> . lista_expr_pc Expresion ;
+    (65) lista_expr_pc -> . error ;
+    (66) lista_expr_pc -> . Expresion ;
     (20) Expresion -> . BOOL_CONST
     (21) Expresion -> . STR_CONST
     (22) Expresion -> . INT_CONST
@@ -789,6 +791,8 @@ state 50
     (54) lista_expr_let -> . OBJECTID : TYPEID ASSIGN Expresion lista_expr_let
     (55) lista_expr_let -> . , OBJECTID : TYPEID ASSIGN Expresion lista_expr_let
     (56) lista_expr_let -> .
+    (57) lista_expr_let -> . OBJECTID : TYPEID ASSIGN error lista_expr_let
+    (58) lista_expr_let -> . , OBJECTID : TYPEID ASSIGN error lista_expr_let
     OBJECTID        shift and go to state 79
     ,               shift and go to state 80
     IN              reduce using rule 56 (lista_expr_let -> .)
@@ -1633,7 +1637,7 @@ state 71
 state 72
 
     (24) Expresion -> { error . }
-    (63) lista_expr_pc -> error . ;
+    (65) lista_expr_pc -> error . ;
     }               shift and go to state 102
     ;               shift and go to state 103
 
@@ -1641,8 +1645,8 @@ state 72
 state 73
 
     (25) Expresion -> { lista_expr_pc . }
-    (61) lista_expr_pc -> lista_expr_pc . error ;
-    (62) lista_expr_pc -> lista_expr_pc . Expresion ;
+    (63) lista_expr_pc -> lista_expr_pc . error ;
+    (64) lista_expr_pc -> lista_expr_pc . Expresion ;
     (20) Expresion -> . BOOL_CONST
     (21) Expresion -> . STR_CONST
     (22) Expresion -> . INT_CONST
@@ -1694,7 +1698,7 @@ state 73
 
 state 74
 
-    (64) lista_expr_pc -> Expresion . ;
+    (66) lista_expr_pc -> Expresion . ;
     (34) Expresion -> Expresion . . OBJECTID ( )
     (35) Expresion -> Expresion . . OBJECTID ( Expresion lista_expr )
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
@@ -1786,6 +1790,7 @@ state 79
 
     (52) lista_expr_let -> OBJECTID . : TYPEID lista_expr_let
     (54) lista_expr_let -> OBJECTID . : TYPEID ASSIGN Expresion lista_expr_let
+    (57) lista_expr_let -> OBJECTID . : TYPEID ASSIGN error lista_expr_let
     :               shift and go to state 111
 
 
@@ -1793,6 +1798,7 @@ state 80
 
     (53) lista_expr_let -> , . OBJECTID : TYPEID lista_expr_let
     (55) lista_expr_let -> , . OBJECTID : TYPEID ASSIGN Expresion lista_expr_let
+    (58) lista_expr_let -> , . OBJECTID : TYPEID ASSIGN error lista_expr_let
     OBJECTID        shift and go to state 112
 
 
@@ -1888,15 +1894,11 @@ state 84
     (46) Expresion -> Expresion . + Expresion
     (47) Expresion -> Expresion . / Expresion
     (48) Expresion -> Expresion . * Expresion
-  ! shift/reduce conflict for . resolved as shift
-  ! shift/reduce conflict for @ resolved as shift
-  ! shift/reduce conflict for = resolved as shift
-  ! shift/reduce conflict for DARROW resolved as shift
-  ! shift/reduce conflict for < resolved as shift
-  ! shift/reduce conflict for - resolved as shift
-  ! shift/reduce conflict for + resolved as shift
-  ! shift/reduce conflict for / resolved as shift
-  ! shift/reduce conflict for * resolved as shift
+    =               reduce using rule 38 (Expresion -> ~ Expresion .)
+    DARROW          reduce using rule 38 (Expresion -> ~ Expresion .)
+    <               reduce using rule 38 (Expresion -> ~ Expresion .)
+    -               reduce using rule 38 (Expresion -> ~ Expresion .)
+    +               reduce using rule 38 (Expresion -> ~ Expresion .)
     ;               reduce using rule 38 (Expresion -> ~ Expresion .)
     OF              reduce using rule 38 (Expresion -> ~ Expresion .)
     LOOP            reduce using rule 38 (Expresion -> ~ Expresion .)
@@ -1911,11 +1913,6 @@ state 84
     FI              reduce using rule 38 (Expresion -> ~ Expresion .)
     .               shift and go to state 61
     @               shift and go to state 62
-    =               shift and go to state 63
-    DARROW          shift and go to state 64
-    <               shift and go to state 65
-    -               shift and go to state 66
-    +               shift and go to state 67
     /               shift and go to state 68
     *               shift and go to state 69
 
@@ -1971,9 +1968,7 @@ state 86
     (46) Expresion -> Expresion . + Expresion
     (47) Expresion -> Expresion . / Expresion
     (48) Expresion -> Expresion . * Expresion
-    =               reduce using rule 40 (Expresion -> NOT Expresion .)
     DARROW          reduce using rule 40 (Expresion -> NOT Expresion .)
-    <               reduce using rule 40 (Expresion -> NOT Expresion .)
     ;               reduce using rule 40 (Expresion -> NOT Expresion .)
     OF              reduce using rule 40 (Expresion -> NOT Expresion .)
     LOOP            reduce using rule 40 (Expresion -> NOT Expresion .)
@@ -1988,6 +1983,8 @@ state 86
     FI              reduce using rule 40 (Expresion -> NOT Expresion .)
     .               shift and go to state 61
     @               shift and go to state 62
+    =               shift and go to state 63
+    <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
     /               shift and go to state 68
@@ -2063,7 +2060,6 @@ state 92
     (48) Expresion -> Expresion . * Expresion
     =               reduce using rule 42 (Expresion -> Expresion = Expresion .)
     DARROW          reduce using rule 42 (Expresion -> Expresion = Expresion .)
-    <               reduce using rule 42 (Expresion -> Expresion = Expresion .)
     ;               reduce using rule 42 (Expresion -> Expresion = Expresion .)
     OF              reduce using rule 42 (Expresion -> Expresion = Expresion .)
     LOOP            reduce using rule 42 (Expresion -> Expresion = Expresion .)
@@ -2078,6 +2074,7 @@ state 92
     FI              reduce using rule 42 (Expresion -> Expresion = Expresion .)
     .               shift and go to state 61
     @               shift and go to state 62
+    <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
     /               shift and go to state 68
@@ -2147,6 +2144,8 @@ state 94
     =               reduce using rule 44 (Expresion -> Expresion < Expresion .)
     DARROW          reduce using rule 44 (Expresion -> Expresion < Expresion .)
     <               reduce using rule 44 (Expresion -> Expresion < Expresion .)
+    -               reduce using rule 44 (Expresion -> Expresion < Expresion .)
+    +               reduce using rule 44 (Expresion -> Expresion < Expresion .)
     ;               reduce using rule 44 (Expresion -> Expresion < Expresion .)
     OF              reduce using rule 44 (Expresion -> Expresion < Expresion .)
     LOOP            reduce using rule 44 (Expresion -> Expresion < Expresion .)
@@ -2161,8 +2160,6 @@ state 94
     FI              reduce using rule 44 (Expresion -> Expresion < Expresion .)
     .               shift and go to state 61
     @               shift and go to state 62
-    -               shift and go to state 66
-    +               shift and go to state 67
     /               shift and go to state 68
     *               shift and go to state 69
 
@@ -2183,7 +2180,6 @@ state 95
     (48) Expresion -> Expresion . * Expresion
     =               reduce using rule 45 (Expresion -> Expresion - Expresion .)
     DARROW          reduce using rule 45 (Expresion -> Expresion - Expresion .)
-    <               reduce using rule 45 (Expresion -> Expresion - Expresion .)
     -               reduce using rule 45 (Expresion -> Expresion - Expresion .)
     +               reduce using rule 45 (Expresion -> Expresion - Expresion .)
     ;               reduce using rule 45 (Expresion -> Expresion - Expresion .)
@@ -2200,6 +2196,7 @@ state 95
     FI              reduce using rule 45 (Expresion -> Expresion - Expresion .)
     .               shift and go to state 61
     @               shift and go to state 62
+    <               shift and go to state 65
     /               shift and go to state 68
     *               shift and go to state 69
 
@@ -2220,7 +2217,6 @@ state 96
     (48) Expresion -> Expresion . * Expresion
     =               reduce using rule 46 (Expresion -> Expresion + Expresion .)
     DARROW          reduce using rule 46 (Expresion -> Expresion + Expresion .)
-    <               reduce using rule 46 (Expresion -> Expresion + Expresion .)
     -               reduce using rule 46 (Expresion -> Expresion + Expresion .)
     +               reduce using rule 46 (Expresion -> Expresion + Expresion .)
     ;               reduce using rule 46 (Expresion -> Expresion + Expresion .)
@@ -2237,6 +2233,7 @@ state 96
     FI              reduce using rule 46 (Expresion -> Expresion + Expresion .)
     .               shift and go to state 61
     @               shift and go to state 62
+    <               shift and go to state 65
     /               shift and go to state 68
     *               shift and go to state 69
 
@@ -2436,23 +2433,23 @@ state 102
 
 state 103
 
-    (63) lista_expr_pc -> error ; .
-    }               reduce using rule 63 (lista_expr_pc -> error ; .)
-    error           reduce using rule 63 (lista_expr_pc -> error ; .)
-    BOOL_CONST      reduce using rule 63 (lista_expr_pc -> error ; .)
-    STR_CONST       reduce using rule 63 (lista_expr_pc -> error ; .)
-    INT_CONST       reduce using rule 63 (lista_expr_pc -> error ; .)
-    OBJECTID        reduce using rule 63 (lista_expr_pc -> error ; .)
-    {               reduce using rule 63 (lista_expr_pc -> error ; .)
-    NEW             reduce using rule 63 (lista_expr_pc -> error ; .)
-    CASE            reduce using rule 63 (lista_expr_pc -> error ; .)
-    LET             reduce using rule 63 (lista_expr_pc -> error ; .)
-    WHILE           reduce using rule 63 (lista_expr_pc -> error ; .)
-    IF              reduce using rule 63 (lista_expr_pc -> error ; .)
-    ~               reduce using rule 63 (lista_expr_pc -> error ; .)
-    ISVOID          reduce using rule 63 (lista_expr_pc -> error ; .)
-    NOT             reduce using rule 63 (lista_expr_pc -> error ; .)
-    (               reduce using rule 63 (lista_expr_pc -> error ; .)
+    (65) lista_expr_pc -> error ; .
+    }               reduce using rule 65 (lista_expr_pc -> error ; .)
+    error           reduce using rule 65 (lista_expr_pc -> error ; .)
+    BOOL_CONST      reduce using rule 65 (lista_expr_pc -> error ; .)
+    STR_CONST       reduce using rule 65 (lista_expr_pc -> error ; .)
+    INT_CONST       reduce using rule 65 (lista_expr_pc -> error ; .)
+    OBJECTID        reduce using rule 65 (lista_expr_pc -> error ; .)
+    {               reduce using rule 65 (lista_expr_pc -> error ; .)
+    NEW             reduce using rule 65 (lista_expr_pc -> error ; .)
+    CASE            reduce using rule 65 (lista_expr_pc -> error ; .)
+    LET             reduce using rule 65 (lista_expr_pc -> error ; .)
+    WHILE           reduce using rule 65 (lista_expr_pc -> error ; .)
+    IF              reduce using rule 65 (lista_expr_pc -> error ; .)
+    ~               reduce using rule 65 (lista_expr_pc -> error ; .)
+    ISVOID          reduce using rule 65 (lista_expr_pc -> error ; .)
+    NOT             reduce using rule 65 (lista_expr_pc -> error ; .)
+    (               reduce using rule 65 (lista_expr_pc -> error ; .)
 
 
 state 104
@@ -2483,13 +2480,13 @@ state 104
 
 state 105
 
-    (61) lista_expr_pc -> lista_expr_pc error . ;
+    (63) lista_expr_pc -> lista_expr_pc error . ;
     ;               shift and go to state 123
 
 
 state 106
 
-    (62) lista_expr_pc -> lista_expr_pc Expresion . ;
+    (64) lista_expr_pc -> lista_expr_pc Expresion . ;
     (34) Expresion -> Expresion . . OBJECTID ( )
     (35) Expresion -> Expresion . . OBJECTID ( Expresion lista_expr )
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
@@ -2515,32 +2512,32 @@ state 106
 
 state 107
 
-    (64) lista_expr_pc -> Expresion ; .
-    }               reduce using rule 64 (lista_expr_pc -> Expresion ; .)
-    error           reduce using rule 64 (lista_expr_pc -> Expresion ; .)
-    BOOL_CONST      reduce using rule 64 (lista_expr_pc -> Expresion ; .)
-    STR_CONST       reduce using rule 64 (lista_expr_pc -> Expresion ; .)
-    INT_CONST       reduce using rule 64 (lista_expr_pc -> Expresion ; .)
-    OBJECTID        reduce using rule 64 (lista_expr_pc -> Expresion ; .)
-    {               reduce using rule 64 (lista_expr_pc -> Expresion ; .)
-    NEW             reduce using rule 64 (lista_expr_pc -> Expresion ; .)
-    CASE            reduce using rule 64 (lista_expr_pc -> Expresion ; .)
-    LET             reduce using rule 64 (lista_expr_pc -> Expresion ; .)
-    WHILE           reduce using rule 64 (lista_expr_pc -> Expresion ; .)
-    IF              reduce using rule 64 (lista_expr_pc -> Expresion ; .)
-    ~               reduce using rule 64 (lista_expr_pc -> Expresion ; .)
-    ISVOID          reduce using rule 64 (lista_expr_pc -> Expresion ; .)
-    NOT             reduce using rule 64 (lista_expr_pc -> Expresion ; .)
-    (               reduce using rule 64 (lista_expr_pc -> Expresion ; .)
+    (66) lista_expr_pc -> Expresion ; .
+    }               reduce using rule 66 (lista_expr_pc -> Expresion ; .)
+    error           reduce using rule 66 (lista_expr_pc -> Expresion ; .)
+    BOOL_CONST      reduce using rule 66 (lista_expr_pc -> Expresion ; .)
+    STR_CONST       reduce using rule 66 (lista_expr_pc -> Expresion ; .)
+    INT_CONST       reduce using rule 66 (lista_expr_pc -> Expresion ; .)
+    OBJECTID        reduce using rule 66 (lista_expr_pc -> Expresion ; .)
+    {               reduce using rule 66 (lista_expr_pc -> Expresion ; .)
+    NEW             reduce using rule 66 (lista_expr_pc -> Expresion ; .)
+    CASE            reduce using rule 66 (lista_expr_pc -> Expresion ; .)
+    LET             reduce using rule 66 (lista_expr_pc -> Expresion ; .)
+    WHILE           reduce using rule 66 (lista_expr_pc -> Expresion ; .)
+    IF              reduce using rule 66 (lista_expr_pc -> Expresion ; .)
+    ~               reduce using rule 66 (lista_expr_pc -> Expresion ; .)
+    ISVOID          reduce using rule 66 (lista_expr_pc -> Expresion ; .)
+    NOT             reduce using rule 66 (lista_expr_pc -> Expresion ; .)
+    (               reduce using rule 66 (lista_expr_pc -> Expresion ; .)
 
 
 state 108
 
     (27) Expresion -> CASE error OF . lista_expr_case ESAC
-    (57) lista_expr_case -> . OBJECTID : TYPEID DARROW error ; lista_expr_case
-    (58) lista_expr_case -> . OBJECTID : TYPEID DARROW error ;
-    (59) lista_expr_case -> . OBJECTID : TYPEID DARROW Expresion ; lista_expr_case
-    (60) lista_expr_case -> . OBJECTID : TYPEID DARROW Expresion ;
+    (59) lista_expr_case -> . OBJECTID : TYPEID DARROW error ; lista_expr_case
+    (60) lista_expr_case -> . OBJECTID : TYPEID DARROW error ;
+    (61) lista_expr_case -> . OBJECTID : TYPEID DARROW Expresion ; lista_expr_case
+    (62) lista_expr_case -> . OBJECTID : TYPEID DARROW Expresion ;
     OBJECTID        shift and go to state 126
 
     lista_expr_case                shift and go to state 125
@@ -2548,10 +2545,10 @@ state 108
 state 109
 
     (28) Expresion -> CASE Expresion OF . lista_expr_case ESAC
-    (57) lista_expr_case -> . OBJECTID : TYPEID DARROW error ; lista_expr_case
-    (58) lista_expr_case -> . OBJECTID : TYPEID DARROW error ;
-    (59) lista_expr_case -> . OBJECTID : TYPEID DARROW Expresion ; lista_expr_case
-    (60) lista_expr_case -> . OBJECTID : TYPEID DARROW Expresion ;
+    (59) lista_expr_case -> . OBJECTID : TYPEID DARROW error ; lista_expr_case
+    (60) lista_expr_case -> . OBJECTID : TYPEID DARROW error ;
+    (61) lista_expr_case -> . OBJECTID : TYPEID DARROW Expresion ; lista_expr_case
+    (62) lista_expr_case -> . OBJECTID : TYPEID DARROW Expresion ;
     OBJECTID        shift and go to state 126
 
     lista_expr_case                shift and go to state 127
@@ -2610,6 +2607,7 @@ state 111
 
     (52) lista_expr_let -> OBJECTID : . TYPEID lista_expr_let
     (54) lista_expr_let -> OBJECTID : . TYPEID ASSIGN Expresion lista_expr_let
+    (57) lista_expr_let -> OBJECTID : . TYPEID ASSIGN error lista_expr_let
     TYPEID          shift and go to state 129
 
 
@@ -2617,6 +2615,7 @@ state 112
 
     (53) lista_expr_let -> , OBJECTID . : TYPEID lista_expr_let
     (55) lista_expr_let -> , OBJECTID . : TYPEID ASSIGN Expresion lista_expr_let
+    (58) lista_expr_let -> , OBJECTID . : TYPEID ASSIGN error lista_expr_let
     :               shift and go to state 130
 
 
@@ -2971,44 +2970,44 @@ state 122
 
 state 123
 
-    (61) lista_expr_pc -> lista_expr_pc error ; .
-    }               reduce using rule 61 (lista_expr_pc -> lista_expr_pc error ; .)
-    error           reduce using rule 61 (lista_expr_pc -> lista_expr_pc error ; .)
-    BOOL_CONST      reduce using rule 61 (lista_expr_pc -> lista_expr_pc error ; .)
-    STR_CONST       reduce using rule 61 (lista_expr_pc -> lista_expr_pc error ; .)
-    INT_CONST       reduce using rule 61 (lista_expr_pc -> lista_expr_pc error ; .)
-    OBJECTID        reduce using rule 61 (lista_expr_pc -> lista_expr_pc error ; .)
-    {               reduce using rule 61 (lista_expr_pc -> lista_expr_pc error ; .)
-    NEW             reduce using rule 61 (lista_expr_pc -> lista_expr_pc error ; .)
-    CASE            reduce using rule 61 (lista_expr_pc -> lista_expr_pc error ; .)
-    LET             reduce using rule 61 (lista_expr_pc -> lista_expr_pc error ; .)
-    WHILE           reduce using rule 61 (lista_expr_pc -> lista_expr_pc error ; .)
-    IF              reduce using rule 61 (lista_expr_pc -> lista_expr_pc error ; .)
-    ~               reduce using rule 61 (lista_expr_pc -> lista_expr_pc error ; .)
-    ISVOID          reduce using rule 61 (lista_expr_pc -> lista_expr_pc error ; .)
-    NOT             reduce using rule 61 (lista_expr_pc -> lista_expr_pc error ; .)
-    (               reduce using rule 61 (lista_expr_pc -> lista_expr_pc error ; .)
+    (63) lista_expr_pc -> lista_expr_pc error ; .
+    }               reduce using rule 63 (lista_expr_pc -> lista_expr_pc error ; .)
+    error           reduce using rule 63 (lista_expr_pc -> lista_expr_pc error ; .)
+    BOOL_CONST      reduce using rule 63 (lista_expr_pc -> lista_expr_pc error ; .)
+    STR_CONST       reduce using rule 63 (lista_expr_pc -> lista_expr_pc error ; .)
+    INT_CONST       reduce using rule 63 (lista_expr_pc -> lista_expr_pc error ; .)
+    OBJECTID        reduce using rule 63 (lista_expr_pc -> lista_expr_pc error ; .)
+    {               reduce using rule 63 (lista_expr_pc -> lista_expr_pc error ; .)
+    NEW             reduce using rule 63 (lista_expr_pc -> lista_expr_pc error ; .)
+    CASE            reduce using rule 63 (lista_expr_pc -> lista_expr_pc error ; .)
+    LET             reduce using rule 63 (lista_expr_pc -> lista_expr_pc error ; .)
+    WHILE           reduce using rule 63 (lista_expr_pc -> lista_expr_pc error ; .)
+    IF              reduce using rule 63 (lista_expr_pc -> lista_expr_pc error ; .)
+    ~               reduce using rule 63 (lista_expr_pc -> lista_expr_pc error ; .)
+    ISVOID          reduce using rule 63 (lista_expr_pc -> lista_expr_pc error ; .)
+    NOT             reduce using rule 63 (lista_expr_pc -> lista_expr_pc error ; .)
+    (               reduce using rule 63 (lista_expr_pc -> lista_expr_pc error ; .)
 
 
 state 124
 
-    (62) lista_expr_pc -> lista_expr_pc Expresion ; .
-    }               reduce using rule 62 (lista_expr_pc -> lista_expr_pc Expresion ; .)
-    error           reduce using rule 62 (lista_expr_pc -> lista_expr_pc Expresion ; .)
-    BOOL_CONST      reduce using rule 62 (lista_expr_pc -> lista_expr_pc Expresion ; .)
-    STR_CONST       reduce using rule 62 (lista_expr_pc -> lista_expr_pc Expresion ; .)
-    INT_CONST       reduce using rule 62 (lista_expr_pc -> lista_expr_pc Expresion ; .)
-    OBJECTID        reduce using rule 62 (lista_expr_pc -> lista_expr_pc Expresion ; .)
-    {               reduce using rule 62 (lista_expr_pc -> lista_expr_pc Expresion ; .)
-    NEW             reduce using rule 62 (lista_expr_pc -> lista_expr_pc Expresion ; .)
-    CASE            reduce using rule 62 (lista_expr_pc -> lista_expr_pc Expresion ; .)
-    LET             reduce using rule 62 (lista_expr_pc -> lista_expr_pc Expresion ; .)
-    WHILE           reduce using rule 62 (lista_expr_pc -> lista_expr_pc Expresion ; .)
-    IF              reduce using rule 62 (lista_expr_pc -> lista_expr_pc Expresion ; .)
-    ~               reduce using rule 62 (lista_expr_pc -> lista_expr_pc Expresion ; .)
-    ISVOID          reduce using rule 62 (lista_expr_pc -> lista_expr_pc Expresion ; .)
-    NOT             reduce using rule 62 (lista_expr_pc -> lista_expr_pc Expresion ; .)
-    (               reduce using rule 62 (lista_expr_pc -> lista_expr_pc Expresion ; .)
+    (64) lista_expr_pc -> lista_expr_pc Expresion ; .
+    }               reduce using rule 64 (lista_expr_pc -> lista_expr_pc Expresion ; .)
+    error           reduce using rule 64 (lista_expr_pc -> lista_expr_pc Expresion ; .)
+    BOOL_CONST      reduce using rule 64 (lista_expr_pc -> lista_expr_pc Expresion ; .)
+    STR_CONST       reduce using rule 64 (lista_expr_pc -> lista_expr_pc Expresion ; .)
+    INT_CONST       reduce using rule 64 (lista_expr_pc -> lista_expr_pc Expresion ; .)
+    OBJECTID        reduce using rule 64 (lista_expr_pc -> lista_expr_pc Expresion ; .)
+    {               reduce using rule 64 (lista_expr_pc -> lista_expr_pc Expresion ; .)
+    NEW             reduce using rule 64 (lista_expr_pc -> lista_expr_pc Expresion ; .)
+    CASE            reduce using rule 64 (lista_expr_pc -> lista_expr_pc Expresion ; .)
+    LET             reduce using rule 64 (lista_expr_pc -> lista_expr_pc Expresion ; .)
+    WHILE           reduce using rule 64 (lista_expr_pc -> lista_expr_pc Expresion ; .)
+    IF              reduce using rule 64 (lista_expr_pc -> lista_expr_pc Expresion ; .)
+    ~               reduce using rule 64 (lista_expr_pc -> lista_expr_pc Expresion ; .)
+    ISVOID          reduce using rule 64 (lista_expr_pc -> lista_expr_pc Expresion ; .)
+    NOT             reduce using rule 64 (lista_expr_pc -> lista_expr_pc Expresion ; .)
+    (               reduce using rule 64 (lista_expr_pc -> lista_expr_pc Expresion ; .)
 
 
 state 125
@@ -3019,10 +3018,10 @@ state 125
 
 state 126
 
-    (57) lista_expr_case -> OBJECTID . : TYPEID DARROW error ; lista_expr_case
-    (58) lista_expr_case -> OBJECTID . : TYPEID DARROW error ;
-    (59) lista_expr_case -> OBJECTID . : TYPEID DARROW Expresion ; lista_expr_case
-    (60) lista_expr_case -> OBJECTID . : TYPEID DARROW Expresion ;
+    (59) lista_expr_case -> OBJECTID . : TYPEID DARROW error ; lista_expr_case
+    (60) lista_expr_case -> OBJECTID . : TYPEID DARROW error ;
+    (61) lista_expr_case -> OBJECTID . : TYPEID DARROW Expresion ; lista_expr_case
+    (62) lista_expr_case -> OBJECTID . : TYPEID DARROW Expresion ;
     :               shift and go to state 142
 
 
@@ -3082,11 +3081,14 @@ state 129
 
     (52) lista_expr_let -> OBJECTID : TYPEID . lista_expr_let
     (54) lista_expr_let -> OBJECTID : TYPEID . ASSIGN Expresion lista_expr_let
+    (57) lista_expr_let -> OBJECTID : TYPEID . ASSIGN error lista_expr_let
     (52) lista_expr_let -> . OBJECTID : TYPEID lista_expr_let
     (53) lista_expr_let -> . , OBJECTID : TYPEID lista_expr_let
     (54) lista_expr_let -> . OBJECTID : TYPEID ASSIGN Expresion lista_expr_let
     (55) lista_expr_let -> . , OBJECTID : TYPEID ASSIGN Expresion lista_expr_let
     (56) lista_expr_let -> .
+    (57) lista_expr_let -> . OBJECTID : TYPEID ASSIGN error lista_expr_let
+    (58) lista_expr_let -> . , OBJECTID : TYPEID ASSIGN error lista_expr_let
     ASSIGN          shift and go to state 145
     OBJECTID        shift and go to state 79
     ,               shift and go to state 80
@@ -3098,6 +3100,7 @@ state 130
 
     (53) lista_expr_let -> , OBJECTID : . TYPEID lista_expr_let
     (55) lista_expr_let -> , OBJECTID : . TYPEID ASSIGN Expresion lista_expr_let
+    (58) lista_expr_let -> , OBJECTID : . TYPEID ASSIGN error lista_expr_let
     TYPEID          shift and go to state 146
 
 
@@ -3358,10 +3361,10 @@ state 141
 
 state 142
 
-    (57) lista_expr_case -> OBJECTID : . TYPEID DARROW error ; lista_expr_case
-    (58) lista_expr_case -> OBJECTID : . TYPEID DARROW error ;
-    (59) lista_expr_case -> OBJECTID : . TYPEID DARROW Expresion ; lista_expr_case
-    (60) lista_expr_case -> OBJECTID : . TYPEID DARROW Expresion ;
+    (59) lista_expr_case -> OBJECTID : . TYPEID DARROW error ; lista_expr_case
+    (60) lista_expr_case -> OBJECTID : . TYPEID DARROW error ;
+    (61) lista_expr_case -> OBJECTID : . TYPEID DARROW Expresion ; lista_expr_case
+    (62) lista_expr_case -> OBJECTID : . TYPEID DARROW Expresion ;
     TYPEID          shift and go to state 155
 
 
@@ -3400,6 +3403,7 @@ state 144
 state 145
 
     (54) lista_expr_let -> OBJECTID : TYPEID ASSIGN . Expresion lista_expr_let
+    (57) lista_expr_let -> OBJECTID : TYPEID ASSIGN . error lista_expr_let
     (20) Expresion -> . BOOL_CONST
     (21) Expresion -> . STR_CONST
     (22) Expresion -> . INT_CONST
@@ -3430,6 +3434,7 @@ state 145
     (47) Expresion -> . Expresion / Expresion
     (48) Expresion -> . Expresion * Expresion
     (49) Expresion -> . OBJECTID ASSIGN Expresion
+    error           shift and go to state 157
     BOOL_CONST      shift and go to state 43
     STR_CONST       shift and go to state 44
     INT_CONST       shift and go to state 45
@@ -3451,17 +3456,20 @@ state 146
 
     (53) lista_expr_let -> , OBJECTID : TYPEID . lista_expr_let
     (55) lista_expr_let -> , OBJECTID : TYPEID . ASSIGN Expresion lista_expr_let
+    (58) lista_expr_let -> , OBJECTID : TYPEID . ASSIGN error lista_expr_let
     (52) lista_expr_let -> . OBJECTID : TYPEID lista_expr_let
     (53) lista_expr_let -> . , OBJECTID : TYPEID lista_expr_let
     (54) lista_expr_let -> . OBJECTID : TYPEID ASSIGN Expresion lista_expr_let
     (55) lista_expr_let -> . , OBJECTID : TYPEID ASSIGN Expresion lista_expr_let
     (56) lista_expr_let -> .
-    ASSIGN          shift and go to state 158
+    (57) lista_expr_let -> . OBJECTID : TYPEID ASSIGN error lista_expr_let
+    (58) lista_expr_let -> . , OBJECTID : TYPEID ASSIGN error lista_expr_let
+    ASSIGN          shift and go to state 159
     OBJECTID        shift and go to state 79
     ,               shift and go to state 80
     IN              reduce using rule 56 (lista_expr_let -> .)
 
-    lista_expr_let                 shift and go to state 157
+    lista_expr_let                 shift and go to state 158
 
 state 147
 
@@ -3537,7 +3545,7 @@ state 148
     NOT             shift and go to state 56
     (               shift and go to state 53
 
-    Expresion                      shift and go to state 159
+    Expresion                      shift and go to state 160
 
 state 149
 
@@ -3560,7 +3568,7 @@ state 151
 state 152
 
     (35) Expresion -> Expresion . OBJECTID ( Expresion lista_expr . )
-    )               shift and go to state 160
+    )               shift and go to state 161
 
 
 state 153
@@ -3597,7 +3605,7 @@ state 153
     (47) Expresion -> . Expresion / Expresion
     (48) Expresion -> . Expresion * Expresion
     (49) Expresion -> . OBJECTID ASSIGN Expresion
-    )               shift and go to state 162
+    )               shift and go to state 163
     BOOL_CONST      shift and go to state 43
     STR_CONST       shift and go to state 44
     INT_CONST       shift and go to state 45
@@ -3613,7 +3621,7 @@ state 153
     NOT             shift and go to state 56
     (               shift and go to state 53
 
-    Expresion                      shift and go to state 161
+    Expresion                      shift and go to state 162
 
 state 154
 
@@ -3623,11 +3631,11 @@ state 154
 
 state 155
 
-    (57) lista_expr_case -> OBJECTID : TYPEID . DARROW error ; lista_expr_case
-    (58) lista_expr_case -> OBJECTID : TYPEID . DARROW error ;
-    (59) lista_expr_case -> OBJECTID : TYPEID . DARROW Expresion ; lista_expr_case
-    (60) lista_expr_case -> OBJECTID : TYPEID . DARROW Expresion ;
-    DARROW          shift and go to state 163
+    (59) lista_expr_case -> OBJECTID : TYPEID . DARROW error ; lista_expr_case
+    (60) lista_expr_case -> OBJECTID : TYPEID . DARROW error ;
+    (61) lista_expr_case -> OBJECTID : TYPEID . DARROW Expresion ; lista_expr_case
+    (62) lista_expr_case -> OBJECTID : TYPEID . DARROW Expresion ;
+    DARROW          shift and go to state 164
 
 
 state 156
@@ -3649,6 +3657,8 @@ state 156
     (54) lista_expr_let -> . OBJECTID : TYPEID ASSIGN Expresion lista_expr_let
     (55) lista_expr_let -> . , OBJECTID : TYPEID ASSIGN Expresion lista_expr_let
     (56) lista_expr_let -> .
+    (57) lista_expr_let -> . OBJECTID : TYPEID ASSIGN error lista_expr_let
+    (58) lista_expr_let -> . , OBJECTID : TYPEID ASSIGN error lista_expr_let
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
@@ -3662,178 +3672,34 @@ state 156
     ,               shift and go to state 80
     IN              reduce using rule 56 (lista_expr_let -> .)
 
-    lista_expr_let                 shift and go to state 164
+    lista_expr_let                 shift and go to state 165
 
 state 157
+
+    (57) lista_expr_let -> OBJECTID : TYPEID ASSIGN error . lista_expr_let
+    (52) lista_expr_let -> . OBJECTID : TYPEID lista_expr_let
+    (53) lista_expr_let -> . , OBJECTID : TYPEID lista_expr_let
+    (54) lista_expr_let -> . OBJECTID : TYPEID ASSIGN Expresion lista_expr_let
+    (55) lista_expr_let -> . , OBJECTID : TYPEID ASSIGN Expresion lista_expr_let
+    (56) lista_expr_let -> .
+    (57) lista_expr_let -> . OBJECTID : TYPEID ASSIGN error lista_expr_let
+    (58) lista_expr_let -> . , OBJECTID : TYPEID ASSIGN error lista_expr_let
+    OBJECTID        shift and go to state 79
+    ,               shift and go to state 80
+    IN              reduce using rule 56 (lista_expr_let -> .)
+
+    lista_expr_let                 shift and go to state 166
+
+state 158
 
     (53) lista_expr_let -> , OBJECTID : TYPEID lista_expr_let .
     IN              reduce using rule 53 (lista_expr_let -> , OBJECTID : TYPEID lista_expr_let .)
 
 
-state 158
-
-    (55) lista_expr_let -> , OBJECTID : TYPEID ASSIGN . Expresion lista_expr_let
-    (20) Expresion -> . BOOL_CONST
-    (21) Expresion -> . STR_CONST
-    (22) Expresion -> . INT_CONST
-    (23) Expresion -> . OBJECTID
-    (24) Expresion -> . { error }
-    (25) Expresion -> . { lista_expr_pc }
-    (26) Expresion -> . NEW TYPEID
-    (27) Expresion -> . CASE error OF lista_expr_case ESAC
-    (28) Expresion -> . CASE Expresion OF lista_expr_case ESAC
-    (29) Expresion -> . LET lista_expr_let IN Expresion
-    (30) Expresion -> . WHILE Expresion LOOP Expresion POOL
-    (31) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
-    (32) Expresion -> . OBJECTID ( )
-    (33) Expresion -> . OBJECTID ( Expresion lista_expr )
-    (34) Expresion -> . Expresion . OBJECTID ( )
-    (35) Expresion -> . Expresion . OBJECTID ( Expresion lista_expr )
-    (36) Expresion -> . Expresion @ TYPEID . OBJECTID ( Expresion lista_expr )
-    (37) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
-    (38) Expresion -> . ~ Expresion
-    (39) Expresion -> . ISVOID Expresion
-    (40) Expresion -> . NOT Expresion
-    (41) Expresion -> . ( Expresion )
-    (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
-    (44) Expresion -> . Expresion < Expresion
-    (45) Expresion -> . Expresion - Expresion
-    (46) Expresion -> . Expresion + Expresion
-    (47) Expresion -> . Expresion / Expresion
-    (48) Expresion -> . Expresion * Expresion
-    (49) Expresion -> . OBJECTID ASSIGN Expresion
-    BOOL_CONST      shift and go to state 43
-    STR_CONST       shift and go to state 44
-    INT_CONST       shift and go to state 45
-    OBJECTID        shift and go to state 46
-    {               shift and go to state 47
-    NEW             shift and go to state 48
-    CASE            shift and go to state 49
-    LET             shift and go to state 50
-    WHILE           shift and go to state 51
-    IF              shift and go to state 52
-    ~               shift and go to state 54
-    ISVOID          shift and go to state 55
-    NOT             shift and go to state 56
-    (               shift and go to state 53
-
-    Expresion                      shift and go to state 165
-
 state 159
 
-    (31) Expresion -> IF Expresion THEN Expresion ELSE Expresion . FI
-    (34) Expresion -> Expresion . . OBJECTID ( )
-    (35) Expresion -> Expresion . . OBJECTID ( Expresion lista_expr )
-    (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
-    (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
-    (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
-    (44) Expresion -> Expresion . < Expresion
-    (45) Expresion -> Expresion . - Expresion
-    (46) Expresion -> Expresion . + Expresion
-    (47) Expresion -> Expresion . / Expresion
-    (48) Expresion -> Expresion . * Expresion
-    FI              shift and go to state 166
-    .               shift and go to state 61
-    @               shift and go to state 62
-    =               shift and go to state 63
-    DARROW          shift and go to state 64
-    <               shift and go to state 65
-    -               shift and go to state 66
-    +               shift and go to state 67
-    /               shift and go to state 68
-    *               shift and go to state 69
-
-
-state 160
-
-    (35) Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .
-    .               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    @               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    =               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    DARROW          reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    <               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    -               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    +               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    /               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    *               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    ;               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    OF              reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    LOOP            reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    THEN            reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    )               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    }               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    ,               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    POOL            reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    ELSE            reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    OBJECTID        reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    IN              reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    FI              reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-
-
-state 161
-
-    (36) Expresion -> Expresion @ TYPEID . OBJECTID ( Expresion . lista_expr )
-    (34) Expresion -> Expresion . . OBJECTID ( )
-    (35) Expresion -> Expresion . . OBJECTID ( Expresion lista_expr )
-    (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
-    (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
-    (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
-    (44) Expresion -> Expresion . < Expresion
-    (45) Expresion -> Expresion . - Expresion
-    (46) Expresion -> Expresion . + Expresion
-    (47) Expresion -> Expresion . / Expresion
-    (48) Expresion -> Expresion . * Expresion
-    (50) lista_expr -> . , Expresion lista_expr
-    (51) lista_expr -> .
-    .               shift and go to state 61
-    @               shift and go to state 62
-    =               shift and go to state 63
-    DARROW          shift and go to state 64
-    <               shift and go to state 65
-    -               shift and go to state 66
-    +               shift and go to state 67
-    /               shift and go to state 68
-    *               shift and go to state 69
-    ,               shift and go to state 122
-    )               reduce using rule 51 (lista_expr -> .)
-
-    lista_expr                     shift and go to state 167
-
-state 162
-
-    (37) Expresion -> Expresion @ TYPEID . OBJECTID ( ) .
-    .               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    @               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    =               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    DARROW          reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    <               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    -               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    +               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    /               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    *               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    ;               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    OF              reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    LOOP            reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    THEN            reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    )               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    }               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    ,               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    POOL            reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    ELSE            reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    OBJECTID        reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    IN              reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    FI              reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-
-
-state 163
-
-    (57) lista_expr_case -> OBJECTID : TYPEID DARROW . error ; lista_expr_case
-    (58) lista_expr_case -> OBJECTID : TYPEID DARROW . error ;
-    (59) lista_expr_case -> OBJECTID : TYPEID DARROW . Expresion ; lista_expr_case
-    (60) lista_expr_case -> OBJECTID : TYPEID DARROW . Expresion ;
+    (55) lista_expr_let -> , OBJECTID : TYPEID ASSIGN . Expresion lista_expr_let
+    (58) lista_expr_let -> , OBJECTID : TYPEID ASSIGN . error lista_expr_let
     (20) Expresion -> . BOOL_CONST
     (21) Expresion -> . STR_CONST
     (22) Expresion -> . INT_CONST
@@ -3880,15 +3746,183 @@ state 163
     NOT             shift and go to state 56
     (               shift and go to state 53
 
-    Expresion                      shift and go to state 169
+    Expresion                      shift and go to state 167
+
+state 160
+
+    (31) Expresion -> IF Expresion THEN Expresion ELSE Expresion . FI
+    (34) Expresion -> Expresion . . OBJECTID ( )
+    (35) Expresion -> Expresion . . OBJECTID ( Expresion lista_expr )
+    (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
+    (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (42) Expresion -> Expresion . = Expresion
+    (43) Expresion -> Expresion . DARROW Expresion
+    (44) Expresion -> Expresion . < Expresion
+    (45) Expresion -> Expresion . - Expresion
+    (46) Expresion -> Expresion . + Expresion
+    (47) Expresion -> Expresion . / Expresion
+    (48) Expresion -> Expresion . * Expresion
+    FI              shift and go to state 169
+    .               shift and go to state 61
+    @               shift and go to state 62
+    =               shift and go to state 63
+    DARROW          shift and go to state 64
+    <               shift and go to state 65
+    -               shift and go to state 66
+    +               shift and go to state 67
+    /               shift and go to state 68
+    *               shift and go to state 69
+
+
+state 161
+
+    (35) Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .
+    .               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    @               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    =               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    DARROW          reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    <               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    -               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    +               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    /               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    *               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    ;               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    OF              reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    LOOP            reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    THEN            reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    )               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    }               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    ,               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    POOL            reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    ELSE            reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    OBJECTID        reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    IN              reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    FI              reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+
+
+state 162
+
+    (36) Expresion -> Expresion @ TYPEID . OBJECTID ( Expresion . lista_expr )
+    (34) Expresion -> Expresion . . OBJECTID ( )
+    (35) Expresion -> Expresion . . OBJECTID ( Expresion lista_expr )
+    (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
+    (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
+    (42) Expresion -> Expresion . = Expresion
+    (43) Expresion -> Expresion . DARROW Expresion
+    (44) Expresion -> Expresion . < Expresion
+    (45) Expresion -> Expresion . - Expresion
+    (46) Expresion -> Expresion . + Expresion
+    (47) Expresion -> Expresion . / Expresion
+    (48) Expresion -> Expresion . * Expresion
+    (50) lista_expr -> . , Expresion lista_expr
+    (51) lista_expr -> .
+    .               shift and go to state 61
+    @               shift and go to state 62
+    =               shift and go to state 63
+    DARROW          shift and go to state 64
+    <               shift and go to state 65
+    -               shift and go to state 66
+    +               shift and go to state 67
+    /               shift and go to state 68
+    *               shift and go to state 69
+    ,               shift and go to state 122
+    )               reduce using rule 51 (lista_expr -> .)
+
+    lista_expr                     shift and go to state 170
+
+state 163
+
+    (37) Expresion -> Expresion @ TYPEID . OBJECTID ( ) .
+    .               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    @               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    =               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    DARROW          reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    <               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    -               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    +               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    /               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    *               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    ;               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    OF              reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    LOOP            reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    THEN            reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    )               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    }               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    ,               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    POOL            reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    ELSE            reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    OBJECTID        reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    IN              reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    FI              reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+
 
 state 164
+
+    (59) lista_expr_case -> OBJECTID : TYPEID DARROW . error ; lista_expr_case
+    (60) lista_expr_case -> OBJECTID : TYPEID DARROW . error ;
+    (61) lista_expr_case -> OBJECTID : TYPEID DARROW . Expresion ; lista_expr_case
+    (62) lista_expr_case -> OBJECTID : TYPEID DARROW . Expresion ;
+    (20) Expresion -> . BOOL_CONST
+    (21) Expresion -> . STR_CONST
+    (22) Expresion -> . INT_CONST
+    (23) Expresion -> . OBJECTID
+    (24) Expresion -> . { error }
+    (25) Expresion -> . { lista_expr_pc }
+    (26) Expresion -> . NEW TYPEID
+    (27) Expresion -> . CASE error OF lista_expr_case ESAC
+    (28) Expresion -> . CASE Expresion OF lista_expr_case ESAC
+    (29) Expresion -> . LET lista_expr_let IN Expresion
+    (30) Expresion -> . WHILE Expresion LOOP Expresion POOL
+    (31) Expresion -> . IF Expresion THEN Expresion ELSE Expresion FI
+    (32) Expresion -> . OBJECTID ( )
+    (33) Expresion -> . OBJECTID ( Expresion lista_expr )
+    (34) Expresion -> . Expresion . OBJECTID ( )
+    (35) Expresion -> . Expresion . OBJECTID ( Expresion lista_expr )
+    (36) Expresion -> . Expresion @ TYPEID . OBJECTID ( Expresion lista_expr )
+    (37) Expresion -> . Expresion @ TYPEID . OBJECTID ( )
+    (38) Expresion -> . ~ Expresion
+    (39) Expresion -> . ISVOID Expresion
+    (40) Expresion -> . NOT Expresion
+    (41) Expresion -> . ( Expresion )
+    (42) Expresion -> . Expresion = Expresion
+    (43) Expresion -> . Expresion DARROW Expresion
+    (44) Expresion -> . Expresion < Expresion
+    (45) Expresion -> . Expresion - Expresion
+    (46) Expresion -> . Expresion + Expresion
+    (47) Expresion -> . Expresion / Expresion
+    (48) Expresion -> . Expresion * Expresion
+    (49) Expresion -> . OBJECTID ASSIGN Expresion
+    error           shift and go to state 171
+    BOOL_CONST      shift and go to state 43
+    STR_CONST       shift and go to state 44
+    INT_CONST       shift and go to state 45
+    OBJECTID        shift and go to state 46
+    {               shift and go to state 47
+    NEW             shift and go to state 48
+    CASE            shift and go to state 49
+    LET             shift and go to state 50
+    WHILE           shift and go to state 51
+    IF              shift and go to state 52
+    ~               shift and go to state 54
+    ISVOID          shift and go to state 55
+    NOT             shift and go to state 56
+    (               shift and go to state 53
+
+    Expresion                      shift and go to state 172
+
+state 165
 
     (54) lista_expr_let -> OBJECTID : TYPEID ASSIGN Expresion lista_expr_let .
     IN              reduce using rule 54 (lista_expr_let -> OBJECTID : TYPEID ASSIGN Expresion lista_expr_let .)
 
 
-state 165
+state 166
+
+    (57) lista_expr_let -> OBJECTID : TYPEID ASSIGN error lista_expr_let .
+    IN              reduce using rule 57 (lista_expr_let -> OBJECTID : TYPEID ASSIGN error lista_expr_let .)
+
+
+state 167
 
     (55) lista_expr_let -> , OBJECTID : TYPEID ASSIGN Expresion . lista_expr_let
     (34) Expresion -> Expresion . . OBJECTID ( )
@@ -3907,6 +3941,8 @@ state 165
     (54) lista_expr_let -> . OBJECTID : TYPEID ASSIGN Expresion lista_expr_let
     (55) lista_expr_let -> . , OBJECTID : TYPEID ASSIGN Expresion lista_expr_let
     (56) lista_expr_let -> .
+    (57) lista_expr_let -> . OBJECTID : TYPEID ASSIGN error lista_expr_let
+    (58) lista_expr_let -> . , OBJECTID : TYPEID ASSIGN error lista_expr_let
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
@@ -3920,9 +3956,25 @@ state 165
     ,               shift and go to state 80
     IN              reduce using rule 56 (lista_expr_let -> .)
 
-    lista_expr_let                 shift and go to state 170
+    lista_expr_let                 shift and go to state 173
 
-state 166
+state 168
+
+    (58) lista_expr_let -> , OBJECTID : TYPEID ASSIGN error . lista_expr_let
+    (52) lista_expr_let -> . OBJECTID : TYPEID lista_expr_let
+    (53) lista_expr_let -> . , OBJECTID : TYPEID lista_expr_let
+    (54) lista_expr_let -> . OBJECTID : TYPEID ASSIGN Expresion lista_expr_let
+    (55) lista_expr_let -> . , OBJECTID : TYPEID ASSIGN Expresion lista_expr_let
+    (56) lista_expr_let -> .
+    (57) lista_expr_let -> . OBJECTID : TYPEID ASSIGN error lista_expr_let
+    (58) lista_expr_let -> . , OBJECTID : TYPEID ASSIGN error lista_expr_let
+    OBJECTID        shift and go to state 79
+    ,               shift and go to state 80
+    IN              reduce using rule 56 (lista_expr_let -> .)
+
+    lista_expr_let                 shift and go to state 174
+
+state 169
 
     (31) Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .
     .               reduce using rule 31 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
@@ -3948,23 +4000,23 @@ state 166
     FI              reduce using rule 31 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
 
 
-state 167
+state 170
 
     (36) Expresion -> Expresion @ TYPEID . OBJECTID ( Expresion lista_expr . )
-    )               shift and go to state 171
+    )               shift and go to state 175
 
 
-state 168
+state 171
 
-    (57) lista_expr_case -> OBJECTID : TYPEID DARROW error . ; lista_expr_case
-    (58) lista_expr_case -> OBJECTID : TYPEID DARROW error . ;
-    ;               shift and go to state 172
+    (59) lista_expr_case -> OBJECTID : TYPEID DARROW error . ; lista_expr_case
+    (60) lista_expr_case -> OBJECTID : TYPEID DARROW error . ;
+    ;               shift and go to state 176
 
 
-state 169
+state 172
 
-    (59) lista_expr_case -> OBJECTID : TYPEID DARROW Expresion . ; lista_expr_case
-    (60) lista_expr_case -> OBJECTID : TYPEID DARROW Expresion . ;
+    (61) lista_expr_case -> OBJECTID : TYPEID DARROW Expresion . ; lista_expr_case
+    (62) lista_expr_case -> OBJECTID : TYPEID DARROW Expresion . ;
     (34) Expresion -> Expresion . . OBJECTID ( )
     (35) Expresion -> Expresion . . OBJECTID ( Expresion lista_expr )
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
@@ -3976,7 +4028,7 @@ state 169
     (46) Expresion -> Expresion . + Expresion
     (47) Expresion -> Expresion . / Expresion
     (48) Expresion -> Expresion . * Expresion
-    ;               shift and go to state 173
+    ;               shift and go to state 177
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
@@ -3988,13 +4040,19 @@ state 169
     *               shift and go to state 69
 
 
-state 170
+state 173
 
     (55) lista_expr_let -> , OBJECTID : TYPEID ASSIGN Expresion lista_expr_let .
     IN              reduce using rule 55 (lista_expr_let -> , OBJECTID : TYPEID ASSIGN Expresion lista_expr_let .)
 
 
-state 171
+state 174
+
+    (58) lista_expr_let -> , OBJECTID : TYPEID ASSIGN error lista_expr_let .
+    IN              reduce using rule 58 (lista_expr_let -> , OBJECTID : TYPEID ASSIGN error lista_expr_let .)
+
+
+state 175
 
     (36) Expresion -> Expresion @ TYPEID . OBJECTID ( Expresion lista_expr ) .
     .               reduce using rule 36 (Expresion -> Expresion @ TYPEID . OBJECTID ( Expresion lista_expr ) .)
@@ -4020,55 +4078,46 @@ state 171
     FI              reduce using rule 36 (Expresion -> Expresion @ TYPEID . OBJECTID ( Expresion lista_expr ) .)
 
 
-state 172
+state 176
 
-    (57) lista_expr_case -> OBJECTID : TYPEID DARROW error ; . lista_expr_case
-    (58) lista_expr_case -> OBJECTID : TYPEID DARROW error ; .
-    (57) lista_expr_case -> . OBJECTID : TYPEID DARROW error ; lista_expr_case
-    (58) lista_expr_case -> . OBJECTID : TYPEID DARROW error ;
-    (59) lista_expr_case -> . OBJECTID : TYPEID DARROW Expresion ; lista_expr_case
-    (60) lista_expr_case -> . OBJECTID : TYPEID DARROW Expresion ;
-    ESAC            reduce using rule 58 (lista_expr_case -> OBJECTID : TYPEID DARROW error ; .)
+    (59) lista_expr_case -> OBJECTID : TYPEID DARROW error ; . lista_expr_case
+    (60) lista_expr_case -> OBJECTID : TYPEID DARROW error ; .
+    (59) lista_expr_case -> . OBJECTID : TYPEID DARROW error ; lista_expr_case
+    (60) lista_expr_case -> . OBJECTID : TYPEID DARROW error ;
+    (61) lista_expr_case -> . OBJECTID : TYPEID DARROW Expresion ; lista_expr_case
+    (62) lista_expr_case -> . OBJECTID : TYPEID DARROW Expresion ;
+    ESAC            reduce using rule 60 (lista_expr_case -> OBJECTID : TYPEID DARROW error ; .)
     OBJECTID        shift and go to state 126
 
-    lista_expr_case                shift and go to state 174
+    lista_expr_case                shift and go to state 178
 
-state 173
+state 177
 
-    (59) lista_expr_case -> OBJECTID : TYPEID DARROW Expresion ; . lista_expr_case
-    (60) lista_expr_case -> OBJECTID : TYPEID DARROW Expresion ; .
-    (57) lista_expr_case -> . OBJECTID : TYPEID DARROW error ; lista_expr_case
-    (58) lista_expr_case -> . OBJECTID : TYPEID DARROW error ;
-    (59) lista_expr_case -> . OBJECTID : TYPEID DARROW Expresion ; lista_expr_case
-    (60) lista_expr_case -> . OBJECTID : TYPEID DARROW Expresion ;
-    ESAC            reduce using rule 60 (lista_expr_case -> OBJECTID : TYPEID DARROW Expresion ; .)
+    (61) lista_expr_case -> OBJECTID : TYPEID DARROW Expresion ; . lista_expr_case
+    (62) lista_expr_case -> OBJECTID : TYPEID DARROW Expresion ; .
+    (59) lista_expr_case -> . OBJECTID : TYPEID DARROW error ; lista_expr_case
+    (60) lista_expr_case -> . OBJECTID : TYPEID DARROW error ;
+    (61) lista_expr_case -> . OBJECTID : TYPEID DARROW Expresion ; lista_expr_case
+    (62) lista_expr_case -> . OBJECTID : TYPEID DARROW Expresion ;
+    ESAC            reduce using rule 62 (lista_expr_case -> OBJECTID : TYPEID DARROW Expresion ; .)
     OBJECTID        shift and go to state 126
 
-    lista_expr_case                shift and go to state 175
+    lista_expr_case                shift and go to state 179
 
-state 174
+state 178
 
-    (57) lista_expr_case -> OBJECTID : TYPEID DARROW error ; lista_expr_case .
-    ESAC            reduce using rule 57 (lista_expr_case -> OBJECTID : TYPEID DARROW error ; lista_expr_case .)
+    (59) lista_expr_case -> OBJECTID : TYPEID DARROW error ; lista_expr_case .
+    ESAC            reduce using rule 59 (lista_expr_case -> OBJECTID : TYPEID DARROW error ; lista_expr_case .)
 
 
-state 175
+state 179
 
-    (59) lista_expr_case -> OBJECTID : TYPEID DARROW Expresion ; lista_expr_case .
-    ESAC            reduce using rule 59 (lista_expr_case -> OBJECTID : TYPEID DARROW Expresion ; lista_expr_case .)
+    (61) lista_expr_case -> OBJECTID : TYPEID DARROW Expresion ; lista_expr_case .
+    ESAC            reduce using rule 61 (lista_expr_case -> OBJECTID : TYPEID DARROW Expresion ; lista_expr_case .)
 
 
 Conflicts:
 
-shift/reduce conflict for . in state 84 resolved as shift
-shift/reduce conflict for @ in state 84 resolved as shift
-shift/reduce conflict for = in state 84 resolved as shift
-shift/reduce conflict for DARROW in state 84 resolved as shift
-shift/reduce conflict for < in state 84 resolved as shift
-shift/reduce conflict for - in state 84 resolved as shift
-shift/reduce conflict for + in state 84 resolved as shift
-shift/reduce conflict for / in state 84 resolved as shift
-shift/reduce conflict for * in state 84 resolved as shift
 shift/reduce conflict for . in state 93 resolved as shift
 shift/reduce conflict for @ in state 93 resolved as shift
 shift/reduce conflict for = in state 93 resolved as shift
