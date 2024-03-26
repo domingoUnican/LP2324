@@ -23,6 +23,9 @@ class Formal(Nodo):
         resultado += f'{(n+2)*" "}{self.tipo}\n'
         return resultado
 
+    def genera_codigo(self, n):
+        return "" + self.nombre_variable
+
 
 
 class Expresion(Nodo):
@@ -42,6 +45,9 @@ class Asignacion(Expresion):
         resultado += self.cuerpo.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+
+    def genera_codigo(self, n):
+        return ""+self.cuerpo
 
 
 
@@ -144,6 +150,11 @@ class Bloque(Expresion):
         resultado += f'{(n)*" "}: {self.cast}\n'
         resultado += '\n'
         return resultado
+    def genera_codigo(self, n):
+        codigo=""
+        for e in self.expresiones:
+            codigo+= e.genera_codigo(n)
+        return codigo
 
 
 @dataclass
@@ -281,6 +292,11 @@ class Igual(OperacionBinaria):
         resultado += self.derecha.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n):
+        codigo = ""
+        codigo = f'{self.izquierda.genera_codigo(n)} == {self.derecha.genera_codigo(0)}'
+        return codigo
 
 
 
@@ -387,8 +403,15 @@ class Programa(IterableNodo):
         resultado += f'{" "*n}_program\n'
         resultado += ''.join([c.str(n+2) for c in self.secuencia])
         return resultado
-    def genera_codigo(self):
-        return "print(fich)"
+    def genera_codigo(self, n=0): # genera codigo tiene que tener un indentado 
+        #----------------------------------
+        codigo =""
+        for clase in self.secuencia:
+            codigo += clase.genera_codigo(n)
+            codigo+= f"{' '*n}Main().main()\n"
+
+        return codigo
+        #----------------------------------
 
 
 @dataclass
@@ -416,6 +439,15 @@ class Clase(Nodo):
         resultado += '\n'
         resultado += f'{(n+2)*" "})\n'
         return resultado
+    
+        #------------------
+    def genera_codigo(self,n):
+        codigo =""
+        codigo = f"{' '*n}class {self.nombre}({self.padre}):\n"
+        for caracteristica in self.caracteristicas:
+            codigo += caracteristica.genera_codigo(n+2)
+        return codigo
+    #-------------------
 
 @dataclass
 class Metodo(Caracteristica):
@@ -430,6 +462,14 @@ class Metodo(Caracteristica):
         resultado += self.cuerpo.str(n+2)
 
         return resultado
+
+    def genera_codigo(self, n):
+        codigo = ""
+        codigo += f"{' '*n}def {self.nombre}(self"
+        for formal in self.formales:
+            codigo += "," + formal.genera_codigo(n)
+        codigo +=")"
+        return codigo
 
 
 class Atributo(Caracteristica):
