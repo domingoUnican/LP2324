@@ -9,7 +9,7 @@ sys.path.append(DIRECTORIO)
 
 from Lexer import CoolLexer
 
-PRACTICA = "01"  # Practica que hay que evaluar
+PRACTICA = "04"  # Practica que hay que evaluar
 DEBUG = True   # Decir si se lanzan mensajes de debug
 NUMLINEAS = 3   # Numero de lineas que se muestran antes y después de la no coincidencia
 sys.path.append(DIRECTORIO)
@@ -82,6 +82,9 @@ if True:
                         f.close()
                         g.close()
                         contador -= 1
+            except Exception as e:
+                print(f"Lanza excepción en {fich} con el texto {e}")
+                contador -= 1
         elif PRACTICA == '04':
             from Parser import CoolParser
             parser = CoolParser()

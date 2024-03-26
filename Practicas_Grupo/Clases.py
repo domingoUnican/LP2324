@@ -1,7 +1,7 @@
 # coding: utf-8
 from dataclasses import dataclass, field
 from typing import List
-import pdb
+
 
 
 @dataclass
@@ -104,7 +104,7 @@ class Condicional(Expresion):
 @dataclass
 class Bucle(Expresion):
     condicion: Expresion = None
-    cuerpo: Expresion = None  # Esto no debería ser un bloque ¿?
+    cuerpo: Expresion = None
 
     def str(self, n):
         resultado = super().str(n)
@@ -387,6 +387,8 @@ class Programa(IterableNodo):
         resultado += f'{" "*n}_program\n'
         resultado += ''.join([c.str(n+2) for c in self.secuencia])
         return resultado
+    def genera_codigo(self):
+        return "print(fich)"
 
 
 @dataclass
