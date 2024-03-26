@@ -1,2 +1,5 @@
-#name "invalidcharacters.cool"
-#1 '>'
+#name
+"invalidcharacters.cool"
+ERROR
+"_"
+'\'

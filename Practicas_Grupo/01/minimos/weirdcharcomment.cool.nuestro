@@ -1,6 +1,0 @@
-#name "weirdcharcomment.cool"
- '(' 
- '*' 
- '*' 
- ')' 
- OBJECTID test

@@ -1,2 +1,9 @@
-#name "s05.test.cool"
-#1 STR_CONST "other unescaped whitespace: \t"
+#name
+"s05.test.cool"
+STR_CONST
+"other
+unescaped
+whitespace:
+\t
+
+"

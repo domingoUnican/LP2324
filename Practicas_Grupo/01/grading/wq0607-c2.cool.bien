@@ -1,4 +1,9 @@
-#name "wq0607-c2.cool"
-#3 STR_CONST "(*"
-#3 ERROR "Unmatched *)"
-#3 STR_CONST "*)(*"
+#name
+"wq0607-c2.cool"
+STR_CONST
+"(*"
+ERROR
+"Unmatched
+*)"
+STR_CONST
+"*)(*"
