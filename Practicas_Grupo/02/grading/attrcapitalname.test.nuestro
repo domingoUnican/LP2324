@@ -1,0 +1,2 @@
+Error de sintaxis en la linea 3 y token Token(type='TYPEID', value='Foo', lineno=3, index=18, end=21) y columna 18 en el fichero attrcapitalname.test
+Compilation halted due to lex and parse errors

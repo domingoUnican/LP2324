@@ -1,0 +1,3 @@
+Error de sintaxis en la linea 2 y token Token(type='TYPEID', value='F', lineno=2, index=12, end=13) y columna 12 en el fichero badfeaturenames.test
+Error de sintaxis en la linea 8 y token Token(type='TYPEID', value='Y', lineno=8, index=64, end=65) y columna 64 en el fichero badfeaturenames.test
+Compilation halted due to lex and parse errors

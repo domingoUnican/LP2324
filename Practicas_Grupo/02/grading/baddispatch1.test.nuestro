@@ -1,0 +1,2 @@
+Error de sintaxis en la linea 2 y token Token(type=')', value=')', lineno=2, index=44, end=45) y columna 44 en el fichero baddispatch1.test
+Compilation halted due to lex and parse errors

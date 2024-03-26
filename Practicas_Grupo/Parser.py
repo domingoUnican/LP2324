@@ -100,6 +100,8 @@ class CoolParser(Parser):
     debugfile = "salida.out"
     errores = []
     precedence = (
+        ('left', 'ASSIGN'),
+        ('left', 'IN'),
         ('nonassoc', 'LE', '<', '='), # Nonassociative operators
         ('left', '+', '-'),
         ('left', '*', '/'),
@@ -118,9 +120,14 @@ class CoolParser(Parser):
     def Programa(self, p):
         return Programa(secuencia=[p[0]])
 
-    @_("CLASS TYPEID optInherit '{' lista_atr_met '}' ';'")
+    # @_("CLASS TYPEID optInherit '{' lista_atr_met '}' ';'")
+    # def Clase(self, p):
+    #     return Clase(nombre=p[1], padre = p[2], nombre_fichero=self.nombre_fichero, caracteristicas = p[4])
+
+    @_("CLASS TYPEID optInherit class_body ';'")
     def Clase(self, p):
-        return Clase(nombre=p[1], padre = p[2], nombre_fichero=self.nombre_fichero, caracteristicas = p[4])
+        return Clase(nombre=p[1], padre = p[2], nombre_fichero=self.nombre_fichero, caracteristicas = p[3])
+
     
     @_("")
     def optInherit(self, p):
@@ -130,17 +137,17 @@ class CoolParser(Parser):
     def optInherit(self, p):
         return p[1]
 
-    @_("")
-    def lista_atr_met(self, p):
-        return []
+    # @_("")
+    # def lista_atr_met(self, p):
+    #     return []
 
     @_("Atributo")
     def lista_atr_met(self, p):
-        return p[0]
+        return [p[0]]
 
     @_("Metodo")
     def lista_atr_met(self, p):
-        return p[0]
+        return [p[0]]
 
     @_("Atributo lista_atr_met")
     def lista_atr_met(self, p):
@@ -149,6 +156,14 @@ class CoolParser(Parser):
     @_("Metodo lista_atr_met")
     def lista_atr_met(self, p):
         return [p[0]] + p[1]
+
+    @_("'{' '}'")
+    def class_body(self, p):
+        return []
+
+    @_("'{' lista_atr_met '}'")
+    def class_body(self, p):
+        return p[1]
 
     @_("OBJECTID ':' TYPEID optAssign ';'")
     def Atributo(self, p):
@@ -227,7 +242,7 @@ class CoolParser(Parser):
 
     @_("NOT Expresion")
     def Expresion(self, p):
-        return Not(izquierda=p[1])
+        return Not(expr=p[1])
 
     @_("ISVOID Expresion")
     def Expresion(self, p):
@@ -235,7 +250,7 @@ class CoolParser(Parser):
 
     @_("'~' Expresion")
     def Expresion(self, p):
-        return Neg(izquierda=p[1])
+        return Neg(expr=p[1])
 
     @_("Expresion '@' TYPEID '.' OBJECTID '(' ')'")
     def Expresion(self, p):
@@ -243,7 +258,7 @@ class CoolParser(Parser):
 
     @_("Expresion '@' TYPEID '.' OBJECTID '(' listaExpresiones ')'")
     def Expresion(self, p):
-        return LlamadaMetodoEstatico(cuerpo=p[0], clase=p[2], nombre_metodo=[4], argumentos=p[6])
+        return LlamadaMetodoEstatico(cuerpo=p[0], clase=p[2], nombre_metodo=p[4], argumentos=p[6])
 
     @_("Expresion")
     def listaExpresiones(self, p):
@@ -252,22 +267,22 @@ class CoolParser(Parser):
     @_("Expresion ',' listaExpresiones")
     def listaExpresiones(self, p):
         return [p[0]] + p[2]
-
-    @_("optExpresion OBJECTID '(' listaExpresiones ')'")
+    
+    @_("optExpresion '(' listaExpresiones ')'")
     def Expresion(self, p):
-        return LlamadaMetodo(cuerpo=p[0], nombre_metodo=p[1], argumentos=p[3])
+        return LlamadaMetodo(cuerpo=p[0][0], nombre_metodo=p[0][1], argumentos=p[2])
 
-    @_("optExpresion OBJECTID '(' ')'")
+    @_("optExpresion '(' ')'")
     def Expresion(self, p):
-        return LlamadaMetodo(cuerpo=p[0], nombre_metodo=p[1], argumentos=[])
+        return LlamadaMetodo(cuerpo=p[0][0], nombre_metodo=p[0][1], argumentos=[])
 
-    @_("")
+    @_("OBJECTID")
     def optExpresion(self, p):
-        return NoExpr()
-
-    @_("Expresion '.'")
+        return [Objeto(nombre='self'), p[0]]
+    
+    @_("Expresion '.' OBJECTID")
     def optExpresion(self, p):
-        return p[0]
+        return [p[0], p[2]]
 
     @_("IF Expresion THEN Expresion ELSE Expresion FI")
     def Expresion(self, p):
@@ -277,7 +292,7 @@ class CoolParser(Parser):
     def Expresion(self, p):
         return Bucle(condicion=p[1], cuerpo=p[3])
     
-    ####################################### TODO LET FOTO 6 DE MARZO
+    ####################################### LET
 
     @_("LET OBJECTID ':' TYPEID optArrow starFormal IN Expresion")
     def Expresion(self, p):
@@ -298,8 +313,6 @@ class CoolParser(Parser):
     
     @_("ASSIGN Expresion")
     def optArrow(self, p):
-        # return Asignacion(nombre=None, cuerpo=p[2])
-        # return Expresion(p[1])
         return p[1]
 
     @_("")
@@ -313,17 +326,17 @@ class CoolParser(Parser):
 
     ################################################### FIN LET
 
-    @_("CASE Expresion OF plusExpresion ';' ESAC")
+    @_("CASE Expresion OF plusExpresion ESAC")
     def Expresion(self, p):
         return Swicht(expr=p[1], casos=p[3])
 
-    @_("OBJECTID ':' TYPEID DARROW Expresion")
+    @_("OBJECTID ':' TYPEID DARROW Expresion ';'")
     def plusExpresion(self, p):
         return [RamaCase(nombre_variable=p[0], tipo=p[2], cuerpo=p[4])]
 
-    @_("OBJECTID ':' TYPEID DARROW Expresion plusExpresion")
+    @_("OBJECTID ':' TYPEID DARROW Expresion ';' plusExpresion")
     def plusExpresion(self, p):
-        return [RamaCase(nombre_variable=p[0], tipo=p[2], cuerpo=p[4])] + p[5]
+        return [RamaCase(nombre_variable=p[0], tipo=p[2], cuerpo=p[4])] + p[6]
 
     @_("NEW TYPEID")
     def Expresion(self, p):
@@ -338,7 +351,7 @@ class CoolParser(Parser):
         return [p[0]]
 
     def error(self, p):
-        self.errores.append(p)
+        self.errores.append(f"Error de sintaxis en la linea {p.lineno} y token {p} y columna {p.index} en el fichero {self.nombre_fichero}")	
 
     @_("error ';' Expresion ';'")
     def bloque(self, p):
@@ -346,7 +359,7 @@ class CoolParser(Parser):
 
     @_("error ';'")
     def bloque(self, p):
-        pass
+        return []
 
     @_("Expresion ';' bloque")
     def bloque(self, p):
