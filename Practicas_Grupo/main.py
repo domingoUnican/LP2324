@@ -1,7 +1,8 @@
 import os
 import re
 import sys
-
+import io
+from Base_clases import *
 
 DIRECTORIO = os.path.expanduser("./")
 sys.path.append(DIRECTORIO)
@@ -19,6 +20,7 @@ TESTS = [fich for fich in FICHEROS
          if os.path.isfile(os.path.join(DIR, fich)) and
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$", fich)]
 TESTS.sort()
+
 
 if True:
     contador = len(TESTS)
@@ -70,6 +72,34 @@ if True:
                 else:
                     resultado = '\n'.join(parser.errores)
                     resultado += '\n' + "Compilation halted due to lex and parse errors"
+                if resultado.lower().strip().split() != bien.lower().strip().split():
+                    print(f"Revisa el fichero {fich}")
+                    if DEBUG:
+                        f = open(os.path.join(DIR, fich)+'.nuestro', 'w')
+                        g = open(os.path.join(DIR, fich)+'.bien', 'w')
+                        f.write(resultado.strip())
+                        g.write(bien.strip())
+                        f.close()
+                        g.close()
+                        contador -= 1
+            except Exception as e:
+                print(f"Lanza excepción en {fich} con el texto {e}")
+                contador -= 1
+        elif PRACTICA == '04':
+            from Parser import CoolParser
+            parser = CoolParser()
+            parser.nombre_fichero = fich
+            parser.errores = []
+            bien = g.read()
+            g.close()
+            j = parser.parse(lexer.tokenize(entrada))
+            try:
+                codigo = j.genera_codigo()
+                resultado = io.StringIO()
+                sys.stdout = resultado
+                exec(codigo)
+                sys.stdout = sys.__stdout__
+                resultado = resultado.getvalue()
                 if resultado.lower().strip().split() != bien.lower().strip().split():
                     print(f"Revisa el fichero {fich}")
                     if DEBUG:
