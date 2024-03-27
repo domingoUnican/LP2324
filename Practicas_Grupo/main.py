@@ -89,6 +89,10 @@ if True:
                 print(f"Lanza excepción en {fich} con el texto {e}")
                 contador -= 1
         elif PRACTICA == '04':
+            
+            if fich == 'basic_init.cl':
+                print("Revisa el fichero {fich}")
+                pass
             from Parser import CoolParser
             parser = CoolParser()
             parser.nombre_fichero = fich
