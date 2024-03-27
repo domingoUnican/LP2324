@@ -14,11 +14,20 @@ class Entero(Objeto):
 
     def __add__(self, s):
         return Entero(self.numero + s.numero)
-
+    
+class String(Objeto):
+    def __init__(self, cadena):
+        super().__init__()
+        self.cadena = cadena
+    
+    def __add__(self, s):
+        return String(self.cadena + s.cadena)
+    
 
 class IO(Objeto):
     def out_string(self, s):
-        print( "") # ¿Que habra que poner?
+        print(s.cadena) # ¿Que habra que poner?
 
     def out_int(self, s):
-        print("") # ¿Que habra que poner?
+        print(s.numero) # ¿Que habra que poner?
+
