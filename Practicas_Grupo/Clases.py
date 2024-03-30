@@ -451,9 +451,10 @@ class Objeto(Expresion):
         return resultado
 
     def genera_codigo(self, n):
+        codigo = f"{self.nombre}"
         if self.nombre in Clase.atributos:
-            return f"{' '*n}self.{self.nombre}"
-        return self.nombre
+            codigo = f"{' '*n}self.{self.nombre}"
+        return codigo
 
 
 @dataclass
@@ -498,7 +499,7 @@ class String(Expresion):
         return resultado
 
     def genera_codigo(self, n):
-        return f"{' '*n}t = {self.valor}\n"
+        return f"{' '*n}{self.valor}\n"
 
 
 @dataclass

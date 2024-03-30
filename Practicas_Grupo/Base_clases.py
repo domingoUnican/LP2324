@@ -26,8 +26,10 @@ class String(Objeto):
 
 class IO(Objeto):
     def out_string(self, s):
+        s = String(s)
         print(s.cadena) # ¿Que habra que poner?
 
     def out_int(self, s):
+        s = Entero(s)
         print(s.numero) # ¿Que habra que poner?
 
