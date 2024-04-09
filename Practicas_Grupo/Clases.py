@@ -28,7 +28,16 @@ class Formal(Nodo):
         return resultado
     
     def genera_codigo(self, n):
-        return f"{self.nombre_variable}: {self.tipo}"
+        codigo = ''
+        if self.tipo == 'Int':
+            codigo = f"{' '*n}{self.nombre_variable} = 0\n"
+        elif self.tipo == 'String':
+            codigo = f"{' '*n}{self.nombre_variable} = ''\n"
+        elif self.tipo == 'Bool':
+            codigo = f"{' '*n}{self.nombre_variable} = False\n"
+        else:
+            codigo = f"{' '*n}{self.nombre_variable} = None\n"
+        return codigo
 
 
 
@@ -114,7 +123,10 @@ class LlamadaMetodo(Expresion):
         
         
         argumentos_codigo = ', '.join([f't{pos}' for pos, c in enumerate(self.argumentos)])
-        codigo += f"{self.cuerpo.genera_codigo(n)}\n"
+        if self.argumentos:
+            codigo += f"{self.cuerpo.genera_codigo(n)}\n"
+        else:
+            codigo += f"{' '*(n-8)}{self.cuerpo.genera_codigo(0)}\n"
         codigo += f"{' '*n}t{len(self.argumentos)} = t\n"
         codigo += f"{' '*n}t = t{len(self.argumentos)}.{self.nombre_metodo}({argumentos_codigo})\n"
         return codigo
@@ -182,7 +194,12 @@ class Let(Expresion):
         return resultado
     
     def genera_codigo(self, n):
-        return f"{' '*n}{self.nombre} = {self.inicializacion.genera_codigo(0)}\n{self.cuerpo.genera_codigo(n)}"
+        codigo = ""
+        
+        codigo += f"{' '*n}{self.nombre} = {self.inicializacion.genera_codigo(0)}\n"
+        codigo += f"{' '*n}t = {self.nombre}\n"
+        codigo += f"{self.cuerpo.genera_codigo(n)}"
+        return codigo
 
 
 @dataclass
