@@ -18,7 +18,7 @@ class Entero(Objeto):
 
 class IO(Objeto):
     def out_string(self, s):
-        print( "") # ¿Que habra que poner?
+        print(s,flush=false) # ¿Que habra que poner?
 
     def out_int(self, s):
         print("") # ¿Que habra que poner?

@@ -20,8 +20,7 @@ TESTS = [fich for fich in FICHEROS
          if os.path.isfile(os.path.join(DIR, fich)) and
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$", fich)]
 TESTS.sort()
-TESTS ={"basic-init.cl"}
-
+TESTS = {"basic-init.cl"}
 
 if True:
     contador = len(TESTS)
@@ -96,6 +95,7 @@ if True:
             j = parser.parse(lexer.tokenize(entrada))
             try:
                 codigo = j.genera_codigo()
+                #print(codigo)
                 resultado = io.StringIO()
                 sys.stdout = resultado
                 exec(codigo)

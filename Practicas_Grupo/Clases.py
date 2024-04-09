@@ -24,7 +24,7 @@ class Formal(Nodo):
         return resultado
 
     def genera_codigo(self, n):
-        return "" + self.nombre_variable
+        return f"{' '*n}{self.nombre_variable}"
 
 
 
@@ -47,7 +47,7 @@ class Asignacion(Expresion):
         return resultado
 
     def genera_codigo(self, n):
-        return ""+self.cuerpo
+        return f"{' '*n}{self.nombre}={self.cuerpo}"
 
 
 
@@ -70,6 +70,16 @@ class LlamadaMetodoEstatico(Expresion):
         resultado += f'{(n)*" "}: _no_type\n'
         return resultado
 
+    def genera_codigo(self, n):
+        codigo = ""
+        codigo += f"{' '*n}self.{self.nombre_metodo}("
+        for formal in self.argumentos[:-1]:
+            codigo += formal.genera_codigo(0) + ","
+        if self.argumentos:
+            codigo += self.argumentos[-1].genera_codigo(0) 
+        codigo +=")\n"
+        return codigo
+
 
 
 @dataclass
@@ -88,6 +98,17 @@ class LlamadaMetodo(Expresion):
         resultado += f'{(n+2)*" "})\n'
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n):
+        codigo = ""
+        codigo += f"{' '*n}self.{self.nombre_metodo}("
+        for formal in self.argumentos[:-1]:
+            codigo += formal.genera_codigo(0) + ","
+        if self.argumentos:
+            codigo += self.argumentos[-1].genera_codigo(0) 
+        codigo +=")\n"
+        return codigo
+
 
 
 @dataclass
@@ -104,6 +125,12 @@ class Condicional(Expresion):
         resultado += self.falso.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    def genera_codigo(self, n):
+        codigo = f"{' '*n}if {self.condicion.genera_codigo(0)}:\n"
+        codigo += f"{self.verdadero.genera_codigo(n+2)}"
+        codigo += f"{' '*n}else:\n"
+        codigo += f"{self.falso.genera_codigo(n+2)}"
+        return codigo
 
 
 
@@ -151,6 +178,7 @@ class Bloque(Expresion):
         resultado += '\n'
         return resultado
     def genera_codigo(self, n):
+        #codigo=f"{' '*n}"
         codigo=""
         for e in self.expresiones:
             codigo+= e.genera_codigo(n)
@@ -214,6 +242,8 @@ class Suma(OperacionBinaria):
         resultado += self.derecha.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    def genera_codigo(self, n):
+        return f"{' '*n}{self.izquierda}+{self.derecha}"
 
 @dataclass
 class Resta(OperacionBinaria):
@@ -226,6 +256,9 @@ class Resta(OperacionBinaria):
         resultado += self.derecha.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+
+    def genera_codigo(self, n):
+        return f"{' '*n}{self.izquierda}-{self.derecha}"
 
 
 
@@ -252,6 +285,8 @@ class Division(OperacionBinaria):
         resultado += self.derecha.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    def genera_codigo(self, n):
+        return f"{' '*n}{self.izquierda}/{self.derecha}"
 
 
 @dataclass
@@ -265,7 +300,8 @@ class Menor(OperacionBinaria):
         resultado += self.derecha.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
-
+    def genera_codigo(self, n):
+        return f"{' '*n}{self.izquierda}<{self.derecha}"
 
 
 @dataclass
@@ -279,6 +315,8 @@ class LeIgual(OperacionBinaria):
         resultado += self.derecha.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    def genera_codigo(self, n):
+        return f"{' '*n}{self.izquierda}<={self.derecha}"
 
 
 @dataclass
@@ -295,7 +333,7 @@ class Igual(OperacionBinaria):
     
     def genera_codigo(self, n):
         codigo = ""
-        codigo = f'{self.izquierda.genera_codigo(n)} == {self.derecha.genera_codigo(0)}'
+        codigo = f"{' '*n}{self.izquierda.genera_codigo(n)}=={self.derecha.genera_codigo(0)}"
         return codigo
 
 
@@ -311,6 +349,9 @@ class Neg(Expresion):
         resultado += self.expr.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n):
+        return f"{' '*n}not{self.expr}"
 
 @dataclass
 class Not(Expresion):
@@ -323,7 +364,10 @@ class Not(Expresion):
         resultado += self.expr.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
-
+    
+    def genera_codigo(self, n):
+        return f"{' '*n}not{self.expr}"
+        
 @dataclass
 class EsNulo(Expresion):
     expr: Expresion = None
@@ -334,6 +378,9 @@ class EsNulo(Expresion):
         resultado += self.expr.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n):
+        return f"{' '*n}{self.expr.genera_codigo(0)} is None"
 
 @dataclass
 class Objeto(Expresion):
@@ -345,6 +392,8 @@ class Objeto(Expresion):
         resultado += f'{(n+2)*" "}{self.nombre}\n'
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    def genera_codigo(self, n):
+        return f"{' '*n}self.{self.nombre}"
 
 
 @dataclass
@@ -356,6 +405,8 @@ class NoExpr(Expresion):
         resultado += f'{(n)*" "}_no_expr\n'
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    def genera_codigo(self, n):
+        return f"{' '*n}"
 
 
 @dataclass
@@ -368,6 +419,8 @@ class Entero(Expresion):
         resultado += f'{(n+2)*" "}{self.valor}\n'
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    def genera_codigo(self, n):
+        return f"{' '*n}{self.valor}"
 
 @dataclass
 class String(Expresion):
@@ -379,6 +432,9 @@ class String(Expresion):
         resultado += f'{(n+2)*" "}{self.valor}\n'
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n):
+        return f"{' '*n}{self.valor}"
 
 
 @dataclass
@@ -391,6 +447,9 @@ class Booleano(Expresion):
         resultado += f'{(n+2)*" "}{1 if self.valor else 0}\n'
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    def genera_codigo(self, n):
+        return f"{' '*n}{self.valor}"
+    
 
 @dataclass
 class IterableNodo(Nodo):
@@ -409,6 +468,7 @@ class Programa(IterableNodo):
         for clase in self.secuencia:
             codigo += clase.genera_codigo(n)
             codigo+= f"{' '*n}Main().main()\n"
+            #codigo += clase.genera_codigo(n)
 
         return codigo
         #----------------------------------
@@ -466,9 +526,12 @@ class Metodo(Caracteristica):
     def genera_codigo(self, n):
         codigo = ""
         codigo += f"{' '*n}def {self.nombre}(self"
-        for formal in self.formales:
-            codigo += "," + formal.genera_codigo(n)
-        codigo +=")"
+        for formal in self.formales[:-1]:
+            codigo += formal.genera_codigo(0) + ","
+        if self.formales:
+            codigo += self.formales[-1].genera_codigo(0) 
+        codigo +="):\n"
+        codigo +=self.cuerpo.genera_codigo(n+2)
         return codigo
 
 
@@ -481,3 +544,9 @@ class Atributo(Caracteristica):
         resultado += f'{(n+2)*" "}{self.tipo}\n'
         resultado += self.cuerpo.str(n+2)
         return resultado
+
+    def genera_codigo(self, n):
+        if isinstance (self.cuerpo, NoExpr):
+            return f"{' '*n}{self.nombre}=0\n"
+        else:
+            return f"{' '*n}{self.nombre}={self.cuerpo.genera_codigo(n)}\n"
