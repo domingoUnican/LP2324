@@ -10,7 +10,11 @@ class Nodo:
 
     def str(self, n):
         return f'{n*" "}#{self.linea}\n'
-    #TODO Nodo
+    
+    #FIXME Nodo
+    def genera_codigo(self, n=0):
+        return ""
+    
 
 
 @dataclass
@@ -98,7 +102,7 @@ class LlamadaMetodo(Expresion):
     def genera_codigo(self, n=0):
         codigo = ""
         codigo = f'{self.cuerpo.genera_codigo(n)}.('
-        if len(self.argumentos > 0):
+        if len(self.argumentos) > 0:
             for arg in self.argumentos[:-1]:
                 codigo += f'{arg.genera_codigo(0)} ,'
             codigo += f'{self.argumentos[-1].genera_codigo(0)}'
@@ -194,7 +198,7 @@ class Bloque(Expresion):
         resultado += f'{(n)*" "}: {self.cast}\n'
         resultado += '\n'
         return resultado
-    #TODO Bloque
+    #FIXME Bloque
 
     def genera_codigo(self, n=0):
         codigo = ""
@@ -217,7 +221,12 @@ class RamaCase(Nodo):
         resultado += f'{(n+2)*" "}{self.tipo}\n'
         resultado += self.cuerpo.str(n+2)
         return resultado
-    #TODO RamaCase
+    #FIXME RamaCase
+    def genera_codigo(self, n=0):
+        codigo = ""
+        codigo = f'{(n)*" "}if {self.nombre_variable} is {self.tipo}:\n'
+        codigo += f'{self.cuerpo.genera_codigo(n+2)}\n'
+        return codigo
 
 @dataclass
 class Swicht(Expresion):
@@ -235,6 +244,7 @@ class Swicht(Expresion):
     # def genera_codigo(self, n=0):
     #     codigo = ""
     #     codigo = f'{(n)*" "}if {self.expr.genera_codigo(0)}:\n'
+    #TODO Swicht
 
 
 @dataclass

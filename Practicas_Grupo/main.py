@@ -20,7 +20,7 @@ TESTS = [fich for fich in FICHEROS
          if os.path.isfile(os.path.join(DIR, fich)) and
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$", fich)]
 TESTS.sort()
-#TESTS = ["backslash2.cool"]
+TESTS = ["dispatch-override-dynamic.cl"]
 
 
 if True:
@@ -84,12 +84,12 @@ if True:
                         g.close()
                         contador -= 1
             except Exception as e:
-                import traceback
-                traceback.print_exception(e)
+                # import traceback
+                # traceback.print_exception(e)
                 print(f"Lanza excepción en {fich} con el texto {e}")
                 contador -= 1
         elif PRACTICA == '04':
-            
+            #print (fich)
             if fich == 'basic_init.cl':
                 print("Revisa el fichero {fich}")
                 pass
@@ -118,6 +118,8 @@ if True:
                         g.close()
                         contador -= 1
             except Exception as e:
+                # import traceback
+                # traceback.print_exception(e)
                 print(f"Lanza excepción en {fich} con el texto {e}")
                 contador -= 1
     print(f'Ficheros correctos: {contador}/{len(TESTS)}')
