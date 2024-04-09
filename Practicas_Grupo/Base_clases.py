@@ -2,7 +2,8 @@ from copy import deepcopy
 
 class Objeto:
     def abort(self):
-        exit()
+        # exit()
+        print("error")
 
     def copy(self):
         return deepcopy(self)

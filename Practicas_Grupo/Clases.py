@@ -97,11 +97,11 @@ class LlamadaMetodo(Expresion):
         resultado += f'{(n+2)*" "})\n'
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
-    #FIXME LlamadaMetodo
+    
 
     def genera_codigo(self, n=0):
         codigo = ""
-        codigo = f'{self.cuerpo.genera_codigo(n)}.('
+        codigo = f'{self.cuerpo.genera_codigo(n)}.{self.nombre_metodo}('
         if len(self.argumentos) > 0:
             for arg in self.argumentos[:-1]:
                 codigo += f'{arg.genera_codigo(0)} ,'
@@ -461,7 +461,10 @@ class Objeto(Expresion):
     
     def genera_codigo(self, n=0):
         codigo = ""
-        codigo = f'{(n)*" "}{self.nombre}'
+        if self.nombre == "self":
+            codigo = f'{(n)*" "}{self.nombre}'
+        else:
+            codigo = f'{(n)*" "}self.{self.nombre}' 
         return codigo
 
 
@@ -476,7 +479,7 @@ class NoExpr(Expresion):
         return resultado
 
     def genera_codigo(self, n=0):
-        return ""
+        return "None"
 
 
 @dataclass
@@ -581,8 +584,12 @@ class Clase(Nodo):
     def genera_codigo(self,n=0):
         codigo =""
         codigo = f"{' '*n}class {self.nombre}({self.padre}):\n"
+        lista_atributos = []
         for caracteristica in self.caracteristicas:
-            codigo += caracteristica.genera_codigo(n+2)
+            if (isinstance(caracteristica, Atributo)):
+                lista_atributos.append(caracteristica.nombre)
+        for caracteristica in self.caracteristicas:
+            codigo += caracteristica.genera_codigo(n+2, lista_atributos)
         return codigo
     #-------------------
 
@@ -621,5 +628,12 @@ class Atributo(Caracteristica):
         return resultado
     
     def genera_codigo(self,n=0):
-        codigo = f"{' '*n}{self.nombre} = {self.cuerpo.genera_codigo(0)}\n"
+        if (self.tipo == "Int" and self.cuerpo.genera_codigo(0) == "None"):
+            codigo = f"{' '*n}{self.nombre} = 0\n"
+        elif (self.tipo == "Bool" and self.cuerpo.genera_codigo(0) == "None"):
+            codigo = f"{' '*n}{self.nombre} = False\n"
+        elif (self.tipo == "String" and self.cuerpo.genera_codigo(0) == "None"):
+            codigo = f"{' '*n}{self.nombre} = ''\n"
+        else:
+            codigo = f"{' '*n}{self.nombre} = {self.cuerpo.genera_codigo(0)}\n"
         return codigo

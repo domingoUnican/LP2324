@@ -20,7 +20,7 @@ TESTS = [fich for fich in FICHEROS
          if os.path.isfile(os.path.join(DIR, fich)) and
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$", fich)]
 TESTS.sort()
-TESTS = ["dispatch-override-dynamic.cl"]
+#TESTS = ["dispatch-override-dynamic.cl"]
 
 
 if True:
@@ -90,9 +90,10 @@ if True:
                 contador -= 1
         elif PRACTICA == '04':
             #print (fich)
-            if fich == 'basic_init.cl':
-                print("Revisa el fichero {fich}")
-                pass
+            # if fich == 'basic_init.cl':
+            #     print("Revisa el fichero {fich}")
+            #     pass
+            
             from Parser import CoolParser
             parser = CoolParser()
             parser.nombre_fichero = fich
@@ -102,9 +103,13 @@ if True:
             j = parser.parse(lexer.tokenize(entrada))
             try:
                 codigo = j.genera_codigo()
+                print(codigo)
                 resultado = io.StringIO()
+                print("CHECKPOINT 1")
                 sys.stdout = resultado
+                print("CHECKPOINT 2")
                 exec(codigo)
+                print("CHECKPOINT 3")
                 sys.stdout = sys.__stdout__
                 resultado = resultado.getvalue()
                 if resultado.lower().strip().split() != bien.lower().strip().split():
