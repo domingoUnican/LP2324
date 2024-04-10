@@ -195,9 +195,17 @@ class Let(Expresion):
     
     def genera_codigo(self, n):
         codigo = ""
+        if isinstance(self.inicializacion,NoExpr):
+            if self.tipo == 'Int':
+                codigo += f"{' '*n}{self.nombre} = 0\n"
+            elif self.tipo == 'String':
+                codigo += f"{' '*n}{self.nombre} = ''\n"
+            elif self.tipo == 'Bool':
+                codigo += f"{' '*n}{self.nombre} = False\n"
+        else:
+            codigo += f"{self.inicializacion.genera_codigo(n)}\n"
+            codigo += f"{' '*n}{self.nombre} = t\n"
         
-        codigo += f"{' '*n}{self.nombre} = {self.inicializacion.genera_codigo(0)}\n"
-        codigo += f"{' '*n}t = {self.nombre}\n"
         codigo += f"{self.cuerpo.genera_codigo(n)}"
         return codigo
 
@@ -480,7 +488,7 @@ class Objeto(Expresion):
         return resultado
 
     def genera_codigo(self, n):
-        codigo = f"{self.nombre}"
+        codigo = f"t = {self.nombre}\n"
         if self.nombre in Clase.atributos:
             codigo = f"{' '*n}t = self.{self.nombre}"
         elif self.nombre == 'self':
@@ -499,7 +507,7 @@ class NoExpr(Expresion):
         return resultado
 
     def genera_codigo(self, n):
-        return ''
+        return "None"
 
 
 
@@ -515,7 +523,7 @@ class Entero(Expresion):
         return resultado
         
     def genera_codigo(self, n):
-        codigo = f"t = {self.valor}\n"
+        codigo = f"t = Entero({self.valor})\n"
         return codigo
 
 @dataclass
@@ -530,7 +538,7 @@ class String(Expresion):
         return resultado
 
     def genera_codigo(self, n):
-        return f"t = {self.valor}\n"
+        return f"t = String({self.valor})\n"
 
 
 @dataclass
@@ -545,7 +553,12 @@ class Booleano(Expresion):
         return resultado
 
     def genera_codigo(self, n):
-        return f't = {"true" if self.valor else "false"}\n'
+        codigo = ''
+        if self.valor:
+            codigo = f"t = Booleano(True)\n"
+        else:
+            codigo = f"t = Booleano(False)\n"
+        return codigo
 
 @dataclass
 class IterableNodo(Nodo):
