@@ -20,7 +20,7 @@ TESTS = [fich for fich in FICHEROS
          if os.path.isfile(os.path.join(DIR, fich)) and
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$", fich)]
 TESTS.sort()
-#TESTS = ["dispatch-override-dynamic.cl"]
+#TESTS = ["basic-init.cl"]
 
 
 if True:
@@ -103,13 +103,16 @@ if True:
             j = parser.parse(lexer.tokenize(entrada))
             try:
                 codigo = j.genera_codigo()
+                # if fich == "nested_arith.cl":
+                # print(codigo)
+                print(f"************* {fich} ***************")
                 print(codigo)
                 resultado = io.StringIO()
-                print("CHECKPOINT 1")
+                #print("CHECKPOINT 1")
                 sys.stdout = resultado
-                print("CHECKPOINT 2")
+                # print("CHECKPOINT 2")
                 exec(codigo)
-                print("CHECKPOINT 3")
+                #print("CHECKPOINT 3")
                 sys.stdout = sys.__stdout__
                 resultado = resultado.getvalue()
                 if resultado.lower().strip().split() != bien.lower().strip().split():

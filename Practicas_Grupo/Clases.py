@@ -53,7 +53,7 @@ class Asignacion(Expresion):
     
     def genera_codigo(self, n=0):
         codigo = ""
-        codigo = f'{self.nombre} = {self.cuerpo.genera_codigo(0)}'
+        codigo = f'{(n)*" "}{self.nombre} = {self.cuerpo.genera_codigo(0)}'
         return codigo
 
 
@@ -511,7 +511,7 @@ class String(Expresion):
     
     def genera_codigo(self, n=0):
         codigo = ""
-        codigo = f'{(n)*" "}{self.valor}'
+        codigo = f'{(n)*" "}String({self.valor})'
         return codigo
 
 
@@ -607,7 +607,7 @@ class Metodo(Caracteristica):
 
         return resultado
     
-    def genera_codigo(self,n=0):
+    def genera_codigo(self,n=0,lista_atributos=[]):
         codigo = ""
         codigo = f'{(n)*" "}def {self.nombre}(self'
         for formal in self.formales:
@@ -627,13 +627,16 @@ class Atributo(Caracteristica):
         resultado += self.cuerpo.str(n+2)
         return resultado
     
-    def genera_codigo(self,n=0):
-        if (self.tipo == "Int" and self.cuerpo.genera_codigo(0) == "None"):
-            codigo = f"{' '*n}{self.nombre} = 0\n"
-        elif (self.tipo == "Bool" and self.cuerpo.genera_codigo(0) == "None"):
-            codigo = f"{' '*n}{self.nombre} = False\n"
-        elif (self.tipo == "String" and self.cuerpo.genera_codigo(0) == "None"):
-            codigo = f"{' '*n}{self.nombre} = ''\n"
-        else:
-            codigo = f"{' '*n}{self.nombre} = {self.cuerpo.genera_codigo(0)}\n"
+    def genera_codigo(self,n=0,lista_atributos=[]):
+        codigo = f"{' '*n}{self.nombre} = {self.tipo}({self.cuerpo.genera_codigo(0)})\n"
+        # if (self.tipo == "Int" and self.cuerpo.genera_codigo(0) == "None"):
+        #     codigo = f"{' '*n}{self.nombre} = 0\n"
+        # elif (self.tipo == "Bool" and self.cuerpo.genera_codigo(0) == "None"):
+        #     codigo = f"{' '*n}{self.nombre} = False\n"
+        # elif (self.tipo == "String" and self.cuerpo.genera_codigo(0) == "None"):
+        #     codigo = f"{' '*n}{self.nombre} = ''\n"
+        # else:
+        #     codigo = f"{' '*n}{self.nombre} = {self.cuerpo.genera_codigo(0)}\n"
+        # codigo = f"{' '*n}{self.nombre} = {self.cuerpo.genera_codigo(0)}\n"
+        
         return codigo
