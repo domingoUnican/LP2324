@@ -60,7 +60,10 @@ class Asignacion(Expresion):
         return resultado
     
     def genera_codigo(self, n):
-        return f"{' '*n}{self.nombre} = {self.cuerpo.genera_codigo(0)}"
+        codigo = ""
+        codigo += f"{self.cuerpo.genera_codigo(n)}\n"
+        codigo += f"{' '*n}{self.nombre} = t\n"
+        return codigo
         
 
 
@@ -84,15 +87,22 @@ class LlamadaMetodoEstatico(Expresion):
         return resultado
     
     def genera_codigo(self, n):
-        """
-        TODO:
-        Cada argumento es t = argumento entonces hay que hacer copia en t1 = t y luego se llama al metodo y se guarda en t
-        Preguntar a Domingo como hacer el t1 = t y por el error con el metodo out_int
-        """
+        """TODO: Preguntar a domingo la diferencia entre este metodo y el de abajo"""
         codigo = ""
-        cuerpo_codigo = self.cuerpo.genera_codigo(0) if self.cuerpo else "self"
-        argumentos_codigo = ', '.join([c.genera_codigo(0) if c else "" for c in self.argumentos])
-        codigo += f"{' '*n}t = {cuerpo_codigo}.{self.nombre_metodo}({argumentos_codigo})\n"
+
+        #Generamos codigo para cada argumento y se guarda en una variable temporal
+        for pos, c in enumerate(self.argumentos):
+            codigo += f"{c.genera_codigo(n)}\n"
+            codigo += f"{' '*n}t{pos} = t\n"
+            
+        
+        #Generamos codigo para el cuerpo de la llamada
+        codigo += f"{self.cuerpo.genera_codigo(n)}\n"
+        codigo += f"{' '*n}t{len(self.argumentos)} = t\n"
+
+        #Generamos codigo para la llamada al metodo
+        argumentos_codigo = ', '.join([f't{pos}' for pos, c in enumerate(self.argumentos)])
+        codigo += f"{' '*n}t = t{len(self.argumentos)}.{self.nombre_metodo}({argumentos_codigo})\n"
         return codigo
         
 
@@ -116,18 +126,20 @@ class LlamadaMetodo(Expresion):
         return resultado
     
     def genera_codigo(self, n):
+        """Preguntar a domingo como hacer para que no se sobreescriban los argumentos si se tienen llamadas a metodo anidadas"""
         codigo = ""
+        
+        # Generamos codigo para cada argumento y se guarda en una variable temporal
         for pos, c in enumerate(self.argumentos):
             codigo += f"{c.genera_codigo(n)}\n"
             codigo += f"{' '*n}t{pos} = t\n"
         
-        
-        argumentos_codigo = ', '.join([f't{pos}' for pos, c in enumerate(self.argumentos)])
-        if self.argumentos:
-            codigo += f"{self.cuerpo.genera_codigo(n)}\n"
-        else:
-            codigo += f"{' '*(n-8)}{self.cuerpo.genera_codigo(0)}\n"
+        # Generamos codigo para el cuerpo de la llamada
+        codigo += f"{self.cuerpo.genera_codigo(n)}\n"
         codigo += f"{' '*n}t{len(self.argumentos)} = t\n"
+        
+        # Generamos codigo para la llamada al metodo
+        argumentos_codigo = ', '.join([f't{pos}' for pos, c in enumerate(self.argumentos)])
         codigo += f"{' '*n}t = t{len(self.argumentos)}.{self.nombre_metodo}({argumentos_codigo})\n"
         return codigo
 
@@ -151,9 +163,9 @@ class Condicional(Expresion):
         codigo = ''
         codigo += f"{self.condicion.genera_codigo(n)}\n"
         codigo += f"{' '*n}if t:\n"
-        codigo += f"{' '*(n+2)}{self.verdadero.genera_codigo(n+2)}\n"
+        codigo += f"{self.verdadero.genera_codigo(n+4)}\n"
         codigo += f"{' '*n}else:\n"
-        codigo += f"{' '*(n+2)}{self.falso.genera_codigo(n+2)}\n"
+        codigo += f"{self.falso.genera_codigo(n+4)}\n"
         return codigo
 
 
@@ -197,11 +209,11 @@ class Let(Expresion):
         codigo = ""
         if isinstance(self.inicializacion,NoExpr):
             if self.tipo == 'Int':
-                codigo += f"{' '*n}{self.nombre} = 0\n"
+                codigo += f"{' '*n}{self.nombre} = Entero(0)\n"
             elif self.tipo == 'String':
-                codigo += f"{' '*n}{self.nombre} = ''\n"
+                codigo += f"{' '*n}{self.nombre} = String("")\n"
             elif self.tipo == 'Bool':
-                codigo += f"{' '*n}{self.nombre} = False\n"
+                codigo += f"{' '*n}{self.nombre} = Booleano(False)\n"
         else:
             codigo += f"{self.inicializacion.genera_codigo(n)}\n"
             codigo += f"{' '*n}{self.nombre} = t\n"
@@ -280,7 +292,7 @@ class Nueva(Expresion):
         return resultado
     
     def genera_codigo(self, n):
-        return f"{' '*n}new {self.tipo}"
+        return f"{' '*n}{self.tipo}()\n"
 
 @dataclass
 class OperacionBinaria(Expresion):
@@ -301,10 +313,10 @@ class Suma(OperacionBinaria):
         return resultado
 
     def genera_codigo(self, n):
-        codigo = f"{' '*n} {self.izquierda.genera_codigo(n)}\n"
-        codigo += f"t1 = t\n"
-        codigo += f"{self.derecha.genera_codigo(n)}\n"
-        codigo += f"t += t1"
+        codigo = f"{self.izquierda.genera_codigo(n+2)}\n"
+        codigo += f"{' '*(n+2)}t1 = t\n"
+        codigo += f"{self.derecha.genera_codigo(n+2)}\n"
+        codigo += f"{' '*(n+2)}t += t1\n"
         return codigo
 
 @dataclass
@@ -421,9 +433,9 @@ class Igual(OperacionBinaria):
         return resultado
     
     def genera_codigo(self, n):
-        codigo = f"{' '*n}{self.izquierda.genera_codigo(n)}"
+        codigo = f"{self.izquierda.genera_codigo(n)}"
         codigo += f"{' '*n}t1 = t\n"
-        codigo += f"{' '*n}{self.derecha.genera_codigo(n)}\n"
+        codigo += f"{self.derecha.genera_codigo(n)}\n"
         codigo += f"{' '*n}t = t1 == t"
         return codigo
 
@@ -488,7 +500,7 @@ class Objeto(Expresion):
         return resultado
 
     def genera_codigo(self, n):
-        codigo = f"t = {self.nombre}\n"
+        codigo = f"{' '*n}t = {self.nombre}\n"
         if self.nombre in Clase.atributos:
             codigo = f"{' '*n}t = self.{self.nombre}"
         elif self.nombre == 'self':
@@ -523,7 +535,7 @@ class Entero(Expresion):
         return resultado
         
     def genera_codigo(self, n):
-        codigo = f"t = Entero({self.valor})\n"
+        codigo = f"{' '*n}t = Entero({self.valor})\n"
         return codigo
 
 @dataclass
@@ -538,7 +550,7 @@ class String(Expresion):
         return resultado
 
     def genera_codigo(self, n):
-        return f"t = String({self.valor})\n"
+        return f"{' '*n}t = String({self.valor})\n"
 
 
 @dataclass
@@ -555,9 +567,9 @@ class Booleano(Expresion):
     def genera_codigo(self, n):
         codigo = ''
         if self.valor:
-            codigo = f"t = Booleano(True)\n"
+            codigo = f"{' '*n}t = Booleano(True)\n"
         else:
-            codigo = f"t = Booleano(False)\n"
+            codigo = f"{' '*n}t = Booleano(False)\n"
         return codigo
 
 @dataclass
@@ -666,6 +678,8 @@ class Atributo(Caracteristica):
             codigo = f"{' '*n}{self.nombre} = ''\n"
         elif self.tipo == 'Bool':
             codigo = f"{' '*n}{self.nombre} = False\n"
+        elif self.tipo == 'IO':
+            codigo = f"{' '*n}{self.nombre} = IO()\n"
         else:
             codigo = f"{' '*n}{self.nombre} = None\n"
         return codigo
