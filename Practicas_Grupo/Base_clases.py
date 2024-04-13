@@ -4,6 +4,9 @@ class Objeto:
     
     def abort(self):
         exit()
+    
+    def type_name(self):
+        return self.__class__.__name__
 
     def copy(self): 
         return deepcopy(self)
@@ -27,8 +30,16 @@ class String(Objeto,str):
         else:
             self.cadena = cadena
     
-    def __add__(self, s):
+    def length(self):
+        return Entero(len(self.cadena))
+
+    def concat(self, s):
         return String(self.cadena + s.cadena)
+    
+    def substr(self, i, l):
+        if i.numero < 0 or i.numero >= len(self.cadena) or l.numero <= 0:
+            raise RuntimeError("Substring Index out of range")
+        return String(self.cadena[i.numero:i.numero+l.numero])
 
 class Booleano(Objeto):
     def __init__(self, booleano):
@@ -46,4 +57,12 @@ class IO(Objeto):
     def out_int(self, s):
         s = Entero(s)
         print(s.numero,end="") # ¿Que habra que poner?
+    
+    def in_string(self):
+        return String(input())
+    
+    def in_int(self):
+        return Entero(int(input()))
+
+
 
