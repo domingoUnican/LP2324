@@ -1,11 +1,17 @@
 from copy import deepcopy
 
-class Objeto:
+class Objeto():
+
+    def __init__(self,init=None):
+        self.init = init
+
     
     def abort(self):
         exit()
     
     def type_name(self):
+        if self.init == None:
+            return "Dispatch to void."
         return self.__class__.__name__
 
     def copy(self): 
@@ -13,7 +19,7 @@ class Objeto:
 
 class Entero(Objeto,int):
     def __init__(self, numero):
-        super().__init__()
+        super().__init__(True)
         if numero == None:
             self.numero = Entero(0)
         else:
@@ -22,9 +28,18 @@ class Entero(Objeto,int):
     def __add__(self, s):
         return Entero(self.numero + s.numero)
     
+    def __sub__(self, s):
+        return Entero(self.numero - s.numero)
+    
+    def __mul__(self, s):
+        return Entero(self.numero * s.numero)
+    
+    def __truediv__(self, s):
+        return Entero(self.numero / s.numero)
+    
 class String(Objeto,str):
     def __init__(self, cadena):
-        super().__init__()
+        super().__init__(True)
         if cadena == None:
             self.cadena = ""
         else:
@@ -43,11 +58,14 @@ class String(Objeto,str):
 
 class Booleano(Objeto):
     def __init__(self, booleano):
-        super().__init__()
+        super().__init__(True)
         if booleano == None:
             self.booleano = Booleano(False)
         else:
             self.booleano = booleano
+    
+    def __eq__(self, s):
+        return self.booleano == s.booleano
 
 class IO(Objeto):
     def out_string(self, s):
@@ -63,6 +81,8 @@ class IO(Objeto):
     
     def in_int(self):
         return Entero(int(input()))
+true = Booleano(True)
+false = Booleano(False)
 
 
 

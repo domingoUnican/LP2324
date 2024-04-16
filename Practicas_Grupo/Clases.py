@@ -62,7 +62,10 @@ class Asignacion(Expresion):
     def genera_codigo(self, n):
         codigo = ""
         codigo += f"{self.cuerpo.genera_codigo(n)}\n"
-        codigo += f"{' '*n}{self.nombre} = t\n"
+        if self.nombre in Clase.atributos:
+            codigo += f"{' '*n}self.{self.nombre} = t\n"
+        else:
+            codigo += f"{' '*n}{self.nombre} = t\n"
         return codigo
         
 
@@ -188,7 +191,10 @@ class Bucle(Expresion):
     def genera_codigo(self, n):
         codigo = ''
         codigo += f"{self.condicion.genera_codigo(n)}\n"
-        codigo += f"{' '*n}while t:\n"
+        codigo += f"{' '*n}t1 = t\n"
+        codigo += f"{' '*n}if t == false:\n"
+        codigo += f"{' '*(n+2)}t = Objeto()\n"
+        codigo += f"{' '*n}while t1 == true:\n"
         codigo += f"{self.cuerpo.genera_codigo(n+2)}\n"
         return codigo
 
@@ -301,7 +307,17 @@ class Nueva(Expresion):
         return resultado
     
     def genera_codigo(self, n):
-        return f"{' '*n}t = {self.tipo}()\n"
+        codigo = ''
+        if self.tipo == 'Int':
+            codigo += f"{' '*n}t = Entero(None)\n"
+        elif self.tipo == 'String':
+            codigo += f"{' '*n}t = String(None)\n"
+        elif self.tipo == 'Bool':
+            codigo += f"{' '*n}t = Booleano(None)\n"
+        else:
+            codigo += f"{' '*n}t = {self.tipo}()\n"
+
+        return codigo
 
 @dataclass
 class OperacionBinaria(Expresion):
@@ -483,7 +499,7 @@ class Not(Expresion):
     def genera_codigo(self, n):
         codigo = ''
         codigo += f"{self.expr.genera_codigo(n)}\n"
-        codigo += f"{' '*n}t = {self.operador} t\n"
+        codigo += f"{' '*n}t = not t\n"
         return codigo
 
 @dataclass
@@ -517,9 +533,9 @@ class Objeto(Expresion):
     def genera_codigo(self, n):
         codigo = f"{' '*n}t = {self.nombre}\n"
         if self.nombre in Clase.atributos:
-            codigo = f"{' '*n}t = self.{self.nombre}"
+            codigo = f"{' '*n}t = self.{self.nombre}\n"
         elif self.nombre == 'self':
-            codigo = f"{' '*n}t = self"
+            codigo = f"{' '*n}t = self\n"
         return codigo
 
 
