@@ -638,7 +638,6 @@ class Programa(IterableNodo):
     def genera_codigo(self, n=0): # genera codigo tiene que tener un indentado
         codigo = ''
         for c in self.secuencia:
-            print(c.nombre)
             codigo += c.genera_codigo(n)
         codigo += f"{' '*n}Main().main()\n"
         return codigo
@@ -681,12 +680,17 @@ class Clase(Nodo):
             codigo += "Objeto):\n"
         else:
             codigo += f"{self.padre}):\n"
-        codigo += f"{' '*(n+2)}def __init__(self):\n"
+        
         for c in self.caracteristicas:
             if isinstance(c, Atributo):
                 self.atributos.add(c.nombre)
-                print(self.atributos)
-                codigo += c.genera_codigo(n+4)
+        
+        if len(self.atributos) > 0:
+            codigo += f"{' '*(n+2)}def __init__(self):\n"
+            for c in self.caracteristicas:
+                if isinstance(c, Atributo):
+                    codigo += c.genera_codigo(n+4)
+
         for c in self.caracteristicas:
             if not isinstance(c, Atributo):
                 codigo += c.genera_codigo(n+2)

@@ -1,8 +1,8 @@
 class A inherits IO {
-  b : Bool <- true;
   x : Int <- if b then 1 else ~1 fi;
+  b : Bool <- true;
   y : Int <- x + 3;
-  z : Int <-  - 5;
+  z : Int <- z - 5;
 
   print_attr() : Object { {
    out_string("x: ");
