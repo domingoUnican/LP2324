@@ -26,11 +26,13 @@ class Int(Object, int):
 
 
 class IO(Object):
+
     def out_string(self, s):
         print(s, end='') # ¿Que habra que poner?,flush=False
-
+        
     def out_int(self, s):
         print(s, end='') # ¿Que habra que poner?
+        
 
 class String(Object):#str
     def __init__(self, s=""):

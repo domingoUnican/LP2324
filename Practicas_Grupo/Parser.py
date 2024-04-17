@@ -101,7 +101,7 @@ class CoolParser(Parser):
     def Atributo(self, p):
         return Atributo(nombre = p.OBJECTID, tipo= p.TYPEID, cuerpo=p.opcional_expr)
 
-    @_("Expresion")
+    @_("ASSIGN Expresion")
     def opcional_expr(self, p):
         return p.Expresion
 
@@ -326,7 +326,7 @@ class CoolParser(Parser):
     #STR_CONST
     @_("STR_CONST")
     def Expresion(self, p):
-        return String(valor= p.STR_CONST)
+        return String1(valor= p.STR_CONST)
 
     #BOOL_CONST
     @_("BOOL_CONST")
