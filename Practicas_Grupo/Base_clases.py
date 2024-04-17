@@ -37,8 +37,8 @@ class Entero(Objeto,int):
     def __truediv__(self, s):
         return Entero(self.numero / s.numero)
     
-class String(Objeto,str):
-    def __init__(self, cadena):
+class String1(Objeto,str):
+    def __init__(self, cadena=""):
         super().__init__(True)
         if cadena == None:
             self.cadena = ""
@@ -49,12 +49,12 @@ class String(Objeto,str):
         return Entero(len(self.cadena))
 
     def concat(self, s):
-        return String(self.cadena + s.cadena)
+        return String1(self.cadena + s.cadena)
     
     def substr(self, i, l):
         if i.numero < 0 or i.numero >= len(self.cadena) or l.numero <= 0:
             raise RuntimeError("Substring Index out of range")
-        return String(self.cadena[i.numero:i.numero+l.numero])
+        return String1(self.cadena[i.numero:i.numero+l.numero])
 
 class Booleano(Objeto):
     def __init__(self, booleano):
@@ -66,10 +66,13 @@ class Booleano(Objeto):
     
     def __eq__(self, s):
         return self.booleano == s.booleano
+    
+    def __not__(self):
+        return Booleano(not self.booleano)
 
 class IO(Objeto):
     def out_string(self, s):
-        s = String(s)
+        s = String1(s)
         print(s.cadena,end="") # ¿Que habra que poner?
 
     def out_int(self, s):
@@ -77,12 +80,11 @@ class IO(Objeto):
         print(s.numero,end="") # ¿Que habra que poner?
     
     def in_string(self):
-        return String(input())
+        return String1(input())
     
     def in_int(self):
         return Entero(int(input()))
 true = Booleano(True)
 false = Booleano(False)
 
-
-
+ 
