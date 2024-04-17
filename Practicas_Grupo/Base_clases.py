@@ -24,7 +24,7 @@ class IO(Object):
     def in_int(self):
         return Int(int(input()))
 
-class Int(Object, int):
+class Int(Object):
     def __init__(self, s):
         super().__init__()
         if s is None:
