@@ -18,12 +18,10 @@ class Objeto():
         return deepcopy(self)
 
 class Entero(Objeto,int):
-    def __init__(self, numero):
+    def __init__(self, numero=0):
         super().__init__(True)
-        if numero == None:
-            self.numero = Entero(0)
-        else:
-            self.numero = numero
+        
+        self.numero = numero
 
     def __add__(self, s):
         return Entero(self.numero + s.numero)
@@ -40,10 +38,8 @@ class Entero(Objeto,int):
 class String1(Objeto,str):
     def __init__(self, cadena=""):
         super().__init__(True)
-        if cadena == None:
-            self.cadena = ""
-        else:
-            self.cadena = cadena
+        
+        self.cadena = cadena
     
     def length(self):
         return Entero(len(self.cadena))
@@ -52,17 +48,15 @@ class String1(Objeto,str):
         return String1(self.cadena + s.cadena)
     
     def substr(self, i, l):
-        if i.numero < 0 or i.numero >= len(self.cadena) or l.numero <= 0:
+        if i.numero < 0 or i.numero > len(self.cadena) or l.numero < 0:
             raise RuntimeError("Substring Index out of range")
         return String1(self.cadena[i.numero:i.numero+l.numero])
 
 class Booleano(Objeto):
-    def __init__(self, booleano):
+    def __init__(self, booleano=False):
         super().__init__(True)
-        if booleano == None:
-            self.booleano = Booleano(False)
-        else:
-            self.booleano = booleano
+        
+        self.booleano = booleano
     
     def __eq__(self, s):
         return self.booleano == s.booleano
@@ -87,4 +81,3 @@ class IO(Objeto):
 true = Booleano(True)
 false = Booleano(False)
 
- 

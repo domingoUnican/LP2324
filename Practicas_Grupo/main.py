@@ -21,7 +21,7 @@ TESTS = [fich for fich in FICHEROS
          if os.path.isfile(os.path.join(DIR, fich)) and
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$", fich)]
 TESTS.sort()
-TESTS = ["init-default.cl"]
+TESTS = ["sequence.cl"]
 
 if True:
     contador = len(TESTS)
