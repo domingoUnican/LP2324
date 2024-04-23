@@ -159,7 +159,8 @@ class Condicional(Expresion):
     
     def genera_codigo(self, n=0, dict_recibido=dict_global):
         codigo=""
-        codigo = f'{(n)*" "}if {self.condicion.genera_codigo(0, dict_recibido)}:\n'
+        codigo += f'{(n)*" "}condicion = ({self.condicion.genera_codigo(0, dict_recibido)})\n'
+        codigo += f'{(n)*" "}if (condicion == True):\n'
         codigo += f'{self.verdadero.genera_codigo(n+2, dict_recibido)}\n'
         codigo += f'{(n)*" "}else:\n'
         codigo += f'{self.falso.genera_codigo(n+2, dict_recibido)}\n'
@@ -215,18 +216,20 @@ class Let(Expresion):
         # codigo += f'({self.inicializacion.genera_codigo(0, dict_recibido)})'
         # codigo += f' in {self.cuerpo.genera_codigo(0, dict_actual)}\n'
 
-        codigo += f'{n*" "}temp = lambda {variable} : {self.cuerpo.genera_codigo(0, dict_recibido)}\n'
-        codigo += f'{n*" "}temp({self.tipo}({self.inicializacion.genera_codigo(0, dict_recibido)}))\n'
+        # codigo += f'{n*" "}temp = lambda {variable} : {self.cuerpo.genera_codigo(0, dict_recibido)}\n'
+        # codigo += f'{n*" "}temp({self.tipo}({self.inicializacion.genera_codigo(0, dict_recibido)}))\n'
 
-    #     codigo += f'{(n)*" "}def {self.nombre}({self.tipo}):\n'
-    #     codigo += f'{(n+2)*" "}{self.inicializacion.genera_codigo(0)}\n'
-        # codigo += f'{self.cuerpo.genera_codigo(n+2, dict_recibido)}\n'
-    #     return codigo
+        codigo += f'{(n)*" "}def temp_func({self.nombre}):\n'
+        # codigo += f'{(n+2)*" "}{self.inicializacion.genera_codigo(0)}\n'
+        codigo += f'{self.cuerpo.genera_codigo(n+2, dict_actual)}\n'
+        codigo += f'{(n)*" "}variable = {self.tipo}({self.inicializacion.genera_codigo(0, dict_actual)})\n'
+        codigo += f'{(n)*" "}temp_func(variable)\n'
+        return codigo
     
         # codigo = ""
         # codigo += f'{(n)*" "}{self.nombre} = {self.inicializacion.genera_codigo(0)}\n'
         # codigo += f'{self.cuerpo.genera_codigo(n)}'
-        return codigo
+        # return codigo
     #FIXME Let
 
 
@@ -342,6 +345,11 @@ class Suma(OperacionBinaria):
     
     def genera_codigo(self, n=0, dict_recibido=dict_global):
         codigo = ""
+        # codigo += self.izquierda.genera_codigo(n, dict_recibido)
+        # codigo += f'\n'
+        # codigo += f'{(n)*" "}temp0 = temp\n'
+        # codigo += self.derecha.genera_codigo(n, dict_recibido)
+        # codigo += f'\n{(n)*" "}temp = temp + temp0'
         codigo = f'{self.izquierda.genera_codigo(n, dict_recibido)} + {self.derecha.genera_codigo(0, dict_recibido)}'
         return codigo
 
@@ -358,6 +366,7 @@ class Resta(OperacionBinaria):
         return resultado
     
     def genera_codigo(self, n=0, dict_recibido=dict_global):
+
         codigo = ""
         codigo = f'{self.izquierda.genera_codigo(n, dict_recibido)} - {self.derecha.genera_codigo(0, dict_recibido)}'
         return codigo
@@ -377,6 +386,7 @@ class Multiplicacion(OperacionBinaria):
         return resultado
     
     def genera_codigo(self, n=0, dict_recibido=dict_global):    
+
         codigo = ""
         codigo = f'{self.izquierda.genera_codigo(n, dict_recibido)} * {self.derecha.genera_codigo(0, dict_recibido)}'
         return codigo
@@ -449,7 +459,8 @@ class Igual(OperacionBinaria):
     
     def genera_codigo(self, n=0, dict_recibido=dict_global):    
         codigo = ""
-        codigo = f'{self.izquierda.genera_codigo(n, dict_recibido)} == {self.derecha.genera_codigo(0, dict_recibido)}'
+        codigo += f'{self.izquierda.genera_codigo(n, dict_recibido)} == {self.derecha.genera_codigo(0, dict_recibido)}'
+
         return codigo
 
 
@@ -502,7 +513,7 @@ class EsNulo(Expresion):
     
     def genera_codigo(self, n=0, dict_recibido=dict_global):
         codigo = ""
-        codigo = f'{self.expr.genera_codigo(0, dict_recibido)} is None'
+        codigo = f'{self.expr.genera_codigo(0, dict_recibido)}.isVoid()'
         return codigo
 
 @dataclass
@@ -516,29 +527,29 @@ class Objeto(Expresion):
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
     
-    def genera_codigo(self, n=0, dict_recibido={}):
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
         codigo = ""
 
-        # nombre_variable = self.nombre
-        # diccionario = dict_recibido
+        nombre_variable = self.nombre
+        diccionario = dict_recibido
         
-        # while(diccionario["padre"] is not None):
-        #     if self.nombre in diccionario.keys():
-        #         break
-        #     else:
-        #         diccionario = diccionario["padre"]
+        while(diccionario["padre"] is not None):
+            if self.nombre in diccionario.keys():
+                break
+            else:
+                diccionario = diccionario["padre"]
         
-        # if diccionario["padre"] is not None:
-        #     nombre_usado = nombre_variable
-        # else:
-        #     nombre_usado = "self." + nombre_variable
-
-        # codigo += nombre_usado
-
-        if self.nombre == "self":
-            codigo = f'{(n)*" "}{self.nombre}'
+        if (diccionario["padre"] is not None) or (nombre_variable is "self"):
+            nombre_usado = nombre_variable
         else:
-            codigo = f'{(n)*" "}self.{self.nombre}' 
+            nombre_usado = "self." + nombre_variable
+
+        codigo += f'{(n)*" "}{nombre_usado}'
+
+        # if self.nombre == "self":
+        #     codigo = f'{(n)*" "}{self.nombre}'
+        # else:
+        #     codigo = f'{(n)*" "}self.{self.nombre}' 
         return codigo
     #FIXME que reciba el dict
 
@@ -691,7 +702,7 @@ class Metodo(Caracteristica):
         for formal in self.formales:
             nombre_formal = formal.genera_codigo(0, dict_recibido)
             codigo +=  ', ' + nombre_formal
-            nuevo_ambito.update({nombre_formal: None})
+            nuevo_ambito.update({nombre_formal: "None"})
         codigo += '):\n'
         codigo += self.cuerpo.genera_codigo(n+2, nuevo_ambito)
         codigo += '\n'
@@ -709,7 +720,10 @@ class Atributo(Caracteristica):
         return resultado
     
     def genera_codigo(self,n=0,dict_recibido=dict_global):
-        codigo = f"{' '*n}{self.nombre} = {self.tipo}({self.cuerpo.genera_codigo(0, dict_recibido)})\n"
+        if (self.tipo == "IO" and self.cuerpo.genera_codigo(0) == "None"):
+            codigo = f"{' '*n}{self.nombre} = {self.tipo}()\n"
+        else:
+            codigo = f"{' '*n}{self.nombre} = {self.tipo}({self.cuerpo.genera_codigo(0, dict_recibido)})\n"
         # dict_recibido.update(self.nombre, self.tipo(self.cuerpo.genera_codigo(0)))
         #FIXME cambios con el diccionario
         # if (self.tipo == "Int" and self.cuerpo.genera_codigo(0) == "None"):
