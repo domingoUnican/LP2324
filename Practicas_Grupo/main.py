@@ -8,8 +8,8 @@ sys.path.append(DIRECTORIO)
 
 from Lexer import CoolLexer
 
-PRACTICA = "01"  # Practica que hay que evaluar
-DEBUG = True   # Decir si se lanzan mensajes de debug
+PRACTICA = "02"  # Practica que hay que evaluar
+DEBUG = True   # Decir si se lanzan mensajes de pardebug
 NUMLINEAS = 3   # Numero de lineas que se muestran antes y después de la no coincidencia
 sys.path.append(DIRECTORIO)
 CALIFICACION = "minimos" # Para un reto mayor cambiar a "grading"
