@@ -104,24 +104,20 @@ class LlamadaMetodo(Expresion):
         return resultado
     
     def genera_codigo(self, n):
-        """codigo = ""
-        codigo += f'{" "*n}{self.nombre_metodo}('
-        for i in range(0, len(self.argumentos)):
-            if isinstance(self.argumentos[i], Objeto):
-                codigo += f'{self.argumentos[i].genera_codigo(0)}'
-            else:
-                codigo += f'{self.argumentos[i].genera_codigo(0)}'
-            if i != (len(self.argumentos) - 1):
-                codigo += ", "
-            codigo += f')'
-        return codigo
-        """
-        codigo=f"{self.cuerpo.genera_codigo(n)}.{self.nombre_metodo}("
+        #*lista = trata la lista como puntero, accediendo a sus argumentos
+        codigo = f"{' '*n}lst{self.nombre_metodo} = []\n"
         for formal in self.argumentos[:-1]:
+            codigo += formal.genera_codigo(n) + "\n"
+            codigo += f"{' '*n}lst{self.nombre_metodo}.append(temp)\n"
+        if self.argumentos:
+            codigo += self.argumentos[-1].genera_codigo(n) + "\n"
+            codigo += f"{' '*n}lst{self.nombre_metodo}.append(temp)\n"
+        codigo+=f"{self.cuerpo.genera_codigo(n)}.{self.nombre_metodo}(*lst{self.nombre_metodo})"
+        """for formal in self.argumentos[:-1]:
             codigo += formal.genera_codigo(0) + ","
         if self.argumentos:
-            codigo += self.argumentos[-1].genera_codigo(0)
-        codigo +=")"""
+            codigo += self.argumentos[-1].genera_codigo(0)"""
+        #codigo +=")"
         return codigo
 
 @dataclass
@@ -188,8 +184,6 @@ class Let(Expresion):
             self.inicializacion = Entero()
         elif (self.tipo == 'String' and isinstance(self.inicializacion, NoExpr)):
             self.inicializacion = String1(valor="")
-        global lista
-        lista.append(self.nombre)
         codigo += self.inicializacion.genera_codigo(0) + "\n"
         codigo += f"{' '*n}{self.nombre} = temp\n"
         codigo += self.cuerpo.genera_codigo(n)
@@ -230,7 +224,9 @@ class RamaCase(Nodo):
         resultado += self.cuerpo.str(n+2)
         return resultado
     def genera_codigo(self, n):
-        codigo = f'{" "*n}case {self.valor.code(0)}:\n'
+        codigo = f"{' '*(n+2)}{self.cuerpo.genera_codigo(0)}\n"
+        codigo+= f"{' '*(n+2)}{self.nombre_variable}=temp\n"
+        codigo+= f"{' '*(n+2)}return {self.nombre_variable}\n"
         return codigo
 
 @dataclass
@@ -247,9 +243,13 @@ class Swicht(Expresion):
         return resultado
     def genera_codigo(self, n):
         #genera codigo de condicional
-        codigo = f'{" "*n}match {self.expr.genera_codigo(0)}:\n'
-        for expr in self.casos:
-            codigo += expr.genera_codigo(n+2) + '\n'
+        codigo = f"{self.expr.genera_codigo(n)}\n"
+        codigo += f"{' '*n}variable = temp\n"
+        codigo += f"{' '*n}if isinstance(variable, {self.casos[0].tipo}):\n"
+        codigo += f"{self.casos[0].genera_codigo(n)}"
+        for caso in self.casos[1:]:
+            codigo += f"{' '*n}elif isinstance(variable, {self.caso.tipo}):\n"
+            codigo += f"{self.caso.genera_codigo(n)}"
         return codigo
         
 
@@ -476,9 +476,9 @@ class Objeto(Expresion):
     def genera_codigo(self, n):
         global lista
         if self.nombre in lista:
-            return f"{' '*n}temp = {self.nombre}"
-        else:
             return f"{' '*n}temp = self.{self.nombre}"
+        else:
+            return f"{' '*n}temp = {self.nombre}"
 
 
 @dataclass
@@ -593,8 +593,15 @@ class Clase(Nodo):
             codigo = f"{' '*n}class {self.nombre}(Object):\n"
         else:
             codigo = f"{' '*n}class {self.nombre}({self.padre}):\n"""
+            codigo += f""
+        codigo += f"{' '*(n+2)}def __init__(self):\n"
         for caracteristica in self.caracteristicas:
-            codigo += caracteristica.genera_codigo(n+2)
+            if isinstance(caracteristica, Atributo):
+                codigo += caracteristica.genera_codigo(n+4)
+        for caracteristica in self.caracteristicas:
+            if not isinstance(caracteristica, Atributo):
+                codigo += caracteristica.genera_codigo(n+2)
+        
         return codigo
     #-------------------
 
@@ -613,8 +620,6 @@ class Metodo(Caracteristica):
         return resultado
 
     def genera_codigo(self, n):
-        global lista
-        lista.append(self.nombre)
         codigo = ""
         if self.formales == []:
             codigo += f"{' '*n}def {self.nombre}(self"
@@ -626,6 +631,7 @@ class Metodo(Caracteristica):
             codigo += self.formales[-1].genera_codigo(0) 
         codigo +="):\n"
         codigo +=self.cuerpo.genera_codigo(n+2)
+        codigo += f"{' '*(n+2)}return temp\n"
         return codigo
 
 
@@ -640,7 +646,9 @@ class Atributo(Caracteristica):
 
     def genera_codigo(self, n):
         #else:
+        global lista
+        lista.append(self.nombre)
         codigo = f"{self.cuerpo.genera_codigo(n)}\n"
-        codigo += f"{' '*n}{self.nombre}=temp\n"
+        codigo += f"{' '*n}self.{self.nombre}={self.tipo}()\n"
         return codigo
         #return f"{' '*n}{self.nombre}={self.tipo}({self.cuerpo.genera_codigo(n)})\n"

@@ -28,7 +28,7 @@ class Int(Object, int):
 class IO(Object):
 
     def out_string(self, s):
-        print(s, end='') # ¿Que habra que poner?,flush=False
+        print(s.s, end='') # ¿Que habra que poner?,flush=False
         
     def out_int(self, s):
         print(s, end='') # ¿Que habra que poner?
@@ -71,4 +71,17 @@ class Bool(Object):
             return True
         else:
             return False
+class Main(Object):
+  def __init__(self):
 
+    self.x=Main()
+  def main(self):
+    temp = self.x
+    variable = temp
+    if isinstance(variable, Main):
+      temp=0
+      m=temp
+      return m
+
+    return temp
+Main().main()
