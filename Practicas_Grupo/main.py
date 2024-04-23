@@ -3,6 +3,7 @@ import re
 import sys
 import io
 from Base_clases import *
+import traceback
 
 DIRECTORIO = os.path.expanduser("./")
 sys.path.append(DIRECTORIO)
@@ -20,6 +21,7 @@ TESTS = [fich for fich in FICHEROS
          if os.path.isfile(os.path.join(DIR, fich)) and
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$", fich)]
 TESTS.sort()
+TESTS = {"many_objects_on_heap.cl"}
 
 
 if True:
@@ -95,11 +97,13 @@ if True:
             j = parser.parse(lexer.tokenize(entrada))
             try:
                 codigo = j.genera_codigo()
+                print(codigo)
                 resultado = io.StringIO()
                 sys.stdout = resultado
                 exec(codigo)
                 sys.stdout = sys.__stdout__
                 resultado = resultado.getvalue()
+                print(resultado)
                 if resultado.lower().strip().split() != bien.lower().strip().split():
                     print(f"Revisa el fichero {fich}")
                     if DEBUG:
