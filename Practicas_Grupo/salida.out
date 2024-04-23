@@ -59,22 +59,22 @@ Rule 55    expr_list_pc -> expresion ;
 
 Unused terminals:
 
-    RPAREN
-    MINUS
-    SEMICOLON
-    PLUS
-    LPAREN
-    COMMA
     DOT
     COLON
-    LE
-    DIV
-    EQ
-    NUMBER
-    AT
-    GT
+    SEMICOLON
+    PLUS
     LT
+    GT
+    AT
+    LE
     MULT
+    EQ
+    MINUS
+    DIV
+    RPAREN
+    NUMBER
+    COMMA
+    LPAREN
 
 Terminals, with rules where they appear:
 

@@ -272,6 +272,3 @@ class CoolParser(Parser):
     def expresion(self, p):
         return Booleano(valor=p.BOOL_CONST)
     
-l = CoolLexer()
-p = CoolParser()
-p.parse(l.tokenize("class Main {; class A {;"))
