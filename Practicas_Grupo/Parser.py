@@ -6,10 +6,11 @@ import sys
 import os
 from Clases import *
 
-
 class CoolParser(Parser):
     nombre_fichero = ''
     tokens = CoolLexer.tokens
+    literals = CoolLexer.literals
+    reservados = CoolLexer._key_words
     debugfile = "salida.out"
     
     precedence = (

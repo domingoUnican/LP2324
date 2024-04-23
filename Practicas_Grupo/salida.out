@@ -59,22 +59,7 @@ Rule 55    expr_list_pc -> expresion ;
 
 Unused terminals:
 
-    DOT
-    COLON
-    SEMICOLON
-    PLUS
-    LT
-    GT
-    AT
     LE
-    MULT
-    EQ
-    MINUS
-    DIV
-    RPAREN
-    NUMBER
-    COMMA
-    LPAREN
 
 Terminals, with rules where they appear:
 
@@ -92,20 +77,13 @@ Terminals, with rules where they appear:
 =                    : 37
 @                    : 31 32
 ASSIGN               : 10 44 49 50
-AT                   : 
 BOOL_CONST           : 17
 CASE                 : 23
 CLASS                : 3
-COLON                : 
-COMMA                : 
 DARROW               : 38 52 53
-DIV                  : 
-DOT                  : 
 ELSE                 : 26
-EQ                   : 
 ESAC                 : 23
 FI                   : 26
-GT                   : 
 IF                   : 26
 IN                   : 24
 INHERITS             : 4
@@ -114,19 +92,11 @@ ISVOID               : 34
 LE                   : 
 LET                  : 24
 LOOP                 : 25
-LPAREN               : 
-LT                   : 
-MINUS                : 
-MULT                 : 
 NEW                  : 22
 NOT                  : 35
-NUMBER               : 
 OBJECTID             : 9 12 13 16 20 27 28 29 30 31 32 44 47 48 49 50 52 53
 OF                   : 23
-PLUS                 : 
 POOL                 : 25
-RPAREN               : 
-SEMICOLON            : 
 STR_CONST            : 18
 THEN                 : 26
 TYPEID               : 3 4 9 12 13 16 22 31 32 47 48 49 50 52 53
