@@ -81,3 +81,63 @@ class IO(Objeto):
 true = Booleano(True)
 false = Booleano(False)
 
+class Main (IO):
+  def __init__(self):
+    self.a = Entero(0)
+    t = Entero(100)
+
+    self.i = t
+  def main(self):
+    t = self.i
+
+    t = ~ t
+    t0 = t
+    t = Entero(0)
+
+    t = t0 < t
+    t = Booleano(t)
+
+    t1 = t
+    if t == false:
+      t = Objeto()
+    while t1 == true:
+      t = Entero()
+
+      self.a = t
+      t = IO()
+
+      b = t
+      t = b
+      t = self.i
+
+      t2 = t
+      t = Entero(1)
+
+      t = t2 - t
+
+      self.i = t
+
+      t = self.i
+
+      t = ~ t
+      t0 = t
+      t = Entero(0)
+
+      t = t0 < t
+      
+      t = Booleano(t)
+      print(self.i)
+      print(t0)
+      print(t.booleano)
+      t1 = t
+      
+    t = self.i
+
+    t1 = t
+    t = self
+
+    t2 = t
+    t = t2.out_int(t1)
+
+    return t
+Main().main()

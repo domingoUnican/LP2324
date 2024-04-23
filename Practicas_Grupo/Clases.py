@@ -189,13 +189,19 @@ class Bucle(Expresion):
         return resultado
 
     def genera_codigo(self, n):
+        global contador
         codigo = ''
         codigo += f"{self.condicion.genera_codigo(n)}\n"
-        codigo += f"{' '*n}t1 = t\n"
+        codigo += f"{' '*n}t{contador} = t\n"
+        numero = contador
+        contador += 1
         codigo += f"{' '*n}if t == false:\n"
         codigo += f"{' '*(n+2)}t = Objeto()\n"
-        codigo += f"{' '*n}while t1 == true:\n"
+        codigo += f"{' '*n}while t{numero} == true:\n"
         codigo += f"{self.cuerpo.genera_codigo(n+2)}\n"
+        contador = numero - 1
+        codigo += f"{self.condicion.genera_codigo(n+2)}\n"
+        codigo += f"{' '*(n+2)}t{contador} = t\n"
         return codigo
 
 
