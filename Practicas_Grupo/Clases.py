@@ -51,8 +51,13 @@ class Asignacion(Expresion):
         return resultado
     
     def genera_codigo(self,n):
-    
-        codigo = f"{(' ')*n}{self.nombre} = {self.cuerpo.genera_codigo(n)}"
+        codigo = ""
+        if isinstance(self.cuerpo, Objeto) or isinstance(self.cuerpo, Nueva) :
+            codigo += f"{(' ')*n}temp = {self.cuerpo.genera_codigo(0)}\n"
+        
+        else: 
+            codigo += f"{self.cuerpo.genera_codigo(n)}\n"
+        codigo += f"{(' ')*n}self.{self.nombre} = temp"
         return codigo
 
 
@@ -138,7 +143,8 @@ class LlamadaMetodo(Expresion):
                 
                 INDICE += 1
         
-        codigo += f"{(' ')*n}{self.cuerpo.genera_codigo(0)}.{self.nombre_metodo}("
+        codigo += f"{self.cuerpo.genera_codigo(n)}  \n"
+        codigo += f"{n*(' ')}temp = temp.{self.nombre_metodo}("
         if len(self.argumentos) == 1:
             codigo+= f"temp{lista_ind[0]}"
         elif (len(self.argumentos) > 1):
@@ -187,9 +193,10 @@ class Bucle(Expresion):
     
     def genera_codigo(self, n):
         codigo = ""
-        codigo+=f"{self.condicion.genera_codigo(n)}\n"
+        codigo +=f"{self.condicion.genera_codigo(n)}\n"
         codigo += f"{(n)*(' ')}while(temp == True):\n"
         codigo += f"{self.cuerpo.genera_codigo(n+2)}"
+        codigo +=f"{self.condicion.genera_codigo(n+2)}\n"
         return codigo
 
 
@@ -220,7 +227,7 @@ class Let(Expresion):
         elif (self.tipo == "Bool"):
             inicializa += "Booleano(False)"
         else:
-            inicializa = f"{self.inicializacion.genera_codigo(n)}"
+            inicializa += f"{self.inicializacion.genera_codigo(n)}"
         codigo += f"{inicializa}\n"
         codigo += f"{(' ')*n}{self.nombre} = temp\n"
         codigo += f"{self.cuerpo.genera_codigo(n)}"
@@ -303,17 +310,17 @@ class Nueva(Expresion):
         return resultado
 
     def genera_codigo(self, n):
-        codigo = ""
+        codigo = f"{n*(' ')}temp = "
         if (self.tipo == "Int"):
-            codigo += f"{(' ')*n}Entero(0)"
+            codigo += f"Entero(0)"
         elif (self.tipo == "String"):
-            codigo += f"{(' ')*n}Cadena_carac("")"
+            codigo += f"Cadena_carac("")"
         elif (self.tipo == "Bool"):
-            codigo += f"{(' ')*n}Booleano()"
+            codigo += f"Booleano()"
         elif (self.tipo == "IO"):
-            codigo += f"{(' ')*n}None"
+            codigo += f"IO()"
         else:
-            codigo+=f"{n*(' ')}{self.tipo}()"
+            codigo+=f"{self.tipo}()"
         return codigo
 
 
@@ -337,12 +344,14 @@ class Suma(OperacionBinaria):
         return resultado
     
     def genera_codigo(self, n):
-        
+        global INDICE
+        indiceloc = INDICE
         codigo = ""
         codigo = f"{self.izquierda.genera_codigo(n)}\n" 
-        codigo += f"{(' ')*n}tempsuma = temp\n"
+        codigo += f"{(' ')*n}tempsuma{indiceloc} = temp\n"
         codigo += f"{self.derecha.genera_codigo(n)}\n"
-        codigo += f"{(' ')*n}temp = tempsuma + temp"
+        codigo += f"{(' ')*n}temp = tempsuma{indiceloc} + temp"
+        INDICE += 1
         
         return codigo
 
@@ -359,12 +368,14 @@ class Resta(OperacionBinaria):
         return resultado
     
     def genera_codigo(self, n):
-        
+        global INDICE
+        indiceloc = INDICE 
         codigo = ""
-        codigo = f"{self.izquierda.genera_codigo(n)}\n" 
-        codigo += f"{(' ')*n}tempresta = temp\n"
+        codigo += f"{self.izquierda.genera_codigo(n)}\n" 
+        codigo += f"{(' ')*n}tempresta{indiceloc} = temp\n"
         codigo += f"{self.derecha.genera_codigo(n)}\n"
-        codigo += f"{(' ')*n}temp = tempresta - temp"
+        codigo += f"{(' ')*n}temp = tempresta{indiceloc} - temp"
+        INDICE += 1
         
         return codigo
 
@@ -383,12 +394,14 @@ class Multiplicacion(OperacionBinaria):
         return resultado
     
     def genera_codigo(self, n):
-        
+        global INDICE
+        indiceloc = INDICE 
         codigo = ""
         codigo = f"{self.izquierda.genera_codigo(n)}\n" 
-        codigo += f"{(' ')*n}tempmul = temp\n"
+        codigo += f"{(' ')*n}tempmul{indiceloc} = temp\n"
         codigo += f"{self.derecha.genera_codigo(n)}\n"
-        codigo += f"{(' ')*n}temp = tempmul * temp"
+        codigo += f"{(' ')*n}temp = tempmul{indiceloc} * temp"
+        INDICE += 1
         
         return codigo
 
@@ -405,12 +418,14 @@ class Division(OperacionBinaria):
         return resultado
 
     def genera_codigo(self, n):
-        
+        global INDICE
+        indiceloc = INDICE 
         codigo = ""
         codigo = f"{self.izquierda.genera_codigo(n)}\n" 
-        codigo += f"{(' ')*n}tempdiv = temp\n"
+        codigo += f"{(' ')*n}tempdiv{indiceloc} = temp\n"
         codigo += f"{self.derecha.genera_codigo(n)}\n"
-        codigo += f"{(' ')*n}temp = tempsiv / temp"
+        codigo += f"{(' ')*n}temp = tempdiv{indiceloc} / temp"
+        INDICE += 1
         
         return codigo
 
@@ -481,7 +496,6 @@ class Igual(OperacionBinaria):
         return codigo
 
 
-
 @dataclass
 class Neg(Expresion):
     expr: Expresion = None
@@ -496,8 +510,8 @@ class Neg(Expresion):
 
     def genera_codigo(self, n):
         codigo = ""
-        codigo += f"{n*(' ')}temp = {self.expr.genera_codigo(0)}\n"
-        codigo += f"{n*(' ')}temp = not temp"
+        codigo += f"{self.expr.genera_codigo(n)}\n"
+        codigo += f"{n*(' ')}temp = -temp"
         return codigo
 
 @dataclass
@@ -514,8 +528,8 @@ class Not(Expresion):
     
     def genera_codigo(self, n):
         codigo = ""
-        codigo += f"{n*(' ')}{self.expr.genera_codigo(0)}\n"
-        codigo += f"{n*(' ')}temp = not (True == temp)"
+        codigo += f"{self.expr.genera_codigo(n)}\n"
+        codigo += f"{n*(' ')}temp = NOT(temp)"
         return codigo
 
     
@@ -549,7 +563,7 @@ class Objeto(Expresion):
     
     def genera_codigo(self, n):
         global ATRIBUTOS
-        codigo = f"{(' ')*n}temp = {self.nombre}" if self.nombre not in ATRIBUTOS else f"{(' ')*n}self.{self.nombre}"
+        codigo = f"{(' ')*n}temp = {self.nombre}" if self.nombre not in ATRIBUTOS else f"{(' ')*n}temp = self.{self.nombre}"
         return codigo
 
 
