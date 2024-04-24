@@ -319,7 +319,8 @@ class Nueva(Expresion):
 
     def genera_codigo(self, n=0, dict_recibido=dict_global):
         codigo = ""
-        codigo = f'{(n)*" "}new {self.tipo}'
+        # codigo = f'{(n)*" "}new {self.tipo}'
+        codigo = f'{(n)*" "}'
         return codigo
         #FIXME Nueva
 
@@ -351,6 +352,18 @@ class Suma(OperacionBinaria):
         # codigo += self.derecha.genera_codigo(n, dict_recibido)
         # codigo += f'\n{(n)*" "}temp = temp + temp0'
         codigo = f'{self.izquierda.genera_codigo(n, dict_recibido)} + {self.derecha.genera_codigo(0, dict_recibido)}'
+
+         
+        #si no existen las variables en el diccionario las creamos y inicializamos a 0?
+    #    if(self.izquierda.genera_codigo(0, dict_recibido) not in dict_recibido.keys()):
+    #        dict_recibido.update({self.izquierda.genera_codigo(0, dict_recibido): 0})
+            
+    #    if(self.derecha.genera_codigo(0, dict_recibido) not in dict_recibido.keys()):
+    #        dict_recibido.update({self.derecha.genera_codigo(0, dict_recibido): 0})
+            
+
+        
+        
         return codigo
 
 @dataclass

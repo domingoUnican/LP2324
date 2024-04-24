@@ -17,8 +17,6 @@ class Object:
 
 class IO(Object):
 
-    
-
     def out_string(self, s):
         print(s.cadena,end='')
 
@@ -88,47 +86,3 @@ class Bool(Object):
 true = Bool(True)
 false = Bool(False)
 
-
-
-class Main(Object):
-  def main(self):
-    condicion = (True == False)
-    if (condicion == true):
-      print("1")
-      self.abort()
-    else:
-       0
-    condicion = (True == True)
-    if (condicion == true):
-      0
-    else:
-      print("2")
-      self.abort()
-
-    condicion = (String("hello") == String("hello").copy())
-    if (condicion == true):
-      0
-    else:
-      print("3")
-      self.abort()
-
-    def temp_func(a):
-      condicion = (a == String(""))
-      if (condicion == true):
-        0
-      else:
-        print("4")
-        self.abort()
-
-    variable = String(None)
-    temp_func(variable)
-
-    condicion = (5 == 6)
-    if (condicion == true):
-      print("5")
-      self.abort()
-    else:
-      0
-
-
-Main().main()
