@@ -1,6 +1,7 @@
 # coding: utf-8
 from dataclasses import dataclass, field
 from typing import List
+from collections import defaultdict
 
 
 
@@ -62,6 +63,7 @@ class Asignacion(Expresion):
     def genera_codigo(self, n):
         codigo = ""
         codigo += f"{self.cuerpo.genera_codigo(n)}\n"
+        print(Clase.atributos)
         if self.nombre in Clase.atributos:
             codigo += f"{' '*n}self.{self.nombre} = t\n"
         else:
@@ -199,7 +201,10 @@ class Bucle(Expresion):
         codigo += f"{' '*(n+2)}t = Objeto()\n"
         codigo += f"{' '*n}while t{numero} == true:\n"
         codigo += f"{self.cuerpo.genera_codigo(n+2)}\n"
-        contador = numero - 1
+        if numero == 0:
+            contador = numero
+        else:
+            contador = numero - 1
         codigo += f"{self.condicion.genera_codigo(n+2)}\n"
         codigo += f"{' '*(n+2)}t{contador} = t\n"
         return codigo
@@ -418,7 +423,7 @@ class Division(OperacionBinaria):
         numero = contador
         contador += 1
         codigo += f"{self.derecha.genera_codigo(n)}\n"
-        codigo += f"{' '*n}t = t{contador} / t"
+        codigo += f"{' '*n}t = t{numero} / t"
         return codigo
 
 
@@ -649,13 +654,24 @@ class Programa(IterableNodo):
         return resultado
     def genera_codigo(self, n=0): # genera codigo tiene que tener un indentado
         codigo = ''
+        atributos = set()
         for c in self.secuencia:
+            arbol[c.nombre] = c.padre
+            for car in c.caracteristicas:
+                if isinstance(car, Atributo):
+                    atributos.add(car.nombre)
+            caract[c.nombre] = atributos.union(caract[c.padre])
+            atributos = set()
             codigo += c.genera_codigo(n)
+        print(arbol)
+        print(caract)
         codigo += f"{' '*n}Main().main()\n"
+        
         return codigo
 
-
-        
+arbol = defaultdict(str)
+caract = defaultdict(set)
+   
 
 
 @dataclass
@@ -685,7 +701,6 @@ class Clase(Nodo):
         return resultado
     atributos = set()
     def genera_codigo(self, n):
-        
         codigo = ""
         codigo += f"{' '*n}class {self.nombre} ("
         if self.padre == 'Object':
@@ -696,9 +711,12 @@ class Clase(Nodo):
         for c in self.caracteristicas:
             if isinstance(c, Atributo):
                 self.atributos.add(c.nombre)
-        
+        for c in caract[self.padre]:
+            self.atributos.add(c)
+        #print(self.atributos)
         if len(self.atributos) > 0:
             codigo += f"{' '*(n+2)}def __init__(self):\n"
+            codigo += f"{' '*(n+4)}super().__init__()\n"
             for c in self.caracteristicas:
                 if isinstance(c, Atributo):
                     codigo += c.genera_codigo(n+4)

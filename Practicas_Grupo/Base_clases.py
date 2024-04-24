@@ -12,7 +12,11 @@ class Objeto():
     def type_name(self):
         if self.init == None:
             return "Dispatch to void."
-        return self.__class__.__name__
+        nombre = self.__class__.__name__
+        diccionario = {"Entero":"Int","String1":"String","Booleano":"Bool"}
+        if nombre in diccionario:
+            return diccionario[nombre]
+        return nombre
 
     def copy(self): 
         return deepcopy(self)
@@ -81,63 +85,110 @@ class IO(Objeto):
 true = Booleano(True)
 false = Booleano(False)
 
-class Main (IO):
+class Bob (IO):
   def __init__(self):
-    self.a = Entero(0)
-    t = Entero(100)
+    super().__init__()
+    self.x = Entero(0)
+    t = Entero(4)
 
-    self.i = t
-  def main(self):
-    t = self.i
+    self.y = t
+class Main (Bob):
+  def __init__(self):
+    super().__init__()
+    t = Entero(23)
 
-    t = ~ t
+    self.z = t
+  def jack(self,q,z):
+    t = self.z
+
     t0 = t
-    t = Entero(0)
+    t = self.y
 
-    t = t0 < t
-    t = Booleano(t)
+    t += t0
 
-    t1 = t
-    if t == false:
-      t = Objeto()
-    while t1 == true:
-      t = Entero()
-
-      self.a = t
-      t = IO()
-
-      b = t
-      t = b
-      t = self.i
-
-      t2 = t
-      t = Entero(1)
-
-      t = t2 - t
-
-      self.i = t
-
-      t = self.i
-
-      t = ~ t
-      t0 = t
-      t = Entero(0)
-
-      t = t0 < t
-      
-      t = Booleano(t)
-      print(self.i)
-      print(t0)
-      print(t.booleano)
-      t1 = t
-      
-    t = self.i
+    z = t
+    t = self.z
 
     t1 = t
     t = self
 
     t2 = t
-    t = t2.out_int(t1)
+    t = t2.print_z(t1)
+    t = self.y
+
+    t3 = t
+    t = Entero(4)
+
+    t += t3
+
+    self.y = t
+    t = self.z
+
+    t4 = t
+    t = self.y
+
+    t += t4
+
+    y = t
+    t = self.y
+
+    return t
+  def print_z(self,z):
+    t = String1("z = ")
+
+    t5 = t
+    t = self
+
+    t6 = t
+    t = t6.out_string(t5)
+    t = self.z
+
+    t7 = t
+    t = self
+
+    t8 = t
+    t = t8.out_int(t7)
+    t = String1("\n")
+
+    t9 = t
+    t = self
+
+    t10 = t
+    t = t10.out_string(t9)
+
+    return t
+  def main(self):
+    t = self.z
+
+    t11 = t
+    t = self
+
+    t12 = t
+    t = t12.print_z(t11)
+    t = Entero(5)
+
+    t13 = t
+    t = self.z
+
+    t14 = t
+    t = Entero(2)
+
+    t += t14
+
+    t15 = t
+    t = self
+
+    t16 = t
+    t = t16.jack(t13, t15)
+
+    z = t
+    t = self.z
+
+    t17 = t
+    t = self
+
+    t18 = t
+    t = t18.print_z(t17)
 
     return t
 Main().main()
