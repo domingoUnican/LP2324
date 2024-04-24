@@ -1,10 +1,12 @@
 # coding: utf-8
 from dataclasses import dataclass, field
 from typing import List
+import re
 
 
 
 dict_global = {"padre": None}
+
 
 @dataclass
 class Nodo:
@@ -248,8 +250,10 @@ class Bloque(Expresion):
 
     def genera_codigo(self, n=0, dict_recibido=dict_global):
         codigo = ""
+        temporal = None
         for expr in self.expresiones:
             codigo += f'{expr.genera_codigo(n, dict_recibido)}\n'
+        
         return codigo
 
 
@@ -594,7 +598,7 @@ class Entero(Expresion):
     
     def genera_codigo(self, n=0, dict_recibido=dict_global):
         codigo = ""
-        codigo = f'{(n)*" "}{self.valor}'
+        codigo = f'{(n)*" "}Int({self.valor})'
         return codigo
 
 @dataclass
@@ -715,9 +719,26 @@ class Metodo(Caracteristica):
         for formal in self.formales:
             nombre_formal = formal.genera_codigo(0, dict_recibido)
             codigo +=  ', ' + nombre_formal
+            codigo += f'={formal.tipo}(None)'
             nuevo_ambito.update({nombre_formal: "None"})
         codigo += '):\n'
-        codigo += self.cuerpo.genera_codigo(n+2, nuevo_ambito)
+        #codigo += self.cuerpo.genera_codigo(n+2, nuevo_ambito)
+        #codigo += f'{(n+2)*" "}return {self.cuerpo.genera_codigo(0, nuevo_ambito)[-1]}\n'
+        #bucle que recorre el cuerpo por detras hasta encontrar un salto de linea
+        #TODO
+        lista_retorno = []
+        contador = 0
+        if self.nombre == "main":
+            codigo += self.cuerpo.genera_codigo(n+2, nuevo_ambito)
+        else:
+            for elemento in reversed(self.cuerpo.genera_codigo(0, nuevo_ambito)):
+                    if elemento == '\n':
+                        break
+                    else:
+                        lista_retorno.append(elemento)
+                        contador += 1
+            codigo += self.cuerpo.genera_codigo(n+2, nuevo_ambito)[0:-contador]
+            codigo += f'{(n+2)*" "}return ({"".join(reversed(lista_retorno))})\n'
         codigo += '\n'
         return codigo
 

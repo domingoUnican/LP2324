@@ -85,4 +85,3 @@ class Bool(Object):
 
 true = Bool(True)
 false = Bool(False)
-
