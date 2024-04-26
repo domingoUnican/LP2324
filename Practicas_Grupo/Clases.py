@@ -291,7 +291,7 @@ class Swicht(Expresion):
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
         
-    #TODO Swicht
+    #FIXME Swicht
 
     def genera_codigo(self, n=0, dict_recibido=dict_global):
         
