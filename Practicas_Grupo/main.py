@@ -8,11 +8,11 @@ sys.path.append(DIRECTORIO)
 
 from Lexer import CoolLexer
 
-PRACTICA = "01"  # Practica que hay que evaluar
+PRACTICA = "02"  # Practica que hay que evaluar
 DEBUG = True   # Decir si se lanzan mensajes de debug
 NUMLINEAS = 3   # Numero de lineas que se muestran antes y después de la no coincidencia
 sys.path.append(DIRECTORIO)
-CALIFICACION = "grading" # Para un reto mayor cambiar a "grading"
+CALIFICACION = "minimos" # Para un reto mayor cambiar a "grading"
 DIR = os.path.join(DIRECTORIO, PRACTICA, CALIFICACION)
 FICHEROS = os.listdir(DIR)
 TESTS = [fich for fich in FICHEROS
@@ -87,5 +87,7 @@ if __name__ == '__main__':
                         contador -= 1
             except Exception as e:
                 print(f"Lanza excepción en {fich} con el texto {e}")
+                '''import traceback
+                traceback.print_exc(e)'''
                 contador -= 1
     print(f'Ficheros correctos: {contador}/{len(TESTS)}')

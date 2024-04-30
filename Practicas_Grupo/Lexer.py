@@ -48,7 +48,7 @@ class CoolLexer(Lexer):
 
     literals = {
         '==', r'+', '-', '*', '/', '(', ')', '<', '.', ',', ';', ':', '@', '{', '}',
-        '~', '=',  # TODO: Study these
+        '~', '=',  
     }
 
     @staticmethod

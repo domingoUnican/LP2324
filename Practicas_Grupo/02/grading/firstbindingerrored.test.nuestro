@@ -1,0 +1,12 @@
+_program
+  _class
+    Foo
+    Object
+    "firstbindingerrored.test"
+    (
+    _method
+      bar
+      Int
+      _block
+      : _no_type
+    )

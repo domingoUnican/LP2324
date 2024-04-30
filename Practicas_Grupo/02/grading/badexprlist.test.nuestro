@@ -1,0 +1,12 @@
+_program
+  _class
+    A
+    Object
+    "badexprlist.test"
+    (
+    _method
+      f
+      Int
+      _block
+      : _no_type
+    )

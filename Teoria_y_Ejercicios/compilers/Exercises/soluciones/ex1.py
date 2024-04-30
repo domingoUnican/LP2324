@@ -1,4 +1,5 @@
 # ex1.py
+from sly import Lexer
 
 import re
 
@@ -11,23 +12,30 @@ patterns = [ID, NUMBER, SPACE]
 # Make the master regex pattern
 pat = re.compile('|'.join(patterns))
 
-def tokenize(text):
-    index = 0
-    while index < len(text):
-        try:
-            m = pat.match(text, index)
-            if m:
-                if m.lastgroup != 'SPACE':
-                    yield (m.lastgroup, m.group())
-                index = m.end()
-            else:
-                raise SyntaxError('Bad char %r' % text[index])
-        except SyntaxError as e:
-            print(f"Bad character '{text[index]}'")
-            index += 1  # Move to the next character
+class Ejercicio1(Lexer):
+    tokens = {IGUAL,RESERVADO}
+
+    ignore = ' \t'
+    #usamos estos cuando no hacemos nada con el tokery 
+    # y los nombres declarados asi van en la lista tokens
+    IGUAL = r'='
+    
+    RESERVADO = r'IF|INT'
+    
+    #@_ (r'IF|INT')
+    #def RESERVADA(self, t):
+     #   return t
+    @_('\n')
+    def ignore_newline(self, t):
+        self.lineno += 1
+    
+    def error(self, t):
+        print('Bad character %r' % t.value[0])
+        self.index += 1
+
 
 # Sample usage
-text = 'abc 123 $ cde 456'
-
-for tok in tokenize(text):
+text = 'abc INT \n = IF'
+resultado = Ejercicio1()
+for tok in resultado.tokenize(text):
     print(tok)
