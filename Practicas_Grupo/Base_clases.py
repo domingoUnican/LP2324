@@ -37,7 +37,7 @@ class Entero(Objeto,int):
         return Entero(self.numero * s.numero)
     
     def __truediv__(self, s):
-        return Entero(self.numero / s.numero)
+        return Entero(self.numero // s.numero)
     
 class String1(Objeto,str):
     def __init__(self, cadena=""):
@@ -85,110 +85,205 @@ class IO(Objeto):
 true = Booleano(True)
 false = Booleano(False)
 
-class Bob (IO):
+class Main (IO):
   def __init__(self):
     super().__init__()
-    self.x = Entero(0)
-    t = Entero(4)
-
-    self.y = t
-class Main (Bob):
-  def __init__(self):
-    super().__init__()
-    t = Entero(23)
-
-    self.z = t
-  def jack(self,q,z):
-    t = self.z
+    t = String1("2 is trivially prime.\n")
 
     t0 = t
-    t = self.y
-
-    t += t0
-
-    z = t
-    t = self.z
+    t = self
 
     t1 = t
-    t = self
-
-    t2 = t
-    t = t2.print_z(t1)
-    t = self.y
-
-    t3 = t
-    t = Entero(4)
-
-    t += t3
-
-    self.y = t
-    t = self.z
-
-    t4 = t
-    t = self.y
-
-    t += t4
-
-    y = t
-    t = self.y
-
-    return t
-  def print_z(self,z):
-    t = String1("z = ")
-
-    t5 = t
-    t = self
-
-    t6 = t
-    t = t6.out_string(t5)
-    t = self.z
-
-    t7 = t
-    t = self
-
-    t8 = t
-    t = t8.out_int(t7)
-    t = String1("\n")
-
-    t9 = t
-    t = self
-
-    t10 = t
-    t = t10.out_string(t9)
-
-    return t
-  def main(self):
-    t = self.z
-
-    t11 = t
-    t = self
-
-    t12 = t
-    t = t12.print_z(t11)
-    t = Entero(5)
-
-    t13 = t
-    t = self.z
-
-    t14 = t
+    t = t1.out_string(t0)
     t = Entero(2)
 
-    t += t14
+    self.out = t
+    t = self.out
 
-    t15 = t
-    t = self
+    self.testee = t
+    self.divisor = Entero(0)
+    t = Entero(500)
 
-    t16 = t
-    t = t16.jack(t13, t15)
+    self.stop = t
+    t = Booleano(True)
 
-    z = t
-    t = self.z
+    t2 = t
+    if t == false:
+      t = Objeto()
+    while t2 == true:
+      t = self.testee
 
-    t17 = t
-    t = self
+      t3 = t
+      t = Entero(1)
 
-    t18 = t
-    t = t18.print_z(t17)
+      t += t3
+
+      self.testee = t
+      t = Entero(2)
+
+      self.divisor = t
+      t = self.testee
+      t4 = t
+      t = self.divisor
+
+      t5 = t
+      t = self.divisor
+
+      t *= t5
+
+      t = t4 < t
+      t = Booleano(t)
+
+      if t == true:
+          t = Booleano(False)
+
+      else:
+          t = self.testee
+
+          t6 = t
+          t = self.divisor
+
+          t7 = t
+          t = self.testee
+
+          t8 = t
+          t = self.divisor
+
+          t = t8 / t
+          t *= t7
+
+          t = t6 - t
+          t9 = t
+          t = Entero(0)
+
+          t = t9 == t
+          t = Booleano(t)
+
+          if t == true:
+              t = Booleano(False)
+
+          else:
+              t = Booleano(True)
+
+
+
+      t10 = t
+      if t == false:
+        t = Objeto()
+      while t10 == true:
+        t = self.divisor
+
+        t11 = t
+        t = Entero(1)
+
+        t += t11
+
+        self.divisor = t
+
+        t = self.testee
+        t10 = t
+        t = self.divisor
+
+        t11 = t
+        t = self.divisor
+
+        t *= t11
+
+        t = t10 < t
+        t = Booleano(t)
+
+        if t == true:
+            t = Booleano(False)
+
+        else:
+            t = self.testee
+
+            t12 = t
+            t = self.divisor
+
+            t13 = t
+            t = self.testee
+
+            t14 = t
+            t = self.divisor
+
+            t = t14 / t
+            t *= t13
+
+            t = t12 - t
+            t15 = t
+            t = Entero(0)
+
+            t = t15 == t
+            t = Booleano(t)
+
+            if t == true:
+                t = Booleano(False)
+
+            else:
+                t = Booleano(True)
+
+
+
+        t10 = t
+      t = self.testee
+      t9 = t
+      t = self.divisor
+
+      t10 = t
+      t = self.divisor
+
+      t *= t10
+
+      t = t9 < t
+      t = Booleano(t)
+
+      if t == true:
+          t = self.testee
+
+          self.out = t
+          t = self.out
+
+          t11 = t
+          t = self
+
+          t12 = t
+          t = t12.out_int(t11)
+          t = String1(" is prime.\n")
+
+          t13 = t
+          t = self
+
+          t14 = t
+          t = t14.out_string(t13)
+
+      else:
+          t = Entero(0)
+
+      t = self.stop
+      t15 = t
+      t = self.testee
+
+      t = t15 <= t
+      t = Booleano(t)
+
+      if t == true:
+          t = String1("halt")
+
+          t16 = t
+          t = t16.abort()
+
+      else:
+          t = String1("continue")
+
+
+      t = Booleano(True)
+
+      t2 = t
+
+    self.m = t
+  def main(self):
+    t = Entero(0)
 
     return t
 Main().main()

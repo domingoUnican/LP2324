@@ -64,7 +64,10 @@ class Asignacion(Expresion):
         codigo = ""
         codigo += f"{self.cuerpo.genera_codigo(n)}\n"
         print(Clase.atributos)
-        if self.nombre in Clase.atributos:
+        print(Metodo.conjunto_formales)
+        if self.nombre in Metodo.conjunto_formales:
+            codigo += f"{' '*n}{self.nombre} = t\n"
+        elif self.nombre in Clase.atributos:
             codigo += f"{' '*n}self.{self.nombre} = t\n"
         else:
             codigo += f"{' '*n}{self.nombre} = t\n"
@@ -193,6 +196,7 @@ class Bucle(Expresion):
     def genera_codigo(self, n):
         global contador
         codigo = ''
+        
         codigo += f"{self.condicion.genera_codigo(n)}\n"
         codigo += f"{' '*n}t{contador} = t\n"
         numero = contador
@@ -205,8 +209,11 @@ class Bucle(Expresion):
             contador = numero
         else:
             contador = numero - 1
+        contador1 = contador
+        contador = numero
         codigo += f"{self.condicion.genera_codigo(n+2)}\n"
-        codigo += f"{' '*(n+2)}t{contador} = t\n"
+        codigo += f"{' '*(n+2)}t{numero} = t\n"
+        contador = contador1
         return codigo
 
 
@@ -568,7 +575,9 @@ class Objeto(Expresion):
 
     def genera_codigo(self, n):
         codigo = f"{' '*n}t = {self.nombre}\n"
-        if self.nombre in Clase.atributos:
+        if self.nombre in Metodo.conjunto_formales:
+            codigo = f"{' '*n}t = {self.nombre}\n"
+        elif self.nombre in Clase.atributos:
             codigo = f"{' '*n}t = self.{self.nombre}\n"
         elif self.nombre == 'self':
             codigo = f"{' '*n}t = self\n"
@@ -739,11 +748,12 @@ class Metodo(Caracteristica):
         resultado += self.cuerpo.str(n+2)
 
         return resultado
-
+    conjunto_formales = set()
     def genera_codigo(self, n):
         codigo = ""
         codigo += f"{' '*n}def {self.nombre}(self"
         for formal in self.formales:
+            self.conjunto_formales.add(formal.nombre_variable)
             codigo +="," + formal.nombre_variable
         codigo += "):\n"
         
