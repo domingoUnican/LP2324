@@ -1,10 +1,9 @@
-#name "null_in_string_unescaped_newline.cl.cool"
-#2 OBJECTID null
-#2 OBJECTID character
-#2 OBJECTID is
-#2 OBJECTID here
-#2 '-' 
-#2 '>' 
-#2 ASSIGN
-#3 OBJECTID a
-#3 '+'
+#name
+"null_in_string_unescaped_newline.cl.cool"
+ERROR
+Unterminated
+string
+constant
+OBJECTID
+a
+'+'

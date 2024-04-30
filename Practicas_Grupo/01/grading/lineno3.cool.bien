@@ -1,5 +1,9 @@
-#name "lineno3.cool"
-#7 '+'
-#8 OBJECTID abc
-#12 TYPEID DEF
-#13 STR_CONST "string"
+#name
+"lineno3.cool"
+'+'
+OBJECTID
+abc
+TYPEID
+DEF
+STR_CONST
+"string"
