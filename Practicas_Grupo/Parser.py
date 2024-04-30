@@ -138,7 +138,7 @@ class CoolParser(Parser):
     @_("IGNORE")
     def Expresion(self, p):
         pass
-
+        
     # ⟨Expresion⟩ + ⟨Expresion⟩
     @_("Expresion '+' Expresion")
     def Expresion(self, p):

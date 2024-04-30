@@ -75,8 +75,9 @@ class LlamadaMetodoEstatico(Expresion):
         return resultado
 
     def genera_codigo(self, n):
-        codigo = ""     
-        codigo += f"{' '*n}temp = self.{self.nombre_metodo}("
+        codigo = f"{self.cuerpo.genera_codigo(n)}\n"
+        codigo += f"{' '*n}temp.__class__ = {self.clase}\n"    
+        codigo += f"{' '*n}temp.{self.nombre_metodo}("
         for formal in self.argumentos[:-1]:
             codigo += formal.genera_codigo(0) + ","
         if self.argumentos:
@@ -112,7 +113,7 @@ class LlamadaMetodo(Expresion):
         if self.argumentos:
             codigo += self.argumentos[-1].genera_codigo(n) + "\n"
             codigo += f"{' '*n}lst{self.nombre_metodo}.append(temp)\n"
-        codigo+=f"{self.cuerpo.genera_codigo(n)}.{self.nombre_metodo}(*lst{self.nombre_metodo})"
+        codigo+=f"{self.cuerpo.genera_codigo(n)}.{self.nombre_metodo}(*lst{self.nombre_metodo})\n"
         """for formal in self.argumentos[:-1]:
             codigo += formal.genera_codigo(0) + ","
         if self.argumentos:
@@ -158,6 +159,12 @@ class Bucle(Expresion):
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
 
+    def genera_codigo(self, n):
+        codigo =f"{self.condicion.genera_codigo(n)}"
+        codigo =f"{' '*n}while temp:\n"
+        codigo+=self.cuerpo.genera_codigo(n+2)
+        return codigo
+
 
 @dataclass
 class Let(Expresion):
@@ -184,6 +191,7 @@ class Let(Expresion):
             self.inicializacion = Entero()
         elif (self.tipo == 'String' and isinstance(self.inicializacion, NoExpr)):
             self.inicializacion = String1(valor="")
+
         codigo += self.inicializacion.genera_codigo(0) + "\n"
         codigo += f"{' '*n}{self.nombre} = temp\n"
         codigo += self.cuerpo.genera_codigo(n)
@@ -553,7 +561,7 @@ class Programa(IterableNodo):
         codigo =""
         for clase in self.secuencia:
             codigo += clase.genera_codigo(n)
-            codigo+= f"{' '*n}Main().main()\n"
+        codigo+= f"{' '*n}Main().main()\n"
             #codigo += clase.genera_codigo(n)
 
         return codigo
@@ -595,12 +603,17 @@ class Clase(Nodo):
             codigo = f"{' '*n}class {self.nombre}({self.padre}):\n"""
             codigo += f""
         codigo += f"{' '*(n+2)}def __init__(self):\n"
+        counter = 0
         for caracteristica in self.caracteristicas:
             if isinstance(caracteristica, Atributo):
                 codigo += caracteristica.genera_codigo(n+4)
+                counter += 1
+        if counter == 0:
+            codigo += f"{' '*(n+4)}pass\n"
         for caracteristica in self.caracteristicas:
             if not isinstance(caracteristica, Atributo):
                 codigo += caracteristica.genera_codigo(n+2)
+        
         
         return codigo
     #-------------------
@@ -649,6 +662,15 @@ class Atributo(Caracteristica):
         global lista
         lista.append(self.nombre)
         codigo = f"{self.cuerpo.genera_codigo(n)}\n"
-        codigo += f"{' '*n}self.{self.nombre}={self.tipo}()\n"
+        if (self.tipo == 'Booleano' and isinstance(self.inicializacion, NoExpr)):
+            codigo += f"{' '*n}self.{self.nombre}={self.tipo}()\n"
+        elif (self.tipo == 'Entero' and isinstance(self.inicializacion, NoExpr)):
+            codigo += f"{' '*n}self.{self.nombre}={self.tipo}()\n"
+        elif (self.tipo == 'String' and isinstance(self.inicializacion, NoExpr)):
+            codigo += f"{' '*n}self.{self.nombre}={self.tipo}()\n"
+        else:
+            codigo += f"{' '*n}self.{self.nombre}=None\n"
+        #aqui pendejo
+        #codigo += f"{' '*n}self.{self.nombre}={self.tipo}()\n"
         return codigo
         #return f"{' '*n}{self.nombre}={self.tipo}({self.cuerpo.genera_codigo(n)})\n"

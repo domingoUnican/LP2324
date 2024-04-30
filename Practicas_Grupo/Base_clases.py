@@ -71,17 +71,4 @@ class Bool(Object):
             return True
         else:
             return False
-class Main(Object):
-  def __init__(self):
 
-    self.x=Main()
-  def main(self):
-    temp = self.x
-    variable = temp
-    if isinstance(variable, Main):
-      temp=0
-      m=temp
-      return m
-
-    return temp
-Main().main()
