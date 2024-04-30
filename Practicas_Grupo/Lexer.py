@@ -169,62 +169,6 @@ class CoolLexer(Lexer):
         return r'\b' + ''.join(f'[{l.upper()}{l.lower()}]' for l in kw) + r'\b'
 
     # Ejemplo
-    IF = __kw('if')
-    FI = __kw('fi')
-    THEN = __kw('then')
-    ELSE = __kw('else')
-    CASE = __kw('case')
-    ESAC = __kw('esac')
-    LOOP = __kw('loop')
-    WHILE = __kw('while')
-    POOL = __kw('pool')
-    NOT = __kw('not')
-    IN = __kw('in')
-    ISVOID = __kw('isvoid')
-    CLASS = __kw('class')
-    INHERITS = __kw('inherits')
-    LET = __kw('let')
-    NEW = __kw('new')
-    OF = __kw('of')
-
-    # language=PythonRegExp
-    @_(r'--(?=(?P<lc_atom>.*))(?P=lc_atom)')
-    def LINE_COMMENT(self, t):
-        pass
-
-    # language=PythonRegExp
-    @_(r'\(\*')
-    def BLOCK_COMMENT_START(self, t):
-        self.push_state(CoolLexer.BlockComment)
-
-    class BlockComment(Lexer):
-        tokens = {}
-
-        # @_(r'(?:[^(*\n-]|-(?!-)|\((?!\*)|\*(?!\)))+')
-        # language=PythonRegExp
-        @_(r'(?:[^(*\n]|\((?!\*)|\*(?!\)))+')
-        def COMMENT_PART(self, t):
-            pass
-
-        # # language=PythonRegExp
-        # @_(r'[\s\S]$')
-        # def error_EOF_IN_COMMENT(self, t):
-        #     print("!!!! EOF in comment found")
-        #     sys.stdout.flush()
-        #     if t == '\n':
-        #         self.lineno += 1
-        #         t.lineno += 1
-        #     t.type = "ERROR"
-        #     t.value = "EOF in comment"
-        #     return t
-
-        # @_(r'--.*')
-        # def LINE_COMMENT(self, t):
-        #     pass
-
-        @_(r'\(\*')
-        def BLOCK_COMMENT_START(self, t):
-            self.push_state(CoolLexer.BlockComment)
 
         @_(r'\*\)')
         def BLOCK_COMMENT_END(self, t):
