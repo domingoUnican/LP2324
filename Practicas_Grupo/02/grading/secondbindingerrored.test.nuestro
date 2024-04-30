@@ -1,0 +1,12 @@
+_program
+  _class
+    Foo
+    Object
+    "secondbindingerrored.test"
+    (
+    _method
+      bar
+      Int
+      _block
+      : _no_type
+    )

@@ -1,0 +1,23 @@
+_program
+  _class
+    A
+    Object
+    "emptyassign.test"
+    (
+    _attr
+      x
+      Int
+      _no_expr
+      : _no_type
+    _method
+      f
+      _formal
+        x
+        Int
+      Object
+      _block
+        _int
+          5
+        : _no_type
+      : _no_type
+    )

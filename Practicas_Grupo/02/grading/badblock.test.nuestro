@@ -1,0 +1,12 @@
+_program
+  _class
+    A
+    Object
+    "badblock.test"
+    (
+    _method
+      f
+      Object
+      _block
+      : _no_type
+    )
