@@ -10,23 +10,19 @@ sys.path.append(DIRECTORIO)
 
 from Lexer import CoolLexer
 
-PRACTICA = "02"  # Practica que hay que evaluar
+PRACTICA = "04"  # Practica que hay que evaluar
 DEBUG = True   # Decir si se lanzan mensajes de debug
 NUMLINEAS = 3   # Numero de lineas que se muestran antes y después de la no coincidencia
 sys.path.append(DIRECTORIO)
-CALIFICACION = "grading" # Para un reto mayor cambiar a "grading"
+CALIFICACION = "minimos" # Para un reto mayor cambiar a "grading"
 DIR = os.path.join(DIRECTORIO, PRACTICA, CALIFICACION)
 FICHEROS = os.listdir(DIR)
 TESTS = [fich for fich in FICHEROS
          if os.path.isfile(os.path.join(DIR, fich)) and
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$", fich)]
 TESTS.sort()
-
-TESTS = {"newbasic.cl"}
-#TESTS = {"nested-arith.cl"}
-
-#TESTS = {"casenoexpr.test"}
-
+#TESTS = {"primes.cl"}
+TESTS = {"init-default.cl"}
 
 
 if True:

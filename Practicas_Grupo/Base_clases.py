@@ -1,4 +1,5 @@
 from copy import deepcopy
+from collections import defaultdict
 
 class Object:
     def abort(self):
@@ -8,7 +9,12 @@ class Object:
         return deepcopy(self)
 
     def type_name(self):
-        return Cadena_carac(type(self).__qualname__)
+        d = {"<class 'Base_clases.Booleano'>" : "Bool", "<class 'Base_clases.Cadena_carac'>" : "String", 
+                "<class 'Base_clases.Entero'>" : "Int"}
+        if str(type(self))in d:
+            return Cadena_carac(d[str(type(self))])
+        else:
+            return Cadena_carac(type(self).__qualname__)
 
 class Entero(Object):
     def __init__(self, numero):
@@ -25,7 +31,7 @@ class Entero(Object):
         return Entero(self.numero * s.numero)
     
     def __div__(self, s):
-        return Entero(self.numero / s.numero)
+        return Entero(self.numero // s.numero)
 
     def __eq__(self, value: object) -> bool:
         return self.numero == value.numero
@@ -48,7 +54,7 @@ class Cadena_carac(Object):
         return Cadena_carac(self.cadena + s.cadena)
 
     def substr(self, i, l):
-        return Cadena_carac(self.cadena[i:l + i])
+        return Cadena_carac(self.cadena[i.numero:l.numero + i.numero])
     
     def __eq__(self, value: object) -> bool:
         return self.cadena == value
@@ -85,3 +91,4 @@ class IO(Object):
 
 def NOT(x):
     return Booleano(not x.booleano)
+
