@@ -77,8 +77,8 @@ Unused terminals:
 
     ERROR
     NUMBER
-    COMMENT_1LINEA
     COMMENT_BLOQUE
+    COMMENT_1LINEA
 
 Terminals, with rules where they appear:
 
