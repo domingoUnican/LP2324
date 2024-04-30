@@ -574,13 +574,15 @@ class Objeto(Expresion):
         return resultado
 
     def genera_codigo(self, n):
-        codigo = f"{' '*n}t = {self.nombre}\n"
+        codigo = ''
         if self.nombre in Metodo.conjunto_formales:
             codigo = f"{' '*n}t = {self.nombre}\n"
         elif self.nombre in Clase.atributos:
             codigo = f"{' '*n}t = self.{self.nombre}\n"
         elif self.nombre == 'self':
             codigo = f"{' '*n}t = self\n"
+        else:
+            codigo = f"{' '*n}t = {self.nombre}\n"
         return codigo
 
 
@@ -731,6 +733,7 @@ class Clase(Nodo):
                     codigo += c.genera_codigo(n+4)
 
         for c in self.caracteristicas:
+            Metodo.conjunto_formales = set()
             if not isinstance(c, Atributo):
                 codigo += c.genera_codigo(n+2)
         return codigo
@@ -753,11 +756,12 @@ class Metodo(Caracteristica):
         codigo = ""
         codigo += f"{' '*n}def {self.nombre}(self"
         for formal in self.formales:
-            self.conjunto_formales.add(formal.nombre_variable)
+            Metodo.conjunto_formales.add(formal.nombre_variable)
             codigo +="," + formal.nombre_variable
         codigo += "):\n"
         
         codigo += f"{self.cuerpo.genera_codigo(n+2)}\n"
+        Metodo.conjunto_formales = set()
         codigo += f"{' '*(n+2)}return t\n"
         return codigo
 
