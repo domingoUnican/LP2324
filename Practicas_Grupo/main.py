@@ -14,7 +14,7 @@ PRACTICA = "04"  # Practica que hay que evaluar
 DEBUG = True   # Decir si se lanzan mensajes de debug
 NUMLINEAS = 3   # Numero de lineas que se muestran antes y después de la no coincidencia
 sys.path.append(DIRECTORIO)
-CALIFICACION = "minimos" # Para un reto mayor cambiar a "grading"
+CALIFICACION = "grading" # Para un reto mayor cambiar a "grading"
 DIR = os.path.join(DIRECTORIO, PRACTICA, CALIFICACION)
 FICHEROS = os.listdir(DIR)
 TESTS = [fich for fich in FICHEROS
@@ -22,7 +22,8 @@ TESTS = [fich for fich in FICHEROS
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$", fich)]
 TESTS.sort()
 #TESTS = {"primes.cl"}
-TESTS = {"init-default.cl"}
+
+#TESTS = {"hairyscary.cl"}
 
 
 if True:

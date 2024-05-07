@@ -128,7 +128,7 @@ class CoolParser(Parser):
     def Expresion(self, p):
         return Menor(izquierda=p[0], derecha=p[2])
 
-    @_("Expresion DARROW Expresion")
+    @_("Expresion LE Expresion")
     def Expresion(self, p):
         return LeIgual(izquierda=p[0], derecha=p[2])
 
