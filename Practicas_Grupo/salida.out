@@ -76,8 +76,8 @@ Rule 71    bloque -> expr ;
 Unused terminals:
 
     ERROR
-    COMMENT_1LINEA
     NUMBER
+    COMMENT_1LINEA
     COMMENT_BLOQUE
 
 Terminals, with rules where they appear:

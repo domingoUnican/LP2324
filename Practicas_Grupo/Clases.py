@@ -105,6 +105,8 @@ class LlamadaMetodoEstatico(Expresion):
             codigo += f"{' '*n}t{contador} = t\n"
             pila.append(f"t{contador}")
             contador += 1
+        
+        codigo += f"{self.cuerpo.genera_codigo(n)}\n"
 
         #Generamos codigo para la llamada al metodo de forma estatica
         argumentos_codigo = ', '.join(pila)
@@ -252,6 +254,8 @@ class Let(Expresion):
                 codigo += f"{' '*n}{self.nombre} = String1()\n"
             elif self.tipo == 'Bool':
                 codigo += f"{' '*n}{self.nombre} = Booleano()\n"
+            else:
+                codigo += f"{' '*n}{self.nombre} = {self.tipo}()\n"
             codigo += f"{' '*n}t = auxiliar({self.nombre})\n"
         else:
             codigo += f"{self.inicializacion.genera_codigo(n)}\n"
@@ -297,7 +301,17 @@ class RamaCase(Nodo):
 
     def genera_codigo(self, n):
         codigo = ''
-        codigo += f"{' '*n}if isinstance(t, {self.tipo}):\n"
+
+        if self.tipo == 'Int':
+            codigo += f"{' '*n}if isinstance(t, Entero):\n"
+        elif self.tipo == 'String':
+            codigo += f"{' '*n}if isinstance(t, String1):\n"
+        elif self.tipo == 'Bool':
+            codigo += f"{' '*n}if isinstance(t, Booleano):\n"
+        elif self.tipo == 'Object':
+            codigo += f"{' '*n}if isinstance(t, Objeto):\n"
+        else:
+            codigo += f"{' '*n}if isinstance(t, {self.tipo}):\n"
         codigo += f"{self.cuerpo.genera_codigo(n+2)}\n"
         codigo += f"{' '*(n+2)}return t\n"
         return codigo
@@ -440,7 +454,7 @@ class Division(OperacionBinaria):
         numero = contador
         contador += 1
         codigo += f"{self.derecha.genera_codigo(n)}\n"
-        codigo += f"{' '*n}t = t{numero} / t"
+        codigo += f"{' '*n}t = t{numero} / t\n"
         return codigo
 
 
@@ -534,6 +548,7 @@ class Neg(Expresion):
         codigo = ''
         codigo += f"{self.expr.genera_codigo(n)}\n"
         codigo += f"{' '*n}t = {self.operador} t\n"
+        codigo += f"{' '*n}t = Entero(t)\n"
         return codigo
 
 @dataclass
@@ -741,6 +756,8 @@ class Clase(Nodo):
             for c in self.caracteristicas:
                 if isinstance(c, Atributo):
                     codigo += c.genera_codigo(n+4)
+        if len(self.caracteristicas) == 0:
+            codigo += f"{' '*(n+2)}pass\n"
 
         for c in self.caracteristicas:
             Metodo.conjunto_formales = set()
