@@ -40,8 +40,8 @@ class Int(Object):
 
     def __sub__(self, s):
         if (isinstance(s, Int)):
-            #return Int(self.numero - s.numero)
-            return Int(0)
+            return Int(self.numero - s.numero)
+            # return Int(0)
         else:
             return Int(self.numero - s)
             
