@@ -1,7 +1,11 @@
 # coding: utf-8
 from dataclasses import dataclass, field
 from typing import List
-import pdb
+import re
+
+
+
+dict_global = {"padre": None}
 
 
 @dataclass
@@ -10,6 +14,11 @@ class Nodo:
 
     def str(self, n):
         return f'{n*" "}#{self.linea}\n'
+    
+    #FIXME Nodo
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
+        return ""
+    
 
 
 @dataclass
@@ -22,10 +31,10 @@ class Formal(Nodo):
         resultado += f'{(n+2)*" "}{self.nombre_variable}\n'
         resultado += f'{(n+2)*" "}{self.tipo}\n'
         return resultado
+    
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
+        return f'{self.nombre_variable}'
 
-    def Tipo(self,ambito):
-        if self.nombre_variable == 'self':
-            raise Exception("{}: '{}' cannot be the name of a formal parameter.\nCompilation halted due to static semantic errors.".format(self.linea,self.nombre_variable))
 
 
 class Expresion(Nodo):
@@ -45,12 +54,30 @@ class Asignacion(Expresion):
         resultado += self.cuerpo.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
+        global dict_global
+        codigo = ""
+        # Recibir el diccionario local y ver si esta ahi, si no, mirar al "padre"
+        nombre_variable = self.nombre
+        diccionario = dict_recibido
+        
+        while(diccionario["padre"] is not None):
+            if self.nombre in diccionario.keys():
+                break
+            else:
+                diccionario = diccionario["padre"]
+        
+        if diccionario["padre"] is not None:
+            nombre_usado = nombre_variable
+        else:
+            nombre_usado = "self." + nombre_variable
 
-    def Tipo(self,ambito):
-        self.cuerpo.Tipo(ambito)
-        self.cast = self.cuerpo.cast
-        if self.nombre == 'self':
-            raise Exception("{}: Cannot assign to '{}'.\nCompilation halted due to static semantic errors.".format(self.linea,self.nombre))
+        codigo += self.cuerpo.genera_codigo(n, dict_recibido)
+        codigo += f'{(n)*" "}{nombre_usado} = temp'
+        #FIXME
+        return codigo
+
 
 
 @dataclass
@@ -71,13 +98,35 @@ class LlamadaMetodoEstatico(Expresion):
         resultado += f'{(n+2)*" "})\n'
         resultado += f'{(n)*" "}: _no_type\n'
         return resultado
+    
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
+        codigo = ""
+        variable = self.cuerpo.genera_codigo(0, dict_recibido)
+        codigo += f'{" "*n}temp_class = {variable}\n'
+        codigo += f'{" "*n}temp_class.__class__ = {self.clase}\n'
+        # codigo += f'{" "*n}temp_class.{self.nombre_metodo}('
+        # if len(self.argumentos) > 0:
+        #     for arg in self.argumentos[:-1]:
+        #         codigo += f'{arg.genera_codigo(0, dict_recibido)}, '
+        #     codigo += f'{self.argumentos[-1].genera_codigo(0, dict_recibido)}'
+        # codigo += f')'
+        argumentos = ""
+        if len(self.argumentos) > 0:
+            for i in range(len(self.argumentos)-1):
+                codigo += self.argumentos[i].genera_codigo(n, dict_recibido) + '\n'
+                codigo += f'arg{i} = temp\n'
+                argumentos += f'arg{i}, '
+            codigo += self.argumentos[len(self.argumentos)-1].genera_codigo(n, dict_recibido) + '\n'
+            codigo += f'{" "*n}arg{len(self.argumentos)-1} = temp\n'
+            argumentos += f'arg{len(self.argumentos)-1}'
 
-    def Tipo(self,ambito):
-        self.cuerpo.Tipo(ambito)
-        argumentos = ambito.devuelve_tipo_metodo(self.nombre_metodo, self.clase)
-        for arg, arg1 in zip(argumentos,self.argumentos):
-            arg1.Tipo(ambito)
-        self.cast = argumentos[-1]
+        codigo += f'{" "*n}temp_class.{self.nombre_metodo}({argumentos})'
+
+
+        return codigo
+    
+    
+
 
 
 @dataclass
@@ -96,15 +145,30 @@ class LlamadaMetodo(Expresion):
         resultado += f'{(n+2)*" "})\n'
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
 
-    def Tipo(self,ambito):
-        self.cuerpo.Tipo(ambito) ################################################################################################################################# NEG 2
-        argumentos = ambito.devuelve_tipo_metodo(self.nombre_metodo, self.cuerpo.cast)
-        for arg in self.argumentos:
-            arg.Tipo(ambito)
-        for arg, arg1 in zip(argumentos,self.argumentos):
-            arg1.Tipo(ambito)
-        self.cast = argumentos[-1]
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
+        codigo = ""
+        # codigo = f'{self.cuerpo.genera_codigo(n, dict_recibido)}.{self.nombre_metodo}('
+        # if len(self.argumentos) > 0:
+        #     for arg in self.argumentos[:-1]:
+        #         codigo += f'{arg.genera_codigo(0, dict_recibido)}, '
+        #     codigo += f'{self.argumentos[-1].genera_codigo(0, dict_recibido)}'
+        # codigo += f')'
+        argumentos = ""
+        if len(self.argumentos) > 0:
+            for i in range(len(self.argumentos)-1):
+                codigo += self.argumentos[i].genera_codigo(n, dict_recibido) + '\n'
+                codigo += f'arg{i} = temp\n'
+                argumentos += f'arg{i}, '
+            codigo += self.argumentos[len(self.argumentos)-1].genera_codigo(n, dict_recibido) + '\n'
+            codigo += f'{" "*n}arg{len(self.argumentos)-1} = temp\n'
+            argumentos += f'arg{len(self.argumentos)-1}'
+
+        codigo += f'{self.cuerpo.genera_codigo(n, dict_recibido)}.{self.nombre_metodo}({argumentos})'
+
+        return codigo
+
 
 @dataclass
 class Condicional(Expresion):
@@ -120,20 +184,24 @@ class Condicional(Expresion):
         resultado += self.falso.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
+        codigo=""
+        codigo += self.condicion.genera_codigo(n, dict_recibido)
+        codigo += '\n'
+        codigo += f'{(n)*" "}condicion = temp\n'
+        codigo += f'{(n)*" "}if (condicion == True):\n'
+        codigo += f'{self.verdadero.genera_codigo(n+2, dict_recibido)}\n'
+        codigo += f'{(n)*" "}else:\n'
+        codigo += f'{self.falso.genera_codigo(n+2, dict_recibido)}\n'
+        return codigo
 
-    def Tipo(self,ambito):
-        self.verdadero.Tipo(ambito)
-        self.falso.Tipo(ambito)
-        if self.condicion:
-            self.cast = self.verdadero.cast
-        else:
-            self.cast = self.falso.cast
 
 
 @dataclass
 class Bucle(Expresion):
     condicion: Expresion = None
-    cuerpo: Expresion = None  # Esto no debería ser un bloque ¿?
+    cuerpo: Expresion = None
 
     def str(self, n):
         resultado = super().str(n)
@@ -142,10 +210,16 @@ class Bucle(Expresion):
         resultado += self.cuerpo.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
+        codigo = ""
+        codigo += self.condicion.genera_codigo(n, dict_recibido)
+        codigo += '\n'
+        codigo += f'{" "*n}condicion = temp\n'
+        codigo += f'{(n)*" "}while (condicion == true):\n'
+        codigo += f'{self.cuerpo.genera_codigo(n+2, dict_recibido)}\n'
+        return codigo
 
-    def Tipo(self,ambito):
-        self.cuerpo.Tipo(ambito) 
-        self.cast = self.cuerpo.cast
 
 @dataclass
 class Let(Expresion):
@@ -163,11 +237,34 @@ class Let(Expresion):
         resultado += self.cuerpo.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
+    #     #similar to lambda expression
+        variable = self.nombre
+        dict_actual = {"padre": dict_recibido}
+        dict_actual.update({self.nombre: None})
+        codigo = ""
+        # codigo += f'{n*" "}let {variable} : '
+        # codigo += f'{self.tipo}'
+        # codigo += f'({self.inicializacion.genera_codigo(0, dict_recibido)})'
+        # codigo += f' in {self.cuerpo.genera_codigo(0, dict_actual)}\n'
 
-    def Tipo(self,ambito):
-        self.cuerpo.Tipo(ambito)
-        self.inicializacion.Tipo(ambito)
-        self.cast = self.cuerpo.cast
+        # codigo += f'{n*" "}temp = lambda {variable} : {self.cuerpo.genera_codigo(0, dict_recibido)}\n'
+        # codigo += f'{n*" "}temp({self.tipo}({self.inicializacion.genera_codigo(0, dict_recibido)}))\n'
+        codigo += self.inicializacion.genera_codigo(n, dict_actual)
+        codigo += '\n'
+        codigo += f'{(n)*" "}def temp_func({self.nombre}):\n'
+        # codigo += f'{(n+2)*" "}{self.inicializacion.genera_codigo(0)}\n'
+        codigo += f'{self.cuerpo.genera_codigo(n+2, dict_actual)}\n'
+        codigo += f'{(n)*" "}variable = {self.tipo}(temp)\n'
+        codigo += f'{(n)*" "}temp_func(variable)\n'
+        return codigo
+    
+        # codigo = ""
+        # codigo += f'{(n)*" "}{self.nombre} = {self.inicializacion.genera_codigo(0)}\n'
+        # codigo += f'{self.cuerpo.genera_codigo(n)}'
+        # return codigo
+    #FIXME Let
 
 
 @dataclass
@@ -181,11 +278,15 @@ class Bloque(Expresion):
         resultado += f'{(n)*" "}: {self.cast}\n'
         resultado += '\n'
         return resultado
+    #FIXME Bloque
 
-    def Tipo(self,ambito):
-        for i in self.expresiones:
-            i.Tipo(ambito)
-        self.cast = self.expresiones[-1].cast
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
+        codigo = ""
+        temporal = None
+        for expr in self.expresiones:
+            codigo += f'{expr.genera_codigo(n, dict_recibido)}\n'
+        
+        return codigo
 
 
 @dataclass
@@ -202,12 +303,22 @@ class RamaCase(Nodo):
         resultado += f'{(n+2)*" "}{self.tipo}\n'
         resultado += self.cuerpo.str(n+2)
         return resultado
-
-    def Tipo(self,ambito):
-        ambito.tipo_variable(self.nombre_variable,self.tipo)
-        self.cuerpo.Tipo(ambito)
-        self.cast = self.cuerpo.cast
-
+    #FIXME RamaCase
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
+        codigo = ""
+        codigo = f'{(n)*" "}case {self.tipo}:\n'
+        codigo += f'{self.cuerpo.genera_codigo(n+2, dict_recibido)}'
+        # lista_retorno = []
+        # contador = 0
+        # for elemento in reversed(self.cuerpo.genera_codigo(n, dict_recibido)):
+        #         if elemento == '\n':
+        #             break
+        #         else:
+        #             lista_retorno.append(elemento)
+        #             contador += 1
+        # codigo += f'{self.cuerpo.genera_codigo(n+2, dict_recibido)[0:-contador]}'
+        # codigo += f'{(n+2)*" "}return ({"".join(reversed(lista_retorno))})\n'
+        return codigo
 
 @dataclass
 class Swicht(Expresion):
@@ -221,18 +332,26 @@ class Swicht(Expresion):
         resultado += ''.join([c.str(n+2) for c in self.casos])
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+        
+    #FIXME Swicht NO FUNCIONA NADA BIEN
 
-    def Tipo(self,ambito):
-        self.expr.Tipo(ambito)
-        self.casos[0].Tipo(ambito)
-        self.casos[1].Tipo(ambito)
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
         
-        min_padre = ambito.minimo_ancestro(self.casos[0].cast,self.casos[1].cast)
-        for i in range(2,len(self.casos)):
-            self.casos[i].Tipo(ambito)
-            min_padre = ambito.minimo_ancestro(min_padre,self.casos[i].cast)
-        self.cast = min_padre.nombre
+        #usamos un diccionario para hacer el switch
+        codigo = ""
+        codigo = f'{(n)*" "}match {self.expr.genera_codigo(0, dict_recibido)}:\n'
+        for caso in self.casos:
+            codigo += f'{caso.genera_codigo(n+2, dict_recibido)}'
+            # codigo += f'{caso.cuerpo.genera_codigo(n+4, dict_recibido)}'
+        return codigo
+
         
+        # codigo = ""
+        # codigo = f'{(n)*" "}switch {self.expr.genera_codigo(0)}:\n'
+        # for caso in self.casos:
+        #     codigo += caso.genera_codigo(n+2)
+            
+
 
 @dataclass
 class Nueva(Expresion):
@@ -244,14 +363,19 @@ class Nueva(Expresion):
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
 
-    def Tipo(self,ambito):
-        self.cast = self.tipo
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
+        codigo = ""
+        # codigo = f'{(n)*" "}new {self.tipo}'
+        codigo = f'{(n)*" "}'
+        return codigo
+        #FIXME Nueva
 
 
 @dataclass
 class OperacionBinaria(Expresion):
     izquierda: Expresion = None
     derecha: Expresion = None
+
 
 
 @dataclass
@@ -266,15 +390,27 @@ class Suma(OperacionBinaria):
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
     
-    def Tipo(self,ambito):
-        self.izquierda.Tipo(ambito)
-        self.derecha.Tipo(ambito)
-        if(self.izquierda.cast == 'Int' and self.derecha.cast == 'Int'):
-            self.cast='Int'
-            return ''
-        else:
-            self.cast='Object'
-            raise Exception(f'{self.linea}: non-Int arguments: {self.izquierda.cast} + {self.derecha.cast} \n Compilation halted due to static semantic errors.')
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
+        codigo = ""
+        codigo += self.izquierda.genera_codigo(n, dict_recibido)
+        codigo += f'\n'
+        codigo += f'{(n)*" "}temp0 = temp\n'
+        codigo += self.derecha.genera_codigo(n, dict_recibido)
+        codigo += f'\n{(n)*" "}temp = temp + temp0'
+        # codigo = f'{self.izquierda.genera_codigo(n, dict_recibido)} + {self.derecha.genera_codigo(0, dict_recibido)}'
+
+         
+        #si no existen las variables en el diccionario las creamos y inicializamos a 0?
+    #    if(self.izquierda.genera_codigo(0, dict_recibido) not in dict_recibido.keys()):
+    #        dict_recibido.update({self.izquierda.genera_codigo(0, dict_recibido): 0})
+            
+    #    if(self.derecha.genera_codigo(0, dict_recibido) not in dict_recibido.keys()):
+    #        dict_recibido.update({self.derecha.genera_codigo(0, dict_recibido): 0})
+            
+
+        
+        
+        return codigo
 
 @dataclass
 class Resta(OperacionBinaria):
@@ -287,16 +423,20 @@ class Resta(OperacionBinaria):
         resultado += self.derecha.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
 
-    def Tipo(self,ambito):
-        self.izquierda.Tipo(ambito)
-        self.derecha.Tipo(ambito)
-        if(self.izquierda.cast == 'Int' and self.derecha.cast == 'Int'):
-            self.cast='Int'
-            return ''
-        else:
-            self.cast='Object'
-            raise Exception(f'{self.linea}: non-Int arguments: {self.izquierda.cast} + {self.derecha.cast} \n Compilation halted due to static semantic errors.')
+        codigo = ""
+
+        codigo += self.izquierda.genera_codigo(n, dict_recibido)
+        codigo += f'\n'
+        codigo += f'{(n)*" "}temp0 = temp\n'
+        codigo += self.derecha.genera_codigo(n, dict_recibido)
+        codigo += f'\n{(n)*" "}temp = temp0 - temp'
+
+        # codigo = f'{self.izquierda.genera_codigo(n, dict_recibido)} - {self.derecha.genera_codigo(0, dict_recibido)}'
+        return codigo
+
 
 
 @dataclass
@@ -310,16 +450,18 @@ class Multiplicacion(OperacionBinaria):
         resultado += self.derecha.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n=0, dict_recibido=dict_global):    
+        codigo = ""
 
-    def Tipo(self,ambito):
-        self.izquierda.Tipo(ambito)
-        self.derecha.Tipo(ambito)
-        if(self.izquierda.cast == 'Int' and self.derecha.cast == 'Int'):
-            self.cast='Int'
-        else:
-            self.cast='Object'
-            raise Exception(f'{self.linea}: non-Int arguments: {self.izquierda.cast} + {self.derecha.cast} \n Compilation halted due to static semantic errors.')
+        codigo += self.izquierda.genera_codigo(n, dict_recibido)
+        codigo += f'\n'
+        codigo += f'{(n)*" "}temp0 = temp\n'
+        codigo += self.derecha.genera_codigo(n, dict_recibido)
+        codigo += f'\n{(n)*" "}temp = temp0 * temp'
 
+        #codigo = f'{self.izquierda.genera_codigo(n, dict_recibido)} * {self.derecha.genera_codigo(0, dict_recibido)}'
+        return codigo
 
 @dataclass
 class Division(OperacionBinaria):
@@ -332,15 +474,18 @@ class Division(OperacionBinaria):
         resultado += self.derecha.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n=0, dict_recibido=dict_global):    
+        codigo = ""
+        
+        codigo += self.izquierda.genera_codigo(n, dict_recibido)
+        codigo += f'\n'
+        codigo += f'{(n)*" "}temp0 = temp\n'
+        codigo += self.derecha.genera_codigo(n, dict_recibido)
+        codigo += f'\n{(n)*" "}temp = temp0 / temp'
 
-    def Tipo(self,ambito):
-        self.izquierda.Tipo(ambito)
-        self.derecha.Tipo(ambito)
-        if(self.izquierda.cast == 'Int' and self.derecha.cast == 'Int'):
-            self.cast='Int'
-        else:
-            self.cast='Object'
-            raise Exception(f'{self.linea}: non-Int arguments: {self.izquierda.cast} + {self.derecha.cast} \n Compilation halted due to static semantic errors.')
+        #codigo = f'{self.izquierda.genera_codigo(n, dict_recibido)} / {self.derecha.genera_codigo(0, dict_recibido)}'
+        return codigo
 
 @dataclass
 class Menor(OperacionBinaria):
@@ -353,17 +498,19 @@ class Menor(OperacionBinaria):
         resultado += self.derecha.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n=0, dict_recibido=dict_global):    
+        codigo = ""
+        codigo += self.izquierda.genera_codigo(n, dict_recibido)
+        codigo += f'\n'
+        codigo += f'{(n)*" "}temp0 = temp\n'
+        codigo += self.derecha.genera_codigo(n, dict_recibido)
+        codigo += f'\n{(n)*" "}temp = temp0 < temp'
 
-    def Tipo(self,ambito):
-        self.izquierda.Tipo(ambito)
-        self.derecha.Tipo(ambito)
-        if(self.izquierda.cast in ["Int","String","Bool"] and self.derecha.cast == self.izquierda.cast):
-            self.cast='Bool'
-        elif (self.izquierda.cast not in ["Int","String","Bool"] and self.derecha.cast not in ["Int","String","Bool"]):
-            self.cast='Bool'
-        else:
-            self.cast='Object'
-            return 'Error de tipos'
+        #codigo = f'{self.izquierda.genera_codigo(n, dict_recibido)} < {self.derecha.genera_codigo(0, dict_recibido)}'
+        return codigo
+
+
 
 @dataclass
 class LeIgual(OperacionBinaria):
@@ -376,17 +523,19 @@ class LeIgual(OperacionBinaria):
         resultado += self.derecha.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n=0, dict_recibido=dict_global):    
+        codigo = ""
 
-    def Tipo(self,ambito):
-        self.izquierda.Tipo(ambito)
-        self.derecha.Tipo(ambito)
-        if(self.izquierda.cast in ["Int","String","Bool"] and self.derecha.cast == self.izquierda.cast):
-            self.cast='Bool'
-        elif (self.izquierda.cast not in ["Int","String","Bool"] and self.derecha.cast not in ["Int","String","Bool"]):
-            self.cast='Bool'
-        else:
-            self.cast='Object'
-            return 'Error de tipos'
+        codigo += self.izquierda.genera_codigo(n, dict_recibido)
+        codigo += f'\n'
+        codigo += f'{(n)*" "}temp0 = temp\n'
+        codigo += self.derecha.genera_codigo(n, dict_recibido)
+        codigo += f'\n{(n)*" "}temp = temp0 <= temp'
+
+
+        #codigo = f'{self.izquierda.genera_codigo(n, dict_recibido)} <= {self.derecha.genera_codigo(0, dict_recibido)}'
+        return codigo
 
 
 @dataclass
@@ -400,17 +549,20 @@ class Igual(OperacionBinaria):
         resultado += self.derecha.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n=0, dict_recibido=dict_global):    
+        codigo = ""
 
-    def Tipo(self,ambito):
-        self.izquierda.Tipo(ambito)
-        self.derecha.Tipo(ambito)
-        if(self.izquierda.cast in ["Int","String","Bool"] and self.derecha.cast == self.izquierda.cast):
-            self.cast='Bool'
-        elif (self.izquierda.cast not in ["Int","String","Bool"] and self.derecha.cast not in ["Int","String","Bool"]):
-            self.cast='Bool'
-        else:
-            self.cast='Object'
-            return 'Error de tipos'
+        codigo += self.izquierda.genera_codigo(n, dict_recibido)
+        codigo += f'\n'
+        codigo += f'{(n)*" "}temp0 = temp\n'
+        codigo += self.derecha.genera_codigo(n, dict_recibido)
+        codigo += f'\n{(n)*" "}temp = temp == temp0'
+
+        # codigo += f'{self.izquierda.genera_codigo(n, dict_recibido)} == {self.derecha.genera_codigo(0, dict_recibido)}'
+
+        return codigo
+
 
 
 
@@ -425,15 +577,11 @@ class Neg(Expresion):
         resultado += self.expr.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
-
-    def Tipo(self,ambito):
-        self.expr.Tipo(ambito) ########################################################################################################## NEG 1
-        
-        if(self.expr.cast == 'Int'):
-            self.cast='Int'
-        else:
-            self.cast='Object'
-            return 'Error de tipos'
+    
+    def genera_codigo(self, n=0, dict_recibido=dict_global):    
+        codigo = ""
+        codigo = f'not {self.expr.genera_codigo(0, dict_recibido)}'
+        return codigo
 
 @dataclass
 class Not(Expresion):
@@ -446,14 +594,11 @@ class Not(Expresion):
         resultado += self.expr.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
-
-    def Tipo(self,ambito):
-        self.expr.Tipo(ambito)
-        if(self.expr.cast == 'Bool'):
-            self.cast='Bool'
-        else:
-            self.cast='Object'
-            return 'Error de tipos'
+    
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
+        codigo = ""
+        codigo = f'not {self.expr.genera_codigo(0, dict_recibido)}'
+        return codigo
 
 @dataclass
 class EsNulo(Expresion):
@@ -465,11 +610,11 @@ class EsNulo(Expresion):
         resultado += self.expr.str(n+2)
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
-
-    def Tipo(self,ambito):
-        self.expr.Tipo(ambito)
-        self.cast = self.expr.cast    
-
+    
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
+        codigo = ""
+        codigo = f'{self.expr.genera_codigo(0, dict_recibido)}.isVoid()'
+        return codigo
 
 @dataclass
 class Objeto(Expresion):
@@ -481,14 +626,32 @@ class Objeto(Expresion):
         resultado += f'{(n+2)*" "}{self.nombre}\n'
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
+    
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
+        codigo = ""
 
-    def Tipo(self,ambito):
-        ################################################################################################################### NEG 3
-
-        if self.nombre == "self":
-            self.cast="SELF_TYPE"
+        nombre_variable = self.nombre
+        diccionario = dict_recibido
+        
+        while(diccionario["padre"] is not None):
+            if self.nombre in diccionario.keys():
+                break
+            else:
+                diccionario = diccionario["padre"]
+        
+        if (diccionario["padre"] is not None) or (nombre_variable is "self"):
+            nombre_usado = nombre_variable
         else:
-            self.cast=ambito.get_tipo_variable(self.nombre)
+            nombre_usado = "self." + nombre_variable
+
+        codigo += f'{(n)*" "}temp = {nombre_usado}'
+
+        # if self.nombre == "self":
+        #     codigo = f'{(n)*" "}{self.nombre}'
+        # else:
+        #     codigo = f'{(n)*" "}self.{self.nombre}' 
+        return codigo
+    #FIXME que reciba el dict
 
 
 @dataclass
@@ -501,8 +664,8 @@ class NoExpr(Expresion):
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
 
-    def Tipo(self,ambito):
-        self.cast='_no_type'
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
+        return "None"
 
 
 @dataclass
@@ -516,8 +679,11 @@ class Entero(Expresion):
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
     
-    def Tipo(self,ambito):
-        self.cast='Int'
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
+        codigo = ""
+        codigo = f'{(n)*" "}temp = Int({self.valor})'
+        # codigo += "temp = "
+        return codigo
 
 @dataclass
 class String(Expresion):
@@ -529,10 +695,11 @@ class String(Expresion):
         resultado += f'{(n+2)*" "}{self.valor}\n'
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
-
-    def Tipo(self,ambito):
-        self.cast= 'String'
-        return ""  # Retorna vacío para devolver siempre algo
+    
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
+        codigo = ""
+        codigo = f'{(n)*" "}temp = String({self.valor})'
+        return codigo
 
 
 @dataclass
@@ -546,8 +713,12 @@ class Booleano(Expresion):
         resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
 
-    def Tipo(self,ambito):
-        self.cast = 'Bool'
+    def genera_codigo(self, n=0, dict_recibido=dict_global):
+        codigo = ""
+        #codigo = f'{(n)*" "}{True if self.valor else False}'
+        codigo += f'{" "*n}temp = Bool({self.valor})'
+        return codigo
+        
 
 @dataclass
 class IterableNodo(Nodo):
@@ -560,41 +731,16 @@ class Programa(IterableNodo):
         resultado += f'{" "*n}_program\n'
         resultado += ''.join([c.str(n+2) for c in self.secuencia])
         return resultado
-
-    def Tipo(self):
-        nombres = []
-        ambito = Ambito([], {}, {})
-        e_main = False
-        for clase in self.secuencia:
-            if clase.nombre in nombres:
-                raise Exception(str(clase.linea+1) + ':' + " Class " + clase.nombre + " was previously defined.\nCompilation halted due to static semantic errors.")
-            else:
-                nombres.append(clase.nombre)
-            if clase.nombre == 'SELF_TYPE':
-                raise Exception(str(clase.linea+3) + ': ' + "Redefinition of basic class " + clase.nombre + '.\n' + "Compilation halted due to static semantic errors.")
-            elif clase.nombre == 'Int':
-                raise Exception(str(clase.linea+1) + ': ' + "Redefinition of basic class " + clase.nombre + '.\n' + "Compilation halted due to static semantic errors.")
-            if clase.nombre == 'Main':
-                for carac in clase.caracteristicas:
-                    if carac.nombre == 'main':
-                        e_main = True
-            clase.Tipo(ambito)
-        for clase in self.secuencia:
-            for caracteristica in clase.caracteristicas:
-                if isinstance(caracteristica,Metodo):
-                    ambito.meter_funcion(clase.nombre,caracteristica.nombre,[[x.nombre_variable,x.tipo] for x in caracteristica.formales],caracteristica.tipo)# Hay que meter los parametros que sean
-        # ERRORES
-        for clase in self.secuencia:
-
-            for caracteristica in clase.caracteristicas:
-                if caracteristica.tipo not in ["Int", "Bool", "String", "SELF_TYPE", "Object"] and caracteristica.tipo not in ambito.variables.values():
-                        raise Exception(str(self.linea+2) +":"+ " Undefined return type " + caracteristica.tipo + " in method main." + "\n" + "returntypenoexist.test:" +
-                                        str(self.linea+2) +":"+ " 'new' used with undefined class " + caracteristica.tipo + ".\nCompilation halted due to static semantic errors.")
-                if isinstance(caracteristica,Metodo) and not ambito.es_subtipo(caracteristica.tipo,caracteristica.cuerpo.cast) and not ambito.es_subtipo(caracteristica.cuerpo.cast,caracteristica.tipo):
-                    raise Exception(str(self.linea+4) + ':' + " Incompatible number of formal parameters in redefined method " + caracteristica.nombre + ".\nCompilation halted due to static semantic errors.")
     
-        if e_main == False:
-            raise Exception("Class Main is not defined.\nCompilation halted due to static semantic errors.")
+    def genera_codigo(self, n=0, dict_recibido=dict_global): # genera codigo tiene que tener un indentado 
+        #----------------------------------
+        codigo =""
+        for clase in self.secuencia:
+            codigo += clase.genera_codigo(n, dict_recibido)
+        codigo += f"{' '*n}Main().main()\n"
+
+        return codigo
+        #----------------------------------
 
 @dataclass
 class Caracteristica(Nodo):
@@ -621,36 +767,32 @@ class Clase(Nodo):
         resultado += '\n'
         resultado += f'{(n+2)*" "})\n'
         return resultado
-
-    def Tipo(self,ambito):
-        if self.nombre not in ambito.clases:
-            ambito.meter_clase(self)
-        self.cast = 'Object'
-        ambito.tipo_variable('self',self.nombre)
+    
+    #------------------
+    def genera_codigo(self,n=0, dict_recibido=dict_global):
+        codigo =""
+        codigo = f"{' '*n}class {self.nombre}({self.padre}):\n"
+        global dict_global
+            # if (self.caracteristicas is not []):
+        # for caracteristica in self.caracteristicas[0]:
         for caracteristica in self.caracteristicas:
-            if isinstance(caracteristica,Atributo):
-                caracteristica.Tipo(ambito)
-                ambito.tipo_variable(caracteristica.nombre,caracteristica.tipo)
-            else:
-                # Hace falta meter los metodos aquí llamando al nuevo metodo que hay abajo
-                caracteristica.Tipo(ambito)
-                ambito.meter_funcion(self.nombre,caracteristica.nombre,[[x.nombre_variable,x.tipo] for x in caracteristica.formales],caracteristica.tipo)# Hay que meter los parametros que sean
-        """for caracteristica in self.caracteristicas:
-            if caracteristica.tipo not in ["Int", "Bool", "String", "SELF_TYPE", "Object"] and caracteristica.tipo not in ambito.variables.values():
-                    raise Exception(str(self.linea+1) +":"+ " Undefined return type " + caracteristica.tipo + " in method main." + "\n" + "returntypenoexist.test:" +
-                                    str(self.linea+1) +":"+ " 'new' used with undefined class " + caracteristica.tipo + ".\nCompilation halted due to static semantic errors.")"""
+            if (isinstance(caracteristica, Atributo)):
+                codigo += f"{' '*(n+2)}def __init__(self):\n"
+                break
         for caracteristica in self.caracteristicas:
-            caracteristica.Tipo(ambito)
-            
+            if (isinstance(caracteristica, Atributo)):
+               # lista_atributos.append(caracteristica.nombre)
+                dict_global.update({caracteristica.nombre: None}) # FIXME
+                codigo += caracteristica.genera_codigo(n+4)
+        for caracteristica in self.caracteristicas:
+            if (not isinstance(caracteristica, Atributo)):
+                codigo += caracteristica.genera_codigo(n+2, dict_global) # FIXME
+        return codigo
+    #-------------------
 
 @dataclass
 class Metodo(Caracteristica):
     formales: List[Formal] = field(default_factory=list)
-
-    def Tipo(self,ambito):
-        for formal in self.formales:
-            formal.Tipo(ambito)
-        self.cuerpo.Tipo(ambito)
 
     def str(self, n):
         resultado = super().str(n)
@@ -661,6 +803,38 @@ class Metodo(Caracteristica):
         resultado += self.cuerpo.str(n+2)
 
         return resultado
+    
+    def genera_codigo(self,n=0, dict_recibido=dict_global):      
+        # global lista_atributos
+        nuevo_ambito = {"padre": dict_recibido}
+        codigo = ""
+        codigo = f'{(n)*" "}def {self.nombre}(self'
+        for formal in self.formales:
+            nombre_formal = formal.genera_codigo(0, dict_recibido)
+            codigo +=  ', ' + nombre_formal
+            codigo += f'={formal.tipo}(None)'
+            nuevo_ambito.update({nombre_formal: "None"})
+        codigo += '):\n'
+        codigo += self.cuerpo.genera_codigo(n+2, nuevo_ambito)
+        #codigo += f'{(n+2)*" "}return {self.cuerpo.genera_codigo(0, nuevo_ambito)[-1]}\n'
+        #bucle que recorre el cuerpo por detras hasta encontrar un salto de linea
+        #TODO
+        # lista_retorno = []
+        # contador = 0
+        # if self.nombre == "main":
+        #     codigo += self.cuerpo.genera_codigo(n+2, nuevo_ambito)
+        # else:
+        #     for elemento in reversed(self.cuerpo.genera_codigo(0, nuevo_ambito)):
+        #             if elemento == '\n':
+        #                 break
+        #             else:
+        #                 lista_retorno.append(elemento)
+        #                 contador += 1
+        #     codigo += self.cuerpo.genera_codigo(n+2, nuevo_ambito)[0:-contador]
+        #     codigo += f'{(n+2)*" "}return ({"".join(reversed(lista_retorno))})\n'
+        # codigo += '\n'
+        codigo += f'{" "*(n+2)}return temp\n'
+        return codigo
 
 
 class Atributo(Caracteristica):
@@ -672,201 +846,38 @@ class Atributo(Caracteristica):
         resultado += f'{(n+2)*" "}{self.tipo}\n'
         resultado += self.cuerpo.str(n+2)
         return resultado
-
-    def Tipo(self,ambito):
-        self.cast = 'Object'
-        self.cuerpo.Tipo(ambito)
-        reserved_names = ['self']
-        if self.nombre in reserved_names:
-            raise Exception("{}: '{}' cannot be the name of an attribute.\nCompilation halted due to static semantic errors.".format(self.linea,self.nombre))
-
-class Arbol:
-    def __init__(self, nombre, padre, funciones, hijos):
-        self.nombre = nombre
-        self.padre = padre
-        self.funciones = funciones
-        self.hijos = hijos
-
-    def meter_funcion(self, nombre_funcion, parametro_formales, retorno):
-        self.funciones[nombre_funcion] = [parametro_formales,retorno]
     
-
-class Ambito:
-    def __init__(self, arbol, metodos, variables):
-        self.metodos = metodos
-        self.variables = variables
-        self.clases = ["Object",'Int','IO','String']
-        raiz = Arbol('Object','', {'abort':[[[]],'Object'],
-                                'typename': [[[]], 'String'],
-                                  'copy': [[[]], 'SELF_TYPE'],
-                                   'self': [[[]], 'SELF_TYPE']}
-                     , [] #Añadir hijos
-                     )
-        integer = Arbol('Int','Object',{'new':[[[]],'Int']},[]) #(Int no tiene metodos)
-        io = Arbol('IO','Object', {'out_string':[[['x','String']],'SELF_TYPE'],'out_int':[[['x','Int']],'SELF_TYPE'],'in_string':[[[]],'String'],'in_int':[[[]],'Int']},[])
-        string = Arbol('String','Object',{'length':[[[]],'Int'],'concat':[[['s','String']],'String'],'substr':[[['i','Int'],['l','Int']],'String']},[])
-      
-        boolean = Arbol('Bool','Object',{'new':[[[]],'Bool']},[]) #(Bool no tiene metodos) default = false
-        """raiz.meter_funcion('abort', [], 'Object')
-        raiz.meter_funcion('typename', [], 'String')
-        raiz.meter_funcion('copy', [], 'SELF_TYPE')"""
-        raiz.hijos.append(integer)
-        raiz.hijos.append(boolean)
-        raiz.hijos.append(io)
-        raiz.hijos.append(string)
-        self.Arbol = raiz
-
-    def clase_tiene_metodo_x(self, hijo_clase, nombre_metodo):
-        if isinstance(hijo_clase,str):
-            hijo_clase = self.get_nodo(hijo_clase)
-
-        if nombre_metodo in hijo_clase.funciones:
-
-            return hijo_clase.funciones[nombre_metodo] ## Devuelve una lista de los tipos de los argumentos y del return
-        else:
-            #if self.get_nodo(hijo_clase) is not False:
-            #    if self.get_nodo(hijo_clase).padre:
-
-            if hijo_clase.padre:
-
-                return self.clase_tiene_metodo_x(hijo_clase.padre, nombre_metodo)
-            else:
-
-                return False
-    
-    def devuelve_tipo_metodo(self,nombre_metodo,cast):
-
-        nodo_temp = self.Arbol
-        l = [nodo_temp]
-        while l:
-            nodo_temp = l.pop()
-            if nodo_temp.nombre == cast:
+    def genera_codigo(self,n=0,dict_recibido=dict_global):
+        nombre_variable = self.nombre
+        diccionario = dict_recibido
+        
+        while(diccionario["padre"] is not None):
+            if self.nombre in diccionario.keys():
                 break
-            l.extend(nodo_temp.hijos)
-
-
-        metodos = self.clase_tiene_metodo_x(nodo_temp, nombre_metodo)
-        if metodos is not False:
-
-            """nodo = self.Arbol
-            l = [nodo]
-            while l:
-                nodo_temp = l.pop()
-                if nodo_temp.nombre == cast:
-                    break
-                l.extend(nodo_temp.hijos)"""
-            if nombre_metodo is not 'self' and metodos[-1] == "SELF_TYPE":
-                metodos = [metodos[:-1],cast]
-            return metodos
-        else:
-            return False
-
-
-    def es_subtipo(self,claseA,claseB):
-        if claseA == claseB:
-            return True
-        elif claseB == "Object":
-            return claseA == claseB
-        else:
-            return self.es_subtipo(self.padreada(claseB),claseA)
-
-    def padreada(self,nombreN):
-      nodo = self.Arbol
-      l = [nodo]
-      while l:
-        nodo_temp = l.pop()
-        if nodo_temp.nombre == nombreN:
-          return nodo_temp.padre
-        else:
-          l.extend(nodo_temp.hijos)
-      return "ERROR"
-
-    def minimo_ancestro(self,nodoA,nodoB):
-        if isinstance(nodoA,str):
-            nodoA = self.get_nodo(nodoA)
-        if isinstance(nodoB,str):
-            nodoB = self.get_nodo(nodoB)
-        if nodoA is nodoB:
-            return nodoA
-        elif nodoB is nodoA.padre:
-            return nodoB
-        elif nodoA is nodoB.padre:
-            return nodoA
-        else:
-            if self.profundidad(nodoA) >= self.profundidad(nodoB) and nodoA.padre != '':
-                nodoA = nodoA.padre
             else:
-                nodoB = nodoB.padre
-            return self.minimo_ancestro(nodoA,nodoB)
-
-    def profundidad(self,nodo):
-        if (self.Arbol == nodo):
-            return 0
+                diccionario = diccionario["padre"]
+        
+        if (diccionario["padre"] is not None) or (nombre_variable is "self"):
+            nombre_usado = nombre_variable
         else:
-            return 1+self.profundidad(self.get_nodo(nodo.padre))
+            nombre_usado = "self." + nombre_variable
 
-    def nodoArbol(self,nombreN):
-      nodo = self.Arbol
-      l = [nodo]
-      while l:
-        nodo_temp = l.pop()
-        if nodo_temp.nombre == nombreN:
-          return nodo_temp
+        if (self.tipo not in "Int,Bool,String,IO" and self.cuerpo.genera_codigo(0) == "None"):
+            codigo = f"{' '*n}{nombre_usado} = None\n"
+        elif (self.tipo in "IO" and self.cuerpo.genera_codigo(0) == "None"):
+            codigo = f"{' '*n}{nombre_usado} = {self.tipo}()\n"
         else:
-          l.extend(nodo_temp.hijos)
-      return self.Arbol
-
-    def tipo_variable(self,nombre,tipo):
-        self.variables[nombre] = tipo
-
-    def get_tipo_variable(self,nombre):
-        return self.variables[nombre]
-
-    def meter_funcion(self, nombre_clase, nombre_funcion, parametro_formales, retorno):
-        # Hay que enganchar la funcion al arbol que se define arriba en el __init__ de ambito
-        # No se donde se engancha lol
-        # Pero es como el diccionario este que hay encima. Ejemplo: string = Arbol('String','Object',{'length':[[[]],'Int'],'concat':[[['s','String']],'String'],'substr':[[['i','Int'],['l','Int']],'String']},[])
-        nodo = self.Arbol
-        l = [nodo]
-        while l:
-            nodo_temp = l.pop()
-            if nodo_temp.nombre == nombre_clase:
-                break
-            l.extend(nodo_temp.hijos)
-
-        nodo_temp.meter_funcion(nombre_funcion, parametro_formales, retorno)
-
-    def existe_clase(self,nombreN):
-        nodo = self.Arbol
-        l = [nodo]
-        while l:
-            nodo_temp = l.pop()
-            if nodo_temp.nombre == nombreN:
-              return True
-            else:
-              l.extend(nodo_temp.hijos)
-        return False
-
-    def get_nodo(self,nombre_nodo):
-        nodo = self.Arbol
-        l = [nodo]
-        while l:
-            nodo_temp = l.pop()
-            if nodo_temp.nombre == nombre_nodo:
-              return nodo_temp
-            else:
-              l.extend(nodo_temp.hijos)
-        return False
-
-    def mostrar_arbol(self): # metodo de debug
-        nodo = self.Arbol
-        l = [nodo]
-        while l:
-            nodo_temp = l.pop()
-            l.extend(nodo_temp.hijos)
-        return False
-
-    def meter_clase(self,clase):
-        self.clases.append(clase)
-        nodoPadre = self.get_nodo(clase.padre)
-        nodoPadre.hijos.append(Arbol(clase.nombre,clase.padre,{},[]))
+            codigo = f"{' '*n}{nombre_usado} = {self.tipo}({self.cuerpo.genera_codigo(0, dict_recibido)})\n"
+        # dict_recibido.update(self.nombre, self.tipo(self.cuerpo.genera_codigo(0)))
+        #FIXME cambios con el diccionario
+        # if (self.tipo == "Int" and self.cuerpo.genera_codigo(0) == "None"):
+        #     codigo = f"{' '*n}{self.nombre} = 0\n"
+        # elif (self.tipo == "Bool" and self.cuerpo.genera_codigo(0) == "None"):
+        #     codigo = f"{' '*n}{self.nombre} = False\n"
+        # elif (self.tipo == "String" and self.cuerpo.genera_codigo(0) == "None"):
+        #     codigo = f"{' '*n}{self.nombre} = ''\n"
+        # else:
+        #     codigo = f"{' '*n}{self.nombre} = {self.cuerpo.genera_codigo(0)}\n"
+        # codigo = f"{' '*n}{self.nombre} = {self.cuerpo.genera_codigo(0)}\n"
+        
+        return codigo

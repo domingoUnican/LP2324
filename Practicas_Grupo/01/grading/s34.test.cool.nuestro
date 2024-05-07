@@ -1,0 +1,6 @@
+#name "s34.test.cool"
+ OBJECTID before_it
+ ERROR "Unterminated string constant"
+ OBJECTID doens
+ OBJECTID t
+ OBJECTID end
