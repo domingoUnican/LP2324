@@ -38,6 +38,14 @@ class Int(Object):
         else:
             self.numero = s
 
+    def __sub__(self, s):
+        if (isinstance(s, Int)):
+            #return Int(self.numero - s.numero)
+            return Int(0)
+        else:
+            return Int(self.numero - s)
+            
+        
     def __add__(self, s):
         if (isinstance(s, Int)):
             return Int(self.numero + s.numero)
@@ -83,6 +91,60 @@ class Bool(Object):
         else:
             self.booleano = s
 
+    def __eq__(self, e1):
+        if (isinstance(e1, Bool)):
+            return self.booleano == e1.booleano
+        else:
+            return self.booleano == e1
+
 true = Bool(True)
 false = Bool(False)
 
+class Main(IO):
+  def fact(self, n=Int(None)):
+    temp = n
+    temp0 = temp
+    temp = Int(0)
+    temp = temp == temp0
+    condicion = temp
+    if (condicion == True):
+      temp = Int(1)
+    else:
+      temp = n
+      temp0 = temp
+      temp = n
+      temp0 = temp
+      temp = Int(1)
+      temp = temp0 - temp
+      arg0 = temp
+      temp = self.fact(arg0)
+      temp = temp0 * temp
+    return temp
+  def main(self):
+    temp = Int(3)
+    arg0 = temp
+    temp = self.fact(arg0)
+    arg0 = temp
+    temp = self.out_int(arg0)
+    temp = String("\n")
+    arg0 = temp
+    temp = self.out_string(arg0)
+    temp = Int(7)
+    arg0 = temp
+    temp = self.fact(arg0)
+    arg0 = temp
+    temp = self.out_int(arg0)
+    temp = String("\n")
+    arg0 = temp
+    temp = self.out_string(arg0)
+    temp = Int(10)
+    arg0 = temp
+    temp = self.fact(arg0)
+    arg0 = temp
+    temp = self.out_int(arg0)
+    temp = String("\n")
+    temp = String("\n")
+    arg0 = temp
+    temp = self.out_string(arg0)
+    return temp
+Main().main()
