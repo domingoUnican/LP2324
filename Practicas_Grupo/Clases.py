@@ -274,8 +274,18 @@ class RamaCase(Nodo):
     #FIXME RamaCase
     def genera_codigo(self, n=0, dict_recibido=dict_global):
         codigo = ""
-        codigo = f'{(n)*" "}if {self.nombre_variable} is {self.tipo}:\n'
-        codigo += f'{self.cuerpo.genera_codigo(n+2, dict_recibido)}\n'
+        codigo = f'{(n)*" "}case {self.tipo}:\n'
+        #codigo += f'{self.cuerpo.genera_codigo(n+2, dict_recibido)}'
+        lista_retorno = []
+        contador = 0
+        for elemento in reversed(self.cuerpo.genera_codigo(n, dict_recibido)):
+                if elemento == '\n':
+                    break
+                else:
+                    lista_retorno.append(elemento)
+                    contador += 1
+        codigo += f'{self.cuerpo.genera_codigo(n+2, dict_recibido)[0:-contador]}'
+        codigo += f'{(n+2)*" "}return ({"".join(reversed(lista_retorno))})\n'
         return codigo
 
 @dataclass
@@ -297,15 +307,11 @@ class Swicht(Expresion):
         
         #usamos un diccionario para hacer el switch
         codigo = ""
-        
-
-        # codigo = f'{(n)*" "}match {self.expr.genera_codigo(0, dict_recibido)}:\n'
-        # for caso in self.casos:
-        #     codigo += f'{(n+2)*" "}case {caso.genera_codigo(0)}:\n'
-        #     codigo += f'{caso.cuerpo.genera_codigo(n+4, dict_recibido)}\n'
-        # return codigo
-
-
+        codigo = f'{(n)*" "}match {self.expr.genera_codigo(0, dict_recibido)}:\n'
+        for caso in self.casos:
+            codigo += f'{caso.genera_codigo(n+2, dict_recibido)}'
+            # codigo += f'{caso.cuerpo.genera_codigo(n+4, dict_recibido)}'
+        return codigo
 
         
         # codigo = ""
@@ -735,12 +741,20 @@ class Clase(Nodo):
         codigo =""
         codigo = f"{' '*n}class {self.nombre}({self.padre}):\n"
         global dict_global
+            # if (self.caracteristicas is not []):
+        # for caracteristica in self.caracteristicas[0]:
         for caracteristica in self.caracteristicas:
             if (isinstance(caracteristica, Atributo)):
-                # lista_atributos.append(caracteristica.nombre)
-                dict_global.update({caracteristica.nombre: None}) # FIXME
+                codigo += f"{' '*(n+2)}def __init__(self):\n"
+                break
         for caracteristica in self.caracteristicas:
-            codigo += caracteristica.genera_codigo(n+2, dict_global) # FIXME
+            if (isinstance(caracteristica, Atributo)):
+               # lista_atributos.append(caracteristica.nombre)
+                dict_global.update({caracteristica.nombre: None}) # FIXME
+                codigo += caracteristica.genera_codigo(n+4)
+        for caracteristica in self.caracteristicas:
+            if (not isinstance(caracteristica, Atributo)):
+                codigo += caracteristica.genera_codigo(n+2, dict_global) # FIXME
         return codigo
     #-------------------
 
@@ -802,10 +816,26 @@ class Atributo(Caracteristica):
         return resultado
     
     def genera_codigo(self,n=0,dict_recibido=dict_global):
-        if (self.tipo == "IO" and self.cuerpo.genera_codigo(0) == "None"):
-            codigo = f"{' '*n}{self.nombre} = {self.tipo}()\n"
+        nombre_variable = self.nombre
+        diccionario = dict_recibido
+        
+        while(diccionario["padre"] is not None):
+            if self.nombre in diccionario.keys():
+                break
+            else:
+                diccionario = diccionario["padre"]
+        
+        if (diccionario["padre"] is not None) or (nombre_variable is "self"):
+            nombre_usado = nombre_variable
         else:
-            codigo = f"{' '*n}{self.nombre} = {self.tipo}({self.cuerpo.genera_codigo(0, dict_recibido)})\n"
+            nombre_usado = "self." + nombre_variable
+
+        if (self.tipo not in "Int,Bool,String,IO" and self.cuerpo.genera_codigo(0) == "None"):
+            codigo = f"{' '*n}{nombre_usado} = None\n"
+        elif (self.tipo in "IO" and self.cuerpo.genera_codigo(0) == "None"):
+            codigo = f"{' '*n}{nombre_usado} = {self.tipo}()\n"
+        else:
+            codigo = f"{' '*n}{nombre_usado} = {self.tipo}({self.cuerpo.genera_codigo(0, dict_recibido)})\n"
         # dict_recibido.update(self.nombre, self.tipo(self.cuerpo.genera_codigo(0)))
         #FIXME cambios con el diccionario
         # if (self.tipo == "Int" and self.cuerpo.genera_codigo(0) == "None"):
