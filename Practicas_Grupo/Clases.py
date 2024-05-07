@@ -52,7 +52,7 @@ class Asignacion(Expresion):
     
     def genera_codigo(self,n):
         codigo = ""
-        if isinstance(self.cuerpo, Objeto) or isinstance(self.cuerpo, Nueva) :
+        if isinstance(self.cuerpo, Objeto) or isinstance(self.cuerpo, Nueva):
             codigo += f"{(' ')*n}temp = {self.cuerpo.genera_codigo(0)}\n"
         
         else: 
@@ -347,11 +347,11 @@ class Suma(OperacionBinaria):
         global INDICE
         indiceloc = INDICE
         codigo = ""
+        INDICE += 1
         codigo = f"{self.izquierda.genera_codigo(n)}\n" 
         codigo += f"{(' ')*n}tempsuma{indiceloc} = temp\n"
         codigo += f"{self.derecha.genera_codigo(n)}\n"
         codigo += f"{(' ')*n}temp = tempsuma{indiceloc} + temp"
-        INDICE += 1
         
         return codigo
 
@@ -371,11 +371,12 @@ class Resta(OperacionBinaria):
         global INDICE
         indiceloc = INDICE 
         codigo = ""
+        INDICE += 1
         codigo += f"{self.izquierda.genera_codigo(n)}\n" 
         codigo += f"{(' ')*n}tempresta{indiceloc} = temp\n"
         codigo += f"{self.derecha.genera_codigo(n)}\n"
         codigo += f"{(' ')*n}temp = tempresta{indiceloc} - temp"
-        INDICE += 1
+        
         
         return codigo
 
@@ -397,11 +398,12 @@ class Multiplicacion(OperacionBinaria):
         global INDICE
         indiceloc = INDICE 
         codigo = ""
+        INDICE += 1
         codigo = f"{self.izquierda.genera_codigo(n)}\n" 
         codigo += f"{(' ')*n}tempmul{indiceloc} = temp\n"
         codigo += f"{self.derecha.genera_codigo(n)}\n"
         codigo += f"{(' ')*n}temp = tempmul{indiceloc} * temp"
-        INDICE += 1
+        
         
         return codigo
 
@@ -421,11 +423,12 @@ class Division(OperacionBinaria):
         global INDICE
         indiceloc = INDICE 
         codigo = ""
+        INDICE += 1
         codigo = f"{self.izquierda.genera_codigo(n)}\n" 
         codigo += f"{(' ')*n}tempdiv{indiceloc} = temp\n"
         codigo += f"{self.derecha.genera_codigo(n)}\n"
         codigo += f"{(' ')*n}temp = tempdiv{indiceloc} / temp"
-        INDICE += 1
+        
         
         return codigo
 
@@ -677,15 +680,20 @@ class Clase(Nodo):
         return resultado
     
     def genera_codigo(self, n):
+        global ATRIBUTOS
         codigo = ""
         if self.padre == '_no_set':
             codigo += f"class {self.nombre}:\n"
         else:
             codigo += f"class {self.nombre}({self.padre}):\n"
+        codigo += f"{(n+2)*' '}def __init__(self):\n"
         for caracteristica in self.caracteristicas:
-            global ATRIBUTOS
             ATRIBUTOS.append(caracteristica.nombre)
-            codigo += f"{caracteristica.genera_codigo(n+2)}\n"
+            if isinstance(caracteristica,Atributo):
+                codigo += f"{caracteristica.genera_codigo(n+2)}\n"
+        for caracteristica in self.caracteristicas:
+            if isinstance(caracteristica,Metodo):
+                codigo += f"{caracteristica.genera_codigo(n+2)}\n"
         return codigo
 
 @dataclass
@@ -727,20 +735,20 @@ class Atributo(Caracteristica):
         codigo = ""
         if isinstance(self.cuerpo, NoExpr):
             if (self.tipo == "Int"):
-                codigo += f"{(' ')*n}{self.nombre} = Entero(0)"
+                codigo += f"{(' ')*n}self.{self.nombre} = Entero(0)"
             elif (self.tipo == "String"):
-                codigo += f"{(' ')*n}{self.nombre} = Cadena_carac("")"
+                codigo += f"{(' ')*n}self.{self.nombre} = Cadena_carac("")"
             elif (self.tipo == "Bool"):
-                codigo += f"{(' ')*n}{self.nombre} = Booleano()"
+                codigo += f"{(' ')*n}self.{self.nombre} = Booleano()"
             elif (self.tipo == "IO"):
-                codigo += f"{(' ')*n}{self.nombre} = None"
+                codigo += f"{(' ')*n}self.{self.nombre} = None"
             else:
-                codigo += f"{(' ')*n}{self.nombre} = {self.tipo}()"
+                codigo += f"{(' ')*n}self.{self.nombre} = None"
         elif (self.tipo == "Int" or self.tipo == "String" or self.tipo == "Bool" or self.tipo == "IO"):
-            codigo += f"{(' ')*n}{self.cuerpo.genera_codigo(0)}\n"
-            codigo += f"{(' ')*n}{self.nombre} = temp"
+            codigo += f"{self.cuerpo.genera_codigo(n+2)}\n"
+            codigo += f"{(' ')*(n+2)}{self.nombre} = temp"
         else:
-            codigo += f"{(' ')*n}{self.nombre} = {self.tipo}({self.cuerpo.genera_codigo(0)})"
+            codigo += f"{(' ')*(n+2)}{self.nombre} = {self.tipo}()"
             
             
 
