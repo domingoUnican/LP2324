@@ -18,7 +18,7 @@ class Object:
 class IO(Object):
 
     def out_string(self, s):
-        print(s.cadena,end='')
+        print(s.cadena,end='') #domingo nos dijo que debería de ser '' pero en otros sitios no funciona sin \n
 
     def out_int(self, s):
         print(s.numero,end='')
@@ -85,3 +85,33 @@ class Bool(Object):
 
 true = Bool(True)
 false = Bool(False)
+
+
+
+class Base(IO):
+  def identify(self):
+        return (self.out_string(String("base\n")))
+
+class Derived(Base):
+  def identify(self):
+        return (self.out_string(String("derived\n")))
+
+class Main(Object):
+  def main(self):
+    def temp_func(me):
+      me.identify()
+    variable = Base()
+    temp_func(variable)
+
+    def temp_func(me):
+      me.identify()
+    variable = Base()
+    temp_func(variable)
+
+    def temp_func(me):
+      me.identify()
+    variable = Derived()
+    temp_func(variable)
+
+
+Main().main()
