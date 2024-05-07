@@ -236,6 +236,15 @@ class Let(Expresion):
     
     def genera_codigo(self, n):
         codigo = ""
+        entra = False
+        if self.nombre in Clase.atributos:
+            entra = True
+            Clase.atributos.remove(self.nombre)
+        codigo += f"{' '*n}def auxiliar({self.nombre}):\n"
+        codigo += f"{self.cuerpo.genera_codigo(n+2)}"
+        codigo += f"{' '*(n+2)}return t\n"
+        if entra:
+            Clase.atributos.add(self.nombre)
         if isinstance(self.inicializacion,NoExpr):
             if self.tipo == 'Int':
                 codigo += f"{' '*n}{self.nombre} = Entero()\n"
@@ -243,11 +252,12 @@ class Let(Expresion):
                 codigo += f"{' '*n}{self.nombre} = String1()\n"
             elif self.tipo == 'Bool':
                 codigo += f"{' '*n}{self.nombre} = Booleano()\n"
+            codigo += f"{' '*n}t = auxiliar({self.nombre})\n"
         else:
             codigo += f"{self.inicializacion.genera_codigo(n)}\n"
-            codigo += f"{' '*n}{self.nombre} = t\n"
         
-        codigo += f"{self.cuerpo.genera_codigo(n)}"
+            codigo += f"{' '*n}t = auxiliar(t)\n"
+        
         return codigo
 
 
