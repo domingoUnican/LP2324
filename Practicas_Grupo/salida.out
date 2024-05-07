@@ -43,7 +43,7 @@ Rule 39    Expresion -> ISVOID Expresion  [precedence=left, level=6]
 Rule 40    Expresion -> NOT Expresion  [precedence=left, level=1]
 Rule 41    Expresion -> ( Expresion )
 Rule 42    Expresion -> Expresion = Expresion  [precedence=nonassoc, level=2]
-Rule 43    Expresion -> Expresion DARROW Expresion
+Rule 43    Expresion -> Expresion LE Expresion  [precedence=left, level=4]
 Rule 44    Expresion -> Expresion < Expresion  [precedence=left, level=4]
 Rule 45    Expresion -> Expresion - Expresion  [precedence=left, level=3]
 Rule 46    Expresion -> Expresion + Expresion  [precedence=left, level=3]
@@ -68,10 +68,6 @@ Rule 64    lista_expr_pc -> lista_expr_pc Expresion ;
 Rule 65    lista_expr_pc -> error ;
 Rule 66    lista_expr_pc -> Expresion ;
 
-Unused terminals:
-
-    LE
-
 Terminals, with rules where they appear:
 
 (                    : 13 14 15 16 32 33 34 35 36 37 41
@@ -91,7 +87,7 @@ ASSIGN               : 11 49 54 55 57 58
 BOOL_CONST           : 20
 CASE                 : 27 28
 CLASS                : 3
-DARROW               : 43 59 60 61 62
+DARROW               : 59 60 61 62
 ELSE                 : 31
 ESAC                 : 27 28
 FI                   : 31
@@ -100,7 +96,7 @@ IN                   : 29
 INHERITS             : 4
 INT_CONST            : 22
 ISVOID               : 39
-LE                   : 
+LE                   : 43
 LET                  : 29
 LOOP                 : 30
 NEW                  : 26
@@ -472,7 +468,7 @@ state 36
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -541,7 +537,7 @@ state 42
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -551,7 +547,7 @@ state 42
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -565,7 +561,7 @@ state 43
     .               reduce using rule 20 (Expresion -> BOOL_CONST .)
     @               reduce using rule 20 (Expresion -> BOOL_CONST .)
     =               reduce using rule 20 (Expresion -> BOOL_CONST .)
-    DARROW          reduce using rule 20 (Expresion -> BOOL_CONST .)
+    LE              reduce using rule 20 (Expresion -> BOOL_CONST .)
     <               reduce using rule 20 (Expresion -> BOOL_CONST .)
     -               reduce using rule 20 (Expresion -> BOOL_CONST .)
     +               reduce using rule 20 (Expresion -> BOOL_CONST .)
@@ -591,7 +587,7 @@ state 44
     .               reduce using rule 21 (Expresion -> STR_CONST .)
     @               reduce using rule 21 (Expresion -> STR_CONST .)
     =               reduce using rule 21 (Expresion -> STR_CONST .)
-    DARROW          reduce using rule 21 (Expresion -> STR_CONST .)
+    LE              reduce using rule 21 (Expresion -> STR_CONST .)
     <               reduce using rule 21 (Expresion -> STR_CONST .)
     -               reduce using rule 21 (Expresion -> STR_CONST .)
     +               reduce using rule 21 (Expresion -> STR_CONST .)
@@ -617,7 +613,7 @@ state 45
     .               reduce using rule 22 (Expresion -> INT_CONST .)
     @               reduce using rule 22 (Expresion -> INT_CONST .)
     =               reduce using rule 22 (Expresion -> INT_CONST .)
-    DARROW          reduce using rule 22 (Expresion -> INT_CONST .)
+    LE              reduce using rule 22 (Expresion -> INT_CONST .)
     <               reduce using rule 22 (Expresion -> INT_CONST .)
     -               reduce using rule 22 (Expresion -> INT_CONST .)
     +               reduce using rule 22 (Expresion -> INT_CONST .)
@@ -646,7 +642,7 @@ state 46
     .               reduce using rule 23 (Expresion -> OBJECTID .)
     @               reduce using rule 23 (Expresion -> OBJECTID .)
     =               reduce using rule 23 (Expresion -> OBJECTID .)
-    DARROW          reduce using rule 23 (Expresion -> OBJECTID .)
+    LE              reduce using rule 23 (Expresion -> OBJECTID .)
     <               reduce using rule 23 (Expresion -> OBJECTID .)
     -               reduce using rule 23 (Expresion -> OBJECTID .)
     +               reduce using rule 23 (Expresion -> OBJECTID .)
@@ -699,7 +695,7 @@ state 47
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -758,7 +754,7 @@ state 49
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -825,7 +821,7 @@ state 51
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -875,7 +871,7 @@ state 52
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -925,7 +921,7 @@ state 53
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -975,7 +971,7 @@ state 54
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -1025,7 +1021,7 @@ state 55
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -1075,7 +1071,7 @@ state 56
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -1144,7 +1140,7 @@ state 60
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -1208,7 +1204,7 @@ state 63
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -1234,7 +1230,7 @@ state 63
 
 state 64
 
-    (43) Expresion -> Expresion DARROW . Expresion
+    (43) Expresion -> Expresion LE . Expresion
     (20) Expresion -> . BOOL_CONST
     (21) Expresion -> . STR_CONST
     (22) Expresion -> . INT_CONST
@@ -1258,7 +1254,7 @@ state 64
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -1308,7 +1304,7 @@ state 65
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -1358,7 +1354,7 @@ state 66
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -1408,7 +1404,7 @@ state 67
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -1458,7 +1454,7 @@ state 68
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -1508,7 +1504,7 @@ state 69
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -1559,7 +1555,7 @@ state 70
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -1610,7 +1606,7 @@ state 71
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -1670,7 +1666,7 @@ state 73
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -1704,7 +1700,7 @@ state 74
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -1714,7 +1710,7 @@ state 74
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -1728,7 +1724,7 @@ state 75
     .               reduce using rule 26 (Expresion -> NEW TYPEID .)
     @               reduce using rule 26 (Expresion -> NEW TYPEID .)
     =               reduce using rule 26 (Expresion -> NEW TYPEID .)
-    DARROW          reduce using rule 26 (Expresion -> NEW TYPEID .)
+    LE              reduce using rule 26 (Expresion -> NEW TYPEID .)
     <               reduce using rule 26 (Expresion -> NEW TYPEID .)
     -               reduce using rule 26 (Expresion -> NEW TYPEID .)
     +               reduce using rule 26 (Expresion -> NEW TYPEID .)
@@ -1762,7 +1758,7 @@ state 77
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -1772,7 +1768,7 @@ state 77
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -1810,7 +1806,7 @@ state 81
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -1820,7 +1816,7 @@ state 81
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -1836,7 +1832,7 @@ state 82
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -1846,7 +1842,7 @@ state 82
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -1862,7 +1858,7 @@ state 83
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -1872,7 +1868,7 @@ state 83
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -1888,14 +1884,14 @@ state 84
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
     (47) Expresion -> Expresion . / Expresion
     (48) Expresion -> Expresion . * Expresion
     =               reduce using rule 38 (Expresion -> ~ Expresion .)
-    DARROW          reduce using rule 38 (Expresion -> ~ Expresion .)
+    LE              reduce using rule 38 (Expresion -> ~ Expresion .)
     <               reduce using rule 38 (Expresion -> ~ Expresion .)
     -               reduce using rule 38 (Expresion -> ~ Expresion .)
     +               reduce using rule 38 (Expresion -> ~ Expresion .)
@@ -1925,14 +1921,14 @@ state 85
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
     (47) Expresion -> Expresion . / Expresion
     (48) Expresion -> Expresion . * Expresion
     =               reduce using rule 39 (Expresion -> ISVOID Expresion .)
-    DARROW          reduce using rule 39 (Expresion -> ISVOID Expresion .)
+    LE              reduce using rule 39 (Expresion -> ISVOID Expresion .)
     <               reduce using rule 39 (Expresion -> ISVOID Expresion .)
     -               reduce using rule 39 (Expresion -> ISVOID Expresion .)
     +               reduce using rule 39 (Expresion -> ISVOID Expresion .)
@@ -1962,13 +1958,12 @@ state 86
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
     (47) Expresion -> Expresion . / Expresion
     (48) Expresion -> Expresion . * Expresion
-    DARROW          reduce using rule 40 (Expresion -> NOT Expresion .)
     ;               reduce using rule 40 (Expresion -> NOT Expresion .)
     OF              reduce using rule 40 (Expresion -> NOT Expresion .)
     LOOP            reduce using rule 40 (Expresion -> NOT Expresion .)
@@ -1984,6 +1979,7 @@ state 86
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -2012,7 +2008,7 @@ state 89
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -2022,7 +2018,7 @@ state 89
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -2052,14 +2048,13 @@ state 92
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
     (47) Expresion -> Expresion . / Expresion
     (48) Expresion -> Expresion . * Expresion
     =               reduce using rule 42 (Expresion -> Expresion = Expresion .)
-    DARROW          reduce using rule 42 (Expresion -> Expresion = Expresion .)
     ;               reduce using rule 42 (Expresion -> Expresion = Expresion .)
     OF              reduce using rule 42 (Expresion -> Expresion = Expresion .)
     LOOP            reduce using rule 42 (Expresion -> Expresion = Expresion .)
@@ -2074,6 +2069,7 @@ state 92
     FI              reduce using rule 42 (Expresion -> Expresion = Expresion .)
     .               shift and go to state 61
     @               shift and go to state 62
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -2083,46 +2079,37 @@ state 92
 
 state 93
 
-    (43) Expresion -> Expresion DARROW Expresion .
+    (43) Expresion -> Expresion LE Expresion .
     (34) Expresion -> Expresion . . OBJECTID ( )
     (35) Expresion -> Expresion . . OBJECTID ( Expresion lista_expr )
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
     (47) Expresion -> Expresion . / Expresion
     (48) Expresion -> Expresion . * Expresion
-  ! shift/reduce conflict for . resolved as shift
-  ! shift/reduce conflict for @ resolved as shift
-  ! shift/reduce conflict for = resolved as shift
-  ! shift/reduce conflict for DARROW resolved as shift
-  ! shift/reduce conflict for < resolved as shift
-  ! shift/reduce conflict for - resolved as shift
-  ! shift/reduce conflict for + resolved as shift
-  ! shift/reduce conflict for / resolved as shift
-  ! shift/reduce conflict for * resolved as shift
-    ;               reduce using rule 43 (Expresion -> Expresion DARROW Expresion .)
-    OF              reduce using rule 43 (Expresion -> Expresion DARROW Expresion .)
-    LOOP            reduce using rule 43 (Expresion -> Expresion DARROW Expresion .)
-    THEN            reduce using rule 43 (Expresion -> Expresion DARROW Expresion .)
-    )               reduce using rule 43 (Expresion -> Expresion DARROW Expresion .)
-    }               reduce using rule 43 (Expresion -> Expresion DARROW Expresion .)
-    ,               reduce using rule 43 (Expresion -> Expresion DARROW Expresion .)
-    POOL            reduce using rule 43 (Expresion -> Expresion DARROW Expresion .)
-    ELSE            reduce using rule 43 (Expresion -> Expresion DARROW Expresion .)
-    OBJECTID        reduce using rule 43 (Expresion -> Expresion DARROW Expresion .)
-    IN              reduce using rule 43 (Expresion -> Expresion DARROW Expresion .)
-    FI              reduce using rule 43 (Expresion -> Expresion DARROW Expresion .)
+    =               reduce using rule 43 (Expresion -> Expresion LE Expresion .)
+    LE              reduce using rule 43 (Expresion -> Expresion LE Expresion .)
+    <               reduce using rule 43 (Expresion -> Expresion LE Expresion .)
+    -               reduce using rule 43 (Expresion -> Expresion LE Expresion .)
+    +               reduce using rule 43 (Expresion -> Expresion LE Expresion .)
+    ;               reduce using rule 43 (Expresion -> Expresion LE Expresion .)
+    OF              reduce using rule 43 (Expresion -> Expresion LE Expresion .)
+    LOOP            reduce using rule 43 (Expresion -> Expresion LE Expresion .)
+    THEN            reduce using rule 43 (Expresion -> Expresion LE Expresion .)
+    )               reduce using rule 43 (Expresion -> Expresion LE Expresion .)
+    }               reduce using rule 43 (Expresion -> Expresion LE Expresion .)
+    ,               reduce using rule 43 (Expresion -> Expresion LE Expresion .)
+    POOL            reduce using rule 43 (Expresion -> Expresion LE Expresion .)
+    ELSE            reduce using rule 43 (Expresion -> Expresion LE Expresion .)
+    OBJECTID        reduce using rule 43 (Expresion -> Expresion LE Expresion .)
+    IN              reduce using rule 43 (Expresion -> Expresion LE Expresion .)
+    FI              reduce using rule 43 (Expresion -> Expresion LE Expresion .)
     .               shift and go to state 61
     @               shift and go to state 62
-    =               shift and go to state 63
-    DARROW          shift and go to state 64
-    <               shift and go to state 65
-    -               shift and go to state 66
-    +               shift and go to state 67
     /               shift and go to state 68
     *               shift and go to state 69
 
@@ -2135,14 +2122,14 @@ state 94
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
     (47) Expresion -> Expresion . / Expresion
     (48) Expresion -> Expresion . * Expresion
     =               reduce using rule 44 (Expresion -> Expresion < Expresion .)
-    DARROW          reduce using rule 44 (Expresion -> Expresion < Expresion .)
+    LE              reduce using rule 44 (Expresion -> Expresion < Expresion .)
     <               reduce using rule 44 (Expresion -> Expresion < Expresion .)
     -               reduce using rule 44 (Expresion -> Expresion < Expresion .)
     +               reduce using rule 44 (Expresion -> Expresion < Expresion .)
@@ -2172,14 +2159,13 @@ state 95
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
     (47) Expresion -> Expresion . / Expresion
     (48) Expresion -> Expresion . * Expresion
     =               reduce using rule 45 (Expresion -> Expresion - Expresion .)
-    DARROW          reduce using rule 45 (Expresion -> Expresion - Expresion .)
     -               reduce using rule 45 (Expresion -> Expresion - Expresion .)
     +               reduce using rule 45 (Expresion -> Expresion - Expresion .)
     ;               reduce using rule 45 (Expresion -> Expresion - Expresion .)
@@ -2196,6 +2182,7 @@ state 95
     FI              reduce using rule 45 (Expresion -> Expresion - Expresion .)
     .               shift and go to state 61
     @               shift and go to state 62
+    LE              shift and go to state 64
     <               shift and go to state 65
     /               shift and go to state 68
     *               shift and go to state 69
@@ -2209,14 +2196,13 @@ state 96
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
     (47) Expresion -> Expresion . / Expresion
     (48) Expresion -> Expresion . * Expresion
     =               reduce using rule 46 (Expresion -> Expresion + Expresion .)
-    DARROW          reduce using rule 46 (Expresion -> Expresion + Expresion .)
     -               reduce using rule 46 (Expresion -> Expresion + Expresion .)
     +               reduce using rule 46 (Expresion -> Expresion + Expresion .)
     ;               reduce using rule 46 (Expresion -> Expresion + Expresion .)
@@ -2233,6 +2219,7 @@ state 96
     FI              reduce using rule 46 (Expresion -> Expresion + Expresion .)
     .               shift and go to state 61
     @               shift and go to state 62
+    LE              shift and go to state 64
     <               shift and go to state 65
     /               shift and go to state 68
     *               shift and go to state 69
@@ -2246,14 +2233,14 @@ state 97
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
     (47) Expresion -> Expresion . / Expresion
     (48) Expresion -> Expresion . * Expresion
     =               reduce using rule 47 (Expresion -> Expresion / Expresion .)
-    DARROW          reduce using rule 47 (Expresion -> Expresion / Expresion .)
+    LE              reduce using rule 47 (Expresion -> Expresion / Expresion .)
     <               reduce using rule 47 (Expresion -> Expresion / Expresion .)
     -               reduce using rule 47 (Expresion -> Expresion / Expresion .)
     +               reduce using rule 47 (Expresion -> Expresion / Expresion .)
@@ -2283,14 +2270,14 @@ state 98
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
     (47) Expresion -> Expresion . / Expresion
     (48) Expresion -> Expresion . * Expresion
     =               reduce using rule 48 (Expresion -> Expresion * Expresion .)
-    DARROW          reduce using rule 48 (Expresion -> Expresion * Expresion .)
+    LE              reduce using rule 48 (Expresion -> Expresion * Expresion .)
     <               reduce using rule 48 (Expresion -> Expresion * Expresion .)
     -               reduce using rule 48 (Expresion -> Expresion * Expresion .)
     +               reduce using rule 48 (Expresion -> Expresion * Expresion .)
@@ -2318,7 +2305,7 @@ state 99
     .               reduce using rule 32 (Expresion -> OBJECTID ( ) .)
     @               reduce using rule 32 (Expresion -> OBJECTID ( ) .)
     =               reduce using rule 32 (Expresion -> OBJECTID ( ) .)
-    DARROW          reduce using rule 32 (Expresion -> OBJECTID ( ) .)
+    LE              reduce using rule 32 (Expresion -> OBJECTID ( ) .)
     <               reduce using rule 32 (Expresion -> OBJECTID ( ) .)
     -               reduce using rule 32 (Expresion -> OBJECTID ( ) .)
     +               reduce using rule 32 (Expresion -> OBJECTID ( ) .)
@@ -2346,7 +2333,7 @@ state 100
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -2357,7 +2344,7 @@ state 100
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -2376,13 +2363,12 @@ state 101
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
     (47) Expresion -> Expresion . / Expresion
     (48) Expresion -> Expresion . * Expresion
-    DARROW          reduce using rule 49 (Expresion -> OBJECTID ASSIGN Expresion .)
     ;               reduce using rule 49 (Expresion -> OBJECTID ASSIGN Expresion .)
     OF              reduce using rule 49 (Expresion -> OBJECTID ASSIGN Expresion .)
     LOOP            reduce using rule 49 (Expresion -> OBJECTID ASSIGN Expresion .)
@@ -2398,6 +2384,7 @@ state 101
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -2411,7 +2398,7 @@ state 102
     .               reduce using rule 24 (Expresion -> { error } .)
     @               reduce using rule 24 (Expresion -> { error } .)
     =               reduce using rule 24 (Expresion -> { error } .)
-    DARROW          reduce using rule 24 (Expresion -> { error } .)
+    LE              reduce using rule 24 (Expresion -> { error } .)
     <               reduce using rule 24 (Expresion -> { error } .)
     -               reduce using rule 24 (Expresion -> { error } .)
     +               reduce using rule 24 (Expresion -> { error } .)
@@ -2458,7 +2445,7 @@ state 104
     .               reduce using rule 25 (Expresion -> { lista_expr_pc } .)
     @               reduce using rule 25 (Expresion -> { lista_expr_pc } .)
     =               reduce using rule 25 (Expresion -> { lista_expr_pc } .)
-    DARROW          reduce using rule 25 (Expresion -> { lista_expr_pc } .)
+    LE              reduce using rule 25 (Expresion -> { lista_expr_pc } .)
     <               reduce using rule 25 (Expresion -> { lista_expr_pc } .)
     -               reduce using rule 25 (Expresion -> { lista_expr_pc } .)
     +               reduce using rule 25 (Expresion -> { lista_expr_pc } .)
@@ -2492,7 +2479,7 @@ state 106
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -2502,7 +2489,7 @@ state 106
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -2579,7 +2566,7 @@ state 110
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -2645,7 +2632,7 @@ state 113
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -2695,7 +2682,7 @@ state 114
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -2725,7 +2712,7 @@ state 115
     .               reduce using rule 41 (Expresion -> ( Expresion ) .)
     @               reduce using rule 41 (Expresion -> ( Expresion ) .)
     =               reduce using rule 41 (Expresion -> ( Expresion ) .)
-    DARROW          reduce using rule 41 (Expresion -> ( Expresion ) .)
+    LE              reduce using rule 41 (Expresion -> ( Expresion ) .)
     <               reduce using rule 41 (Expresion -> ( Expresion ) .)
     -               reduce using rule 41 (Expresion -> ( Expresion ) .)
     +               reduce using rule 41 (Expresion -> ( Expresion ) .)
@@ -2772,7 +2759,7 @@ state 116
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -2823,7 +2810,7 @@ state 117
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -2880,7 +2867,7 @@ state 119
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -2944,7 +2931,7 @@ state 122
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -3039,7 +3026,7 @@ state 128
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -3048,7 +3035,7 @@ state 128
   ! shift/reduce conflict for . resolved as shift
   ! shift/reduce conflict for @ resolved as shift
   ! shift/reduce conflict for = resolved as shift
-  ! shift/reduce conflict for DARROW resolved as shift
+  ! shift/reduce conflict for LE resolved as shift
   ! shift/reduce conflict for < resolved as shift
   ! shift/reduce conflict for - resolved as shift
   ! shift/reduce conflict for + resolved as shift
@@ -3069,7 +3056,7 @@ state 128
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -3112,7 +3099,7 @@ state 131
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -3122,7 +3109,7 @@ state 131
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -3138,7 +3125,7 @@ state 132
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -3148,7 +3135,7 @@ state 132
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -3170,7 +3157,7 @@ state 134
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -3180,7 +3167,7 @@ state 134
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -3196,7 +3183,7 @@ state 135
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -3206,7 +3193,7 @@ state 135
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -3222,7 +3209,7 @@ state 136
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -3233,7 +3220,7 @@ state 136
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -3250,7 +3237,7 @@ state 137
     .               reduce using rule 34 (Expresion -> Expresion . OBJECTID ( ) .)
     @               reduce using rule 34 (Expresion -> Expresion . OBJECTID ( ) .)
     =               reduce using rule 34 (Expresion -> Expresion . OBJECTID ( ) .)
-    DARROW          reduce using rule 34 (Expresion -> Expresion . OBJECTID ( ) .)
+    LE              reduce using rule 34 (Expresion -> Expresion . OBJECTID ( ) .)
     <               reduce using rule 34 (Expresion -> Expresion . OBJECTID ( ) .)
     -               reduce using rule 34 (Expresion -> Expresion . OBJECTID ( ) .)
     +               reduce using rule 34 (Expresion -> Expresion . OBJECTID ( ) .)
@@ -3283,7 +3270,7 @@ state 139
     .               reduce using rule 33 (Expresion -> OBJECTID ( Expresion lista_expr ) .)
     @               reduce using rule 33 (Expresion -> OBJECTID ( Expresion lista_expr ) .)
     =               reduce using rule 33 (Expresion -> OBJECTID ( Expresion lista_expr ) .)
-    DARROW          reduce using rule 33 (Expresion -> OBJECTID ( Expresion lista_expr ) .)
+    LE              reduce using rule 33 (Expresion -> OBJECTID ( Expresion lista_expr ) .)
     <               reduce using rule 33 (Expresion -> OBJECTID ( Expresion lista_expr ) .)
     -               reduce using rule 33 (Expresion -> OBJECTID ( Expresion lista_expr ) .)
     +               reduce using rule 33 (Expresion -> OBJECTID ( Expresion lista_expr ) .)
@@ -3311,7 +3298,7 @@ state 140
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -3322,7 +3309,7 @@ state 140
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -3339,7 +3326,7 @@ state 141
     .               reduce using rule 27 (Expresion -> CASE error OF lista_expr_case ESAC .)
     @               reduce using rule 27 (Expresion -> CASE error OF lista_expr_case ESAC .)
     =               reduce using rule 27 (Expresion -> CASE error OF lista_expr_case ESAC .)
-    DARROW          reduce using rule 27 (Expresion -> CASE error OF lista_expr_case ESAC .)
+    LE              reduce using rule 27 (Expresion -> CASE error OF lista_expr_case ESAC .)
     <               reduce using rule 27 (Expresion -> CASE error OF lista_expr_case ESAC .)
     -               reduce using rule 27 (Expresion -> CASE error OF lista_expr_case ESAC .)
     +               reduce using rule 27 (Expresion -> CASE error OF lista_expr_case ESAC .)
@@ -3374,7 +3361,7 @@ state 143
     .               reduce using rule 28 (Expresion -> CASE Expresion OF lista_expr_case ESAC .)
     @               reduce using rule 28 (Expresion -> CASE Expresion OF lista_expr_case ESAC .)
     =               reduce using rule 28 (Expresion -> CASE Expresion OF lista_expr_case ESAC .)
-    DARROW          reduce using rule 28 (Expresion -> CASE Expresion OF lista_expr_case ESAC .)
+    LE              reduce using rule 28 (Expresion -> CASE Expresion OF lista_expr_case ESAC .)
     <               reduce using rule 28 (Expresion -> CASE Expresion OF lista_expr_case ESAC .)
     -               reduce using rule 28 (Expresion -> CASE Expresion OF lista_expr_case ESAC .)
     +               reduce using rule 28 (Expresion -> CASE Expresion OF lista_expr_case ESAC .)
@@ -3427,7 +3414,7 @@ state 145
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -3477,7 +3464,7 @@ state 147
     .               reduce using rule 30 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
     @               reduce using rule 30 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
     =               reduce using rule 30 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
-    DARROW          reduce using rule 30 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
+    LE              reduce using rule 30 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
     <               reduce using rule 30 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
     -               reduce using rule 30 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
     +               reduce using rule 30 (Expresion -> WHILE Expresion LOOP Expresion POOL .)
@@ -3523,7 +3510,7 @@ state 148
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -3598,7 +3585,7 @@ state 153
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -3646,7 +3633,7 @@ state 156
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -3662,7 +3649,7 @@ state 156
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -3723,7 +3710,7 @@ state 159
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -3756,7 +3743,7 @@ state 160
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -3766,7 +3753,7 @@ state 160
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -3780,7 +3767,7 @@ state 161
     .               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
     @               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
     =               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
-    DARROW          reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
+    LE              reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
     <               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
     -               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
     +               reduce using rule 35 (Expresion -> Expresion . OBJECTID ( Expresion lista_expr ) .)
@@ -3808,7 +3795,7 @@ state 162
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -3819,7 +3806,7 @@ state 162
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -3836,7 +3823,7 @@ state 163
     .               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
     @               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
     =               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
-    DARROW          reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
+    LE              reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
     <               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
     -               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
     +               reduce using rule 37 (Expresion -> Expresion @ TYPEID . OBJECTID ( ) .)
@@ -3885,7 +3872,7 @@ state 164
     (40) Expresion -> . NOT Expresion
     (41) Expresion -> . ( Expresion )
     (42) Expresion -> . Expresion = Expresion
-    (43) Expresion -> . Expresion DARROW Expresion
+    (43) Expresion -> . Expresion LE Expresion
     (44) Expresion -> . Expresion < Expresion
     (45) Expresion -> . Expresion - Expresion
     (46) Expresion -> . Expresion + Expresion
@@ -3930,7 +3917,7 @@ state 167
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -3946,7 +3933,7 @@ state 167
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -3980,7 +3967,7 @@ state 169
     .               reduce using rule 31 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
     @               reduce using rule 31 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
     =               reduce using rule 31 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
-    DARROW          reduce using rule 31 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
+    LE              reduce using rule 31 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
     <               reduce using rule 31 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
     -               reduce using rule 31 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
     +               reduce using rule 31 (Expresion -> IF Expresion THEN Expresion ELSE Expresion FI .)
@@ -4022,7 +4009,7 @@ state 172
     (36) Expresion -> Expresion . @ TYPEID . OBJECTID ( Expresion lista_expr )
     (37) Expresion -> Expresion . @ TYPEID . OBJECTID ( )
     (42) Expresion -> Expresion . = Expresion
-    (43) Expresion -> Expresion . DARROW Expresion
+    (43) Expresion -> Expresion . LE Expresion
     (44) Expresion -> Expresion . < Expresion
     (45) Expresion -> Expresion . - Expresion
     (46) Expresion -> Expresion . + Expresion
@@ -4032,7 +4019,7 @@ state 172
     .               shift and go to state 61
     @               shift and go to state 62
     =               shift and go to state 63
-    DARROW          shift and go to state 64
+    LE              shift and go to state 64
     <               shift and go to state 65
     -               shift and go to state 66
     +               shift and go to state 67
@@ -4058,7 +4045,7 @@ state 175
     .               reduce using rule 36 (Expresion -> Expresion @ TYPEID . OBJECTID ( Expresion lista_expr ) .)
     @               reduce using rule 36 (Expresion -> Expresion @ TYPEID . OBJECTID ( Expresion lista_expr ) .)
     =               reduce using rule 36 (Expresion -> Expresion @ TYPEID . OBJECTID ( Expresion lista_expr ) .)
-    DARROW          reduce using rule 36 (Expresion -> Expresion @ TYPEID . OBJECTID ( Expresion lista_expr ) .)
+    LE              reduce using rule 36 (Expresion -> Expresion @ TYPEID . OBJECTID ( Expresion lista_expr ) .)
     <               reduce using rule 36 (Expresion -> Expresion @ TYPEID . OBJECTID ( Expresion lista_expr ) .)
     -               reduce using rule 36 (Expresion -> Expresion @ TYPEID . OBJECTID ( Expresion lista_expr ) .)
     +               reduce using rule 36 (Expresion -> Expresion @ TYPEID . OBJECTID ( Expresion lista_expr ) .)
@@ -4118,19 +4105,10 @@ state 179
 
 Conflicts:
 
-shift/reduce conflict for . in state 93 resolved as shift
-shift/reduce conflict for @ in state 93 resolved as shift
-shift/reduce conflict for = in state 93 resolved as shift
-shift/reduce conflict for DARROW in state 93 resolved as shift
-shift/reduce conflict for < in state 93 resolved as shift
-shift/reduce conflict for - in state 93 resolved as shift
-shift/reduce conflict for + in state 93 resolved as shift
-shift/reduce conflict for / in state 93 resolved as shift
-shift/reduce conflict for * in state 93 resolved as shift
 shift/reduce conflict for . in state 128 resolved as shift
 shift/reduce conflict for @ in state 128 resolved as shift
 shift/reduce conflict for = in state 128 resolved as shift
-shift/reduce conflict for DARROW in state 128 resolved as shift
+shift/reduce conflict for LE in state 128 resolved as shift
 shift/reduce conflict for < in state 128 resolved as shift
 shift/reduce conflict for - in state 128 resolved as shift
 shift/reduce conflict for + in state 128 resolved as shift
