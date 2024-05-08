@@ -71,4 +71,3 @@ class Bool(Object):
             return True
         else:
             return False
-

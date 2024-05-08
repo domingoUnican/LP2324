@@ -49,10 +49,14 @@ class Asignacion(Expresion):
         return resultado
 
     def genera_codigo(self, n):
-        #codigo = f"{' '*n}temp = {self.nombre}\n"
-        return f"{' '*n}{self.nombre}={self.cuerpo.genera_codigo(0)}"
-        #codigo += self.cuerpo.genera_codigo(n)
-        #return codigo
+        codigo = ""
+        if isinstance(self.cuerpo, Objeto) or isinstance(self.cuerpo, Nueva):
+            codigo += f"{(' ')*n}temp = {self.cuerpo.genera_codigo(0)}\n"
+        
+        else: 
+            codigo += f"{self.cuerpo.genera_codigo(n)}\n"
+        codigo += f"{(' ')*n}self.{self.nombre} = temp"
+        return codigo
 
 
 @dataclass
@@ -293,9 +297,9 @@ class Suma(OperacionBinaria):
     def genera_codigo(self, n):
         codigo = ""
         codigo+= self.izquierda.genera_codigo(n) + "\n"
-        codigo+= f"{' '*n}temporal = temp \n"
+        codigo+= f"{' '*n}sumando = temp \n"
         codigo+= self.derecha.genera_codigo(n) + "\n"
-        codigo+= f"{' '*n}temp = temporal + temp \n"
+        codigo+= f"{' '*n}temp = sumando + temp \n"
         return codigo
 
 @dataclass
@@ -314,9 +318,9 @@ class Resta(OperacionBinaria):
         #return f"{' '*n}{self.izquierda}-{self.derecha}"
         codigo = ""
         codigo+= self.izquierda.genera_codigo(n) + "\n"
-        codigo+= f"{' '*n}temporal = temp \n"
+        codigo+= f"{' '*n}restando = temp \n"
         codigo+= self.derecha.genera_codigo(n) + "\n"
-        codigo+= f"{' '*n}temp = temporal - temp \n"
+        codigo+= f"{' '*n}temp = restando - temp \n"
         return codigo
 
 
@@ -336,9 +340,9 @@ class Multiplicacion(OperacionBinaria):
     def genera_codigo(self, n):
         codigo = ""
         codigo+= self.izquierda.genera_codigo(n) + "\n"
-        codigo+= f"{' '*n}temporal = temp \n"
+        codigo+= f"{' '*n}multiplicando = temp \n"
         codigo+= self.derecha.genera_codigo(n) + "\n"
-        codigo+= f"{' '*n}temp = temporal * temp \n"
+        codigo+= f"{' '*n}temp = multiplicando * temp \n"
         return codigo
 
 
@@ -357,9 +361,9 @@ class Division(OperacionBinaria):
 
         codigo = ""
         codigo+= self.izquierda.genera_codigo(n) + "\n"
-        codigo+= f"{' '*n}temporal = temp \n"
+        codigo+= f"{' '*n}dividendo = temp \n"
         codigo+= self.derecha.genera_codigo(n) + "\n"
-        codigo+= f"{' '*n}temp = temporal / temp \n"
+        codigo+= f"{' '*n}temp = dividendo / temp \n"
         return codigo
         #return f"{' '*n}{self.izquierda}/{self.derecha}"
 
@@ -662,12 +666,16 @@ class Atributo(Caracteristica):
         global lista
         lista.append(self.nombre)
         codigo = f"{self.cuerpo.genera_codigo(n)}\n"
-        if (self.tipo == 'Booleano' and isinstance(self.inicializacion, NoExpr)):
+        if (self.tipo == 'Booleano' and isinstance(self.cuerpo, NoExpr)):
             codigo += f"{' '*n}self.{self.nombre}={self.tipo}()\n"
-        elif (self.tipo == 'Entero' and isinstance(self.inicializacion, NoExpr)):
+        elif (self.tipo == 'Entero' and isinstance(self.cuerpo, NoExpr)):
             codigo += f"{' '*n}self.{self.nombre}={self.tipo}()\n"
-        elif (self.tipo == 'String' and isinstance(self.inicializacion, NoExpr)):
+        elif (self.tipo == 'String' and isinstance(self.cuerpo, NoExpr)):
             codigo += f"{' '*n}self.{self.nombre}={self.tipo}()\n"
+        elif (not isinstance(self.cuerpo, NoExpr)):
+            codigo += self.cuerpo.genera_codigo(n)
+            codigo+="\n"
+            codigo += f"{' '*n}self.{self.nombre}=temp\n"
         else:
             codigo += f"{' '*n}self.{self.nombre}=None\n"
         #aqui pendejo
