@@ -20,7 +20,7 @@ TESTS = [fich for fich in FICHEROS
          if os.path.isfile(os.path.join(DIR, fich)) and
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$", fich)]
 TESTS.sort()
-TESTS = {"init-default.cl"} #abort, basic-init, basicequality, calls, casevoid, dispatch1, dispatch2, fact, fibo
+TESTS = {"let-nested.cl"} #abort, basic-init, basicequality, calls, casevoid, dispatch1, dispatch2, fact, fibo, init-default
 
 if True:
     contador = len(TESTS)

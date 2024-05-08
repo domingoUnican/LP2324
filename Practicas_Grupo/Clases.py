@@ -145,7 +145,7 @@ class Condicional(Expresion):
         
         codigo += f"{self.verdadero.genera_codigo(n+2)}\n"
         codigo += f"{' '*n}else:\n"
-        codigo += f"{self.falso.genera_codigo(n+2)}"
+        codigo += f"{self.falso.genera_codigo(n+2)}\n"
         return codigo
 
 
@@ -195,6 +195,7 @@ class Let(Expresion):
             self.inicializacion = Entero()
         elif (self.tipo == 'String' and isinstance(self.inicializacion, NoExpr)):
             self.inicializacion = String1(valor="")
+
 
         codigo += self.inicializacion.genera_codigo(0) + "\n"
         codigo += f"{' '*n}{self.nombre} = temp\n"
@@ -444,7 +445,7 @@ class Neg(Expresion):
         return resultado
     
     def genera_codigo(self, n):
-        return f"{' '*n}not{self.expr}"
+        return f"{' '*n}temp = not {self.expr}"
 
 @dataclass
 class Not(Expresion):
@@ -459,7 +460,7 @@ class Not(Expresion):
         return resultado
     
     def genera_codigo(self, n):
-        return f"{' '*n}not{self.expr}"
+        return f"{' '*n}temp = not {self.expr}"
         
 @dataclass
 class EsNulo(Expresion):

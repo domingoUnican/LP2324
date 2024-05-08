@@ -71,3 +71,43 @@ class Bool(Object):
             return True
         else:
             return False
+
+class Main(IO):
+  def __init__(self):
+    pass
+  def print(self,x):
+    lstout_int = []
+    temp = x
+    lstout_int.append(temp)
+    temp = self.out_int(*lstout_int)
+
+    lstout_string = []
+    temp = String("\n")
+    lstout_string.append(temp)
+    temp = self.out_string(*lstout_string)
+
+    return temp
+  def main(self):
+    temp=5
+    foo = temp
+    temp = not Entero(linea=0, valor='1')
+    foo = temp
+
+    foo = temp
+    temp = not Objeto(linea=0, nombre='foo')
+    if Bool(b=True) == (temp):
+
+      foo = temp
+      lstprint = []
+      temp = foo
+      sumando = temp
+      temp=1
+      temp = sumando + temp
+
+      lstprint.append(temp)
+      temp = self.print(*lstprint)
+
+    else:
+      temp=5
+    return temp
+Main().main()
