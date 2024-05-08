@@ -14,14 +14,14 @@ PRACTICA = "04"  # Practica que hay que evaluar
 DEBUG = True   # Decir si se lanzan mensajes de debug
 NUMLINEAS = 3   # Numero de lineas que se muestran antes y después de la no coincidencia
 sys.path.append(DIRECTORIO)
-CALIFICACION = "minimos" # Para un reto mayor cambiar a "grading"
+CALIFICACION = "grading" # Para un reto mayor cambiar a "grading"
 DIR = os.path.join(DIRECTORIO, PRACTICA, CALIFICACION)
 FICHEROS = os.listdir(DIR)
 TESTS = [fich for fich in FICHEROS
          if os.path.isfile(os.path.join(DIR, fich)) and
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$", fich)]
 TESTS.sort()
-TESTS = ["scoping.cl"]
+TESTS = ["while-val.cl"]
 
 if True:
     contador = len(TESTS)
