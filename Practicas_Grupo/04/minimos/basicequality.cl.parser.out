@@ -1,0 +1,171 @@
+#0
+_program
+  #0
+  _class
+    Main
+    Object
+    "basicequality.cl"
+    (
+    #0
+    _method
+      main
+      Object
+      _block
+        #0
+        _cond
+          #0
+          _eq
+            #0
+            _bool
+              1
+            : _no_type
+            #0
+            _bool
+              0
+            : _no_type
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            abort
+            (
+            )
+          : _no_type
+          #0
+          _int
+            0
+          : _no_type
+        : _no_type
+        #0
+        _cond
+          #0
+          _eq
+            #0
+            _bool
+              1
+            : _no_type
+            #0
+            _bool
+              1
+            : _no_type
+          : _no_type
+          #0
+          _int
+            0
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            abort
+            (
+            )
+          : _no_type
+        : _no_type
+        #0
+        _cond
+          #0
+          _eq
+            #0
+            _string
+              "hello"
+            : _no_type
+            #0
+            _dispatch
+              #0
+              _string
+                "hello"
+              : _no_type
+              copy
+              (
+              )
+            : _no_type
+          : _no_type
+          #0
+          _int
+            0
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            abort
+            (
+            )
+          : _no_type
+        : _no_type
+        #0
+        _let
+          a
+          String
+          #0
+          _no_expr
+          : _no_type
+          #0
+          _cond
+            #0
+            _eq
+              #0
+              _object
+                a
+              : _no_type
+              #0
+              _string
+                ""
+              : _no_type
+            : _no_type
+            #0
+            _int
+              0
+            : _no_type
+            #0
+            _dispatch
+              #0
+              _object
+                self
+              : _no_type
+              abort
+              (
+              )
+            : _no_type
+          : _no_type
+        : _no_type
+        #0
+        _cond
+          #0
+          _eq
+            #0
+            _int
+              5
+            : _no_type
+            #0
+            _int
+              6
+            : _no_type
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            abort
+            (
+            )
+          : _no_type
+          #0
+          _int
+            0
+          : _no_type
+        : _no_type
+      : _no_type
+
+
+    )

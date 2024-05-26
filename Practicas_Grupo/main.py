@@ -1,18 +1,22 @@
 import os
 import re
 import sys
-
+import io
+import traceback
+from contextlib import redirect_stdout
+# ¡from Base_clases import *
 
 DIRECTORIO = os.path.expanduser("./")
 sys.path.append(DIRECTORIO)
 
 from Lexer import CoolLexer
 
-PRACTICA = "02"  # Practica que hay que evaluar
+PRACTICA = "04"  # Practica que hay que evaluar
 DEBUG = True   # Decir si se lanzan mensajes de debug
 NUMLINEAS = 3   # Numero de lineas que se muestran antes y después de la no coincidencia
 sys.path.append(DIRECTORIO)
-CALIFICACION = "minimos" # Para un reto mayor cambiar a "grading"
+CALIFICACION = "grading"  # Para un reto mayor cambiar a "grading"
+# CALIFICACION = "grading"
 DIR = os.path.join(DIRECTORIO, PRACTICA, CALIFICACION)
 FICHEROS = os.listdir(DIR)
 TESTS = [fich for fich in FICHEROS
@@ -21,7 +25,7 @@ TESTS = [fich for fich in FICHEROS
 TESTS.sort()
 
 
-if __name__ == '__main__':
+if True:
     contador = len(TESTS)
     for fich in TESTS:
         lexer = CoolLexer()
@@ -31,6 +35,8 @@ if __name__ == '__main__':
             os.remove(os.path.join(DIR, fich)+'.nuestro')
         if os.path.isfile(os.path.join(DIR, fich)+'.bien'):
             os.remove(os.path.join(DIR, fich)+'.bien')
+        if os.path.isfile(os.path.join(DIR, fich) + '.gen.py'):
+            os.remove(os.path.join(DIR, fich) + '.gen.py')
         texto = ''
         entrada = f.read()
         f.close()
@@ -46,17 +52,13 @@ if __name__ == '__main__':
             if texto.strip().split() != resultado.strip().split():
                 print(f"Revisa el fichero {fich}")
                 if DEBUG:
-
-                    # texto = re.sub(r'#\d+\b','',texto)
-                    # resultado = re.sub(r'#\d+\b','',resultado)
-                    nuestro = '\n'.join(linea for linea in texto.split('\n') if linea.strip())
-                    bien = '\n'.join(linea for linea in resultado.split('\n') if linea.strip())
-
+                    nuestro = [linea for linea in texto.split('\n') if linea]
+                    bien = [linea for linea in resultado.split('\n') if linea]
                     linea = 0
-                    f = open(os.path.join(DIR, fich)+'.nuestro', 'w', encoding='utf-8')
-                    g = open(os.path.join(DIR, fich)+'.bien', 'w', encoding='utf-8')
-                    f.write(nuestro.strip())
-                    g.write(bien.strip())
+                    f = open(os.path.join(DIR, fich)+'.nuestro', 'w')
+                    g = open(os.path.join(DIR, fich)+'.bien', 'w')
+                    f.write(texto.strip())
+                    g.write(resultado.strip())
                     f.close()
                     g.close()
                     contador -= 1
@@ -87,7 +89,46 @@ if __name__ == '__main__':
                         contador -= 1
             except Exception as e:
                 print(f"Lanza excepción en {fich} con el texto {e}")
-                '''import traceback
-                traceback.print_exc(e)'''
+                contador -= 1
+        elif PRACTICA == '04':
+            from Parser import CoolParser
+            parser = CoolParser()
+            parser.nombre_fichero = fich
+            parser.errores = []
+            bien = g.read()
+            g.close()
+            j = parser.parse(lexer.tokenize(entrada))
+            try:
+                codigo = j.genera_codigo()
+                if DEBUG:
+                    with open(os.path.join(DIR, fich + '.gen.py'), 'w+') as d:
+                        d.write(codigo)
+                    with open(os.path.join(DIR, fich + '.parser.out'), 'w+') as pd:
+                        pd.write(j.str(0))
+                else:
+                    os.remove(os.path.join(DIR, fich + '.gen.py'))
+                    os.remove(os.path.join(DIR, fich + '.parser.out'))
+                resultado = io.StringIO()
+                print(f"Executing code for {fich}:")
+                sys.stdout.flush()
+                with redirect_stdout(resultado):
+                    exec(codigo)
+                resultado = resultado.getvalue()
+                print(f"Result: \n{resultado}")
+                if resultado.lower().strip().split() != bien.lower().strip().split():
+                    print(f"✗ Revisa el fichero {fich}")
+                    if DEBUG:
+                        f = open(os.path.join(DIR, fich)+'.nuestro', 'w')
+                        g = open(os.path.join(DIR, fich)+'.bien', 'w')
+                        f.write(resultado.strip())
+                        g.write(bien.strip())
+                        f.close()
+                        g.close()
+                        contador -= 1
+                else:
+                    print(f"✓ Fichero correcto: {fich}")
+            except Exception as e:
+                print(f"✗ Lanza excepción en {fich} con el texto {e}")
+                traceback.print_exception(e, file=sys.stdout)
                 contador -= 1
     print(f'Ficheros correctos: {contador}/{len(TESTS)}')

@@ -1,0 +1,204 @@
+#0
+_program
+  #0
+  _class
+    Main
+    IO
+    "sequence.cl"
+    (
+    #0
+    _attr
+      a
+      Int
+      #0
+      _int
+        0
+      : _no_type
+    #0
+    _attr
+      b
+      Int
+      #0
+      _int
+        1
+      : _no_type
+    #0
+    _method
+      main
+      Object
+      _block
+        #0
+        _assign
+          a
+          #0
+          _plus
+            #0
+            _object
+              b
+            : _no_type
+            #0
+            _int
+              1
+            : _no_type
+          : _no_type
+        : _no_type
+        #0
+        _assign
+          b
+          #0
+          _plus
+            #0
+            _object
+              a
+            : _no_type
+            #0
+            _int
+              1
+            : _no_type
+          : _no_type
+        : _no_type
+        #0
+        _assign
+          a
+          #0
+          _plus
+            #0
+            _object
+              b
+            : _no_type
+            #0
+            _int
+              1
+            : _no_type
+          : _no_type
+        : _no_type
+        #0
+        _assign
+          b
+          #0
+          _plus
+            #0
+            _object
+              a
+            : _no_type
+            #0
+            _int
+              1
+            : _no_type
+          : _no_type
+        : _no_type
+        #0
+        _assign
+          a
+          #0
+          _plus
+            #0
+            _object
+              b
+            : _no_type
+            #0
+            _int
+              1
+            : _no_type
+          : _no_type
+        : _no_type
+        #0
+        _assign
+          b
+          #0
+          _plus
+            #0
+            _object
+              a
+            : _no_type
+            #0
+            _int
+              1
+            : _no_type
+          : _no_type
+        : _no_type
+        #0
+        _assign
+          a
+          #0
+          _plus
+            #0
+            _object
+              b
+            : _no_type
+            #0
+            _int
+              1
+            : _no_type
+          : _no_type
+        : _no_type
+        #0
+        _assign
+          b
+          #0
+          _plus
+            #0
+            _object
+              a
+            : _no_type
+            #0
+            _int
+              1
+            : _no_type
+          : _no_type
+        : _no_type
+        #0
+        _assign
+          a
+          #0
+          _plus
+            #0
+            _object
+              b
+            : _no_type
+            #0
+            _int
+              1
+            : _no_type
+          : _no_type
+        : _no_type
+        #0
+        _assign
+          b
+          #0
+          _plus
+            #0
+            _object
+              a
+            : _no_type
+            #0
+            _int
+              1
+            : _no_type
+          : _no_type
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_int
+          (
+          #0
+          _plus
+            #0
+            _object
+              a
+            : _no_type
+            #0
+            _object
+              b
+            : _no_type
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+
+
+    )

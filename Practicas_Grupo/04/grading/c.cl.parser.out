@@ -1,0 +1,2323 @@
+#0
+_program
+  #0
+  _class
+    EvalObject
+    IO
+    "c.cl"
+    (
+    #0
+    _method
+      eval
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          abort
+          (
+          )
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Closure
+    EvalObject
+    "c.cl"
+    (
+    #0
+    _attr
+      parent
+      Closure
+      #0
+      _no_expr
+      : _no_type
+    #0
+    _attr
+      x
+      EvalObject
+      #0
+      _no_expr
+      : _no_type
+    #0
+    _method
+      get_parent
+      Closure
+      #0
+      _object
+        parent
+      : _no_type
+    #0
+    _method
+      get_x
+      EvalObject
+      #0
+      _object
+        x
+      : _no_type
+    #0
+    _method
+      init
+      #0
+      _formal
+        p
+        Closure
+      Closure
+      _block
+        #0
+        _assign
+          parent
+          #0
+          _object
+            p
+          : _no_type
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      apply
+      #0
+      _formal
+        y
+        EvalObject
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          abort
+          (
+          )
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Main
+    Object
+    "c.cl"
+    (
+    #0
+    _method
+      main
+      EvalObject
+      #0
+      _let
+        x
+        EvalObject
+        #0
+        _let
+          x
+          EvalObject
+          #0
+          _let
+            x
+            EvalObject
+            #0
+            _let
+              x
+              EvalObject
+              #0
+              _let
+                x
+                EvalObject
+                #0
+                _let
+                  x
+                  EvalObject
+                  #0
+                  _let
+                    x
+                    EvalObject
+                    #0
+                    _let
+                      x
+                      EvalObject
+                      #0
+                      _dispatch
+                        #0
+                        _new
+                          Closure0
+                        : _no_type
+                        init
+                        (
+                        #0
+                        _new
+                          Closure
+                        : _no_type
+                        )
+                      : _no_type
+                      #0
+                      _let
+                        y
+                        EvalObject
+                        #0
+                        _dispatch
+                          #0
+                          _new
+                            Closure1
+                          : _no_type
+                          init
+                          (
+                          #0
+                          _new
+                            Closure
+                          : _no_type
+                          )
+                        : _no_type
+                        #0
+                        _typcase
+                          #0
+                          _object
+                            x
+                          : _no_type
+                          #0
+                          _branch
+                            c
+                            Closure
+                            #0
+                            _dispatch
+                              #0
+                              _object
+                                c
+                              : _no_type
+                              apply
+                              (
+                              #0
+                              _object
+                                y
+                              : _no_type
+                              )
+                            : _no_type
+                          #0
+                          _branch
+                            o
+                            Object
+                            _block
+                              #0
+                              _dispatch
+                                #0
+                                _object
+                                  self
+                                : _no_type
+                                abort
+                                (
+                                )
+                              : _no_type
+                              #0
+                              _new
+                                EvalObject
+                              : _no_type
+                            : _no_type
+
+                        : _no_type
+                      : _no_type
+                    : _no_type
+                    #0
+                    _let
+                      y
+                      EvalObject
+                      #0
+                      _dispatch
+                        #0
+                        _new
+                          Closure2
+                        : _no_type
+                        init
+                        (
+                        #0
+                        _new
+                          Closure
+                        : _no_type
+                        )
+                      : _no_type
+                      #0
+                      _typcase
+                        #0
+                        _object
+                          x
+                        : _no_type
+                        #0
+                        _branch
+                          c
+                          Closure
+                          #0
+                          _dispatch
+                            #0
+                            _object
+                              c
+                            : _no_type
+                            apply
+                            (
+                            #0
+                            _object
+                              y
+                            : _no_type
+                            )
+                          : _no_type
+                        #0
+                        _branch
+                          o
+                          Object
+                          _block
+                            #0
+                            _dispatch
+                              #0
+                              _object
+                                self
+                              : _no_type
+                              abort
+                              (
+                              )
+                            : _no_type
+                            #0
+                            _new
+                              EvalObject
+                            : _no_type
+                          : _no_type
+
+                      : _no_type
+                    : _no_type
+                  : _no_type
+                  #0
+                  _let
+                    y
+                    EvalObject
+                    #0
+                    _dispatch
+                      #0
+                      _new
+                        Closure3
+                      : _no_type
+                      init
+                      (
+                      #0
+                      _new
+                        Closure
+                      : _no_type
+                      )
+                    : _no_type
+                    #0
+                    _typcase
+                      #0
+                      _object
+                        x
+                      : _no_type
+                      #0
+                      _branch
+                        c
+                        Closure
+                        #0
+                        _dispatch
+                          #0
+                          _object
+                            c
+                          : _no_type
+                          apply
+                          (
+                          #0
+                          _object
+                            y
+                          : _no_type
+                          )
+                        : _no_type
+                      #0
+                      _branch
+                        o
+                        Object
+                        _block
+                          #0
+                          _dispatch
+                            #0
+                            _object
+                              self
+                            : _no_type
+                            abort
+                            (
+                            )
+                          : _no_type
+                          #0
+                          _new
+                            EvalObject
+                          : _no_type
+                        : _no_type
+
+                    : _no_type
+                  : _no_type
+                : _no_type
+                #0
+                _let
+                  y
+                  EvalObject
+                  #0
+                  _dispatch
+                    #0
+                    _new
+                      Closure4
+                    : _no_type
+                    init
+                    (
+                    #0
+                    _new
+                      Closure
+                    : _no_type
+                    )
+                  : _no_type
+                  #0
+                  _typcase
+                    #0
+                    _object
+                      x
+                    : _no_type
+                    #0
+                    _branch
+                      c
+                      Closure
+                      #0
+                      _dispatch
+                        #0
+                        _object
+                          c
+                        : _no_type
+                        apply
+                        (
+                        #0
+                        _object
+                          y
+                        : _no_type
+                        )
+                      : _no_type
+                    #0
+                    _branch
+                      o
+                      Object
+                      _block
+                        #0
+                        _dispatch
+                          #0
+                          _object
+                            self
+                          : _no_type
+                          abort
+                          (
+                          )
+                        : _no_type
+                        #0
+                        _new
+                          EvalObject
+                        : _no_type
+                      : _no_type
+
+                  : _no_type
+                : _no_type
+              : _no_type
+              #0
+              _let
+                y
+                EvalObject
+                #0
+                _dispatch
+                  #0
+                  _new
+                    Closure5
+                  : _no_type
+                  init
+                  (
+                  #0
+                  _new
+                    Closure
+                  : _no_type
+                  )
+                : _no_type
+                #0
+                _typcase
+                  #0
+                  _object
+                    x
+                  : _no_type
+                  #0
+                  _branch
+                    c
+                    Closure
+                    #0
+                    _dispatch
+                      #0
+                      _object
+                        c
+                      : _no_type
+                      apply
+                      (
+                      #0
+                      _object
+                        y
+                      : _no_type
+                      )
+                    : _no_type
+                  #0
+                  _branch
+                    o
+                    Object
+                    _block
+                      #0
+                      _dispatch
+                        #0
+                        _object
+                          self
+                        : _no_type
+                        abort
+                        (
+                        )
+                      : _no_type
+                      #0
+                      _new
+                        EvalObject
+                      : _no_type
+                    : _no_type
+
+                : _no_type
+              : _no_type
+            : _no_type
+            #0
+            _let
+              y
+              EvalObject
+              #0
+              _dispatch
+                #0
+                _new
+                  Closure6
+                : _no_type
+                init
+                (
+                #0
+                _new
+                  Closure
+                : _no_type
+                )
+              : _no_type
+              #0
+              _typcase
+                #0
+                _object
+                  x
+                : _no_type
+                #0
+                _branch
+                  c
+                  Closure
+                  #0
+                  _dispatch
+                    #0
+                    _object
+                      c
+                    : _no_type
+                    apply
+                    (
+                    #0
+                    _object
+                      y
+                    : _no_type
+                    )
+                  : _no_type
+                #0
+                _branch
+                  o
+                  Object
+                  _block
+                    #0
+                    _dispatch
+                      #0
+                      _object
+                        self
+                      : _no_type
+                      abort
+                      (
+                      )
+                    : _no_type
+                    #0
+                    _new
+                      EvalObject
+                    : _no_type
+                  : _no_type
+
+              : _no_type
+            : _no_type
+          : _no_type
+          #0
+          _let
+            y
+            EvalObject
+            #0
+            _dispatch
+              #0
+              _new
+                Closure7
+              : _no_type
+              init
+              (
+              #0
+              _new
+                Closure
+              : _no_type
+              )
+            : _no_type
+            #0
+            _typcase
+              #0
+              _object
+                x
+              : _no_type
+              #0
+              _branch
+                c
+                Closure
+                #0
+                _dispatch
+                  #0
+                  _object
+                    c
+                  : _no_type
+                  apply
+                  (
+                  #0
+                  _object
+                    y
+                  : _no_type
+                  )
+                : _no_type
+              #0
+              _branch
+                o
+                Object
+                _block
+                  #0
+                  _dispatch
+                    #0
+                    _object
+                      self
+                    : _no_type
+                    abort
+                    (
+                    )
+                  : _no_type
+                  #0
+                  _new
+                    EvalObject
+                  : _no_type
+                : _no_type
+
+            : _no_type
+          : _no_type
+        : _no_type
+        #0
+        _let
+          y
+          EvalObject
+          #0
+          _dispatch
+            #0
+            _new
+              Closure8
+            : _no_type
+            init
+            (
+            #0
+            _new
+              Closure
+            : _no_type
+            )
+          : _no_type
+          #0
+          _typcase
+            #0
+            _object
+              x
+            : _no_type
+            #0
+            _branch
+              c
+              Closure
+              #0
+              _dispatch
+                #0
+                _object
+                  c
+                : _no_type
+                apply
+                (
+                #0
+                _object
+                  y
+                : _no_type
+                )
+              : _no_type
+            #0
+            _branch
+              o
+              Object
+              _block
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  abort
+                  (
+                  )
+                : _no_type
+                #0
+                _new
+                  EvalObject
+                : _no_type
+              : _no_type
+
+          : _no_type
+        : _no_type
+      : _no_type
+
+    )
+  #0
+  _class
+    Closure8
+    Closure
+    "c.cl"
+    (
+    #0
+    _method
+      apply
+      #0
+      _formal
+        y
+        EvalObject
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "Applying closure 8\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          get_x
+          (
+          )
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Closure7
+    Closure
+    "c.cl"
+    (
+    #0
+    _method
+      apply
+      #0
+      _formal
+        y
+        EvalObject
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "Applying closure 7\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _new
+            Closure9
+          : _no_type
+          init
+          (
+          #0
+          _object
+            self
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Closure9
+    Closure
+    "c.cl"
+    (
+    #0
+    _method
+      apply
+      #0
+      _formal
+        y
+        EvalObject
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "Applying closure 9\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            get_parent
+            (
+            )
+          : _no_type
+          get_x
+          (
+          )
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Closure6
+    Closure
+    "c.cl"
+    (
+    #0
+    _method
+      apply
+      #0
+      _formal
+        y
+        EvalObject
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "Applying closure 6\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          get_x
+          (
+          )
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Closure5
+    Closure
+    "c.cl"
+    (
+    #0
+    _method
+      apply
+      #0
+      _formal
+        y
+        EvalObject
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "Applying closure 5\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _new
+            Closure10
+          : _no_type
+          init
+          (
+          #0
+          _object
+            self
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Closure10
+    Closure
+    "c.cl"
+    (
+    #0
+    _method
+      apply
+      #0
+      _formal
+        y
+        EvalObject
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "Applying closure 10\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _new
+            Closure11
+          : _no_type
+          init
+          (
+          #0
+          _object
+            self
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Closure11
+    Closure
+    "c.cl"
+    (
+    #0
+    _method
+      apply
+      #0
+      _formal
+        y
+        EvalObject
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "Applying closure 11\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _let
+          x
+          EvalObject
+          #0
+          _let
+            x
+            EvalObject
+            #0
+            _dispatch
+              #0
+              _dispatch
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  get_parent
+                  (
+                  )
+                : _no_type
+                get_parent
+                (
+                )
+              : _no_type
+              get_x
+              (
+              )
+            : _no_type
+            #0
+            _let
+              y
+              EvalObject
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                get_x
+                (
+                )
+              : _no_type
+              #0
+              _typcase
+                #0
+                _object
+                  x
+                : _no_type
+                #0
+                _branch
+                  c
+                  Closure
+                  #0
+                  _dispatch
+                    #0
+                    _object
+                      c
+                    : _no_type
+                    apply
+                    (
+                    #0
+                    _object
+                      y
+                    : _no_type
+                    )
+                  : _no_type
+                #0
+                _branch
+                  o
+                  Object
+                  _block
+                    #0
+                    _dispatch
+                      #0
+                      _object
+                        self
+                      : _no_type
+                      abort
+                      (
+                      )
+                    : _no_type
+                    #0
+                    _new
+                      EvalObject
+                    : _no_type
+                  : _no_type
+
+              : _no_type
+            : _no_type
+          : _no_type
+          #0
+          _let
+            y
+            EvalObject
+            #0
+            _let
+              x
+              EvalObject
+              #0
+              _dispatch
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  get_parent
+                  (
+                  )
+                : _no_type
+                get_x
+                (
+                )
+              : _no_type
+              #0
+              _let
+                y
+                EvalObject
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  get_x
+                  (
+                  )
+                : _no_type
+                #0
+                _typcase
+                  #0
+                  _object
+                    x
+                  : _no_type
+                  #0
+                  _branch
+                    c
+                    Closure
+                    #0
+                    _dispatch
+                      #0
+                      _object
+                        c
+                      : _no_type
+                      apply
+                      (
+                      #0
+                      _object
+                        y
+                      : _no_type
+                      )
+                    : _no_type
+                  #0
+                  _branch
+                    o
+                    Object
+                    _block
+                      #0
+                      _dispatch
+                        #0
+                        _object
+                          self
+                        : _no_type
+                        abort
+                        (
+                        )
+                      : _no_type
+                      #0
+                      _new
+                        EvalObject
+                      : _no_type
+                    : _no_type
+
+                : _no_type
+              : _no_type
+            : _no_type
+            #0
+            _typcase
+              #0
+              _object
+                x
+              : _no_type
+              #0
+              _branch
+                c
+                Closure
+                #0
+                _dispatch
+                  #0
+                  _object
+                    c
+                  : _no_type
+                  apply
+                  (
+                  #0
+                  _object
+                    y
+                  : _no_type
+                  )
+                : _no_type
+              #0
+              _branch
+                o
+                Object
+                _block
+                  #0
+                  _dispatch
+                    #0
+                    _object
+                      self
+                    : _no_type
+                    abort
+                    (
+                    )
+                  : _no_type
+                  #0
+                  _new
+                    EvalObject
+                  : _no_type
+                : _no_type
+
+            : _no_type
+          : _no_type
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Closure4
+    Closure
+    "c.cl"
+    (
+    #0
+    _method
+      apply
+      #0
+      _formal
+        y
+        EvalObject
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "Applying closure 4\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _new
+            Closure12
+          : _no_type
+          init
+          (
+          #0
+          _object
+            self
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Closure12
+    Closure
+    "c.cl"
+    (
+    #0
+    _method
+      apply
+      #0
+      _formal
+        y
+        EvalObject
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "Applying closure 12\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            get_parent
+            (
+            )
+          : _no_type
+          get_x
+          (
+          )
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Closure3
+    Closure
+    "c.cl"
+    (
+    #0
+    _method
+      apply
+      #0
+      _formal
+        y
+        EvalObject
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "Applying closure 3\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _new
+            Closure13
+          : _no_type
+          init
+          (
+          #0
+          _object
+            self
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Closure13
+    Closure
+    "c.cl"
+    (
+    #0
+    _method
+      apply
+      #0
+      _formal
+        y
+        EvalObject
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "Applying closure 13\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _new
+            Closure14
+          : _no_type
+          init
+          (
+          #0
+          _object
+            self
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Closure14
+    Closure
+    "c.cl"
+    (
+    #0
+    _method
+      apply
+      #0
+      _formal
+        y
+        EvalObject
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "Applying closure 14\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _let
+          x
+          EvalObject
+          #0
+          _let
+            x
+            EvalObject
+            #0
+            _dispatch
+              #0
+              _dispatch
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  get_parent
+                  (
+                  )
+                : _no_type
+                get_parent
+                (
+                )
+              : _no_type
+              get_x
+              (
+              )
+            : _no_type
+            #0
+            _let
+              y
+              EvalObject
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                get_x
+                (
+                )
+              : _no_type
+              #0
+              _typcase
+                #0
+                _object
+                  x
+                : _no_type
+                #0
+                _branch
+                  c
+                  Closure
+                  #0
+                  _dispatch
+                    #0
+                    _object
+                      c
+                    : _no_type
+                    apply
+                    (
+                    #0
+                    _object
+                      y
+                    : _no_type
+                    )
+                  : _no_type
+                #0
+                _branch
+                  o
+                  Object
+                  _block
+                    #0
+                    _dispatch
+                      #0
+                      _object
+                        self
+                      : _no_type
+                      abort
+                      (
+                      )
+                    : _no_type
+                    #0
+                    _new
+                      EvalObject
+                    : _no_type
+                  : _no_type
+
+              : _no_type
+            : _no_type
+          : _no_type
+          #0
+          _let
+            y
+            EvalObject
+            #0
+            _let
+              x
+              EvalObject
+              #0
+              _dispatch
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  get_parent
+                  (
+                  )
+                : _no_type
+                get_x
+                (
+                )
+              : _no_type
+              #0
+              _let
+                y
+                EvalObject
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  get_x
+                  (
+                  )
+                : _no_type
+                #0
+                _typcase
+                  #0
+                  _object
+                    x
+                  : _no_type
+                  #0
+                  _branch
+                    c
+                    Closure
+                    #0
+                    _dispatch
+                      #0
+                      _object
+                        c
+                      : _no_type
+                      apply
+                      (
+                      #0
+                      _object
+                        y
+                      : _no_type
+                      )
+                    : _no_type
+                  #0
+                  _branch
+                    o
+                    Object
+                    _block
+                      #0
+                      _dispatch
+                        #0
+                        _object
+                          self
+                        : _no_type
+                        abort
+                        (
+                        )
+                      : _no_type
+                      #0
+                      _new
+                        EvalObject
+                      : _no_type
+                    : _no_type
+
+                : _no_type
+              : _no_type
+            : _no_type
+            #0
+            _typcase
+              #0
+              _object
+                x
+              : _no_type
+              #0
+              _branch
+                c
+                Closure
+                #0
+                _dispatch
+                  #0
+                  _object
+                    c
+                  : _no_type
+                  apply
+                  (
+                  #0
+                  _object
+                    y
+                  : _no_type
+                  )
+                : _no_type
+              #0
+              _branch
+                o
+                Object
+                _block
+                  #0
+                  _dispatch
+                    #0
+                    _object
+                      self
+                    : _no_type
+                    abort
+                    (
+                    )
+                  : _no_type
+                  #0
+                  _new
+                    EvalObject
+                  : _no_type
+                : _no_type
+
+            : _no_type
+          : _no_type
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Closure2
+    Closure
+    "c.cl"
+    (
+    #0
+    _method
+      apply
+      #0
+      _formal
+        y
+        EvalObject
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "Applying closure 2\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _new
+            Closure15
+          : _no_type
+          init
+          (
+          #0
+          _object
+            self
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Closure15
+    Closure
+    "c.cl"
+    (
+    #0
+    _method
+      apply
+      #0
+      _formal
+        y
+        EvalObject
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "Applying closure 15\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _new
+            Closure16
+          : _no_type
+          init
+          (
+          #0
+          _object
+            self
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Closure16
+    Closure
+    "c.cl"
+    (
+    #0
+    _method
+      apply
+      #0
+      _formal
+        y
+        EvalObject
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "Applying closure 16\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _let
+          x
+          EvalObject
+          #0
+          _let
+            x
+            EvalObject
+            #0
+            _dispatch
+              #0
+              _dispatch
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  get_parent
+                  (
+                  )
+                : _no_type
+                get_parent
+                (
+                )
+              : _no_type
+              get_x
+              (
+              )
+            : _no_type
+            #0
+            _let
+              y
+              EvalObject
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                get_x
+                (
+                )
+              : _no_type
+              #0
+              _typcase
+                #0
+                _object
+                  x
+                : _no_type
+                #0
+                _branch
+                  c
+                  Closure
+                  #0
+                  _dispatch
+                    #0
+                    _object
+                      c
+                    : _no_type
+                    apply
+                    (
+                    #0
+                    _object
+                      y
+                    : _no_type
+                    )
+                  : _no_type
+                #0
+                _branch
+                  o
+                  Object
+                  _block
+                    #0
+                    _dispatch
+                      #0
+                      _object
+                        self
+                      : _no_type
+                      abort
+                      (
+                      )
+                    : _no_type
+                    #0
+                    _new
+                      EvalObject
+                    : _no_type
+                  : _no_type
+
+              : _no_type
+            : _no_type
+          : _no_type
+          #0
+          _let
+            y
+            EvalObject
+            #0
+            _let
+              x
+              EvalObject
+              #0
+              _dispatch
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  get_parent
+                  (
+                  )
+                : _no_type
+                get_x
+                (
+                )
+              : _no_type
+              #0
+              _let
+                y
+                EvalObject
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  get_x
+                  (
+                  )
+                : _no_type
+                #0
+                _typcase
+                  #0
+                  _object
+                    x
+                  : _no_type
+                  #0
+                  _branch
+                    c
+                    Closure
+                    #0
+                    _dispatch
+                      #0
+                      _object
+                        c
+                      : _no_type
+                      apply
+                      (
+                      #0
+                      _object
+                        y
+                      : _no_type
+                      )
+                    : _no_type
+                  #0
+                  _branch
+                    o
+                    Object
+                    _block
+                      #0
+                      _dispatch
+                        #0
+                        _object
+                          self
+                        : _no_type
+                        abort
+                        (
+                        )
+                      : _no_type
+                      #0
+                      _new
+                        EvalObject
+                      : _no_type
+                    : _no_type
+
+                : _no_type
+              : _no_type
+            : _no_type
+            #0
+            _typcase
+              #0
+              _object
+                x
+              : _no_type
+              #0
+              _branch
+                c
+                Closure
+                #0
+                _dispatch
+                  #0
+                  _object
+                    c
+                  : _no_type
+                  apply
+                  (
+                  #0
+                  _object
+                    y
+                  : _no_type
+                  )
+                : _no_type
+              #0
+              _branch
+                o
+                Object
+                _block
+                  #0
+                  _dispatch
+                    #0
+                    _object
+                      self
+                    : _no_type
+                    abort
+                    (
+                    )
+                  : _no_type
+                  #0
+                  _new
+                    EvalObject
+                  : _no_type
+                : _no_type
+
+            : _no_type
+          : _no_type
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Closure1
+    Closure
+    "c.cl"
+    (
+    #0
+    _method
+      apply
+      #0
+      _formal
+        y
+        EvalObject
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "Applying closure 1\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _new
+            Closure17
+          : _no_type
+          init
+          (
+          #0
+          _object
+            self
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Closure17
+    Closure
+    "c.cl"
+    (
+    #0
+    _method
+      apply
+      #0
+      _formal
+        y
+        EvalObject
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "Applying closure 17\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            get_parent
+            (
+            )
+          : _no_type
+          get_x
+          (
+          )
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Closure0
+    Closure
+    "c.cl"
+    (
+    #0
+    _method
+      apply
+      #0
+      _formal
+        y
+        EvalObject
+      EvalObject
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "Applying closure 0\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          get_x
+          (
+          )
+        : _no_type
+      : _no_type
+
+
+    )

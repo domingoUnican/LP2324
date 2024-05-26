@@ -1,283 +1,370 @@
 # coding: utf-8
-from Lexer import CoolLexer
-from sly import Parser
-import sys
-import os
+from typing import Optional
+
 from Clases import *
+from Lexer import CoolLexer
+from sly.lex import Token
+from sly.yacc import YaccSymbol
+from sly import Parser
+
+
+# Placebo definition for PyCharm (since it doesn't understand the Parser metaclass)
+def _(*_):
+    return lambda _: _
 
 
 class CoolParser(Parser):
+    # error_token = TokenStr('error', r'error', {})
     nombre_fichero = ''
-    tokens = CoolLexer.tokens
+    tokens = CoolLexer.tokens #.union({
+    #     error_token,
+    # })
     debugfile = "salida.out"
     errores = []
-    precedence = (('right', ASSIGN, IN), 
-                 ('nonassoc', NOT, LE, '<', '=' ),
-                 ('left', '+', '-'),
-                 ('left', '*', '/', ISVOID),
-                 ('left', '~'),
-                 ('left', '@'),
-                 ('left', '.')
-                    )
-   
 
-    @_("Clase") #clase
+    precedence = (
+        ('right', 'NOT'),
+        ('left', 'ASSIGN',),
+        ('left', 'IN'),
+        ('nonassoc', '<', 'LE', '='),
+        ('left', '+', '-'),
+        ('left', '*', '/'),
+        ('right', 'ISVOID', '~'),
+        ('left', '.', '@'),
+    )
+
+    def __init__(self):
+        super().__init__()
+        self.expected_next_error = False
+        self.expected_error = False
+        self.error_depth = 0
+
+    @_("Clases")
     def Programa(self, p):
+        return Programa(secuencia=p.Clases)
 
-        return Programa(secuencia=[p.Clase])
+    @_("Clase",
+       "Clase Clases")
+    def Clases(self, p):
+        if not p:
+            return []
+        return [p.Clase] + (p.Clases if len(p) > 1 else [])
 
-    @_("Programa Clase") #subprograma u otra clase
-    def Programa(self, p):
-        
-        return Programa(secuencia=p.Programa.secuencia + [p.Clase])
-
-    @_("CLASS TYPEID opcional '{' lista_atr_metodos '}' ';'") #subprograma u otra clase
+    @_("CLASS TYPEID SuperClassDeclaration BlockCaracteristicas ';'")
     def Clase(self, p):
-        return Clase(nombre=p[1], padre = p[2], nombre_fichero= self.nombre_fichero, caracteristicas = p[4])
-    
-    @_("")
-    def opcional(self, p):
-        return 'Object'
-    
-    @_("INHERITS TYPEID")
-    def opcional(self, p):
-        return p[1]
-  
-    @_("")
-    def lista_atr_metodos(self,p):
-        return []
-    
+        return Clase(nombre=p.TYPEID, padre=p.SuperClassDeclaration,
+                     nombre_fichero=self.nombre_fichero,
+                     caracteristicas=p.BlockCaracteristicas)
 
-    @_("atributo  lista_atr_metodos")
-    def lista_atr_metodos(self,p):
-        return [p[0]] + p[1]
-    
+    @_("CLASS error ';'",
+       "CLASS TYPEID SuperClassDeclaration error ';'")
+    def Clase(self, p):
+        return ErrorNodo(p.error)
 
-    @_("metodo  lista_atr_metodos")
-    def lista_atr_metodos(self,p):
-        return [p[0]] +p[1]
+    @_("'{' Caracteristicas '}'")
+    def BlockCaracteristicas(self, p):
+        return p.Caracteristicas
 
-    @_("OBJECTID ':' TYPEID inicializacion ';'")
-    def atributo (self,p):
-        return Atributo(nombre= p[0], tipo = p[2], cuerpo= p[3])
-    
+    @_("'{' Caracteristicas error '}'",
+       "'{' error '}'")
+    def BlockCaracteristicas(self, p):
+        return p.Caracteristicas if len(p) > 3 else []
 
-    @_("")
-    def inicializacion(self, p):
-        return NoExpr()
+    @_("",
+       "INHERITS TYPEID")
+    def SuperClassDeclaration(self, p):
+        return p.TYPEID if len(p) > 0 else 'Object'
 
-    @_("ASSIGN expresion")
-    def inicializacion(self, p):
-        return p[1]
+    @_(
+        "",
+        "Caracteristica Caracteristicas")
+    def Caracteristicas(self, p):
+        if not p:
+            return []
+        return [p.Caracteristica] + (p.Caracteristicas if len(p) > 1 else [])
 
-    @_("OBJECTID '(' ')' ':' TYPEID '{' expresion '}' ';'")
-    def metodo (self,p):
-         return Metodo(nombre= p[0], tipo= p[4], cuerpo= p[6], formales= [])
-    
-    @_("OBJECTID '(' formales  formal ')' ':' TYPEID '{' expresion '}' ';'")
-    def metodo (self,p):
-         return Metodo(nombre= p[0], tipo= p[6], cuerpo= p[8], formales= p[2] + [p[3]])
-    
-    @_("")
-    def formales (self,p):
-        return []
-    
-    @_("formales formal ','") 
-    def formales (self,p):
-        return p[0] + [p[1]]
-    
+    @_("Atributo", "Metodo")
+    def Caracteristica(self, p):
+        return p[0]
+
+    @_("OBJECTID ':' TYPEID ';'")
+    def Atributo(self, p):
+        return Atributo(nombre=p.OBJECTID, tipo=p.TYPEID, cuerpo=NoExpr())
+
     @_("OBJECTID ':' TYPEID")
-    def formal(self, p):
-        return Formal(nombre_variable= p[0], tipo= p[2])
-    
+    def Atributo(self, p):
+        self._report_error(p, p.OBJECTID, 'OBJECTID')
+        return ErrorNodo(p.OBJECTID)
+
+    @_("OBJECTID ':' TYPEID ASSIGN Expresion ';'")
+    def Atributo(self, p):
+        return Atributo(nombre=p.OBJECTID, tipo=p.TYPEID, cuerpo=p.Expresion)
+
+    @_("OBJECTID ':' error ';'",
+       "OBJECTID ':' TYPEID error ';'",
+       "OBJECTID ':' TYPEID ASSIGN error ';'")
+    def Atributo(self, p):
+        return ErrorNodo(p.error)
+
+    @_("OBJECTID ParFormales ':' TYPEID BlockExpresion ';'")
+    def Metodo(self, p):
+        return Metodo(nombre=p.OBJECTID, tipo=p.TYPEID, cuerpo=p.BlockExpresion, formales=p.ParFormales)
 
 
-    #hasta aqui se hizo en la tutoria
-    #los nombres de los metodos en minusculas y los metodos que se retornan en mayuscula
+    @_("'(' ')'",
+        "'(' Formales ')'")
+    def ParFormales(self, p):
+        return p.Formales if len(p) > 2 else []
+    @_("'(' error ')'")
+    def ParFormales(self, p):
+        return ErrorNodo(p.error)
 
-    
-    @_("OBJECTID ASSIGN expresion")
-    def expresion(self, p):
-        return Asignacion(nombre= p[0], cuerpo= p[2])
-    
+    @_("'{' Expresion '}'")
+    def BlockExpresion(self, p):
+        return p.Expresion
+    @_("'{' error '}'")
+    def BlockExpresion(self, p):
+        return ErrorNodo(p.error)
+    @_("'{' '}'")
+    def BlockExpresion(self, p):
+        self._report_error(p, p[1])
+        return ErrorNodo(p[1])
 
-    @_("expresion '+' expresion")
-    def expresion(self, p):
-        return Suma(izquierda=  p[0], derecha= p[2])
-    
-    @_("expresion '-' expresion")
-    def expresion(self, p):
-        return Resta(izquierda=  p[0], derecha= p[2])
-    
-    @_("expresion '*' expresion")
-    def expresion(self, p):
-        return Multiplicacion(izquierda=  p[0], derecha= p[2])
-    
+    @_("Formal",
+       "Formal ',' Formales")
+    def Formales(self, p):
+        if not p:
+            return []
+        return [p.Formal] + (p.Formales if len(p) > 1 else [])
 
-    @_("expresion '/' expresion")
-    def expresion(self, p):
-        return Division(izquierda=  p[0], derecha= p[2])
-    
-    @_("expresion '<' expresion")
-    def expresion(self, p):
-        return Menor(izquierda=  p[0], derecha= p[2])
-    
-    @_("expresion LE expresion")
-    def expresion(self, p):
-        return LeIgual(izquierda=  p[0], derecha= p[2])
-    
+    @_("OBJECTID ':' TYPEID")
+    def Formal(self, p):
+        return Formal(nombre_variable=p.OBJECTID, tipo=p.TYPEID)
 
-    @_("expresion '=' expresion")
-    def expresion(self, p):
-        return Igual(izquierda=  p[0], derecha= p[2])
-    
-    @_("'(' expresion ')'")
-    def expresion(self, p):
-        return p[1]
-    
-    
-    @_("NOT expresion")
-    def expresion(self, p):
-        return Not(expr= p[1])
-    
-    @_("ISVOID expresion")
-    def expresion(self, p):
-        return EsNulo(expr= p[1])
-    
-    
-    @_("'~' expresion")
-    def expresion(self, p):
-        return Neg(expr= p[1])
-    
-    @_("expresion '@' TYPEID '.' OBJECTID '(' ')'")
-    def expresion(self, p):
-        return LlamadaMetodoEstatico(cuerpo= p[0], clase= p[2], nombre_metodo= p[4], argumentos= [])
-    
-    @_("expresion '@' TYPEID '.' OBJECTID '(' expresiones_metodos expresion ')'")
-    def expresion(self, p):
-        return LlamadaMetodoEstatico(cuerpo= p[0], clase= p[2], nombre_metodo= p[4], argumentos= p[6] + [p[7]])
-   
-    @_("")
-    def expresiones_metodos (self,p):
-        return []
-    
-    @_("expresiones_metodos expresion  ','") 
-    def expresiones_metodos (self,p):
-        return p[0] + [p[1]]
-    
-    @_("OBJECTID '(' expresiones_metodos expresion ')'")
-    def expresion(self, p):
-        return LlamadaMetodo(cuerpo= Objeto(nombre= "self" ) , nombre_metodo= p[0], argumentos= p[2] + [p[3]])
-    
-    @_("expresion '.' OBJECTID '(' expresiones_metodos expresion ')'")
-    def expresion(self, p):
-        return LlamadaMetodo(cuerpo= p[0] , nombre_metodo= p[2], argumentos= p[4] + [p[5]])
-    
-    @_("expresion '.' OBJECTID '(' ')'")
-    def expresion(self, p):
-        return LlamadaMetodo(cuerpo= p[0], nombre_metodo= p[2], argumentos= [])
-    
-    @_("OBJECTID '(' ')'")
-    def expresion(self, p):
-        return LlamadaMetodo(cuerpo= Objeto(nombre= "self" ), nombre_metodo= p[0], argumentos= [])
+    @_("OBJECTID ASSIGN Expresion")
+    def Expresion(self, p):
+        return Asignacion(nombre=p.OBJECTID, cuerpo=p.Expresion)
 
-    @_("IF expresion THEN expresion ELSE expresion FI") 
-    def expresion(self, p):
-        return Condicional (condicion= p[1], verdadero= p[3], falso= p[5])
-    
-    @_("WHILE expresion LOOP expresion POOL") 
-    def expresion(self, p):
-        return Bucle(condicion= p[1], cuerpo= p[3])
-    
+    @_("Expresion '+' Expresion")
+    def Expresion(self, p):
+        return Suma(izquierda=p.Expresion0, derecha=p.Expresion1)
 
-    ############################
-    
-    
-    @_("LET  OBJECTID ':' TYPEID inicializacion expresiones_let IN expresion")
-    def expresion(self, p):
-       
-        expresiones_in = p[7]
-        expresiones_let_lista = [p[1], p[3], p[4]] + p[5]
-        expresiones_lista = expresiones_let_lista[-3:]
-           
-        for elemento in expresiones_let_lista:
-           
-           del expresiones_let_lista[-3:]
-          
-           expresiones_in  = Let (nombre= expresiones_lista[0], tipo= expresiones_lista[1], 
-                               inicializacion= expresiones_lista[2], cuerpo= expresiones_in)  
-           
-           expresiones_lista = expresiones_let_lista[-3:]
-           
-        return  expresiones_in
+    @_("Expresion '-' Expresion")
+    def Expresion(self, p):
+        return Resta(izquierda=p.Expresion0, derecha=p.Expresion1)
 
+    @_("Expresion '*' Expresion")
+    def Expresion(self, p):
+        return Multiplicacion(izquierda=p.Expresion0, derecha=p.Expresion1)
 
-    #return Let (nombre= p[1], tipo= p[3], inicializacion= p[4], cuerpo= p[7])
-    #Modificar el let este solo, devolver una lista con todos los lets y expresiones let hay que recorrerlo y generar funciones let y como el nested
-    
-    @_("")
-    def expresiones_let(self, p):
-        return []
+    @_("Expresion '/' Expresion")
+    def Expresion(self, p):
+        return Division(izquierda=p.Expresion0, derecha=p.Expresion1)
 
-    
-    @_("',' OBJECTID ':' TYPEID inicializacion  expresiones_let ")
-    def expresiones_let(self, p):
-        return [p[1], p[3], p[4]] + p[5]
-    
+    @_("Expresion '<' Expresion")
+    def Expresion(self, p):
+        return Menor(izquierda=p.Expresion0, derecha=p.Expresion1)
 
-    ############################
+    @_("Expresion LE Expresion")
+    def Expresion(self, p):
+        return LeIgual(izquierda=p.Expresion0, derecha=p.Expresion1)
 
-    @_("CASE expresion OF case_lista  ESAC ") 
-    def expresion(self, p):
-        return Swicht(expr= p[1], casos= p[3]) 
-    
-    @_("OBJECTID ':' TYPEID DARROW expresion ';'") 
-    def case_lista(self,p):
-        return [RamaCase(nombre_variable= p[0], cast = p[2], tipo= p[2], cuerpo= p[4])]
-    
-    @_(" OBJECTID ':' TYPEID DARROW  expresion ';'  case_lista ") 
-    def case_lista(self,p):
-        return [RamaCase(nombre_variable= p[0], cast = p[2], tipo= p[2], cuerpo= p[4])] + p[6]
+    @_("Expresion '=' Expresion")
+    def Expresion(self, p):
+        return Igual(izquierda=p.Expresion0, derecha=p.Expresion1)
 
+    @_("'(' Expresion ')'")
+    def Expresion(self, p):
+        return p.Expresion
+
+    @_("NOT Expresion")
+    def Expresion(self, p):
+        return Not(expr=p.Expresion)
+
+    @_("ISVOID Expresion")
+    def Expresion(self, p):
+        return EsNulo(expr=p.Expresion)
+
+    @_("'~' Expresion")
+    def Expresion(self, p):
+        return Neg(expr=p.Expresion)
+
+    @_("Expresion '@' TYPEID '.' OBJECTID ParOptArgumentos")
+    def Expresion(self, p):
+        return LlamadaMetodoEstatico(cuerpo=p.Expresion, clase=p.TYPEID, nombre_metodo=p.OBJECTID,
+                                     argumentos=p.ParOptArgumentos)
+
+    @_("Expresion '.' OBJECTID ParOptArgumentos")
+    def Expresion(self, p):
+        return LlamadaMetodo(cuerpo=p.Expresion, nombre_metodo=p.OBJECTID, argumentos=p.ParOptArgumentos)
+
+    @_("OBJECTID ParOptArgumentos")
+    def Expresion(self, p):
+        return LlamadaMetodo(cuerpo=Objeto(nombre='self'), nombre_metodo=p.OBJECTID, argumentos=p.ParOptArgumentos)
+
+    @_("'(' OptArgumentos ')'")
+    def ParOptArgumentos(self, p):
+        return p.OptArgumentos
+
+    @_("'(' error ')'",
+       "'(' Argumentos error ')'")
+    def ParOptArgumentos(self, p):
+        return ErrorNodo(p.error)
+
+    @_("",
+       "Argumentos")
+    def OptArgumentos(self, p):
+        if len(p) == 0:
+            return []
+        return p.Argumentos
+
+    @_("Expresion",
+       "Expresion ',' Argumentos")
+    def Argumentos(self, p):
+        if len(p) == 0:
+            return []
+        return [p.Expresion] + (p.Argumentos if len(p) > 1 else [])
+
+    @_("IF Expresion THEN Expresion ELSE Expresion FI")
+    def Expresion(self, p):
+        return Condicional(condicion=p.Expresion0, verdadero=p.Expresion1, falso=p.Expresion2)
+
+    @_("WHILE Expresion LOOP Expresion POOL")
+    def Expresion(self, p):
+        return Bucle(condicion=p.Expresion0, cuerpo=p.Expresion1)
+
+    @_("LET Declaraciones IN Expresion")
+    def Expresion(self, p):
+        cuerpo = p.Expresion
+        for decl in reversed(p.Declaraciones):
+            if not isinstance(decl, ErrorNodo):
+                cuerpo = Let(nombre=decl['nombre'], tipo=decl['tipo'], inicializacion=decl['cuerpo'], cuerpo=cuerpo)
+        return cuerpo
+
+    @_("Declaracion",
+       "Declaracion ',' Declaraciones")
+    def Declaraciones(self, p):
+        return [p.Declaracion] + (p.Declaraciones if len(p) > 1 else [])
+
+    @_("error ',' Declaraciones")
+    def Declaraciones(self, p):
+        return [ErrorNodo(p.error)] + (p.Declaraciones if len(p) > 1 else [])
+
+    @_("OBJECTID ':' TYPEID",
+       "OBJECTID ':' TYPEID ASSIGN Expresion")
+    def Declaracion(self, p):
+        return {'nombre': p.OBJECTID, 'tipo': p.TYPEID, 'cuerpo': p.Expresion if len(p) > 3 else NoExpr()}
+
+    @_("CASE Expresion OF RamasCase ESAC",
+       "CASE OF RamasCase ESAC",
+       "CASE error OF RamasCase ESAC")
+    def Expresion(self, p):
+        if len(p) < 5:
+            self._report_error(p, p.OF, 'OF')
+            return ErrorNodo(p.OF)
+        if isinstance(p[1], Expresion):
+            return Switch(expr=p.Expresion, casos=p.RamasCase)
+        return ErrorNodo(p.error)
+
+    @_("RamaCase",
+       "RamaCase RamasCase")
+    def RamasCase(self, p):
+        return [p.RamaCase] + (p.RamasCase if len(p) > 1 else [])
+
+    @_("OBJECTID ':' TYPEID DARROW Expresion ';'")
+    def RamaCase(self, p):
+        return RamaCase(nombre_variable=p.OBJECTID, tipo=p.TYPEID, cuerpo=p.Expresion)
 
     @_("NEW TYPEID")
-    def expresion(self, p):
-        return Nueva(tipo= p[1])
-    
-  
-    @_("'{' bloque '}'")
-    def expresion(self, p):
-        return Bloque(expresiones= p[1])
-    
+    def Expresion(self, p):
+        return Nueva(tipo=p.TYPEID)
 
-    @_("expresion ';'")
-    def bloque(self, p):
-        return [p[0]]
+    @_("'{' Expresiones '}'")
+    def Expresion(self, p):
+        return Bloque(expresiones=p.Expresiones)
 
-    @_("bloque expresion ';'")
-    def bloque(self, p):
-        return p[0] + [p[1]]
-   
-    @_("error ';'")
-    def bloque(self, p):
-        return list()
+    @_("'{' error '}'")
+    def Expresion(self, p):
+        return ErrorNodo(p.error)
+
+    @_("Expresion ';'",
+       "Expresion ';' Expresiones")
+    def Expresiones(self, p):
+        return [p.Expresion] + (p.Expresiones if len(p) > 2 else [])
+
+    @_("error ';'",
+       "error ';' Expresiones")
+    def Expresiones(self, p):
+        return [ErrorNodo(p.error)] + (p.Expresiones if len(p) > 2 else [])
 
     @_("OBJECTID")
-    def expresion(self, p):
-        return Objeto(nombre= p[0])
-    
+    def Expresion(self, p):
+        return Objeto(nombre=p.OBJECTID)
+
     @_("INT_CONST")
-    def expresion(self, p):
-        return Entero(valor= p[0])
-    
+    def Expresion(self, p):
+        return Entero(valor=p.INT_CONST)
+
     @_("STR_CONST")
-    def expresion(self, p):
-        return String(valor= p[0])
-    
+    def Expresion(self, p):
+        return String(valor=p.STR_CONST)
 
     @_("BOOL_CONST")
-    def expresion(self, p):
-        return Booleano(valor= p[0])
+    def Expresion(self, p):
+        return Booleano(valor=p.BOOL_CONST)
+
+    def error(self, token):
+        self._report_error(token)
+        return None
+
+    def _report_error(self, token, value=None, type=None):
+        if value is not None:
+            s = YaccSymbol()
+            s.value = value
+            s.type = type if type is not None else value
+            s.lineno = token.lineno
+            s.index = token.index
+            s.end = token.end
+            token = s
+        # print(f"  Error: {str(CoolParseError(self.nombre_fichero, token))}")
+        self.errores.append(str(CoolParseError(self.nombre_fichero, token)))
 
 
+class ErrorToken(Token):
+    def __init__(self, value, lineno):
+        self.type = 'error'
+        self.value = value
+        self.lineno = lineno
 
+
+class ErrorNodo(Nodo):
+    def __init__(self, token):
+        print(f"    --- Error node: {token}, type: {type(token)}")
+        self.token = token
+        self.type = 'error'
+        if isinstance(token, Token):
+            self.lineno = token.lineno
+            self.value = token.value
+
+    def genera_codigo(self, indent: str = '', depth: int = 0) -> str:
+        raise ValueError("Cannot generate code from invalid code.")
+
+
+class CoolParseError:
+    def __init__(self, file: str, token):
+        self.file = file
+        if token is not None:
+            self.line = token.lineno
+            self.token = token
+            if token.type.isupper() and (token.type == token.value.upper() or token.value == '<='):
+                self.mensaje = f"syntax error at or near {token.type}"
+            elif token.type == token.value:
+                self.mensaje = f"syntax error at or near '{token.value}'"
+            else:
+                self.mensaje = f"syntax error at or near {token.type} = {token.value}"
+        else:
+            self.line = 0
+            self.mensaje = f"syntax error at or near EOF"
+
+    def __str__(self):
+        return f'"{self.file}", line {self.line}: {self.mensaje}'

@@ -1,0 +1,692 @@
+#0
+_program
+  #0
+  _class
+    List
+    IO
+    "sort_list.cl"
+    (
+    #0
+    _method
+      isNil
+      Bool
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          abort
+          (
+          )
+        : _no_type
+        #0
+        _bool
+          1
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      cons
+      #0
+      _formal
+        hd
+        Int
+      Cons
+      #0
+      _let
+        new_cell
+        Cons
+        #0
+        _new
+          Cons
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            new_cell
+          : _no_type
+          init
+          (
+          #0
+          _object
+            hd
+          : _no_type
+          #0
+          _object
+            self
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+    #0
+    _method
+      car
+      Int
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          abort
+          (
+          )
+        : _no_type
+        #0
+        _new
+          Int
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      cdr
+      List
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          abort
+          (
+          )
+        : _no_type
+        #0
+        _new
+          List
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      rev
+      List
+      #0
+      _dispatch
+        #0
+        _object
+          self
+        : _no_type
+        cdr
+        (
+        )
+      : _no_type
+    #0
+    _method
+      sort
+      List
+      #0
+      _dispatch
+        #0
+        _object
+          self
+        : _no_type
+        cdr
+        (
+        )
+      : _no_type
+    #0
+    _method
+      insert
+      #0
+      _formal
+        i
+        Int
+      List
+      #0
+      _dispatch
+        #0
+        _object
+          self
+        : _no_type
+        cdr
+        (
+        )
+      : _no_type
+    #0
+    _method
+      rcons
+      #0
+      _formal
+        i
+        Int
+      List
+      #0
+      _dispatch
+        #0
+        _object
+          self
+        : _no_type
+        cdr
+        (
+        )
+      : _no_type
+    #0
+    _method
+      print_list
+      Object
+      #0
+      _dispatch
+        #0
+        _object
+          self
+        : _no_type
+        abort
+        (
+        )
+      : _no_type
+
+    )
+  #0
+  _class
+    Cons
+    List
+    "sort_list.cl"
+    (
+    #0
+    _attr
+      xcar
+      Int
+      #0
+      _no_expr
+      : _no_type
+    #0
+    _attr
+      xcdr
+      List
+      #0
+      _no_expr
+      : _no_type
+    #0
+    _method
+      isNil
+      Bool
+      #0
+      _bool
+        0
+      : _no_type
+    #0
+    _method
+      init
+      #0
+      _formal
+        hd
+        Int
+      #0
+      _formal
+        tl
+        List
+      Cons
+      _block
+        #0
+        _assign
+          xcar
+          #0
+          _object
+            hd
+          : _no_type
+        : _no_type
+        #0
+        _assign
+          xcdr
+          #0
+          _object
+            tl
+          : _no_type
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      car
+      Int
+      #0
+      _object
+        xcar
+      : _no_type
+    #0
+    _method
+      cdr
+      List
+      #0
+      _object
+        xcdr
+      : _no_type
+    #0
+    _method
+      rev
+      List
+      #0
+      _dispatch
+        #0
+        _dispatch
+          #0
+          _object
+            xcdr
+          : _no_type
+          rev
+          (
+          )
+        : _no_type
+        rcons
+        (
+        #0
+        _object
+          xcar
+        : _no_type
+        )
+      : _no_type
+    #0
+    _method
+      sort
+      List
+      #0
+      _dispatch
+        #0
+        _dispatch
+          #0
+          _object
+            xcdr
+          : _no_type
+          sort
+          (
+          )
+        : _no_type
+        insert
+        (
+        #0
+        _object
+          xcar
+        : _no_type
+        )
+      : _no_type
+    #0
+    _method
+      insert
+      #0
+      _formal
+        i
+        Int
+      List
+      #0
+      _cond
+        #0
+        _lt
+          #0
+          _object
+            i
+          : _no_type
+          #0
+          _object
+            xcar
+          : _no_type
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _new
+            Cons
+          : _no_type
+          init
+          (
+          #0
+          _object
+            i
+          : _no_type
+          #0
+          _object
+            self
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _new
+            Cons
+          : _no_type
+          init
+          (
+          #0
+          _object
+            xcar
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              xcdr
+            : _no_type
+            insert
+            (
+            #0
+            _object
+              i
+            : _no_type
+            )
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+    #0
+    _method
+      rcons
+      #0
+      _formal
+        i
+        Int
+      List
+      #0
+      _dispatch
+        #0
+        _new
+          Cons
+        : _no_type
+        init
+        (
+        #0
+        _object
+          xcar
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            xcdr
+          : _no_type
+          rcons
+          (
+          #0
+          _object
+            i
+          : _no_type
+          )
+        : _no_type
+        )
+      : _no_type
+    #0
+    _method
+      print_list
+      Object
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_int
+          (
+          #0
+          _object
+            xcar
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            xcdr
+          : _no_type
+          print_list
+          (
+          )
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Nil
+    List
+    "sort_list.cl"
+    (
+    #0
+    _method
+      isNil
+      Bool
+      #0
+      _bool
+        1
+      : _no_type
+    #0
+    _method
+      rev
+      List
+      #0
+      _object
+        self
+      : _no_type
+    #0
+    _method
+      sort
+      List
+      #0
+      _object
+        self
+      : _no_type
+    #0
+    _method
+      insert
+      #0
+      _formal
+        i
+        Int
+      List
+      #0
+      _dispatch
+        #0
+        _object
+          self
+        : _no_type
+        rcons
+        (
+        #0
+        _object
+          i
+        : _no_type
+        )
+      : _no_type
+    #0
+    _method
+      rcons
+      #0
+      _formal
+        i
+        Int
+      List
+      #0
+      _dispatch
+        #0
+        _new
+          Cons
+        : _no_type
+        init
+        (
+        #0
+        _object
+          i
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+        )
+      : _no_type
+    #0
+    _method
+      print_list
+      Object
+      #0
+      _bool
+        1
+      : _no_type
+
+    )
+  #0
+  _class
+    Main
+    IO
+    "sort_list.cl"
+    (
+    #0
+    _attr
+      l
+      List
+      #0
+      _no_expr
+      : _no_type
+    #0
+    _method
+      iota
+      #0
+      _formal
+        i
+        Int
+      List
+      _block
+        #0
+        _assign
+          l
+          #0
+          _new
+            Nil
+          : _no_type
+        : _no_type
+        #0
+        _let
+          j
+          Int
+          #0
+          _int
+            0
+          : _no_type
+          #0
+          _loop
+            #0
+            _lt
+              #0
+              _object
+                j
+              : _no_type
+              #0
+              _object
+                i
+              : _no_type
+            : _no_type
+            _block
+              #0
+              _assign
+                l
+                #0
+                _dispatch
+                  #0
+                  _new
+                    Cons
+                  : _no_type
+                  init
+                  (
+                  #0
+                  _object
+                    j
+                  : _no_type
+                  #0
+                  _object
+                    l
+                  : _no_type
+                  )
+                : _no_type
+              : _no_type
+              #0
+              _assign
+                j
+                #0
+                _plus
+                  #0
+                  _object
+                    j
+                  : _no_type
+                  #0
+                  _int
+                    1
+                  : _no_type
+                : _no_type
+              : _no_type
+            : _no_type
+
+          : _no_type
+        : _no_type
+        #0
+        _object
+          l
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      main
+      Object
+      _block
+        #0
+        _dispatch
+          #0
+          _dispatch
+            #0
+            _dispatch
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                iota
+                (
+                #0
+                _int
+                  20
+                : _no_type
+                )
+              : _no_type
+              rev
+              (
+              )
+            : _no_type
+            sort
+            (
+            )
+          : _no_type
+          print_list
+          (
+          )
+        : _no_type
+      : _no_type
+
+
+    )

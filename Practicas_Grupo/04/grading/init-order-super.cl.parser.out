@@ -1,0 +1,159 @@
+#0
+_program
+  #0
+  _class
+    Base
+    IO
+    "init-order-super.cl"
+    (
+    #0
+    _method
+      recite
+      #0
+      _formal
+        value
+        Int
+      Object
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_int
+          (
+          #0
+          _object
+            value
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+    #0
+    _attr
+      x
+      Object
+      #0
+      _dispatch
+        #0
+        _object
+          self
+        : _no_type
+        recite
+        (
+        #0
+        _int
+          1
+        : _no_type
+        )
+      : _no_type
+    #0
+    _attr
+      b
+      Object
+      #0
+      _dispatch
+        #0
+        _object
+          self
+        : _no_type
+        recite
+        (
+        #0
+        _int
+          2
+        : _no_type
+        )
+      : _no_type
+
+    )
+  #0
+  _class
+    Main
+    Base
+    "init-order-super.cl"
+    (
+    #0
+    _attr
+      y
+      Object
+      #0
+      _dispatch
+        #0
+        _object
+          self
+        : _no_type
+        recite
+        (
+        #0
+        _int
+          3
+        : _no_type
+        )
+      : _no_type
+    #0
+    _attr
+      z
+      Object
+      #0
+      _dispatch
+        #0
+        _object
+          self
+        : _no_type
+        recite
+        (
+        #0
+        _int
+          4
+        : _no_type
+        )
+      : _no_type
+    #0
+    _attr
+      c
+      Object
+      #0
+      _dispatch
+        #0
+        _object
+          self
+        : _no_type
+        recite
+        (
+        #0
+        _int
+          5
+        : _no_type
+        )
+      : _no_type
+    #0
+    _method
+      main
+      Object
+      #0
+      _object
+        self
+      : _no_type
+
+    )

@@ -1,0 +1,282 @@
+#0
+_program
+  #0
+  _class
+    A
+    Object
+    "objectequality.cl"
+    (
+    #0
+    _attr
+      x
+      Int
+      #0
+      _int
+        5
+      : _no_type
+    #0
+    _method
+      foo
+      #0
+      _formal
+        y
+        Int
+      SELF_TYPE
+      _block
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    B
+    A
+    "objectequality.cl"
+    (
+
+    )
+  #0
+  _class
+    Main
+    Object
+    "objectequality.cl"
+    (
+    #0
+    _method
+      main
+      Object
+      _block
+        #0
+        _let
+          x
+          B
+          #0
+          _new
+            B
+          : _no_type
+          _block
+            #0
+            _cond
+              #0
+              _eq
+                #0
+                _object
+                  x
+                : _no_type
+                #0
+                _object
+                  x
+                : _no_type
+              : _no_type
+              #0
+              _int
+                0
+              : _no_type
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                abort
+                (
+                )
+              : _no_type
+            : _no_type
+            #0
+            _cond
+              #0
+              _eq
+                #0
+                _object
+                  x
+                : _no_type
+                #0
+                _new
+                  B
+                : _no_type
+              : _no_type
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                abort
+                (
+                )
+              : _no_type
+              #0
+              _int
+                0
+              : _no_type
+            : _no_type
+            #0
+            _cond
+              #0
+              _eq
+                #0
+                _new
+                  A
+                : _no_type
+                #0
+                _new
+                  A
+                : _no_type
+              : _no_type
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                abort
+                (
+                )
+              : _no_type
+              #0
+              _int
+                0
+              : _no_type
+            : _no_type
+            #0
+            _let
+              y
+              A
+              #0
+              _object
+                x
+              : _no_type
+              _block
+                #0
+                _cond
+                  #0
+                  _eq
+                    #0
+                    _object
+                      y
+                    : _no_type
+                    #0
+                    _object
+                      x
+                    : _no_type
+                  : _no_type
+                  #0
+                  _int
+                    0
+                  : _no_type
+                  #0
+                  _dispatch
+                    #0
+                    _object
+                      self
+                    : _no_type
+                    abort
+                    (
+                    )
+                  : _no_type
+                : _no_type
+                #0
+                _cond
+                  #0
+                  _eq
+                    #0
+                    _dispatch
+                      #0
+                      _object
+                        y
+                      : _no_type
+                      foo
+                      (
+                      #0
+                      _int
+                        3
+                      : _no_type
+                      )
+                    : _no_type
+                    #0
+                    _object
+                      x
+                    : _no_type
+                  : _no_type
+                  #0
+                  _int
+                    0
+                  : _no_type
+                  #0
+                  _dispatch
+                    #0
+                    _object
+                      self
+                    : _no_type
+                    abort
+                    (
+                    )
+                  : _no_type
+                : _no_type
+              : _no_type
+
+            : _no_type
+          : _no_type
+
+        : _no_type
+        #0
+        _let
+          x
+          A
+          #0
+          _no_expr
+          : _no_type
+          #0
+          _let
+            y
+            B
+            #0
+            _no_expr
+            : _no_type
+            #0
+            _cond
+              #0
+              _eq
+                #0
+                _object
+                  x
+                : _no_type
+                #0
+                _object
+                  y
+                : _no_type
+              : _no_type
+              #0
+              _int
+                0
+              : _no_type
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                abort
+                (
+                )
+              : _no_type
+            : _no_type
+          : _no_type
+        : _no_type
+      : _no_type
+
+
+    )
