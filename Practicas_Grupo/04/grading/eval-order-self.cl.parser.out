@@ -1,0 +1,103 @@
+#0
+_program
+  #0
+  _class
+    Main
+    IO
+    "eval-order-self.cl"
+    (
+    #0
+    _method
+      recite
+      #0
+      _formal
+        value
+        Int
+      Main
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_int
+          (
+          #0
+          _object
+            value
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      disregard
+      #0
+      _formal
+        a
+        Object
+      Object
+      #0
+      _object
+        self
+      : _no_type
+    #0
+    _method
+      main
+      Object
+      #0
+      _dispatch
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          recite
+          (
+          #0
+          _int
+            2
+          : _no_type
+          )
+        : _no_type
+        disregard
+        (
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          recite
+          (
+          #0
+          _int
+            1
+          : _no_type
+          )
+        : _no_type
+        )
+      : _no_type
+
+    )

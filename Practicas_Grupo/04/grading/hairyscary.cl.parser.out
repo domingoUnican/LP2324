@@ -1,0 +1,452 @@
+#0
+_program
+  #0
+  _class
+    Foo
+    Bazz
+    "hairyscary.cl"
+    (
+    #0
+    _attr
+      a
+      Razz
+      #0
+      _typcase
+        #0
+        _object
+          self
+        : _no_type
+        #0
+        _branch
+          n
+          Razz
+          #0
+          _new
+            Bar
+          : _no_type
+        #0
+        _branch
+          n
+          Foo
+          #0
+          _new
+            Razz
+          : _no_type
+        #0
+        _branch
+          n
+          Bar
+          #0
+          _object
+            n
+          : _no_type
+      : _no_type
+    #0
+    _attr
+      b
+      Int
+      #0
+      _plus
+        #0
+        _plus
+          #0
+          _plus
+            #0
+            _dispatch
+              #0
+              _object
+                a
+              : _no_type
+              doh
+              (
+              )
+            : _no_type
+            #0
+            _dispatch
+              #0
+              _object
+                g
+              : _no_type
+              doh
+              (
+              )
+            : _no_type
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            doh
+            (
+            )
+          : _no_type
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          printh
+          (
+          )
+        : _no_type
+      : _no_type
+    #0
+    _method
+      doh
+      Int
+      #0
+      _let
+        i
+        Int
+        #0
+        _object
+          h
+        : _no_type
+        _block
+          #0
+          _assign
+            h
+            #0
+            _plus
+              #0
+              _object
+                h
+              : _no_type
+              #0
+              _int
+                2
+              : _no_type
+            : _no_type
+          : _no_type
+          #0
+          _object
+            i
+          : _no_type
+        : _no_type
+
+      : _no_type
+
+    )
+  #0
+  _class
+    Bar
+    Razz
+    "hairyscary.cl"
+    (
+    #0
+    _attr
+      c
+      Int
+      #0
+      _dispatch
+        #0
+        _object
+          self
+        : _no_type
+        doh
+        (
+        )
+      : _no_type
+    #0
+    _attr
+      d
+      Object
+      #0
+      _dispatch
+        #0
+        _object
+          self
+        : _no_type
+        printh
+        (
+        )
+      : _no_type
+
+    )
+  #0
+  _class
+    Razz
+    Foo
+    "hairyscary.cl"
+    (
+    #0
+    _attr
+      e
+      Bar
+      #0
+      _typcase
+        #0
+        _object
+          self
+        : _no_type
+        #0
+        _branch
+          n
+          Razz
+          #0
+          _new
+            Bar
+          : _no_type
+        #0
+        _branch
+          n
+          Bar
+          #0
+          _object
+            n
+          : _no_type
+      : _no_type
+    #0
+    _attr
+      f
+      Int
+      #0
+      _plus
+        #0
+        _plus
+          #0
+          _plus
+            #0
+            _plus
+              #0
+              _static_dispatch
+                #0
+                _object
+                  a
+                : _no_type
+                Bazz
+                doh
+                (
+                )
+              : _no_type
+              #0
+              _dispatch
+                #0
+                _object
+                  g
+                : _no_type
+                doh
+                (
+                )
+              : _no_type
+            : _no_type
+            #0
+            _dispatch
+              #0
+              _object
+                e
+              : _no_type
+              doh
+              (
+              )
+            : _no_type
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            doh
+            (
+            )
+          : _no_type
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          printh
+          (
+          )
+        : _no_type
+      : _no_type
+
+    )
+  #0
+  _class
+    Bazz
+    IO
+    "hairyscary.cl"
+    (
+    #0
+    _attr
+      h
+      Int
+      #0
+      _int
+        1
+      : _no_type
+    #0
+    _attr
+      g
+      Foo
+      #0
+      _typcase
+        #0
+        _object
+          self
+        : _no_type
+        #0
+        _branch
+          n
+          Bazz
+          #0
+          _new
+            Foo
+          : _no_type
+        #0
+        _branch
+          n
+          Razz
+          #0
+          _new
+            Bar
+          : _no_type
+        #0
+        _branch
+          n
+          Foo
+          #0
+          _new
+            Razz
+          : _no_type
+        #0
+        _branch
+          n
+          Bar
+          #0
+          _object
+            n
+          : _no_type
+      : _no_type
+    #0
+    _attr
+      i
+      Object
+      #0
+      _dispatch
+        #0
+        _object
+          self
+        : _no_type
+        printh
+        (
+        )
+      : _no_type
+    #0
+    _method
+      printh
+      Int
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_int
+          (
+          #0
+          _object
+            h
+          : _no_type
+          )
+        : _no_type
+        #0
+        _int
+          0
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      doh
+      Int
+      #0
+      _let
+        i
+        Int
+        #0
+        _object
+          h
+        : _no_type
+        _block
+          #0
+          _assign
+            h
+            #0
+            _plus
+              #0
+              _object
+                h
+              : _no_type
+              #0
+              _int
+                1
+              : _no_type
+            : _no_type
+          : _no_type
+          #0
+          _object
+            i
+          : _no_type
+        : _no_type
+
+      : _no_type
+
+    )
+  #0
+  _class
+    Main
+    Object
+    "hairyscary.cl"
+    (
+    #0
+    _attr
+      a
+      Bazz
+      #0
+      _new
+        Bazz
+      : _no_type
+    #0
+    _attr
+      b
+      Foo
+      #0
+      _new
+        Foo
+      : _no_type
+    #0
+    _attr
+      c
+      Razz
+      #0
+      _new
+        Razz
+      : _no_type
+    #0
+    _attr
+      d
+      Bar
+      #0
+      _new
+        Bar
+      : _no_type
+    #0
+    _method
+      main
+      String
+      #0
+      _string
+        "do nothing"
+      : _no_type
+
+    )

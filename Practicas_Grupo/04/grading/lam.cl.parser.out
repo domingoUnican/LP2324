@@ -1,0 +1,3773 @@
+#0
+_program
+  #0
+  _class
+    VarList
+    IO
+    "lam.cl"
+    (
+    #0
+    _method
+      isNil
+      Bool
+      #0
+      _bool
+        1
+      : _no_type
+    #0
+    _method
+      head
+      Variable
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          abort
+          (
+          )
+        : _no_type
+        #0
+        _new
+          Variable
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      tail
+      VarList
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          abort
+          (
+          )
+        : _no_type
+        #0
+        _new
+          VarList
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      add
+      #0
+      _formal
+        x
+        Variable
+      VarList
+      #0
+      _dispatch
+        #0
+        _new
+          VarListNE
+        : _no_type
+        init
+        (
+        #0
+        _object
+          x
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+        )
+      : _no_type
+    #0
+    _method
+      print
+      SELF_TYPE
+      #0
+      _dispatch
+        #0
+        _object
+          self
+        : _no_type
+        out_string
+        (
+        #0
+        _string
+          "\n"
+        : _no_type
+        )
+      : _no_type
+
+    )
+  #0
+  _class
+    VarListNE
+    VarList
+    "lam.cl"
+    (
+    #0
+    _attr
+      x
+      Variable
+      #0
+      _no_expr
+      : _no_type
+    #0
+    _attr
+      rest
+      VarList
+      #0
+      _no_expr
+      : _no_type
+    #0
+    _method
+      isNil
+      Bool
+      #0
+      _bool
+        0
+      : _no_type
+    #0
+    _method
+      head
+      Variable
+      #0
+      _object
+        x
+      : _no_type
+    #0
+    _method
+      tail
+      VarList
+      #0
+      _object
+        rest
+      : _no_type
+    #0
+    _method
+      init
+      #0
+      _formal
+        y
+        Variable
+      #0
+      _formal
+        r
+        VarList
+      VarListNE
+      _block
+        #0
+        _assign
+          x
+          #0
+          _object
+            y
+          : _no_type
+        : _no_type
+        #0
+        _assign
+          rest
+          #0
+          _object
+            r
+          : _no_type
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      print
+      SELF_TYPE
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            x
+          : _no_type
+          print_self
+          (
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            " "
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            rest
+          : _no_type
+          print
+          (
+          )
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    LambdaList
+    Object
+    "lam.cl"
+    (
+    #0
+    _method
+      isNil
+      Bool
+      #0
+      _bool
+        1
+      : _no_type
+    #0
+    _method
+      headE
+      VarList
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          abort
+          (
+          )
+        : _no_type
+        #0
+        _new
+          VarList
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      headC
+      Lambda
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          abort
+          (
+          )
+        : _no_type
+        #0
+        _new
+          Lambda
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      headN
+      Int
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          abort
+          (
+          )
+        : _no_type
+        #0
+        _int
+          0
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      tail
+      LambdaList
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          abort
+          (
+          )
+        : _no_type
+        #0
+        _new
+          LambdaList
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      add
+      #0
+      _formal
+        e
+        VarList
+      #0
+      _formal
+        x
+        Lambda
+      #0
+      _formal
+        n
+        Int
+      LambdaList
+      #0
+      _dispatch
+        #0
+        _new
+          LambdaListNE
+        : _no_type
+        init
+        (
+        #0
+        _object
+          e
+        : _no_type
+        #0
+        _object
+          x
+        : _no_type
+        #0
+        _object
+          n
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+        )
+      : _no_type
+
+    )
+  #0
+  _class
+    LambdaListNE
+    LambdaList
+    "lam.cl"
+    (
+    #0
+    _attr
+      lam
+      Lambda
+      #0
+      _no_expr
+      : _no_type
+    #0
+    _attr
+      num
+      Int
+      #0
+      _no_expr
+      : _no_type
+    #0
+    _attr
+      env
+      VarList
+      #0
+      _no_expr
+      : _no_type
+    #0
+    _attr
+      rest
+      LambdaList
+      #0
+      _no_expr
+      : _no_type
+    #0
+    _method
+      isNil
+      Bool
+      #0
+      _bool
+        0
+      : _no_type
+    #0
+    _method
+      headE
+      VarList
+      #0
+      _object
+        env
+      : _no_type
+    #0
+    _method
+      headC
+      Lambda
+      #0
+      _object
+        lam
+      : _no_type
+    #0
+    _method
+      headN
+      Int
+      #0
+      _object
+        num
+      : _no_type
+    #0
+    _method
+      tail
+      LambdaList
+      #0
+      _object
+        rest
+      : _no_type
+    #0
+    _method
+      init
+      #0
+      _formal
+        e
+        VarList
+      #0
+      _formal
+        l
+        Lambda
+      #0
+      _formal
+        n
+        Int
+      #0
+      _formal
+        r
+        LambdaList
+      LambdaListNE
+      _block
+        #0
+        _assign
+          env
+          #0
+          _object
+            e
+          : _no_type
+        : _no_type
+        #0
+        _assign
+          lam
+          #0
+          _object
+            l
+          : _no_type
+        : _no_type
+        #0
+        _assign
+          num
+          #0
+          _object
+            n
+          : _no_type
+        : _no_type
+        #0
+        _assign
+          rest
+          #0
+          _object
+            r
+          : _no_type
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    LambdaListRef
+    Object
+    "lam.cl"
+    (
+    #0
+    _attr
+      nextNum
+      Int
+      #0
+      _int
+        0
+      : _no_type
+    #0
+    _attr
+      l
+      LambdaList
+      #0
+      _no_expr
+      : _no_type
+    #0
+    _method
+      isNil
+      Bool
+      #0
+      _dispatch
+        #0
+        _object
+          l
+        : _no_type
+        isNil
+        (
+        )
+      : _no_type
+    #0
+    _method
+      headE
+      VarList
+      #0
+      _dispatch
+        #0
+        _object
+          l
+        : _no_type
+        headE
+        (
+        )
+      : _no_type
+    #0
+    _method
+      headC
+      Lambda
+      #0
+      _dispatch
+        #0
+        _object
+          l
+        : _no_type
+        headC
+        (
+        )
+      : _no_type
+    #0
+    _method
+      headN
+      Int
+      #0
+      _dispatch
+        #0
+        _object
+          l
+        : _no_type
+        headN
+        (
+        )
+      : _no_type
+    #0
+    _method
+      reset
+      SELF_TYPE
+      _block
+        #0
+        _assign
+          nextNum
+          #0
+          _int
+            0
+          : _no_type
+        : _no_type
+        #0
+        _assign
+          l
+          #0
+          _new
+            LambdaList
+          : _no_type
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      add
+      #0
+      _formal
+        env
+        VarList
+      #0
+      _formal
+        c
+        Lambda
+      Int
+      _block
+        #0
+        _assign
+          l
+          #0
+          _dispatch
+            #0
+            _object
+              l
+            : _no_type
+            add
+            (
+            #0
+            _object
+              env
+            : _no_type
+            #0
+            _object
+              c
+            : _no_type
+            #0
+            _object
+              nextNum
+            : _no_type
+            )
+          : _no_type
+        : _no_type
+        #0
+        _assign
+          nextNum
+          #0
+          _plus
+            #0
+            _object
+              nextNum
+            : _no_type
+            #0
+            _int
+              1
+            : _no_type
+          : _no_type
+        : _no_type
+        #0
+        _sub
+          #0
+          _object
+            nextNum
+          : _no_type
+          #0
+          _int
+            1
+          : _no_type
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      removeHead
+      SELF_TYPE
+      _block
+        #0
+        _assign
+          l
+          #0
+          _dispatch
+            #0
+            _object
+              l
+            : _no_type
+            tail
+            (
+            )
+          : _no_type
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Expr
+    IO
+    "lam.cl"
+    (
+    #0
+    _method
+      print_self
+      SELF_TYPE
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "\nError: Expr is pure virtual; can't print self\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          abort
+          (
+          )
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      beta
+      Expr
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "\nError: Expr is pure virtual; can't beta-reduce\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          abort
+          (
+          )
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      substitute
+      #0
+      _formal
+        x
+        Variable
+      #0
+      _formal
+        e
+        Expr
+      Expr
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "\nError: Expr is pure virtual; can't substitute\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          abort
+          (
+          )
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      gen_code
+      #0
+      _formal
+        env
+        VarList
+      #0
+      _formal
+        closures
+        LambdaListRef
+      SELF_TYPE
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "\nError: Expr is pure virtual; can't gen_code\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          abort
+          (
+          )
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Variable
+    Expr
+    "lam.cl"
+    (
+    #0
+    _attr
+      name
+      String
+      #0
+      _no_expr
+      : _no_type
+    #0
+    _method
+      init
+      #0
+      _formal
+        n
+        String
+      Variable
+      _block
+        #0
+        _assign
+          name
+          #0
+          _object
+            n
+          : _no_type
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      print_self
+      SELF_TYPE
+      #0
+      _dispatch
+        #0
+        _object
+          self
+        : _no_type
+        out_string
+        (
+        #0
+        _object
+          name
+        : _no_type
+        )
+      : _no_type
+    #0
+    _method
+      beta
+      Expr
+      #0
+      _object
+        self
+      : _no_type
+    #0
+    _method
+      substitute
+      #0
+      _formal
+        x
+        Variable
+      #0
+      _formal
+        e
+        Expr
+      Expr
+      #0
+      _cond
+        #0
+        _eq
+          #0
+          _object
+            x
+          : _no_type
+          #0
+          _object
+            self
+          : _no_type
+        : _no_type
+        #0
+        _object
+          e
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+    #0
+    _method
+      gen_code
+      #0
+      _formal
+        env
+        VarList
+      #0
+      _formal
+        closures
+        LambdaListRef
+      SELF_TYPE
+      #0
+      _let
+        cur_env
+        VarList
+        #0
+        _object
+          env
+        : _no_type
+        _block
+          #0
+          _loop
+            #0
+            _cond
+              #0
+              _dispatch
+                #0
+                _object
+                  cur_env
+                : _no_type
+                isNil
+                (
+                )
+              : _no_type
+              #0
+              _bool
+                0
+              : _no_type
+              #0
+              _comp
+                #0
+                _eq
+                  #0
+                  _dispatch
+                    #0
+                    _object
+                      cur_env
+                    : _no_type
+                    head
+                    (
+                    )
+                  : _no_type
+                  #0
+                  _object
+                    self
+                  : _no_type
+                : _no_type
+              : _no_type
+            : _no_type
+            _block
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                out_string
+                (
+                #0
+                _string
+                  "get_parent()."
+                : _no_type
+                )
+              : _no_type
+              #0
+              _assign
+                cur_env
+                #0
+                _dispatch
+                  #0
+                  _object
+                    cur_env
+                  : _no_type
+                  tail
+                  (
+                  )
+                : _no_type
+              : _no_type
+            : _no_type
+
+          : _no_type
+          #0
+          _cond
+            #0
+            _dispatch
+              #0
+              _object
+                cur_env
+              : _no_type
+              isNil
+              (
+              )
+            : _no_type
+            _block
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                out_string
+                (
+                #0
+                _string
+                  "Error:  free occurrence of "
+                : _no_type
+                )
+              : _no_type
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                print_self
+                (
+                )
+              : _no_type
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                out_string
+                (
+                #0
+                _string
+                  "\n"
+                : _no_type
+                )
+              : _no_type
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                abort
+                (
+                )
+              : _no_type
+              #0
+              _object
+                self
+              : _no_type
+            : _no_type
+
+            #0
+            _dispatch
+              #0
+              _object
+                self
+              : _no_type
+              out_string
+              (
+              #0
+              _string
+                "get_x()"
+              : _no_type
+              )
+            : _no_type
+          : _no_type
+        : _no_type
+
+      : _no_type
+
+    )
+  #0
+  _class
+    Lambda
+    Expr
+    "lam.cl"
+    (
+    #0
+    _attr
+      arg
+      Variable
+      #0
+      _no_expr
+      : _no_type
+    #0
+    _attr
+      body
+      Expr
+      #0
+      _no_expr
+      : _no_type
+    #0
+    _method
+      init
+      #0
+      _formal
+        a
+        Variable
+      #0
+      _formal
+        b
+        Expr
+      Lambda
+      _block
+        #0
+        _assign
+          arg
+          #0
+          _object
+            a
+          : _no_type
+        : _no_type
+        #0
+        _assign
+          body
+          #0
+          _object
+            b
+          : _no_type
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      print_self
+      SELF_TYPE
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "\\"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            arg
+          : _no_type
+          print_self
+          (
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "."
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            body
+          : _no_type
+          print_self
+          (
+          )
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      beta
+      Expr
+      #0
+      _object
+        self
+      : _no_type
+    #0
+    _method
+      apply
+      #0
+      _formal
+        actual
+        Expr
+      Expr
+      #0
+      _dispatch
+        #0
+        _object
+          body
+        : _no_type
+        substitute
+        (
+        #0
+        _object
+          arg
+        : _no_type
+        #0
+        _object
+          actual
+        : _no_type
+        )
+      : _no_type
+    #0
+    _method
+      substitute
+      #0
+      _formal
+        x
+        Variable
+      #0
+      _formal
+        e
+        Expr
+      Expr
+      #0
+      _cond
+        #0
+        _eq
+          #0
+          _object
+            x
+          : _no_type
+          #0
+          _object
+            arg
+          : _no_type
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+        #0
+        _let
+          new_body
+          Expr
+          #0
+          _dispatch
+            #0
+            _object
+              body
+            : _no_type
+            substitute
+            (
+            #0
+            _object
+              x
+            : _no_type
+            #0
+            _object
+              e
+            : _no_type
+            )
+          : _no_type
+          #0
+          _let
+            new_lam
+            Lambda
+            #0
+            _new
+              Lambda
+            : _no_type
+            #0
+            _dispatch
+              #0
+              _object
+                new_lam
+              : _no_type
+              init
+              (
+              #0
+              _object
+                arg
+              : _no_type
+              #0
+              _object
+                new_body
+              : _no_type
+              )
+            : _no_type
+          : _no_type
+        : _no_type
+      : _no_type
+    #0
+    _method
+      gen_code
+      #0
+      _formal
+        env
+        VarList
+      #0
+      _formal
+        closures
+        LambdaListRef
+      SELF_TYPE
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "((new Closure"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_int
+          (
+          #0
+          _dispatch
+            #0
+            _object
+              closures
+            : _no_type
+            add
+            (
+            #0
+            _object
+              env
+            : _no_type
+            #0
+            _object
+              self
+            : _no_type
+            )
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            ").init("
+          : _no_type
+          )
+        : _no_type
+        #0
+        _cond
+          #0
+          _dispatch
+            #0
+            _object
+              env
+            : _no_type
+            isNil
+            (
+            )
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            out_string
+            (
+            #0
+            _string
+              "new Closure))"
+            : _no_type
+            )
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            out_string
+            (
+            #0
+            _string
+              "self))"
+            : _no_type
+            )
+          : _no_type
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      gen_closure_code
+      #0
+      _formal
+        n
+        Int
+      #0
+      _formal
+        env
+        VarList
+      #0
+      _formal
+        closures
+        LambdaListRef
+      SELF_TYPE
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "class Closure"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_int
+          (
+          #0
+          _object
+            n
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            " inherits Closure {\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "  apply(y : EvalObject) : EvalObject {\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "    { out_string(\"Applying closure "
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_int
+          (
+          #0
+          _object
+            n
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "\\n\");\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "      x <- y;\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            body
+          : _no_type
+          gen_code
+          (
+          #0
+          _dispatch
+            #0
+            _object
+              env
+            : _no_type
+            add
+            (
+            #0
+            _object
+              arg
+            : _no_type
+            )
+          : _no_type
+          #0
+          _object
+            closures
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            ";}};\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "};\n"
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    App
+    Expr
+    "lam.cl"
+    (
+    #0
+    _attr
+      fun
+      Expr
+      #0
+      _no_expr
+      : _no_type
+    #0
+    _attr
+      arg
+      Expr
+      #0
+      _no_expr
+      : _no_type
+    #0
+    _method
+      init
+      #0
+      _formal
+        f
+        Expr
+      #0
+      _formal
+        a
+        Expr
+      App
+      _block
+        #0
+        _assign
+          fun
+          #0
+          _object
+            f
+          : _no_type
+        : _no_type
+        #0
+        _assign
+          arg
+          #0
+          _object
+            a
+          : _no_type
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      print_self
+      SELF_TYPE
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "(("
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            fun
+          : _no_type
+          print_self
+          (
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            ")@("
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            arg
+          : _no_type
+          print_self
+          (
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "))"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _object
+          self
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      beta
+      Expr
+      #0
+      _typcase
+        #0
+        _object
+          fun
+        : _no_type
+        #0
+        _branch
+          l
+          Lambda
+          #0
+          _dispatch
+            #0
+            _object
+              l
+            : _no_type
+            apply
+            (
+            #0
+            _object
+              arg
+            : _no_type
+            )
+          : _no_type
+        #0
+        _branch
+          e
+          Expr
+          #0
+          _let
+            new_fun
+            Expr
+            #0
+            _dispatch
+              #0
+              _object
+                fun
+              : _no_type
+              beta
+              (
+              )
+            : _no_type
+            #0
+            _let
+              new_app
+              App
+              #0
+              _new
+                App
+              : _no_type
+              #0
+              _dispatch
+                #0
+                _object
+                  new_app
+                : _no_type
+                init
+                (
+                #0
+                _object
+                  new_fun
+                : _no_type
+                #0
+                _object
+                  arg
+                : _no_type
+                )
+              : _no_type
+            : _no_type
+          : _no_type
+      : _no_type
+    #0
+    _method
+      substitute
+      #0
+      _formal
+        x
+        Variable
+      #0
+      _formal
+        e
+        Expr
+      Expr
+      #0
+      _let
+        new_fun
+        Expr
+        #0
+        _dispatch
+          #0
+          _object
+            fun
+          : _no_type
+          substitute
+          (
+          #0
+          _object
+            x
+          : _no_type
+          #0
+          _object
+            e
+          : _no_type
+          )
+        : _no_type
+        #0
+        _let
+          new_arg
+          Expr
+          #0
+          _dispatch
+            #0
+            _object
+              arg
+            : _no_type
+            substitute
+            (
+            #0
+            _object
+              x
+            : _no_type
+            #0
+            _object
+              e
+            : _no_type
+            )
+          : _no_type
+          #0
+          _let
+            new_app
+            App
+            #0
+            _new
+              App
+            : _no_type
+            #0
+            _dispatch
+              #0
+              _object
+                new_app
+              : _no_type
+              init
+              (
+              #0
+              _object
+                new_fun
+              : _no_type
+              #0
+              _object
+                new_arg
+              : _no_type
+              )
+            : _no_type
+          : _no_type
+        : _no_type
+      : _no_type
+    #0
+    _method
+      gen_code
+      #0
+      _formal
+        env
+        VarList
+      #0
+      _formal
+        closures
+        LambdaListRef
+      SELF_TYPE
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "(let x : EvalObject <- "
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            fun
+          : _no_type
+          gen_code
+          (
+          #0
+          _object
+            env
+          : _no_type
+          #0
+          _object
+            closures
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            ",\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "     y : EvalObject <- "
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            arg
+          : _no_type
+          gen_code
+          (
+          #0
+          _object
+            env
+          : _no_type
+          #0
+          _object
+            closures
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            " in\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "  case x of\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "    c : Closure => c.apply(y);\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "    o : Object => { abort(); new EvalObject; };\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "  esac)"
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+
+
+    )
+  #0
+  _class
+    Term
+    IO
+    "lam.cl"
+    (
+    #0
+    _method
+      var
+      #0
+      _formal
+        x
+        String
+      Variable
+      #0
+      _let
+        v
+        Variable
+        #0
+        _new
+          Variable
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            v
+          : _no_type
+          init
+          (
+          #0
+          _object
+            x
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+    #0
+    _method
+      lam
+      #0
+      _formal
+        x
+        Variable
+      #0
+      _formal
+        e
+        Expr
+      Lambda
+      #0
+      _let
+        l
+        Lambda
+        #0
+        _new
+          Lambda
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            l
+          : _no_type
+          init
+          (
+          #0
+          _object
+            x
+          : _no_type
+          #0
+          _object
+            e
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+    #0
+    _method
+      app
+      #0
+      _formal
+        e1
+        Expr
+      #0
+      _formal
+        e2
+        Expr
+      App
+      #0
+      _let
+        a
+        App
+        #0
+        _new
+          App
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            a
+          : _no_type
+          init
+          (
+          #0
+          _object
+            e1
+          : _no_type
+          #0
+          _object
+            e2
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+    #0
+    _method
+      i
+      Expr
+      #0
+      _let
+        x
+        Variable
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          var
+          (
+          #0
+          _string
+            "x"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          lam
+          (
+          #0
+          _object
+            x
+          : _no_type
+          #0
+          _object
+            x
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+    #0
+    _method
+      k
+      Expr
+      #0
+      _let
+        x
+        Variable
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          var
+          (
+          #0
+          _string
+            "x"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _let
+          y
+          Variable
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            var
+            (
+            #0
+            _string
+              "y"
+            : _no_type
+            )
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            lam
+            (
+            #0
+            _object
+              x
+            : _no_type
+            #0
+            _dispatch
+              #0
+              _object
+                self
+              : _no_type
+              lam
+              (
+              #0
+              _object
+                y
+              : _no_type
+              #0
+              _object
+                x
+              : _no_type
+              )
+            : _no_type
+            )
+          : _no_type
+        : _no_type
+      : _no_type
+    #0
+    _method
+      s
+      Expr
+      #0
+      _let
+        x
+        Variable
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          var
+          (
+          #0
+          _string
+            "x"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _let
+          y
+          Variable
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            var
+            (
+            #0
+            _string
+              "y"
+            : _no_type
+            )
+          : _no_type
+          #0
+          _let
+            z
+            Variable
+            #0
+            _dispatch
+              #0
+              _object
+                self
+              : _no_type
+              var
+              (
+              #0
+              _string
+                "z"
+              : _no_type
+              )
+            : _no_type
+            #0
+            _dispatch
+              #0
+              _object
+                self
+              : _no_type
+              lam
+              (
+              #0
+              _object
+                x
+              : _no_type
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                lam
+                (
+                #0
+                _object
+                  y
+                : _no_type
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  lam
+                  (
+                  #0
+                  _object
+                    z
+                  : _no_type
+                  #0
+                  _dispatch
+                    #0
+                    _object
+                      self
+                    : _no_type
+                    app
+                    (
+                    #0
+                    _dispatch
+                      #0
+                      _object
+                        self
+                      : _no_type
+                      app
+                      (
+                      #0
+                      _object
+                        x
+                      : _no_type
+                      #0
+                      _object
+                        z
+                      : _no_type
+                      )
+                    : _no_type
+                    #0
+                    _dispatch
+                      #0
+                      _object
+                        self
+                      : _no_type
+                      app
+                      (
+                      #0
+                      _object
+                        y
+                      : _no_type
+                      #0
+                      _object
+                        z
+                      : _no_type
+                      )
+                    : _no_type
+                    )
+                  : _no_type
+                  )
+                : _no_type
+                )
+              : _no_type
+              )
+            : _no_type
+          : _no_type
+        : _no_type
+      : _no_type
+
+    )
+  #0
+  _class
+    Main
+    Term
+    "lam.cl"
+    (
+    #0
+    _method
+      beta_reduce
+      #0
+      _formal
+        e
+        Expr
+      Expr
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "beta-reduce: "
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            e
+          : _no_type
+          print_self
+          (
+          )
+        : _no_type
+        #0
+        _let
+          done
+          Bool
+          #0
+          _bool
+            0
+          : _no_type
+          #0
+          _let
+            new_expr
+            Expr
+            #0
+            _no_expr
+            : _no_type
+            _block
+              #0
+              _loop
+                #0
+                _comp
+                  #0
+                  _object
+                    done
+                  : _no_type
+                : _no_type
+                _block
+                  #0
+                  _assign
+                    new_expr
+                    #0
+                    _dispatch
+                      #0
+                      _object
+                        e
+                      : _no_type
+                      beta
+                      (
+                      )
+                    : _no_type
+                  : _no_type
+                  #0
+                  _cond
+                    #0
+                    _eq
+                      #0
+                      _object
+                        new_expr
+                      : _no_type
+                      #0
+                      _object
+                        e
+                      : _no_type
+                    : _no_type
+                    #0
+                    _assign
+                      done
+                      #0
+                      _bool
+                        1
+                      : _no_type
+                    : _no_type
+                    _block
+                      #0
+                      _assign
+                        e
+                        #0
+                        _object
+                          new_expr
+                        : _no_type
+                      : _no_type
+                      #0
+                      _dispatch
+                        #0
+                        _object
+                          self
+                        : _no_type
+                        out_string
+                        (
+                        #0
+                        _string
+                          " =>\n"
+                        : _no_type
+                        )
+                      : _no_type
+                      #0
+                      _dispatch
+                        #0
+                        _object
+                          e
+                        : _no_type
+                        print_self
+                        (
+                        )
+                      : _no_type
+                    : _no_type
+
+                  : _no_type
+                : _no_type
+
+              : _no_type
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                out_string
+                (
+                #0
+                _string
+                  "\n"
+                : _no_type
+                )
+              : _no_type
+              #0
+              _object
+                e
+              : _no_type
+            : _no_type
+
+          : _no_type
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      eval_class
+      SELF_TYPE
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "class EvalObject inherits IO {\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "  eval() : EvalObject { { abort(); self; } };\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "};\n"
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      closure_class
+      SELF_TYPE
+      _block
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "class Closure inherits EvalObject {\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "  parent : Closure;\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "  x : EvalObject;\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "  get_parent() : Closure { parent };\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "  get_x() : EvalObject { x };\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "  init(p : Closure) : Closure {{ parent <- p; self; }};\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "  apply(y : EvalObject) : EvalObject { { abort(); self; } };\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "};\n"
+          : _no_type
+          )
+        : _no_type
+      : _no_type
+
+    #0
+    _method
+      gen_code
+      #0
+      _formal
+        e
+        Expr
+      SELF_TYPE
+      #0
+      _let
+        cl
+        LambdaListRef
+        #0
+        _dispatch
+          #0
+          _new
+            LambdaListRef
+          : _no_type
+          reset
+          (
+          )
+        : _no_type
+        _block
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            out_string
+            (
+            #0
+            _string
+              "Generating code for "
+            : _no_type
+            )
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              e
+            : _no_type
+            print_self
+            (
+            )
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            out_string
+            (
+            #0
+            _string
+              "\n------------------cut here------------------\n"
+            : _no_type
+            )
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            out_string
+            (
+            #0
+            _string
+              "(*Generated by lam.cl (Jeff Foster, March 2000)*)\n"
+            : _no_type
+            )
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            eval_class
+            (
+            )
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            closure_class
+            (
+            )
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            out_string
+            (
+            #0
+            _string
+              "class Main {\n"
+            : _no_type
+            )
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            out_string
+            (
+            #0
+            _string
+              "  main() : EvalObject {\n"
+            : _no_type
+            )
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              e
+            : _no_type
+            gen_code
+            (
+            #0
+            _new
+              VarList
+            : _no_type
+            #0
+            _object
+              cl
+            : _no_type
+            )
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            out_string
+            (
+            #0
+            _string
+              "\n};\n};\n"
+            : _no_type
+            )
+          : _no_type
+          #0
+          _loop
+            #0
+            _comp
+              #0
+              _dispatch
+                #0
+                _object
+                  cl
+                : _no_type
+                isNil
+                (
+                )
+              : _no_type
+            : _no_type
+            #0
+            _let
+              e
+              VarList
+              #0
+              _dispatch
+                #0
+                _object
+                  cl
+                : _no_type
+                headE
+                (
+                )
+              : _no_type
+              #0
+              _let
+                c
+                Lambda
+                #0
+                _dispatch
+                  #0
+                  _object
+                    cl
+                  : _no_type
+                  headC
+                  (
+                  )
+                : _no_type
+                #0
+                _let
+                  n
+                  Int
+                  #0
+                  _dispatch
+                    #0
+                    _object
+                      cl
+                    : _no_type
+                    headN
+                    (
+                    )
+                  : _no_type
+                  _block
+                    #0
+                    _dispatch
+                      #0
+                      _object
+                        cl
+                      : _no_type
+                      removeHead
+                      (
+                      )
+                    : _no_type
+                    #0
+                    _dispatch
+                      #0
+                      _object
+                        c
+                      : _no_type
+                      gen_closure_code
+                      (
+                      #0
+                      _object
+                        n
+                      : _no_type
+                      #0
+                      _object
+                        e
+                      : _no_type
+                      #0
+                      _object
+                        cl
+                      : _no_type
+                      )
+                    : _no_type
+                  : _no_type
+
+                : _no_type
+              : _no_type
+            : _no_type
+          : _no_type
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            out_string
+            (
+            #0
+            _string
+              "\n------------------cut here------------------\n"
+            : _no_type
+            )
+          : _no_type
+        : _no_type
+
+      : _no_type
+    #0
+    _method
+      main
+      Int
+      _block
+        #0
+        _dispatch
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            i
+            (
+            )
+          : _no_type
+          print_self
+          (
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            k
+            (
+            )
+          : _no_type
+          print_self
+          (
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            s
+            (
+            )
+          : _no_type
+          print_self
+          (
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          out_string
+          (
+          #0
+          _string
+            "\n"
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          beta_reduce
+          (
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            app
+            (
+            #0
+            _dispatch
+              #0
+              _object
+                self
+              : _no_type
+              app
+              (
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                app
+                (
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  s
+                  (
+                  )
+                : _no_type
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  k
+                  (
+                  )
+                : _no_type
+                )
+              : _no_type
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                i
+                (
+                )
+              : _no_type
+              )
+            : _no_type
+            #0
+            _dispatch
+              #0
+              _object
+                self
+              : _no_type
+              i
+              (
+              )
+            : _no_type
+            )
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          beta_reduce
+          (
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            app
+            (
+            #0
+            _dispatch
+              #0
+              _object
+                self
+              : _no_type
+              app
+              (
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                k
+                (
+                )
+              : _no_type
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                i
+                (
+                )
+              : _no_type
+              )
+            : _no_type
+            #0
+            _dispatch
+              #0
+              _object
+                self
+              : _no_type
+              i
+              (
+              )
+            : _no_type
+            )
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          gen_code
+          (
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            app
+            (
+            #0
+            _dispatch
+              #0
+              _object
+                self
+              : _no_type
+              i
+              (
+              )
+            : _no_type
+            #0
+            _dispatch
+              #0
+              _object
+                self
+              : _no_type
+              i
+              (
+              )
+            : _no_type
+            )
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          gen_code
+          (
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            app
+            (
+            #0
+            _dispatch
+              #0
+              _object
+                self
+              : _no_type
+              app
+              (
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                app
+                (
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  s
+                  (
+                  )
+                : _no_type
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  k
+                  (
+                  )
+                : _no_type
+                )
+              : _no_type
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                i
+                (
+                )
+              : _no_type
+              )
+            : _no_type
+            #0
+            _dispatch
+              #0
+              _object
+                self
+              : _no_type
+              i
+              (
+              )
+            : _no_type
+            )
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          gen_code
+          (
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            app
+            (
+            #0
+            _dispatch
+              #0
+              _object
+                self
+              : _no_type
+              app
+              (
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                app
+                (
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  app
+                  (
+                  #0
+                  _dispatch
+                    #0
+                    _object
+                      self
+                    : _no_type
+                    app
+                    (
+                    #0
+                    _dispatch
+                      #0
+                      _object
+                        self
+                      : _no_type
+                      app
+                      (
+                      #0
+                      _dispatch
+                        #0
+                        _object
+                          self
+                        : _no_type
+                        app
+                        (
+                        #0
+                        _dispatch
+                          #0
+                          _object
+                            self
+                          : _no_type
+                          app
+                          (
+                          #0
+                          _dispatch
+                            #0
+                            _object
+                              self
+                            : _no_type
+                            i
+                            (
+                            )
+                          : _no_type
+                          #0
+                          _dispatch
+                            #0
+                            _object
+                              self
+                            : _no_type
+                            k
+                            (
+                            )
+                          : _no_type
+                          )
+                        : _no_type
+                        #0
+                        _dispatch
+                          #0
+                          _object
+                            self
+                          : _no_type
+                          s
+                          (
+                          )
+                        : _no_type
+                        )
+                      : _no_type
+                      #0
+                      _dispatch
+                        #0
+                        _object
+                          self
+                        : _no_type
+                        s
+                        (
+                        )
+                      : _no_type
+                      )
+                    : _no_type
+                    #0
+                    _dispatch
+                      #0
+                      _object
+                        self
+                      : _no_type
+                      k
+                      (
+                      )
+                    : _no_type
+                    )
+                  : _no_type
+                  #0
+                  _dispatch
+                    #0
+                    _object
+                      self
+                    : _no_type
+                    s
+                    (
+                    )
+                  : _no_type
+                  )
+                : _no_type
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  i
+                  (
+                  )
+                : _no_type
+                )
+              : _no_type
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                k
+                (
+                )
+              : _no_type
+              )
+            : _no_type
+            #0
+            _dispatch
+              #0
+              _object
+                self
+              : _no_type
+              i
+              (
+              )
+            : _no_type
+            )
+          : _no_type
+          )
+        : _no_type
+        #0
+        _dispatch
+          #0
+          _object
+            self
+          : _no_type
+          gen_code
+          (
+          #0
+          _dispatch
+            #0
+            _object
+              self
+            : _no_type
+            app
+            (
+            #0
+            _dispatch
+              #0
+              _object
+                self
+              : _no_type
+              app
+              (
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                i
+                (
+                )
+              : _no_type
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                app
+                (
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  k
+                  (
+                  )
+                : _no_type
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  s
+                  (
+                  )
+                : _no_type
+                )
+              : _no_type
+              )
+            : _no_type
+            #0
+            _dispatch
+              #0
+              _object
+                self
+              : _no_type
+              app
+              (
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                k
+                (
+                )
+              : _no_type
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                app
+                (
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  s
+                  (
+                  )
+                : _no_type
+                #0
+                _dispatch
+                  #0
+                  _object
+                    self
+                  : _no_type
+                  s
+                  (
+                  )
+                : _no_type
+                )
+              : _no_type
+              )
+            : _no_type
+            )
+          : _no_type
+          )
+        : _no_type
+        #0
+        _int
+          0
+        : _no_type
+      : _no_type
+
+
+    )

@@ -1,0 +1,307 @@
+#0
+_program
+  #0
+  _class
+    Main
+    Object
+    "not.cl"
+    (
+    #0
+    _method
+      main
+      Object
+      #0
+      _let
+        x
+        Int
+        #0
+        _int
+          0
+        : _no_type
+        #0
+        _let
+          b
+          Bool
+          #0
+          _no_expr
+          : _no_type
+          _block
+            #0
+            _loop
+              #0
+              _lt
+                #0
+                _object
+                  x
+                : _no_type
+                #0
+                _int
+                  100
+                : _no_type
+              : _no_type
+              _block
+                #0
+                _eq
+                  #0
+                  _object
+                    b
+                  : _no_type
+                  #0
+                  _comp
+                    #0
+                    _comp
+                      #0
+                      _comp
+                        #0
+                        _comp
+                          #0
+                          _comp
+                            #0
+                            _comp
+                              #0
+                              _comp
+                                #0
+                                _comp
+                                  #0
+                                  _comp
+                                    #0
+                                    _comp
+                                      #0
+                                      _comp
+                                        #0
+                                        _object
+                                          b
+                                        : _no_type
+                                      : _no_type
+                                    : _no_type
+                                  : _no_type
+                                : _no_type
+                              : _no_type
+                            : _no_type
+                          : _no_type
+                        : _no_type
+                      : _no_type
+                    : _no_type
+                  : _no_type
+                : _no_type
+                #0
+                _eq
+                  #0
+                  _object
+                    b
+                  : _no_type
+                  #0
+                  _comp
+                    #0
+                    _comp
+                      #0
+                      _comp
+                        #0
+                        _comp
+                          #0
+                          _comp
+                            #0
+                            _comp
+                              #0
+                              _comp
+                                #0
+                                _comp
+                                  #0
+                                  _comp
+                                    #0
+                                    _comp
+                                      #0
+                                      _comp
+                                        #0
+                                        _object
+                                          b
+                                        : _no_type
+                                      : _no_type
+                                    : _no_type
+                                  : _no_type
+                                : _no_type
+                              : _no_type
+                            : _no_type
+                          : _no_type
+                        : _no_type
+                      : _no_type
+                    : _no_type
+                  : _no_type
+                : _no_type
+                #0
+                _eq
+                  #0
+                  _object
+                    b
+                  : _no_type
+                  #0
+                  _comp
+                    #0
+                    _comp
+                      #0
+                      _comp
+                        #0
+                        _comp
+                          #0
+                          _comp
+                            #0
+                            _comp
+                              #0
+                              _comp
+                                #0
+                                _comp
+                                  #0
+                                  _comp
+                                    #0
+                                    _comp
+                                      #0
+                                      _comp
+                                        #0
+                                        _object
+                                          b
+                                        : _no_type
+                                      : _no_type
+                                    : _no_type
+                                  : _no_type
+                                : _no_type
+                              : _no_type
+                            : _no_type
+                          : _no_type
+                        : _no_type
+                      : _no_type
+                    : _no_type
+                  : _no_type
+                : _no_type
+                #0
+                _eq
+                  #0
+                  _object
+                    b
+                  : _no_type
+                  #0
+                  _comp
+                    #0
+                    _comp
+                      #0
+                      _comp
+                        #0
+                        _comp
+                          #0
+                          _comp
+                            #0
+                            _comp
+                              #0
+                              _comp
+                                #0
+                                _comp
+                                  #0
+                                  _comp
+                                    #0
+                                    _comp
+                                      #0
+                                      _comp
+                                        #0
+                                        _object
+                                          b
+                                        : _no_type
+                                      : _no_type
+                                    : _no_type
+                                  : _no_type
+                                : _no_type
+                              : _no_type
+                            : _no_type
+                          : _no_type
+                        : _no_type
+                      : _no_type
+                    : _no_type
+                  : _no_type
+                : _no_type
+                #0
+                _eq
+                  #0
+                  _object
+                    b
+                  : _no_type
+                  #0
+                  _comp
+                    #0
+                    _comp
+                      #0
+                      _comp
+                        #0
+                        _comp
+                          #0
+                          _comp
+                            #0
+                            _comp
+                              #0
+                              _comp
+                                #0
+                                _comp
+                                  #0
+                                  _comp
+                                    #0
+                                    _comp
+                                      #0
+                                      _comp
+                                        #0
+                                        _object
+                                          b
+                                        : _no_type
+                                      : _no_type
+                                    : _no_type
+                                  : _no_type
+                                : _no_type
+                              : _no_type
+                            : _no_type
+                          : _no_type
+                        : _no_type
+                      : _no_type
+                    : _no_type
+                  : _no_type
+                : _no_type
+                #0
+                _assign
+                  x
+                  #0
+                  _plus
+                    #0
+                    _object
+                      x
+                    : _no_type
+                    #0
+                    _int
+                      1
+                    : _no_type
+                  : _no_type
+                : _no_type
+              : _no_type
+
+            : _no_type
+            #0
+            _cond
+              #0
+              _object
+                b
+              : _no_type
+              #0
+              _dispatch
+                #0
+                _object
+                  self
+                : _no_type
+                abort
+                (
+                )
+              : _no_type
+              #0
+              _int
+                0
+              : _no_type
+            : _no_type
+          : _no_type
+
+        : _no_type
+      : _no_type
+
+    )
