@@ -445,7 +445,11 @@ class Neg(Expresion):
         return resultado
     
     def genera_codigo(self, n):
-        return f"{' '*n}temp = not {self.expr}"
+        stringAQuitar = "temp="
+        stringOriginal = f"{self.expr.genera_codigo(0)}"
+        new_string = stringOriginal.replace(stringAQuitar, "")
+        codigo = f"{' '*(n)}temp = not {new_string}"
+        return codigo
 
 @dataclass
 class Not(Expresion):
@@ -460,7 +464,9 @@ class Not(Expresion):
         return resultado
     
     def genera_codigo(self, n):
-        return f"{' '*n}temp = not {self.expr}"
+        codigo = f"{self.expr.genera_codigo(n)}\n"
+        codigo += f"{' '*n}temp = not temp"
+        return codigo 
         
 @dataclass
 class EsNulo(Expresion):
