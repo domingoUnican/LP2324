@@ -20,8 +20,7 @@ TESTS = [fich for fich in FICHEROS
          if os.path.isfile(os.path.join(DIR, fich)) and
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$", fich)]
 TESTS.sort()
-TESTS ={"basic-init.cl"}
-
+TESTS = {"let-nested.cl"} #abort, basic-init, basicequality, calls, casevoid, dispatch1, dispatch2, fact, fibo, init-default
 
 if True:
     contador = len(TESTS)
@@ -96,6 +95,7 @@ if True:
             j = parser.parse(lexer.tokenize(entrada))
             try:
                 codigo = j.genera_codigo()
+                print(codigo)
                 resultado = io.StringIO()
                 sys.stdout = resultado
                 exec(codigo)
@@ -115,3 +115,4 @@ if True:
                 print(f"Lanza excepción en {fich} con el texto {e}")
                 contador -= 1
     print(f'Ficheros correctos: {contador}/{len(TESTS)}')
+    

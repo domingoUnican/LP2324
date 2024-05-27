@@ -1,24 +1,74 @@
 from copy import deepcopy
+from Clases import *
 
-class Objeto:
+class Object:
     def abort(self):
         exit()
 
     def copy(self):
         return deepcopy(self)
+    
+    def EsNulo(self):
+        return True
 
-class Entero(Objeto):
-    def __init__(self, numero):
+class Int(Object, int):
+    def __init__(self, numero=None):
         super().__init__()
-        self.numero = numero
+        if numero is None:
+            self.numero = 0
+        else:
+            self.numero = numero
 
     def __add__(self, s):
         return Entero(self.numero + s.numero)
 
+    def EsNulo(self):
+        return False
 
-class IO(Objeto):
+
+class IO(Object):
+
     def out_string(self, s):
-        print( "") # ¿Que habra que poner?
-
+        print(s.s, end='') # ¿Que habra que poner?,flush=False
+        
     def out_int(self, s):
-        print("") # ¿Que habra que poner?
+        print(s, end='') # ¿Que habra que poner?
+        
+
+class String(Object):#str
+    def __init__(self, s=""):
+        super().__init__()
+        if s is None:
+            self.s = ""
+        else:
+            self.s = s
+
+    def __eq__(self, b):
+        if isinstance(b, str):
+            return self.s == b
+        if self.s == b.s:
+            return True
+        else:
+            return False
+    def EsNulo(self):
+        if self.s != None:
+            return False
+        return True
+
+class Bool(Object):
+    def __init__(self, b=None):
+        super().__init__()
+        if b == None:
+            self.b = False
+        else:
+            self.b = b
+    def EsNulo(self):
+        return False
+
+    def __eq__(self, b):
+        if isinstance(b, bool):
+            return self.b == b
+        if self.b == b.b:
+            return True
+        else:
+            return False
